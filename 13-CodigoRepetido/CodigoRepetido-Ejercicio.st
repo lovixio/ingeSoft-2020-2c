@@ -78,7 +78,7 @@ test04CanNotRemoveAnInvalidCustomer
 			self assert: (customerBook includesCustomerNamed: johnLennon) ]
 ! !
 
-!CustomerBookTest methodsFor: 'testing' stamp: 'LH 9/20/2020 17:50:33'!
+!CustomerBookTest methodsFor: 'testing' stamp: 'LH 9/21/2020 18:13:35'!
 test05SuspendingACustomerShouldNotRemoveItFromCustomerBook
 	| customerBook paulMcCartney|
 	paulMcCartney := 'Paul McCartney'.
@@ -86,9 +86,6 @@ test05SuspendingACustomerShouldNotRemoveItFromCustomerBook
 	self book: customerBook hasNumberOfActiveCustomers: 0 hasNumberOfSuspendedCustomers: 1 hasNumberOfCustomers: 1.
 	
 	self assert: (customerBook includesCustomerNamed: paulMcCartney).
-	
-
-	
 ! !
 
 !CustomerBookTest methodsFor: 'testing' stamp: 'LH 9/20/2020 17:50:33'!
@@ -105,14 +102,13 @@ test06RemovingASuspendedCustomerShouldRemoveItFromCustomerBook
 	
 ! !
 
-!CustomerBookTest methodsFor: 'testing' stamp: 'LH 9/20/2020 17:48:47'!
+!CustomerBookTest methodsFor: 'testing' stamp: 'LH 9/21/2020 18:14:22'!
 test07CanNotSuspendAnInvalidCustomer
 	| customerBook johnLennon |
 
 	johnLennon := 'John Lennon'.
 	customerBook := CustomerBook newWithCustomerNamed: johnLennon .	
 	self assert: customerBook cannotSuspend: 'George Harrison' withoutAffecting: johnLennon.	
-	
 ! !
 
 !CustomerBookTest methodsFor: 'testing' stamp: 'LH 9/20/2020 17:50:33'!
@@ -205,12 +201,15 @@ numberOfSuspendedCustomers
 	
 	^suspended size! !
 
-!CustomerBook methodsFor: 'customer management' stamp: 'LH 9/20/2020 18:23:10'!
-removeCustomerNamed: aName 
+!CustomerBook methodsFor: 'customer management' stamp: 'LH 9/21/2020 18:06:38'!
+removeCustomerNamed: aName 	
+	"if the customer is removed from active, return their name"
 	((self removeCustomerNamed: aName from:	active ) == aName) ifTrue: [^aName].	
 	
+	"if the customer is removed from suspended, return their name"
 	((self removeCustomerNamed: aName from:	suspended) == aName) ifTrue: [^aName].
 	
+	"else send an error signal"
 	^ NotFound signal.
 ! !
 
