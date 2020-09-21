@@ -102,38 +102,38 @@ test06RemovingASuspendedCustomerShouldRemoveItFromCustomerBook
 	
 ! !
 
-!CustomerBookTest methodsFor: 'testing' stamp: 'LH 9/21/2020 18:14:22'!
+!CustomerBookTest methodsFor: 'testing' stamp: 'IO 9/21/2020 20:31:41'!
 test07CanNotSuspendAnInvalidCustomer
 	| customerBook johnLennon |
 
 	johnLennon := 'John Lennon'.
 	customerBook := CustomerBook newWithCustomerNamed: johnLennon .	
-	self assert: customerBook cannotSuspend: 'George Harrison' withoutAffecting: johnLennon.	
+	self assert: customerBook cannotSuspendACustomerNamed: 'George Harrison' andStillIncludesACustomerNamed: johnLennon.	
 ! !
 
-!CustomerBookTest methodsFor: 'testing' stamp: 'LH 9/20/2020 17:50:33'!
+!CustomerBookTest methodsFor: 'testing' stamp: 'IO 9/21/2020 20:31:41'!
 test08CanNotSuspendAnAlreadySuspendedCustomer
 	
 	| customerBook johnLennon |
 	johnLennon := 'John Lennon'.
 	customerBook := CustomerBook newWithSuspendedCostumerNamed: johnLennon .
 
-	self assert: customerBook cannotSuspend: johnLennon withoutAffecting: johnLennon.	
+	self assert: customerBook cannotSuspendACustomerNamed: johnLennon andStillIncludesACustomerNamed: johnLennon.	
 	
 ! !
 
 
-!CustomerBookTest methodsFor: 'testing tools' stamp: 'LH 9/20/2020 17:21:29'!
-assert: aCustomerBook cannotSuspend: aCostumer withoutAffecting: aCostumerThatMayDiffer 
+!CustomerBookTest methodsFor: 'testing tools' stamp: 'IO 9/21/2020 20:32:04'!
+assert: aCustomerBook cannotSuspendACustomerNamed: aName andStillIncludesACustomerNamed: anotherName 
 	|bookSizePreviousToAction|
 	
 	bookSizePreviousToAction  := aCustomerBook numberOfCustomers.
-	[ aCustomerBook suspendCustomerNamed: aCostumer.
+	[ aCustomerBook suspendCustomerNamed: aName.
 	self fail ]
 		on: CantSuspend 
 		do: [ :anError | 
 			self assert: aCustomerBook numberOfCustomers = bookSizePreviousToAction .
-			self assert: (aCustomerBook includesCustomerNamed: aCostumerThatMayDiffer ) ]! !
+			self assert: (aCustomerBook includesCustomerNamed: anotherName ) ]! !
 
 !CustomerBookTest methodsFor: 'testing tools' stamp: 'IO 9/21/2020 20:27:49'!
 assert: aCustomerBook hasNumberOfActiveCustomers: numberOfActiveCustomers suspendedCustomers: numberOfSuspendedCustomers andATotalOf: totalCustomers
