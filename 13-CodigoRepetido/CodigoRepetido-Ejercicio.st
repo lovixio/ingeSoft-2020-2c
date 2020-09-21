@@ -78,24 +78,24 @@ test04CanNotRemoveAnInvalidCustomer
 			self assert: (customerBook includesCustomerNamed: johnLennon) ]
 ! !
 
-!CustomerBookTest methodsFor: 'testing' stamp: 'LH 9/21/2020 18:13:35'!
+!CustomerBookTest methodsFor: 'testing' stamp: 'IO 9/21/2020 20:26:51'!
 test05SuspendingACustomerShouldNotRemoveItFromCustomerBook
 	| customerBook paulMcCartney|
 	paulMcCartney := 'Paul McCartney'.
 	customerBook := CustomerBook newWithSuspendedCostumerNamed: paulMcCartney .
-	self book: customerBook hasNumberOfActiveCustomers: 0 hasNumberOfSuspendedCustomers: 1 hasNumberOfCustomers: 1.
+	self assert: customerBook hasNumberOfActiveCustomers: 0 suspendedCustomers: 1 andATotalOf: 1.
 	
 	self assert: (customerBook includesCustomerNamed: paulMcCartney).
 ! !
 
-!CustomerBookTest methodsFor: 'testing' stamp: 'LH 9/20/2020 17:50:33'!
+!CustomerBookTest methodsFor: 'testing' stamp: 'IO 9/21/2020 20:26:51'!
 test06RemovingASuspendedCustomerShouldRemoveItFromCustomerBook
 	| customerBook paulMcCartney|
 	
 	paulMcCartney := 'Paul McCartney'.
 	customerBook := CustomerBook newWithSuspendedCostumerNamed: paulMcCartney .
 	customerBook removeCustomerNamed: paulMcCartney.
-	self book: customerBook hasNumberOfActiveCustomers: 0 hasNumberOfSuspendedCustomers: 0 hasNumberOfCustomers: 0.
+	self assert: customerBook hasNumberOfActiveCustomers: 0 suspendedCustomers: 0 andATotalOf: 0.
 	self deny: (customerBook includesCustomerNamed: paulMcCartney).
 
 
@@ -135,6 +135,13 @@ assert: aCustomerBook cannotSuspend: aCostumer withoutAffecting: aCostumerThatMa
 			self assert: aCustomerBook numberOfCustomers = bookSizePreviousToAction .
 			self assert: (aCustomerBook includesCustomerNamed: aCostumerThatMayDiffer ) ]! !
 
+!CustomerBookTest methodsFor: 'testing tools' stamp: 'IO 9/21/2020 20:27:49'!
+assert: aCustomerBook hasNumberOfActiveCustomers: numberOfActiveCustomers suspendedCustomers: numberOfSuspendedCustomers andATotalOf: totalCustomers
+	
+	self assert: numberOfActiveCustomers equals: aCustomerBook numberOfActiveCustomers.
+	self assert: numberOfSuspendedCustomers equals: aCustomerBook numberOfSuspendedCustomers.
+	self assert: totalCustomers equals: aCustomerBook numberOfCustomers.! !
+
 !CustomerBookTest methodsFor: 'testing tools' stamp: 'LH 9/20/2020 16:35:38'!
 assert: aBlock takesLessThan: time 
 	| millisecondsBeforeRunning millisecondsAfterRunning |
@@ -144,13 +151,6 @@ assert: aBlock takesLessThan: time
 	millisecondsAfterRunning := Time millisecondClockValue * millisecond.
 	
 	self assert: (millisecondsAfterRunning-millisecondsBeforeRunning) < time.! !
-
-!CustomerBookTest methodsFor: 'testing tools' stamp: 'LH 9/20/2020 17:01:38'!
-book: aCustomerBook hasNumberOfActiveCustomers: numActives hasNumberOfSuspendedCustomers: numSuspendeds hasNumberOfCustomers: numTotal
-	
-	self assert: numActives equals: aCustomerBook numberOfActiveCustomers.
-	self assert: numSuspendeds equals: aCustomerBook numberOfSuspendedCustomers.
-	self assert: numTotal equals: aCustomerBook numberOfCustomers.! !
 
 
 !classDefinition: #CustomerBook category: #'CodigoRepetido-Ejercicio'!
