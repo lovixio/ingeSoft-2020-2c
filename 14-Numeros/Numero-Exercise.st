@@ -1,4 +1,4 @@
-!classDefinition: #NumeroTest category: #'Numero-Exercise'!
+!classDefinition: #NumeroTest category: 'Numero-Exercise'!
 TestCase subclass: #NumeroTest
 	instanceVariableNames: 'zero one two four oneFifth oneHalf five twoFifth twoTwentyfifth fiveHalfs three eight negativeOne negativeTwo'
 	classVariableNames: ''
@@ -287,7 +287,7 @@ setUp
 	! !
 
 
-!classDefinition: #Numero category: #'Numero-Exercise'!
+!classDefinition: #Numero category: 'Numero-Exercise'!
 Object subclass: #Numero
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -342,7 +342,7 @@ isZero
 
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
-!classDefinition: 'Numero class' category: #'Numero-Exercise'!
+!classDefinition: 'Numero class' category: 'Numero-Exercise'!
 Numero class
 	instanceVariableNames: ''!
 
@@ -357,7 +357,7 @@ invalidNumberTypeErrorDescription
 	^ 'Tipo de número inválido!!'! !
 
 
-!classDefinition: #Entero category: #'Numero-Exercise'!
+!classDefinition: #Entero category: 'Numero-Exercise'!
 Numero subclass: #Entero
 	instanceVariableNames: 'value'
 	classVariableNames: ''
@@ -478,7 +478,7 @@ isZero
 
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
-!classDefinition: 'Entero class' category: #'Numero-Exercise'!
+!classDefinition: 'Entero class' category: 'Numero-Exercise'!
 Entero class
 	instanceVariableNames: ''!
 
@@ -495,7 +495,7 @@ with: aValue
 	^self new initalizeWith: aValue! !
 
 
-!classDefinition: #Fraccion category: #'Numero-Exercise'!
+!classDefinition: #Fraccion category: 'Numero-Exercise'!
 Numero subclass: #Fraccion
 	instanceVariableNames: 'numerator denominator'
 	classVariableNames: ''
@@ -510,11 +510,15 @@ Numero subclass: #Fraccion
 		ifFalse:[^(numerator * aMultiplier)/ denominator ]
 ! !
 
-!Fraccion methodsFor: 'arithmetic operations' stamp: 'LH 9/27/2020 12:36:53'!
+!Fraccion methodsFor: 'arithmetic operations' stamp: 'LH 9/28/2020 15:53:46'!
 + anAdder 
-	| newNumerator newDenominator |
+	| addMessageFitTo |
 	
-	^(anAdder isKindOf: self class)
+	addMessageFitTo := (('add', (anAdder class) asString),':') asSymbol.
+	^ addMessageFitTo sendTo: self with: anAdder.
+	
+	
+	"^(anAdder isKindOf: self class)
 			ifTrue: [
 					newNumerator := (numerator * anAdder denominator) + (denominator * anAdder numerator).
 					newDenominator := denominator * anAdder denominator.
@@ -526,7 +530,8 @@ Numero subclass: #Fraccion
 					newDenominator := denominator.
 	
 					^newNumerator / newDenominator
-			] .! !
+			] ."
+	! !
 
 !Fraccion methodsFor: 'arithmetic operations' stamp: 'LH 9/27/2020 13:15:06'!
 - aSubtrahend 
@@ -556,6 +561,24 @@ Numero subclass: #Fraccion
 		ifFalse: [^ numerator / (denominator*aDivisor) ]
 	
 	! !
+
+!Fraccion methodsFor: 'arithmetic operations' stamp: 'LH 9/28/2020 15:23:50'!
+addEntero: anEntero
+	|newNumerator newDenominator|
+	
+	newNumerator := numerator  + (denominator * anEntero).
+	newDenominator := denominator.
+	
+	^newNumerator / newDenominator! !
+
+!Fraccion methodsFor: 'arithmetic operations' stamp: 'LH 9/28/2020 15:24:05'!
+addFraccion: aFraccion
+	|newNumerator newDenominator|
+	
+	newNumerator := (numerator * aFraccion denominator) + (denominator * aFraccion numerator).
+	newDenominator := denominator * aFraccion denominator.
+	
+	^newNumerator / newDenominator! !
 
 
 !Fraccion methodsFor: 'comparing' stamp: 'HernanWilkinson 5/7/2016 20:42'!
@@ -617,7 +640,7 @@ printOn: aStream
 
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
-!classDefinition: 'Fraccion class' category: #'Numero-Exercise'!
+!classDefinition: 'Fraccion class' category: 'Numero-Exercise'!
 Fraccion class
 	instanceVariableNames: ''!
 
