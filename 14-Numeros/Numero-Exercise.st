@@ -325,6 +325,12 @@ multiplicarConEntero: unEntero
 	self subclassResponsibility.
 ! !
 
+!Numero methodsFor: 'arithmetic operations' stamp: 'IO 9/28/2020 21:54:37'!
+multiplicarConFraccion: unaFraccion
+
+	self subclassResponsibility.
+! !
+
 !Numero methodsFor: 'arithmetic operations' stamp: 'NR 9/23/2018 23:37:13'!
 negated
 	
@@ -443,6 +449,12 @@ multiplicarConEntero: unEntero
 
 	! !
 
+!Entero methodsFor: 'arithmetic operations' stamp: 'IO 9/28/2020 21:50:24'!
+multiplicarConFraccion: unaFraccion
+
+	^(unaFraccion numerator * self)/ unaFraccion denominator.
+! !
+
 !Entero methodsFor: 'arithmetic operations' stamp: 'IO 9/28/2020 21:13:48'!
 sumarConEntero: unEntero
 
@@ -527,12 +539,11 @@ Numero subclass: #Fraccion
 	poolDictionaries: ''
 	category: 'Numero-Exercise'!
 
-!Fraccion methodsFor: 'arithmetic operations' stamp: 'LH 9/27/2020 12:43:59'!
+!Fraccion methodsFor: 'arithmetic operations' stamp: 'IO 9/28/2020 21:50:40'!
 * aMultiplier 
 	
-	^(aMultiplier isKindOf: self class)
-		ifTrue:[^(numerator * aMultiplier numerator) / (denominator * aMultiplier denominator)]
-		ifFalse:[^(numerator * aMultiplier)/ denominator ]
+	^aMultiplier multiplicarConFraccion: self.
+
 ! !
 
 !Fraccion methodsFor: 'arithmetic operations' stamp: 'IO 9/28/2020 21:23:47'!
@@ -574,6 +585,12 @@ Numero subclass: #Fraccion
 multiplicarConEntero: unEntero
 
 	^ (self numerator * unEntero) / self denominator.
+! !
+
+!Fraccion methodsFor: 'arithmetic operations' stamp: 'IO 9/28/2020 21:49:44'!
+multiplicarConFraccion: unaFraccion 
+	
+	^(numerator * unaFraccion numerator) / (denominator * unaFraccion denominator).
 ! !
 
 !Fraccion methodsFor: 'arithmetic operations' stamp: 'IO 9/28/2020 21:16:00'!
