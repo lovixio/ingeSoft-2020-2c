@@ -374,15 +374,10 @@ Numero subclass: #Entero
 	
 	! !
 
-!Entero methodsFor: 'arithmetic operations' stamp: 'LH 9/27/2020 12:47:15'!
+!Entero methodsFor: 'arithmetic operations' stamp: 'IO 9/28/2020 21:15:12'!
 + anAdder 
-	
-	^(anAdder isKindOf: self class) 
-		ifTrue: [^self class with: value + anAdder integerValue] 
-		ifFalse: [|newNumerator |
-			newNumerator := (self*anAdder denominator)+anAdder numerator.
-			^ newNumerator / anAdder denominator
-			].
+
+	^anAdder sumarConEntero: self.
 ! !
 
 !Entero methodsFor: 'arithmetic operations' stamp: 'LH 9/27/2020 13:11:10'!
@@ -428,6 +423,12 @@ fibonacci
 greatestCommonDivisorWith: anEntero 
 	
 	^self class with: (value gcd: anEntero integerValue)! !
+
+!Entero methodsFor: 'arithmetic operations' stamp: 'IO 9/28/2020 21:13:48'!
+sumarConEntero: unEntero
+
+	^self class with: value + unEntero integerValue
+! !
 
 
 !Entero methodsFor: 'comparing' stamp: 'HernanWilkinson 5/7/2016 21:01'!
@@ -556,6 +557,12 @@ Numero subclass: #Fraccion
 		ifFalse: [^ numerator / (denominator*aDivisor) ]
 	
 	! !
+
+!Fraccion methodsFor: 'arithmetic operations' stamp: 'IO 9/28/2020 21:16:00'!
+sumarConEntero: unEntero
+
+	^((unEntero * (self denominator)) + self numerator) / (self denominator).
+! !
 
 
 !Fraccion methodsFor: 'comparing' stamp: 'HernanWilkinson 5/7/2016 20:42'!
