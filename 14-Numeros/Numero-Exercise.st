@@ -1,4 +1,4 @@
-!classDefinition: #NumeroTest category: #'Numero-Exercise'!
+!classDefinition: #NumeroTest category: 'Numero-Exercise'!
 TestCase subclass: #NumeroTest
 	instanceVariableNames: 'zero one two four oneFifth oneHalf five twoFifth twoTwentyfifth fiveHalfs three eight negativeOne negativeTwo'
 	classVariableNames: ''
@@ -287,7 +287,7 @@ setUp
 	! !
 
 
-!classDefinition: #Numero category: #'Numero-Exercise'!
+!classDefinition: #Numero category: 'Numero-Exercise'!
 Object subclass: #Numero
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -364,7 +364,7 @@ isZero
 
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
-!classDefinition: 'Numero class' category: #'Numero-Exercise'!
+!classDefinition: 'Numero class' category: 'Numero-Exercise'!
 Numero class
 	instanceVariableNames: ''!
 
@@ -379,12 +379,61 @@ invalidNumberTypeErrorDescription
 	^ 'Tipo de número inválido!!'! !
 
 
-!classDefinition: #Entero category: #'Numero-Exercise'!
+!classDefinition: #Entero category: 'Numero-Exercise'!
 Numero subclass: #Entero
 	instanceVariableNames: 'value'
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'Numero-Exercise'!
+
+!Entero methodsFor: 'operaciones con contexto' stamp: 'LH 9/29/2020 14:26:08'!
+dividirConEntero: unEntero
+	^Fraccion with:unEntero over:self.
+! !
+
+!Entero methodsFor: 'operaciones con contexto' stamp: 'LH 9/29/2020 14:27:06'!
+dividirConFraccion: unaFraccion
+	^Fraccion with: unaFraccion numerator over: self*unaFraccion denominator.
+! !
+
+!Entero methodsFor: 'operaciones con contexto' stamp: 'IO 9/28/2020 21:45:10'!
+multiplicarConEntero: unEntero 
+
+	^self class with: value * unEntero integerValue.
+
+	! !
+
+!Entero methodsFor: 'operaciones con contexto' stamp: 'IO 9/28/2020 21:50:24'!
+multiplicarConFraccion: unaFraccion
+
+	^(unaFraccion numerator * self)/ unaFraccion denominator.
+! !
+
+!Entero methodsFor: 'operaciones con contexto' stamp: 'IO 9/28/2020 22:03:03'!
+restarConEntero: unEntero
+	
+	^self class with: unEntero integerValue - value.
+! !
+
+!Entero methodsFor: 'operaciones con contexto' stamp: 'LH 9/29/2020 14:18:16'!
+restarConFraccion: unaFraccion	|newNumerator|
+
+	newNumerator  := unaFraccion numerator - (self* unaFraccion denominator).
+				
+	^ newNumerator / unaFraccion denominator 
+! !
+
+!Entero methodsFor: 'operaciones con contexto' stamp: 'IO 9/28/2020 21:13:48'!
+sumarConEntero: unEntero
+
+	^self class with: value + unEntero integerValue
+! !
+
+!Entero methodsFor: 'operaciones con contexto' stamp: 'IO 9/28/2020 21:28:24'!
+sumarConFraccion: unaFraccion
+
+	^(unaFraccion numerator  + (unaFraccion denominator * self)) / (unaFraccion denominator).! !
+
 
 !Entero methodsFor: 'arithmetic operations' stamp: 'IO 9/28/2020 21:43:11'!
 * aMultiplier 
@@ -404,13 +453,9 @@ Numero subclass: #Entero
 	^aSubtrahend restarConEntero: self.
 ! !
 
-!Entero methodsFor: 'arithmetic operations' stamp: 'LH 9/27/2020 12:53:26'!
+!Entero methodsFor: 'arithmetic operations' stamp: 'LH 9/29/2020 14:32:35'!
 / aDivisor 
-	
-	^(aDivisor isKindOf: self class)
-		ifTrue: [^Fraccion with: self over: aDivisor]
-		ifFalse: [^ Fraccion with: self * aDivisor denominator 
-					      over: aDivisor numerator]! !
+	^aDivisor dividirConEntero: self.! !
 
 !Entero methodsFor: 'arithmetic operations' stamp: 'HernanWilkinson 5/7/2016 21:55'!
 // aDivisor 
@@ -435,36 +480,6 @@ fibonacci
 greatestCommonDivisorWith: anEntero 
 	
 	^self class with: (value gcd: anEntero integerValue)! !
-
-!Entero methodsFor: 'arithmetic operations' stamp: 'IO 9/28/2020 21:45:10'!
-multiplicarConEntero: unEntero 
-
-	^self class with: value * unEntero integerValue.
-
-	! !
-
-!Entero methodsFor: 'arithmetic operations' stamp: 'IO 9/28/2020 21:50:24'!
-multiplicarConFraccion: unaFraccion
-
-	^(unaFraccion numerator * self)/ unaFraccion denominator.
-! !
-
-!Entero methodsFor: 'arithmetic operations' stamp: 'IO 9/28/2020 22:03:03'!
-restarConEntero: unEntero
-	
-	^self class with: unEntero integerValue - value.
-! !
-
-!Entero methodsFor: 'arithmetic operations' stamp: 'IO 9/28/2020 21:13:48'!
-sumarConEntero: unEntero
-
-	^self class with: value + unEntero integerValue
-! !
-
-!Entero methodsFor: 'arithmetic operations' stamp: 'IO 9/28/2020 21:28:24'!
-sumarConFraccion: unaFraccion
-
-	^(unaFraccion numerator  + (unaFraccion denominator * self)) / (unaFraccion denominator).! !
 
 
 !Entero methodsFor: 'comparing' stamp: 'HernanWilkinson 5/7/2016 21:01'!
@@ -515,7 +530,7 @@ isZero
 
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
-!classDefinition: 'Entero class' category: #'Numero-Exercise'!
+!classDefinition: 'Entero class' category: 'Numero-Exercise'!
 Entero class
 	instanceVariableNames: ''!
 
@@ -532,12 +547,64 @@ with: aValue
 	^self new initalizeWith: aValue! !
 
 
-!classDefinition: #Fraccion category: #'Numero-Exercise'!
+!classDefinition: #Fraccion category: 'Numero-Exercise'!
 Numero subclass: #Fraccion
 	instanceVariableNames: 'numerator denominator'
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'Numero-Exercise'!
+
+!Fraccion methodsFor: 'operaciones con contexto' stamp: 'LH 9/29/2020 14:29:02'!
+dividirConEntero: unEntero
+
+	^ (self denominator * unEntero) / self numerator.
+! !
+
+!Fraccion methodsFor: 'operaciones con contexto' stamp: 'LH 9/29/2020 14:31:06'!
+dividirConFraccion: unaFraccion
+
+	^ (unaFraccion numerator * denominator) / (unaFraccion denominator * numerator).
+! !
+
+!Fraccion methodsFor: 'operaciones con contexto' stamp: 'IO 9/28/2020 21:45:17'!
+multiplicarConEntero: unEntero
+
+	^ (self numerator * unEntero) / self denominator.
+! !
+
+!Fraccion methodsFor: 'operaciones con contexto' stamp: 'IO 9/28/2020 21:49:44'!
+multiplicarConFraccion: unaFraccion 
+	
+	^(numerator * unaFraccion numerator) / (denominator * unaFraccion denominator).
+! !
+
+!Fraccion methodsFor: 'operaciones con contexto' stamp: 'IO 9/28/2020 21:58:22'!
+restarConEntero: unEntero
+
+	^((unEntero*self denominator) - self numerator) / self denominator.
+! !
+
+!Fraccion methodsFor: 'operaciones con contexto' stamp: 'LH 9/29/2020 14:12:13'!
+restarConFraccion: unaFraccion
+	|newNumerator newDenominator|
+	
+	newNumerator := (denominator * unaFraccion numerator) - (numerator * unaFraccion denominator) .
+	newDenominator := denominator * unaFraccion denominator.
+	
+	^newNumerator / newDenominator! !
+
+!Fraccion methodsFor: 'operaciones con contexto' stamp: 'IO 9/28/2020 21:16:00'!
+sumarConEntero: unEntero
+
+	^((unEntero * (self denominator)) + self numerator) / (self denominator).
+! !
+
+!Fraccion methodsFor: 'operaciones con contexto' stamp: 'IO 9/28/2020 21:35:28'!
+sumarConFraccion: unaFraccion
+
+	^(self numerator * unaFraccion denominator) + (self denominator * unaFraccion numerator) / (self denominator * unaFraccion denominator).
+! !
+
 
 !Fraccion methodsFor: 'arithmetic operations' stamp: 'IO 9/28/2020 21:50:40'!
 * aMultiplier 
@@ -552,64 +619,17 @@ Numero subclass: #Fraccion
 	^anAdder sumarConFraccion: self.
 ! !
 
-!Fraccion methodsFor: 'arithmetic operations' stamp: 'LH 9/27/2020 13:15:06'!
+!Fraccion methodsFor: 'arithmetic operations' stamp: 'LH 9/29/2020 14:34:00'!
 - aSubtrahend 
-	| newNumerator newDenominator |
-	
-	^(aSubtrahend isKindOf: self class)
-		ifTrue: [
-			newNumerator := (numerator * aSubtrahend denominator) - (denominator * aSubtrahend numerator).
-			newDenominator := denominator * aSubtrahend denominator.
-	
-			^newNumerator / newDenominator
-			]
-		ifFalse: [
-			newNumerator  := numerator - (aSubtrahend*denominator).
-				
-			^ newNumerator / denominator 
-			]
-	
-	 
+	^aSubtrahend restarConFraccion: self.
+
 ! !
 
-!Fraccion methodsFor: 'arithmetic operations' stamp: 'LH 9/27/2020 12:57:16'!
+!Fraccion methodsFor: 'arithmetic operations' stamp: 'LH 9/29/2020 14:32:05'!
 / aDivisor 
-	
-	^(aDivisor isKindOf: self class) 
-		ifTrue: [^(numerator * aDivisor denominator) / (denominator * aDivisor numerator)]
-		ifFalse: [^ numerator / (denominator*aDivisor) ]
+	^ aDivisor dividirConFraccion: self.
 	
 	! !
-
-!Fraccion methodsFor: 'arithmetic operations' stamp: 'IO 9/28/2020 21:45:17'!
-multiplicarConEntero: unEntero
-
-	^ (self numerator * unEntero) / self denominator.
-! !
-
-!Fraccion methodsFor: 'arithmetic operations' stamp: 'IO 9/28/2020 21:49:44'!
-multiplicarConFraccion: unaFraccion 
-	
-	^(numerator * unaFraccion numerator) / (denominator * unaFraccion denominator).
-! !
-
-!Fraccion methodsFor: 'arithmetic operations' stamp: 'IO 9/28/2020 21:58:22'!
-restarConEntero: unEntero
-
-	^((unEntero*self denominator) - self numerator) / self denominator.
-! !
-
-!Fraccion methodsFor: 'arithmetic operations' stamp: 'IO 9/28/2020 21:16:00'!
-sumarConEntero: unEntero
-
-	^((unEntero * (self denominator)) + self numerator) / (self denominator).
-! !
-
-!Fraccion methodsFor: 'arithmetic operations' stamp: 'IO 9/28/2020 21:35:28'!
-sumarConFraccion: unaFraccion
-
-	^(self numerator * unaFraccion denominator) + (self denominator * unaFraccion numerator) / (self denominator * unaFraccion denominator).
-! !
 
 
 !Fraccion methodsFor: 'comparing' stamp: 'HernanWilkinson 5/7/2016 20:42'!
@@ -671,7 +691,7 @@ printOn: aStream
 
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
-!classDefinition: 'Fraccion class' category: #'Numero-Exercise'!
+!classDefinition: 'Fraccion class' category: 'Numero-Exercise'!
 Fraccion class
 	instanceVariableNames: ''!
 
