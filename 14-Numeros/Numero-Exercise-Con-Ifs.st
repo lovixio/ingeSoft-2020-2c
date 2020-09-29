@@ -319,6 +319,12 @@ invalidNumberType
 
 	self error: self class invalidNumberTypeErrorDescription! !
 
+!Numero methodsFor: 'arithmetic operations' stamp: 'IO 9/28/2020 21:44:34'!
+multiplicarConEntero: unEntero
+
+	self subclassResponsibility.
+! !
+
 !Numero methodsFor: 'arithmetic operations' stamp: 'NR 9/23/2018 23:37:13'!
 negated
 	
@@ -374,15 +380,11 @@ Numero subclass: #Entero
 	poolDictionaries: ''
 	category: 'Numero-Exercise'!
 
-!Entero methodsFor: 'arithmetic operations' stamp: 'LH 9/27/2020 12:44:50'!
+!Entero methodsFor: 'arithmetic operations' stamp: 'IO 9/28/2020 21:43:11'!
 * aMultiplier 
 	
-	^(aMultiplier isKindOf: self class)
-			ifTrue: [^self class with: value * aMultiplier integerValue]
-			ifFalse: [^ (aMultiplier numerator * self) / aMultiplier denominator]
-	
-	
-	! !
+	^aMultiplier multiplicarConEntero: self.
+! !
 
 !Entero methodsFor: 'arithmetic operations' stamp: 'IO 9/28/2020 21:15:12'!
 + anAdder 
@@ -433,6 +435,13 @@ fibonacci
 greatestCommonDivisorWith: anEntero 
 	
 	^self class with: (value gcd: anEntero integerValue)! !
+
+!Entero methodsFor: 'arithmetic operations' stamp: 'IO 9/28/2020 21:45:10'!
+multiplicarConEntero: unEntero 
+
+	^self class with: value * unEntero integerValue.
+
+	! !
 
 !Entero methodsFor: 'arithmetic operations' stamp: 'IO 9/28/2020 21:13:48'!
 sumarConEntero: unEntero
@@ -560,6 +569,12 @@ Numero subclass: #Fraccion
 		ifFalse: [^ numerator / (denominator*aDivisor) ]
 	
 	! !
+
+!Fraccion methodsFor: 'arithmetic operations' stamp: 'IO 9/28/2020 21:45:17'!
+multiplicarConEntero: unEntero
+
+	^ (self numerator * unEntero) / self denominator.
+! !
 
 !Fraccion methodsFor: 'arithmetic operations' stamp: 'IO 9/28/2020 21:16:00'!
 sumarConEntero: unEntero
