@@ -324,6 +324,16 @@ negated
 	
 	^self * (Entero with: -1)! !
 
+!Numero methodsFor: 'arithmetic operations' stamp: 'IO 9/28/2020 21:36:36'!
+sumarConEntero: unEntero
+
+	self subclassResponsibility ! !
+
+!Numero methodsFor: 'arithmetic operations' stamp: 'IO 9/28/2020 21:36:43'!
+sumarConFraccion: unaFraccion
+
+	self subclassResponsibility ! !
+
 
 !Numero methodsFor: 'testing' stamp: 'NR 9/23/2018 23:36:49'!
 isNegative
@@ -430,6 +440,11 @@ sumarConEntero: unEntero
 	^self class with: value + unEntero integerValue
 ! !
 
+!Entero methodsFor: 'arithmetic operations' stamp: 'IO 9/28/2020 21:28:24'!
+sumarConFraccion: unaFraccion
+
+	^(unaFraccion numerator  + (unaFraccion denominator * self)) / (unaFraccion denominator).! !
+
 
 !Entero methodsFor: 'comparing' stamp: 'HernanWilkinson 5/7/2016 21:01'!
 = anObject
@@ -511,23 +526,11 @@ Numero subclass: #Fraccion
 		ifFalse:[^(numerator * aMultiplier)/ denominator ]
 ! !
 
-!Fraccion methodsFor: 'arithmetic operations' stamp: 'LH 9/27/2020 12:36:53'!
-+ anAdder 
-	| newNumerator newDenominator |
-	
-	^(anAdder isKindOf: self class)
-			ifTrue: [
-					newNumerator := (numerator * anAdder denominator) + (denominator * anAdder numerator).
-					newDenominator := denominator * anAdder denominator.
-	
-					^newNumerator / newDenominator 
-			]
-			ifFalse: [
-					newNumerator := numerator  + (denominator * anAdder).
-					newDenominator := denominator.
-	
-					^newNumerator / newDenominator
-			] .! !
+!Fraccion methodsFor: 'arithmetic operations' stamp: 'IO 9/28/2020 21:23:47'!
++ anAdder
+
+	^anAdder sumarConFraccion: self.
+! !
 
 !Fraccion methodsFor: 'arithmetic operations' stamp: 'LH 9/27/2020 13:15:06'!
 - aSubtrahend 
@@ -562,6 +565,12 @@ Numero subclass: #Fraccion
 sumarConEntero: unEntero
 
 	^((unEntero * (self denominator)) + self numerator) / (self denominator).
+! !
+
+!Fraccion methodsFor: 'arithmetic operations' stamp: 'IO 9/28/2020 21:35:28'!
+sumarConFraccion: unaFraccion
+
+	^(self numerator * unaFraccion denominator) + (self denominator * unaFraccion numerator) / (self denominator * unaFraccion denominator).
 ! !
 
 
