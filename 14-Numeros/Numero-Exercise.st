@@ -398,17 +398,11 @@ Numero subclass: #Entero
 	^anAdder sumarConEntero: self.
 ! !
 
-!Entero methodsFor: 'arithmetic operations' stamp: 'LH 9/27/2020 13:11:10'!
+!Entero methodsFor: 'arithmetic operations' stamp: 'IO 9/28/2020 21:58:45'!
 - aSubtrahend 
 	
-	^(aSubtrahend isKindOf: self class) 
-		ifTrue: [^ self class with: value - aSubtrahend integerValue]
-		ifFalse: [|newNumerator|
-			newNumerator := (self*aSubtrahend denominator) - aSubtrahend numerator.
-			^ newNumerator / aSubtrahend denominator
-			]
-	
-	! !
+	^aSubtrahend restarConEntero: self.
+! !
 
 !Entero methodsFor: 'arithmetic operations' stamp: 'LH 9/27/2020 12:53:26'!
 / aDivisor 
@@ -453,6 +447,12 @@ multiplicarConEntero: unEntero
 multiplicarConFraccion: unaFraccion
 
 	^(unaFraccion numerator * self)/ unaFraccion denominator.
+! !
+
+!Entero methodsFor: 'arithmetic operations' stamp: 'IO 9/28/2020 22:03:03'!
+restarConEntero: unEntero
+	
+	^self class with: unEntero integerValue - value.
 ! !
 
 !Entero methodsFor: 'arithmetic operations' stamp: 'IO 9/28/2020 21:13:48'!
@@ -591,6 +591,12 @@ multiplicarConEntero: unEntero
 multiplicarConFraccion: unaFraccion 
 	
 	^(numerator * unaFraccion numerator) / (denominator * unaFraccion denominator).
+! !
+
+!Fraccion methodsFor: 'arithmetic operations' stamp: 'IO 9/28/2020 21:58:22'!
+restarConEntero: unEntero
+
+	^((unEntero*self denominator) - self numerator) / self denominator.
 ! !
 
 !Fraccion methodsFor: 'arithmetic operations' stamp: 'IO 9/28/2020 21:16:00'!
