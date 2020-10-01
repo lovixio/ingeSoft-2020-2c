@@ -434,16 +434,16 @@ dividirConFraccion: unaFraccion
 	^Fraccion with: unaFraccion numerator over: self*unaFraccion denominator.
 ! !
 
-!Entero methodsFor: 'arithmetic operations - adapted sublcass' stamp: 'IO 10/1/2020 16:06:31'!
+!Entero methodsFor: 'arithmetic operations - adapted sublcass' stamp: 'IO 10/1/2020 16:16:00'!
 multiplicarConEntero: unEntero
-
-	"Regla de conmutatividad"
 
 	^self class with: value * unEntero integerValue.
 ! !
 
-!Entero methodsFor: 'arithmetic operations - adapted sublcass' stamp: 'IO 10/1/2020 15:59:12'!
+!Entero methodsFor: 'arithmetic operations - adapted sublcass' stamp: 'IO 10/1/2020 16:14:34'!
 multiplicarConFraccion: unaFraccion
+
+	"Regla de conmutatividad"
 
 	^unaFraccion multiplicarConEntero: self.
 
