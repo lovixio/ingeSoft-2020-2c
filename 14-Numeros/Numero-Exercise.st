@@ -428,22 +428,25 @@ dividirConEntero: unEntero
 	^Fraccion with:unEntero over:self.
 ! !
 
-!Entero methodsFor: 'arithmetic operations - adapted sublcass' stamp: 'IO 10/1/2020 15:25:42'!
+!Entero methodsFor: 'arithmetic operations - adapted sublcass' stamp: 'IO 10/1/2020 16:09:52'!
 dividirConFraccion: unaFraccion
 
 	^Fraccion with: unaFraccion numerator over: self*unaFraccion denominator.
 ! !
 
-!Entero methodsFor: 'arithmetic operations - adapted sublcass' stamp: 'IO 10/1/2020 15:25:56'!
+!Entero methodsFor: 'arithmetic operations - adapted sublcass' stamp: 'IO 10/1/2020 16:06:31'!
 multiplicarConEntero: unEntero
+
+	"Regla de conmutatividad"
 
 	^self class with: value * unEntero integerValue.
 ! !
 
-!Entero methodsFor: 'arithmetic operations - adapted sublcass' stamp: 'IO 9/28/2020 21:50:24'!
+!Entero methodsFor: 'arithmetic operations - adapted sublcass' stamp: 'IO 10/1/2020 15:59:12'!
 multiplicarConFraccion: unaFraccion
 
-	^(unaFraccion numerator * self)/ unaFraccion denominator.
+	^unaFraccion multiplicarConEntero: self.
+
 ! !
 
 !Entero methodsFor: 'arithmetic operations - adapted sublcass' stamp: 'IO 9/28/2020 22:03:03'!
@@ -452,24 +455,27 @@ restarConEntero: unEntero
 	^self class with: unEntero integerValue - value.
 ! !
 
-!Entero methodsFor: 'arithmetic operations - adapted sublcass' stamp: 'LH 9/29/2020 14:18:16'!
-restarConFraccion: unaFraccion	|newNumerator|
+!Entero methodsFor: 'arithmetic operations - adapted sublcass' stamp: 'IO 10/1/2020 15:58:46'!
+restarConFraccion: unaFraccion
+	| newNumerator |
 
 	newNumerator  := unaFraccion numerator - (self* unaFraccion denominator).
 				
 	^ newNumerator / unaFraccion denominator 
 ! !
 
-!Entero methodsFor: 'arithmetic operations - adapted sublcass' stamp: 'IO 9/28/2020 21:13:48'!
+!Entero methodsFor: 'arithmetic operations - adapted sublcass' stamp: 'IO 10/1/2020 16:06:40'!
 sumarConEntero: unEntero
+	"Regla de conmutatividad"
 
 	^self class with: value + unEntero integerValue
 ! !
 
-!Entero methodsFor: 'arithmetic operations - adapted sublcass' stamp: 'IO 9/28/2020 21:28:24'!
+!Entero methodsFor: 'arithmetic operations - adapted sublcass' stamp: 'IO 10/1/2020 15:57:59'!
 sumarConFraccion: unaFraccion
 
-	^(unaFraccion numerator  + (unaFraccion denominator * self)) / (unaFraccion denominator).! !
+	^unaFraccion sumarConEntero: self.
+! !
 
 
 !Entero methodsFor: 'arithmetic operations' stamp: 'IO 10/1/2020 15:26:59'!
@@ -603,10 +609,11 @@ Numero subclass: #Fraccion
 	poolDictionaries: ''
 	category: 'Numero-Exercise'!
 
-!Fraccion methodsFor: 'arithmetic operations - adapted subclass' stamp: 'IO 10/1/2020 15:31:03'!
+!Fraccion methodsFor: 'arithmetic operations - adapted subclass' stamp: 'IO 10/1/2020 16:02:29'!
 dividirConEntero: unEntero
+	
+	^(self denominator * unEntero) / self numerator.
 
-	^ (self denominator * unEntero) / self numerator.
 ! !
 
 !Fraccion methodsFor: 'arithmetic operations - adapted subclass' stamp: 'IO 10/1/2020 15:31:10'!
