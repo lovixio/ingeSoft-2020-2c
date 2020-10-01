@@ -1,4 +1,4 @@
-!classDefinition: #NumeroTest category: 'Numero-Exercise'!
+!classDefinition: #NumeroTest category: #'Numero-Exercise'!
 TestCase subclass: #NumeroTest
 	instanceVariableNames: 'zero one two four oneFifth oneHalf five twoFifth twoTwentyfifth fiveHalfs three eight negativeOne negativeTwo'
 	classVariableNames: ''
@@ -287,84 +287,120 @@ setUp
 	! !
 
 
-!classDefinition: #Numero category: 'Numero-Exercise'!
+!classDefinition: #Numero category: #'Numero-Exercise'!
 Object subclass: #Numero
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'Numero-Exercise'!
 
-!Numero methodsFor: 'arithmetic operations' stamp: 'HernanWilkinson 5/7/2016 22:48'!
+!Numero methodsFor: 'arithmetic operations' stamp: 'IO 10/1/2020 15:16:43'!
 * aMultiplier
 
-	self subclassResponsibility ! !
+	self subclassResponsibility.
+! !
 
-!Numero methodsFor: 'arithmetic operations' stamp: 'HernanWilkinson 5/7/2016 22:49'!
+!Numero methodsFor: 'arithmetic operations' stamp: 'IO 10/1/2020 15:16:51'!
 + anAdder
 
-	self subclassResponsibility ! !
+	self subclassResponsibility.
+! !
 
-!Numero methodsFor: 'arithmetic operations' stamp: 'NR 9/23/2018 22:21:28'!
+!Numero methodsFor: 'arithmetic operations' stamp: 'IO 10/1/2020 15:17:04'!
 - aSubtrahend
 
-	self subclassResponsibility ! !
+	self subclassResponsibility.
+! !
 
-!Numero methodsFor: 'arithmetic operations' stamp: 'HernanWilkinson 5/7/2016 22:49'!
+!Numero methodsFor: 'arithmetic operations' stamp: 'IO 10/1/2020 15:17:18'!
 / aDivisor
 
-	self subclassResponsibility ! !
+	self subclassResponsibility.
+! !
 
-!Numero methodsFor: 'arithmetic operations' stamp: 'HernanWilkinson 5/7/2016 22:48'!
+!Numero methodsFor: 'arithmetic operations' stamp: 'IO 10/1/2020 15:17:27'!
 invalidNumberType
 
-	self error: self class invalidNumberTypeErrorDescription! !
+	self error: self class invalidNumberTypeErrorDescription.
+! !
 
-!Numero methodsFor: 'arithmetic operations' stamp: 'IO 9/28/2020 21:44:34'!
+!Numero methodsFor: 'arithmetic operations' stamp: 'IO 10/1/2020 15:17:52'!
+negated
+
+	^self * (Entero with: -1).
+! !
+
+
+!Numero methodsFor: 'testing' stamp: 'IO 10/1/2020 15:18:26'!
+isNegative
+
+	self subclassResponsibility.
+! !
+
+!Numero methodsFor: 'testing' stamp: 'IO 10/1/2020 15:18:38'!
+isOne
+
+	self subclassResponsibility.
+! !
+
+!Numero methodsFor: 'testing' stamp: 'IO 10/1/2020 15:19:27'!
+isZero
+
+	self subclassResponsibility.
+! !
+
+
+!Numero methodsFor: 'arithmetic operations - adapted subclass' stamp: 'IO 10/1/2020 15:26:19'!
+dividirConEntero: unEntero
+
+	self subclassResponsibility.
+! !
+
+!Numero methodsFor: 'arithmetic operations - adapted subclass' stamp: 'IO 10/1/2020 15:26:32'!
+dividirConFraccion: unaFraccion
+
+	self subclassResponsibility.
+! !
+
+!Numero methodsFor: 'arithmetic operations - adapted subclass' stamp: 'IO 10/1/2020 15:26:16'!
 multiplicarConEntero: unEntero
 
 	self subclassResponsibility.
 ! !
 
-!Numero methodsFor: 'arithmetic operations' stamp: 'IO 9/28/2020 21:54:37'!
+!Numero methodsFor: 'arithmetic operations - adapted subclass' stamp: 'IO 10/1/2020 15:26:35'!
 multiplicarConFraccion: unaFraccion
 
 	self subclassResponsibility.
 ! !
 
-!Numero methodsFor: 'arithmetic operations' stamp: 'NR 9/23/2018 23:37:13'!
-negated
-	
-	^self * (Entero with: -1)! !
+!Numero methodsFor: 'arithmetic operations - adapted subclass' stamp: 'IO 10/1/2020 15:26:11'!
+restarConEntero: unEntero
 
-!Numero methodsFor: 'arithmetic operations' stamp: 'IO 9/28/2020 21:36:36'!
+	self subclassResponsibility.
+! !
+
+!Numero methodsFor: 'arithmetic operations - adapted subclass' stamp: 'IO 10/1/2020 15:26:38'!
+restarConFraccion: unaFraccion
+
+	self subclassResponsibility.
+! !
+
+!Numero methodsFor: 'arithmetic operations - adapted subclass' stamp: 'IO 10/1/2020 15:18:06'!
 sumarConEntero: unEntero
 
-	self subclassResponsibility ! !
+	self subclassResponsibility.
+! !
 
-!Numero methodsFor: 'arithmetic operations' stamp: 'IO 9/28/2020 21:36:43'!
+!Numero methodsFor: 'arithmetic operations - adapted subclass' stamp: 'IO 10/1/2020 15:18:14'!
 sumarConFraccion: unaFraccion
 
-	self subclassResponsibility ! !
-
-
-!Numero methodsFor: 'testing' stamp: 'NR 9/23/2018 23:36:49'!
-isNegative
-
-	self subclassResponsibility ! !
-
-!Numero methodsFor: 'testing' stamp: 'HernanWilkinson 5/7/2016 22:49'!
-isOne
-
-	self subclassResponsibility ! !
-
-!Numero methodsFor: 'testing' stamp: 'HernanWilkinson 5/7/2016 22:49'!
-isZero
-
-	self subclassResponsibility ! !
+	self subclassResponsibility.
+! !
 
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
-!classDefinition: 'Numero class' category: 'Numero-Exercise'!
+!classDefinition: 'Numero class' category: #'Numero-Exercise'!
 Numero class
 	instanceVariableNames: ''!
 
@@ -379,43 +415,44 @@ invalidNumberTypeErrorDescription
 	^ 'Tipo de número inválido!!'! !
 
 
-!classDefinition: #Entero category: 'Numero-Exercise'!
+!classDefinition: #Entero category: #'Numero-Exercise'!
 Numero subclass: #Entero
 	instanceVariableNames: 'value'
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'Numero-Exercise'!
 
-!Entero methodsFor: 'operaciones con contexto' stamp: 'LH 9/29/2020 14:26:08'!
+!Entero methodsFor: 'arithmetic operations - adapted sublcass' stamp: 'IO 10/1/2020 15:25:31'!
 dividirConEntero: unEntero
+
 	^Fraccion with:unEntero over:self.
 ! !
 
-!Entero methodsFor: 'operaciones con contexto' stamp: 'LH 9/29/2020 14:27:06'!
+!Entero methodsFor: 'arithmetic operations - adapted sublcass' stamp: 'IO 10/1/2020 15:25:42'!
 dividirConFraccion: unaFraccion
+
 	^Fraccion with: unaFraccion numerator over: self*unaFraccion denominator.
 ! !
 
-!Entero methodsFor: 'operaciones con contexto' stamp: 'IO 9/28/2020 21:45:10'!
-multiplicarConEntero: unEntero 
+!Entero methodsFor: 'arithmetic operations - adapted sublcass' stamp: 'IO 10/1/2020 15:25:56'!
+multiplicarConEntero: unEntero
 
 	^self class with: value * unEntero integerValue.
+! !
 
-	! !
-
-!Entero methodsFor: 'operaciones con contexto' stamp: 'IO 9/28/2020 21:50:24'!
+!Entero methodsFor: 'arithmetic operations - adapted sublcass' stamp: 'IO 9/28/2020 21:50:24'!
 multiplicarConFraccion: unaFraccion
 
 	^(unaFraccion numerator * self)/ unaFraccion denominator.
 ! !
 
-!Entero methodsFor: 'operaciones con contexto' stamp: 'IO 9/28/2020 22:03:03'!
+!Entero methodsFor: 'arithmetic operations - adapted sublcass' stamp: 'IO 9/28/2020 22:03:03'!
 restarConEntero: unEntero
 	
 	^self class with: unEntero integerValue - value.
 ! !
 
-!Entero methodsFor: 'operaciones con contexto' stamp: 'LH 9/29/2020 14:18:16'!
+!Entero methodsFor: 'arithmetic operations - adapted sublcass' stamp: 'LH 9/29/2020 14:18:16'!
 restarConFraccion: unaFraccion	|newNumerator|
 
 	newNumerator  := unaFraccion numerator - (self* unaFraccion denominator).
@@ -423,114 +460,126 @@ restarConFraccion: unaFraccion	|newNumerator|
 	^ newNumerator / unaFraccion denominator 
 ! !
 
-!Entero methodsFor: 'operaciones con contexto' stamp: 'IO 9/28/2020 21:13:48'!
+!Entero methodsFor: 'arithmetic operations - adapted sublcass' stamp: 'IO 9/28/2020 21:13:48'!
 sumarConEntero: unEntero
 
 	^self class with: value + unEntero integerValue
 ! !
 
-!Entero methodsFor: 'operaciones con contexto' stamp: 'IO 9/28/2020 21:28:24'!
+!Entero methodsFor: 'arithmetic operations - adapted sublcass' stamp: 'IO 9/28/2020 21:28:24'!
 sumarConFraccion: unaFraccion
 
 	^(unaFraccion numerator  + (unaFraccion denominator * self)) / (unaFraccion denominator).! !
 
 
-!Entero methodsFor: 'arithmetic operations' stamp: 'IO 9/28/2020 21:43:11'!
-* aMultiplier 
-	
+!Entero methodsFor: 'arithmetic operations' stamp: 'IO 10/1/2020 15:26:59'!
+* aMultiplier
+
 	^aMultiplier multiplicarConEntero: self.
 ! !
 
-!Entero methodsFor: 'arithmetic operations' stamp: 'IO 9/28/2020 21:15:12'!
-+ anAdder 
+!Entero methodsFor: 'arithmetic operations' stamp: 'IO 10/1/2020 15:27:05'!
++ anAdder
 
 	^anAdder sumarConEntero: self.
 ! !
 
-!Entero methodsFor: 'arithmetic operations' stamp: 'IO 9/28/2020 21:58:45'!
-- aSubtrahend 
-	
+!Entero methodsFor: 'arithmetic operations' stamp: 'IO 10/1/2020 15:27:14'!
+- aSubtrahend
+
 	^aSubtrahend restarConEntero: self.
 ! !
 
-!Entero methodsFor: 'arithmetic operations' stamp: 'LH 9/29/2020 14:32:35'!
-/ aDivisor 
-	^aDivisor dividirConEntero: self.! !
+!Entero methodsFor: 'arithmetic operations' stamp: 'IO 10/1/2020 15:27:21'!
+/ aDivisor
 
-!Entero methodsFor: 'arithmetic operations' stamp: 'HernanWilkinson 5/7/2016 21:55'!
-// aDivisor 
-	
-	^self class with: value // aDivisor integerValue! !
+	^aDivisor dividirConEntero: self.
+! !
 
-!Entero methodsFor: 'arithmetic operations' stamp: 'HAW 9/24/2018 08:47:50'!
+!Entero methodsFor: 'arithmetic operations' stamp: 'IO 10/1/2020 15:27:33'!
+// aDivisor
+
+	^self class with: value // aDivisor integerValue.
+! !
+
+!Entero methodsFor: 'arithmetic operations' stamp: 'IO 10/1/2020 15:28:15'!
 fibonacci
 
 	| one two |
-	
+
 	one := Entero with: 1.
 	two := Entero with: 2.
-	
+
 	self isNegative ifTrue: [self error: Entero negativeFibonacciErrorDescription ].	
 	(self isZero or: [self isOne]) ifTrue: [^one].
-	
-	^ (self - one) fibonacci + (self - two) fibonacci
-		! !
 
-!Entero methodsFor: 'arithmetic operations' stamp: 'HernanWilkinson 5/7/2016 21:00'!
-greatestCommonDivisorWith: anEntero 
-	
-	^self class with: (value gcd: anEntero integerValue)! !
+	^ (self - one) fibonacci + (self - two) fibonacci.
+! !
+
+!Entero methodsFor: 'arithmetic operations' stamp: 'IO 10/1/2020 15:28:40'!
+greatestCommonDivisorWith: anEntero
+
+	^self class with: (value gcd: anEntero integerValue).
+! !
 
 
-!Entero methodsFor: 'comparing' stamp: 'HernanWilkinson 5/7/2016 21:01'!
+!Entero methodsFor: 'comparing' stamp: 'IO 10/1/2020 15:28:55'!
 = anObject
 
-	^(anObject isKindOf: self class) and: [ value = anObject integerValue ]! !
+	^(anObject isKindOf: self class) and: [ value = anObject integerValue ].
+! !
 
-!Entero methodsFor: 'comparing' stamp: 'HernanWilkinson 5/7/2016 20:17'!
+!Entero methodsFor: 'comparing' stamp: 'IO 10/1/2020 15:29:02'!
 hash
 
-	^value hash! !
+	^value hash.
+! !
 
 
-!Entero methodsFor: 'initialization' stamp: 'HernanWilkinson 5/7/2016 20:09'!
-initalizeWith: aValue 
-	
-	value := aValue! !
+!Entero methodsFor: 'initialization' stamp: 'IO 10/1/2020 15:29:09'!
+initalizeWith: aValue
+
+	value := aValue.
+! !
 
 
-!Entero methodsFor: 'value' stamp: 'HernanWilkinson 5/7/2016 21:02'!
+!Entero methodsFor: 'value' stamp: 'IO 10/1/2020 15:29:22'!
 integerValue
 
 	"Usamos integerValue en vez de value para que no haya problemas con el mensaje value implementado en Object - Hernan"
-	
-	^value! !
+
+	^value.
+! !
 
 
-!Entero methodsFor: 'printing' stamp: 'HAW 9/24/2018 08:53:19'!
+!Entero methodsFor: 'printing' stamp: 'IO 10/1/2020 15:29:36'!
 printOn: aStream
 
-	aStream print: value ! !
+	aStream print: value.
+! !
 
 
-!Entero methodsFor: 'testing' stamp: 'NR 9/23/2018 22:17:55'!
+!Entero methodsFor: 'testing' stamp: 'IO 10/1/2020 15:29:44'!
 isNegative
-	
-	^value < 0! !
 
-!Entero methodsFor: 'testing' stamp: 'HernanWilkinson 5/7/2016 20:14'!
+	^value < 0.
+! !
+
+!Entero methodsFor: 'testing' stamp: 'IO 10/1/2020 15:29:49'!
 isOne
-	
-	^value = 1! !
 
-!Entero methodsFor: 'testing' stamp: 'HernanWilkinson 5/7/2016 20:12'!
+	^value = 1.
+! !
+
+!Entero methodsFor: 'testing' stamp: 'IO 10/1/2020 15:29:59'!
 isZero
-	
-	^value = 0! !
+
+	^value = 0.
+! !
 
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
-!classDefinition: 'Entero class' category: 'Numero-Exercise'!
+!classDefinition: 'Entero class' category: #'Numero-Exercise'!
 Entero class
 	instanceVariableNames: ''!
 
@@ -547,151 +596,163 @@ with: aValue
 	^self new initalizeWith: aValue! !
 
 
-!classDefinition: #Fraccion category: 'Numero-Exercise'!
+!classDefinition: #Fraccion category: #'Numero-Exercise'!
 Numero subclass: #Fraccion
 	instanceVariableNames: 'numerator denominator'
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'Numero-Exercise'!
 
-!Fraccion methodsFor: 'operaciones con contexto' stamp: 'LH 9/29/2020 14:29:02'!
+!Fraccion methodsFor: 'arithmetic operations - adapted subclass' stamp: 'IO 10/1/2020 15:31:03'!
 dividirConEntero: unEntero
 
 	^ (self denominator * unEntero) / self numerator.
 ! !
 
-!Fraccion methodsFor: 'operaciones con contexto' stamp: 'LH 9/29/2020 14:31:06'!
+!Fraccion methodsFor: 'arithmetic operations - adapted subclass' stamp: 'IO 10/1/2020 15:31:10'!
 dividirConFraccion: unaFraccion
 
-	^ (unaFraccion numerator * denominator) / (unaFraccion denominator * numerator).
+	^(unaFraccion numerator * denominator) / (unaFraccion denominator * numerator).
+
 ! !
 
-!Fraccion methodsFor: 'operaciones con contexto' stamp: 'IO 9/28/2020 21:45:17'!
+!Fraccion methodsFor: 'arithmetic operations - adapted subclass' stamp: 'IO 10/1/2020 15:31:21'!
 multiplicarConEntero: unEntero
 
 	^ (self numerator * unEntero) / self denominator.
 ! !
 
-!Fraccion methodsFor: 'operaciones con contexto' stamp: 'IO 9/28/2020 21:49:44'!
-multiplicarConFraccion: unaFraccion 
-	
+!Fraccion methodsFor: 'arithmetic operations - adapted subclass' stamp: 'IO 10/1/2020 15:31:40'!
+multiplicarConFraccion: unaFraccion
+
 	^(numerator * unaFraccion numerator) / (denominator * unaFraccion denominator).
 ! !
 
-!Fraccion methodsFor: 'operaciones con contexto' stamp: 'IO 9/28/2020 21:58:22'!
+!Fraccion methodsFor: 'arithmetic operations - adapted subclass' stamp: 'IO 10/1/2020 15:31:48'!
 restarConEntero: unEntero
 
 	^((unEntero*self denominator) - self numerator) / self denominator.
 ! !
 
-!Fraccion methodsFor: 'operaciones con contexto' stamp: 'LH 9/29/2020 14:12:13'!
+!Fraccion methodsFor: 'arithmetic operations - adapted subclass' stamp: 'IO 10/1/2020 15:32:15'!
 restarConFraccion: unaFraccion
-	|newNumerator newDenominator|
-	
-	newNumerator := (denominator * unaFraccion numerator) - (numerator * unaFraccion denominator) .
-	newDenominator := denominator * unaFraccion denominator.
-	
-	^newNumerator / newDenominator! !
 
-!Fraccion methodsFor: 'operaciones con contexto' stamp: 'IO 9/28/2020 21:16:00'!
+	^(denominator * unaFraccion numerator) - (numerator * unaFraccion denominator) / (denominator * unaFraccion denominator).
+! !
+
+!Fraccion methodsFor: 'arithmetic operations - adapted subclass' stamp: 'IO 10/1/2020 15:32:49'!
 sumarConEntero: unEntero
 
 	^((unEntero * (self denominator)) + self numerator) / (self denominator).
 ! !
 
-!Fraccion methodsFor: 'operaciones con contexto' stamp: 'IO 9/28/2020 21:35:28'!
+!Fraccion methodsFor: 'arithmetic operations - adapted subclass' stamp: 'IO 10/1/2020 15:32:56'!
 sumarConFraccion: unaFraccion
 
 	^(self numerator * unaFraccion denominator) + (self denominator * unaFraccion numerator) / (self denominator * unaFraccion denominator).
 ! !
 
 
-!Fraccion methodsFor: 'arithmetic operations' stamp: 'IO 9/28/2020 21:50:40'!
-* aMultiplier 
-	
+!Fraccion methodsFor: 'arithmetic operations' stamp: 'IO 10/1/2020 15:33:10'!
+* aMultiplier
+
 	^aMultiplier multiplicarConFraccion: self.
 
 ! !
 
-!Fraccion methodsFor: 'arithmetic operations' stamp: 'IO 9/28/2020 21:23:47'!
+!Fraccion methodsFor: 'arithmetic operations' stamp: 'IO 10/1/2020 15:33:30'!
 + anAdder
 
 	^anAdder sumarConFraccion: self.
 ! !
 
-!Fraccion methodsFor: 'arithmetic operations' stamp: 'LH 9/29/2020 14:34:00'!
-- aSubtrahend 
-	^aSubtrahend restarConFraccion: self.
+!Fraccion methodsFor: 'arithmetic operations' stamp: 'IO 10/1/2020 15:33:43'!
+- aSubtrahend
 
+	^aSubtrahend restarConFraccion: self.
 ! !
 
-!Fraccion methodsFor: 'arithmetic operations' stamp: 'LH 9/29/2020 14:32:05'!
-/ aDivisor 
+!Fraccion methodsFor: 'arithmetic operations' stamp: 'IO 10/1/2020 15:33:50'!
+/ aDivisor
+
 	^ aDivisor dividirConFraccion: self.
-	
-	! !
+! !
 
 
-!Fraccion methodsFor: 'comparing' stamp: 'HernanWilkinson 5/7/2016 20:42'!
+!Fraccion methodsFor: 'comparing' stamp: 'IO 10/1/2020 15:34:13'!
 = anObject
 
-	^(anObject isKindOf: self class) and: [ (numerator * anObject denominator) = (denominator * anObject numerator) ]! !
+	^(anObject isKindOf: self class) and: [(numerator * anObject denominator) = (denominator * anObject numerator)].
+! !
 
-!Fraccion methodsFor: 'comparing' stamp: 'HernanWilkinson 5/7/2016 20:50'!
+!Fraccion methodsFor: 'comparing' stamp: 'IO 10/1/2020 15:34:25'!
 hash
 
-	^(numerator hash / denominator hash) hash! !
+	^(numerator hash / denominator hash) hash.
+! !
 
 
-!Fraccion methodsFor: 'accessing' stamp: 'HernanWilkinson 5/7/2016 21:56'!
+!Fraccion methodsFor: 'accessing' stamp: 'IO 10/1/2020 15:35:02'!
 denominator
 
-	^ denominator! !
+	^ denominator.
+! !
 
-!Fraccion methodsFor: 'accessing' stamp: 'HernanWilkinson 5/7/2016 21:56'!
+!Fraccion methodsFor: 'accessing' stamp: 'IO 10/1/2020 15:35:16'!
 numerator
 
-	^ numerator! !
+	^numerator.
+! !
 
 
-!Fraccion methodsFor: 'initialization' stamp: 'HernanWilkinson 5/7/2016 22:54'!
+!Fraccion methodsFor: 'initialization' stamp: 'IO 10/1/2020 15:35:47'!
 initializeWith: aNumerator over: aDenominator
 
 	"Estas precondiciones estan por si se comenten errores en la implementacion - Hernan"
+
 	aNumerator isZero ifTrue: [ self error: 'una fraccion no puede ser cero' ].
+
 	aDenominator isOne ifTrue: [ self error: 'una fraccion no puede tener denominador 1 porque sino es un entero' ].
 	
 	numerator := aNumerator.
-	denominator := aDenominator ! !
+	denominator := aDenominator.
+! !
 
 
-!Fraccion methodsFor: 'testing' stamp: 'NR 9/23/2018 23:41:38'!
+!Fraccion methodsFor: 'testing' stamp: 'IO 10/1/2020 15:36:13'!
 isNegative
-	
-	^numerator < 0! !
 
-!Fraccion methodsFor: 'testing' stamp: 'HernanWilkinson 5/7/2016 22:51'!
+	^numerator < 0.
+! !
+
+!Fraccion methodsFor: 'testing' stamp: 'IO 10/1/2020 15:36:20'!
 isOne
-	
-	^false! !
 
-!Fraccion methodsFor: 'testing' stamp: 'HernanWilkinson 5/7/2016 22:51'!
+	^false.
+! !
+
+!Fraccion methodsFor: 'testing' stamp: 'IO 10/1/2020 15:36:26'!
 isZero
-	
-	^false! !
+
+	^false.
+! !
 
 
-!Fraccion methodsFor: 'printing' stamp: 'HAW 9/24/2018 08:54:46'!
+!Fraccion methodsFor: 'printing' stamp: 'IO 10/1/2020 15:37:23'!
 printOn: aStream
 
-	aStream 
+	aStream
+
 		print: numerator;
+
 		nextPut: $/;
-		print: denominator ! !
+
+		print: denominator.
+! !
 
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
-!classDefinition: 'Fraccion class' category: 'Numero-Exercise'!
+!classDefinition: 'Fraccion class' category: #'Numero-Exercise'!
 Fraccion class
 	instanceVariableNames: ''!
 
