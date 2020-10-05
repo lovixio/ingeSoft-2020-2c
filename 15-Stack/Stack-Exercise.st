@@ -164,11 +164,11 @@ isEmpty
 	^elements size isEqualTo: 0.
 ! !
 
-!OOStack methodsFor: 'as yet unclassified' stamp: 'IO 10/5/2020 18:39:22'!
+!OOStack methodsFor: 'as yet unclassified' stamp: 'IO 10/5/2020 18:44:23'!
 pop
 
 	| last |
-	(self isEmpty) ifTrue: [^self error: OOStack stackEmptyErrorDescription ].
+	self validateNotEmpty.
 	last := elements last.
 	elements removeLast.
 	^last.
@@ -180,17 +180,22 @@ push: anElement
 
 	elements add: anElement.! !
 
-!OOStack methodsFor: 'as yet unclassified' stamp: 'IO 10/5/2020 18:34:12'!
+!OOStack methodsFor: 'as yet unclassified' stamp: 'IO 10/5/2020 18:45:03'!
+top
+
+	self validateNotEmpty.
+	^elements last.
+! !
+
+!OOStack methodsFor: 'as yet unclassified' stamp: 'IO 10/5/2020 18:44:49'!
+validateNotEmpty
+	(self isEmpty) ifTrue: [^self error: OOStack stackEmptyErrorDescription ].! !
+
+
+!OOStack methodsFor: 'accessing' stamp: 'IO 10/5/2020 18:34:12'!
 size
 
 	^elements size.
-! !
-
-!OOStack methodsFor: 'as yet unclassified' stamp: 'IO 10/5/2020 18:39:45'!
-top
-
-	(self isEmpty) ifTrue: [^self error: OOStack stackEmptyErrorDescription ].
-	^elements last.
 ! !
 
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
