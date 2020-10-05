@@ -164,12 +164,12 @@ isEmpty
 	^elements size isEqualTo: 0.
 ! !
 
-!OOStack methodsFor: 'as yet unclassified' stamp: 'IO 10/5/2020 18:44:23'!
+!OOStack methodsFor: 'as yet unclassified' stamp: 'IO 10/5/2020 19:28:53'!
 pop
 
 	| last |
-	self validateNotEmpty.
-	last := elements last.
+
+	last := self top.
 	elements removeLast.
 	^last.
 
