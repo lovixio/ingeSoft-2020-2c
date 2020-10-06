@@ -152,50 +152,48 @@ Object subclass: #OOStack
 	poolDictionaries: ''
 	category: 'Stack-Exercise'!
 
-!OOStack methodsFor: 'as yet unclassified' stamp: 'IO 10/5/2020 18:30:19'!
+!OOStack methodsFor: 'as yet unclassified' stamp: 'IO 10/5/2020 21:58:48'!
 initializeEmpty
 
-	elements := OrderedCollection new.
+	elements := nil.
 ! !
 
-!OOStack methodsFor: 'as yet unclassified' stamp: 'IO 10/5/2020 18:36:36'!
+!OOStack methodsFor: 'as yet unclassified' stamp: 'IO 10/5/2020 21:59:10'!
 isEmpty
 
-	^elements size isEqualTo: 0.
+	^elements isNil.
 ! !
 
-!OOStack methodsFor: 'as yet unclassified' stamp: 'IO 10/5/2020 19:28:53'!
+!OOStack methodsFor: 'as yet unclassified' stamp: 'IO 10/6/2020 18:19:42'!
 pop
 
 	| last |
 
 	last := self top.
 	elements removeLast.
+	(elements size isZero) ifTrue: [elements := nil].
 	^last.
-
 ! !
 
-!OOStack methodsFor: 'as yet unclassified' stamp: 'IO 10/5/2020 18:31:18'!
-push: anElement
+!OOStack methodsFor: 'as yet unclassified' stamp: 'IO 10/6/2020 18:20:24'!
+push: aValue
 
-	elements add: anElement.! !
+	(self isEmpty) ifTrue: [elements := OrderedCollection new].
+	elements add: aValue.
+! !
 
-!OOStack methodsFor: 'as yet unclassified' stamp: 'IO 10/5/2020 18:45:03'!
+!OOStack methodsFor: 'as yet unclassified' stamp: 'IO 10/5/2020 21:53:10'!
 top
 
-	self validateNotEmpty.
+	(self isEmpty) ifTrue: [^self error: OOStack stackEmptyErrorDescription ].
 	^elements last.
 ! !
 
-!OOStack methodsFor: 'as yet unclassified' stamp: 'IO 10/5/2020 18:44:49'!
-validateNotEmpty
-	(self isEmpty) ifTrue: [^self error: OOStack stackEmptyErrorDescription ].! !
 
-
-!OOStack methodsFor: 'accessing' stamp: 'IO 10/5/2020 18:34:12'!
+!OOStack methodsFor: 'accessing' stamp: 'IO 10/6/2020 18:16:28'!
 size
 
-	^elements size.
+	(self isEmpty) ifTrue: [^0] ifFalse: [^elements size].
 ! !
 
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
