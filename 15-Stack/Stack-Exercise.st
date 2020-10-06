@@ -147,53 +147,53 @@ TestCase subclass: #SentenceFinderByPrefixTest
 
 !classDefinition: #OOStack category: #'Stack-Exercise'!
 Object subclass: #OOStack
-	instanceVariableNames: 'elements'
+	instanceVariableNames: 'lastElement'
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'Stack-Exercise'!
 
-!OOStack methodsFor: 'as yet unclassified' stamp: 'IO 10/5/2020 21:58:48'!
+!OOStack methodsFor: 'as yet unclassified' stamp: 'IO 10/6/2020 19:26:06'!
 initializeEmpty
 
-	elements := nil.
+	lastElement := OOStackElementBase new.
+
 ! !
 
-!OOStack methodsFor: 'as yet unclassified' stamp: 'IO 10/5/2020 21:59:10'!
+!OOStack methodsFor: 'as yet unclassified' stamp: 'IO 10/6/2020 19:26:19'!
 isEmpty
 
-	^elements isNil.
+	^lastElement predecessorsCount isZero.
+
 ! !
 
-!OOStack methodsFor: 'as yet unclassified' stamp: 'IO 10/6/2020 18:19:42'!
+!OOStack methodsFor: 'as yet unclassified' stamp: 'IO 10/6/2020 19:26:50'!
 pop
 
 	| last |
 
-	last := self top.
-	elements removeLast.
-	(elements size isZero) ifTrue: [elements := nil].
+	last := lastElement value.
+	lastElement := lastElement previous.
 	^last.
 ! !
 
-!OOStack methodsFor: 'as yet unclassified' stamp: 'IO 10/6/2020 18:20:24'!
+!OOStack methodsFor: 'as yet unclassified' stamp: 'IO 10/6/2020 19:27:23'!
 push: aValue
 
-	(self isEmpty) ifTrue: [elements := OrderedCollection new].
-	elements add: aValue.
+	lastElement := OOStackElementBody with: aValue andPredecessor: lastElement.
+
 ! !
 
-!OOStack methodsFor: 'as yet unclassified' stamp: 'IO 10/5/2020 21:53:10'!
+!OOStack methodsFor: 'as yet unclassified' stamp: 'IO 10/6/2020 19:27:35'!
 top
 
-	(self isEmpty) ifTrue: [^self error: OOStack stackEmptyErrorDescription ].
-	^elements last.
+	^lastElement value.
 ! !
 
 
-!OOStack methodsFor: 'accessing' stamp: 'IO 10/6/2020 18:16:28'!
+!OOStack methodsFor: 'accessing' stamp: 'IO 10/6/2020 19:30:51'!
 size
 
-	(self isEmpty) ifTrue: [^0] ifFalse: [^elements size].
+	^lastElement predecessorsCount.
 ! !
 
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
@@ -212,6 +212,102 @@ stackEmptyErrorDescription
 new
 
 	^self basicNew initializeEmpty.! !
+
+
+!classDefinition: #OOStackElement category: #'Stack-Exercise'!
+Object subclass: #OOStackElement
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Stack-Exercise'!
+
+!OOStackElement methodsFor: 'as yet unclassified' stamp: 'IO 10/6/2020 19:20:53'!
+predecessorsCount
+	self subclassResponsibility.
+! !
+
+!OOStackElement methodsFor: 'as yet unclassified' stamp: 'IO 10/6/2020 19:20:38'!
+previous
+	self subclassResponsibility.
+! !
+
+!OOStackElement methodsFor: 'as yet unclassified' stamp: 'IO 10/6/2020 19:20:33'!
+value
+	self subclassResponsibility.
+! !
+
+
+!classDefinition: #OOStackElementBase category: #'Stack-Exercise'!
+OOStackElement subclass: #OOStackElementBase
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Stack-Exercise'!
+
+!OOStackElementBase methodsFor: 'as yet unclassified' stamp: 'IO 10/6/2020 19:22:09'!
+predecessorsCount
+	^0.
+! !
+
+!OOStackElementBase methodsFor: 'as yet unclassified' stamp: 'IO 10/6/2020 19:22:33'!
+previous
+	^self error: OOStack stackEmptyErrorDescription.
+! !
+
+!OOStackElementBase methodsFor: 'as yet unclassified' stamp: 'IO 10/6/2020 19:22:28'!
+value
+	^self error: OOStack stackEmptyErrorDescription.
+! !
+
+"-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
+
+!classDefinition: 'OOStackElementBase class' category: #'Stack-Exercise'!
+OOStackElementBase class
+	instanceVariableNames: ''!
+
+!OOStackElementBase class methodsFor: 'as yet unclassified' stamp: 'IO 10/6/2020 19:24:44'!
+new
+	^self basicNew.
+! !
+
+
+!classDefinition: #OOStackElementBody category: #'Stack-Exercise'!
+OOStackElement subclass: #OOStackElementBody
+	instanceVariableNames: 'value previous'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Stack-Exercise'!
+
+!OOStackElementBody methodsFor: 'as yet unclassified' stamp: 'IO 10/6/2020 19:25:40'!
+initializeWith: aValue andPredecessor: anElement
+	value := aValue.
+	previous := anElement.
+! !
+
+!OOStackElementBody methodsFor: 'as yet unclassified' stamp: 'IO 10/6/2020 19:24:08'!
+predecessorsCount
+	^self previous predecessorsCount + 1.
+! !
+
+!OOStackElementBody methodsFor: 'as yet unclassified' stamp: 'IO 10/6/2020 19:24:04'!
+previous
+	^previous.
+! !
+
+!OOStackElementBody methodsFor: 'as yet unclassified' stamp: 'IO 10/6/2020 19:23:18'!
+value
+	^value.
+! !
+
+"-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
+
+!classDefinition: 'OOStackElementBody class' category: #'Stack-Exercise'!
+OOStackElementBody class
+	instanceVariableNames: ''!
+
+!OOStackElementBody class methodsFor: 'as yet unclassified' stamp: 'IO 10/6/2020 19:25:18'!
+with: aValue andPredecessor: anElement
+	^self basicNew initializeWith: aValue andPredecessor: anElement! !
 
 
 !classDefinition: #SentenceFinderByPrefix category: #'Stack-Exercise'!
