@@ -243,6 +243,53 @@ test07PrefixCannotHaveEmptySpaces
 		withExceptionDo: [ :anError |
 			self assert: anError messageText = SentenceFinderByPrefix prefixHasEmptySpaceErrorDescription ]! !
 
+!SentenceFinderByPrefixTest methodsFor: 'test' stamp: 'LH 10/7/2020 15:57:25'!
+test08AFinderReturnAccurateWithMultipleSentencesWithMixedOrder
+	|aFinder aPrefix firstSentence secondSentence thirdSentence fourthSentence aStack correctCollection|
+	
+	aStack := OOStack new.
+	aPrefix := 'Wint'.
+	firstSentence := 'Winter is Coming'.
+	aStack push: firstSentence.
+	secondSentence := 'Winning for You'.
+	aStack push: secondSentence.
+	thirdSentence := 'Winter is Here'.
+	aStack push: thirdSentence.
+	fourthSentence := 'Wind is Blowing'.
+	aStack push: fourthSentence.
+	aFinder := SentenceFinderByPrefix newIn: aStack.	
+		
+	correctCollection := OrderedCollection with: firstSentence with: thirdSentence.
+	
+	self assert: correctCollection equals: (aFinder find: aPrefix).! !
+
+!SentenceFinderByPrefixTest methodsFor: 'test' stamp: 'LH 10/7/2020 16:29:43'!
+test09AFinderWontChangeTheStack
+	|aFinder aPrefix firstSentence secondSentence thirdSentence fourthSentence aStack theSentenceCollection|
+	
+	
+	aStack := OOStack new.
+	aPrefix := 'Wint'.
+	
+	firstSentence := 'Winter is Coming'.
+	aStack push: firstSentence.
+	secondSentence := 'Winning for You'.
+	aStack push: secondSentence.
+	thirdSentence := 'Winter is Here'.
+	aStack push: thirdSentence.
+	fourthSentence := 'Wind is Blowing'.
+	aStack push: fourthSentence.
+	
+	aFinder := SentenceFinderByPrefix newIn: aStack.	
+	aFinder find: aPrefix.
+	
+	theSentenceCollection := OrderedCollection with: fourthSentence with: thirdSentence with: secondSentence  with:  firstSentence .
+	
+	self assert: aStack size equals: theSentenceCollection size.
+	1 to: aStack size do:[:index| self assert: aStack pop equals: (theSentenceCollection at: index)].
+	
+! !
+
 
 !classDefinition: #OOStack category: 'Stack-Exercise'!
 Object subclass: #OOStack
@@ -431,21 +478,27 @@ initializeNewIn: aStackToFindIn
 	stack := aStackToFindIn.! !
 
 
-!SentenceFinderByPrefix methodsFor: 'finding tools' stamp: 'LH 10/6/2020 21:47:25'!
+!SentenceFinderByPrefix methodsFor: 'prefix testing' stamp: 'LH 10/7/2020 15:42:13'!
+aPrefixIsValid: aPrefix
+	"revisamos si aPrefix es vacio o si tiene espacios vacios. En tales casos, devolvemos un error"
+	
+	(aPrefix = '') ifTrue: [^self error: SentenceFinderByPrefix prefixIsEmptyErrorDescription].
+	((aPrefix select:[:anASCIIVAlue | anASCIIVAlue = $ ]) = '') ifFalse: [^self error: SentenceFinderByPrefix prefixHasEmptySpaceErrorDescription].
+	! !
+
+
+!SentenceFinderByPrefix methodsFor: 'finding tools' stamp: 'LH 10/7/2020 16:35:12'!
 find: aPrefix
 	|aSentenceFromStack anOrderedCollectionOfSentences|
 	
-	(aPrefix = '') ifTrue: [^self error: SentenceFinderByPrefix prefixIsEmptyErrorDescription].
-	
-	((aPrefix select:[:anASCIIVAlue | anASCIIVAlue = $ ]) = '') ifFalse: [^self error: SentenceFinderByPrefix prefixHasEmptySpaceErrorDescription].
+	self aPrefixIsValid: aPrefix.
 	
 	(stack isEmpty) 
 		ifFalse:[aSentenceFromStack := stack pop.
+			anOrderedCollectionOfSentences := self find: aPrefix. 
 			
 			(aPrefix = (aSentenceFromStack copyFrom:1 to: aPrefix size)) 
-				ifTrue:[anOrderedCollectionOfSentences := self find: aPrefix. 
-					anOrderedCollectionOfSentences addLast: aSentenceFromStack]
-				ifFalse: [anOrderedCollectionOfSentences := self find: aPrefix].
+				ifTrue:[anOrderedCollectionOfSentences addLast: aSentenceFromStack].
 			
 			stack push: aSentenceFromStack. ] 
 		ifTrue:[anOrderedCollectionOfSentences := OrderedCollection new].
@@ -473,3 +526,27 @@ prefixHasEmptySpaceErrorDescription
 prefixIsEmptyErrorDescription
 
 	^'Prefix cannot be Empty'! !
+
+
+!classDefinition: #SentenceFinderElement category: 'Stack-Exercise'!
+Object subclass: #SentenceFinderElement
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Stack-Exercise'!
+
+
+!classDefinition: #SentenceFinderElementBase category: 'Stack-Exercise'!
+SentenceFinderElement subclass: #SentenceFinderElementBase
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Stack-Exercise'!
+
+
+!classDefinition: #SentenceFinderElementBody category: 'Stack-Exercise'!
+SentenceFinderElement subclass: #SentenceFinderElementBody
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Stack-Exercise'!
