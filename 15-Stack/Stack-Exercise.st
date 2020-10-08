@@ -459,6 +459,43 @@ with: aValue andPredecessor: anElement
 	^self basicNew initializeWith: aValue andPredecessor: anElement! !
 
 
+!classDefinition: #SentecePrefix category: #'Stack-Exercise'!
+Object subclass: #SentecePrefix
+	instanceVariableNames: 'prefix'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Stack-Exercise'!
+
+!SentecePrefix methodsFor: 'initialization' stamp: 'IO 10/8/2020 16:06:12'!
+initializeWith: aString
+
+	prefix := aString
+! !
+
+
+!SentecePrefix methodsFor: 'testing' stamp: 'IO 10/8/2020 15:54:44'!
+isPrefixOf: aSentence
+	^prefix = (aSentence copyFrom:1 to: prefix size).
+! !
+
+"-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
+
+!classDefinition: 'SentecePrefix class' category: #'Stack-Exercise'!
+SentecePrefix class
+	instanceVariableNames: ''!
+
+!SentecePrefix class methodsFor: 'as yet unclassified' stamp: 'IO 10/8/2020 16:06:21'!
+newWith: aString
+	"revisamos si aPrefix es vacio o si tiene espacios vacios. En tales casos, devolvemos un error"
+
+	(aString = '') ifTrue: [^self error: SentenceFinderByPrefix prefixIsEmptyErrorDescription].
+	((aString select: [:anASCIIVAlue | anASCIIVAlue = $ ]) = '') ifFalse: [^self error: SentenceFinderByPrefix prefixHasEmptySpaceErrorDescription].
+	"validacion"
+
+	^self basicNew initializeWith: aString.
+! !
+
+
 !classDefinition: #SentenceFinderByPrefix category: #'Stack-Exercise'!
 Object subclass: #SentenceFinderByPrefix
 	instanceVariableNames: 'stack'
@@ -472,32 +509,28 @@ initializeNewIn: aStackToFindIn
 	stack := aStackToFindIn.! !
 
 
-!SentenceFinderByPrefix methodsFor: 'prefix testing' stamp: 'IO 10/8/2020 15:44:41'!
+!SentenceFinderByPrefix methodsFor: 'prefix testing' stamp: 'IO 10/8/2020 15:51:12'!
 validatePrefix: aPrefix
-	"revisamos si aPrefix es vacio o si tiene espacios vacios. En tales casos, devolvemos un error"
 	
-	(aPrefix = '') ifTrue: [^self error: SentenceFinderByPrefix prefixIsEmptyErrorDescription].
-	((aPrefix select: [:anASCIIVAlue | anASCIIVAlue = $ ]) = '') ifFalse: [^self error: SentenceFinderByPrefix prefixHasEmptySpaceErrorDescription].
 ! !
 
 
-!SentenceFinderByPrefix methodsFor: 'finding tools' stamp: 'IO 10/8/2020 15:43:57'!
-find: aPrefix	
-	self validatePrefix: aPrefix.
-	^self findWithValidPrefix: aPrefix.
+!SentenceFinderByPrefix methodsFor: 'finding tools' stamp: 'IO 10/8/2020 15:55:34'!
+find: aString
+	^self findWithPrefix: (SentecePrefix newWith: aString).
 ! !
 
-!SentenceFinderByPrefix methodsFor: 'finding tools' stamp: 'IO 10/8/2020 15:38:32'!
-findWithValidPrefix: aPrefix
+!SentenceFinderByPrefix methodsFor: 'finding tools' stamp: 'IO 10/8/2020 16:05:52'!
+findWithPrefix: aPrefix
 	(stack isEmpty)
 		ifTrue: [^OrderedCollection new]
 		ifFalse: [
 			| anOrderedCollectionOfSentences aSentenceFromStack |
 			aSentenceFromStack := stack pop.
-			anOrderedCollectionOfSentences := self find: aPrefix. 
+			anOrderedCollectionOfSentences := self findWithPrefix: aPrefix. 
 			stack push: aSentenceFromStack.
 
-			(aPrefix = (aSentenceFromStack copyFrom:1 to: aPrefix size)) ifTrue:[
+			(aPrefix isPrefixOf: aSentenceFromStack) ifTrue:[
 				anOrderedCollectionOfSentences addLast: aSentenceFromStack].
 			^anOrderedCollectionOfSentences].
 ! !
