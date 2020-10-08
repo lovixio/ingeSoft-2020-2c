@@ -177,8 +177,8 @@ test03aFinderReturnsOCollectionWithSentenceWhenUsingRightPrefix
 		
 	self assert: (OrderedCollection with:aSentence) equals: (aFinder find: aPrefix).! !
 
-!SentenceFinderByPrefixTest methodsFor: 'test' stamp: 'LH 10/6/2020 20:59:13'!
-test04AFinderReturnNothingWithMultipleSentences
+!SentenceFinderByPrefixTest methodsFor: 'test' stamp: 'IO 10/8/2020 16:33:30'!
+test04AFinderReturnNothingWithMultipleSentencesThatDontMatch
 	|aFinder aPrefix firstSentence secondSentece thirdSentence aStack|
 	
 	aStack := OOStack new.
@@ -193,8 +193,8 @@ test04AFinderReturnNothingWithMultipleSentences
 	
 	self assert: OrderedCollection new equals: (aFinder find: aPrefix).! !
 
-!SentenceFinderByPrefixTest methodsFor: 'test' stamp: 'LH 10/6/2020 21:19:32'!
-test05AFinderReturnAccurateWithMultipleSentences
+!SentenceFinderByPrefixTest methodsFor: 'test' stamp: 'IO 10/8/2020 16:33:20'!
+test05AFinderReturnAccurateWithMultipleSentencesThatMatch
 	|aFinder aPrefix firstSentence secondSentece thirdSentence aStack correctCollection|
 	
 	aStack := OOStack new.
@@ -263,7 +263,7 @@ test08AFinderReturnAccurateWithMultipleSentencesWithMixedOrder
 	
 	self assert: correctCollection equals: (aFinder find: aPrefix).! !
 
-!SentenceFinderByPrefixTest methodsFor: 'test' stamp: 'LH 10/7/2020 16:29:43'!
+!SentenceFinderByPrefixTest methodsFor: 'test' stamp: 'IO 10/8/2020 16:36:06'!
 test09AFinderWontChangeTheStack
 	|aFinder aPrefix firstSentence secondSentence thirdSentence fourthSentence aStack theSentenceCollection|
 	
@@ -282,12 +282,12 @@ test09AFinderWontChangeTheStack
 	
 	aFinder := SentenceFinderByPrefix newIn: aStack.	
 	aFinder find: aPrefix.
-	
-	theSentenceCollection := OrderedCollection with: fourthSentence with: thirdSentence with: secondSentence  with:  firstSentence .
-	
+
+	"testeamos que sigan en el stack, y en el mismo orden. para eso armamos una coleccion de las oraciones epseradas"
+	theSentenceCollection := OrderedCollection with: fourthSentence with: thirdSentence with: secondSentence with: firstSentence .
+
 	self assert: aStack size equals: theSentenceCollection size.
 	1 to: aStack size do:[:index| self assert: aStack pop equals: (theSentenceCollection at: index)].
-	
 ! !
 
 
@@ -520,7 +520,7 @@ find: aString
 	^self findWithPrefix: (SentecePrefix newWith: aString).
 ! !
 
-!SentenceFinderByPrefix methodsFor: 'finding tools' stamp: 'IO 10/8/2020 16:05:52'!
+!SentenceFinderByPrefix methodsFor: 'finding tools' stamp: 'IO 10/8/2020 16:31:33'!
 findWithPrefix: aPrefix
 	(stack isEmpty)
 		ifTrue: [^OrderedCollection new]
@@ -530,9 +530,13 @@ findWithPrefix: aPrefix
 			anOrderedCollectionOfSentences := self findWithPrefix: aPrefix. 
 			stack push: aSentenceFromStack.
 
-			(aPrefix isPrefixOf: aSentenceFromStack) ifTrue:[
-				anOrderedCollectionOfSentences addLast: aSentenceFromStack].
+			(aPrefix isPrefixOf: stack top) ifTrue:[anOrderedCollectionOfSentences addLast: stack top].
+
 			^anOrderedCollectionOfSentences].
+
+	"no hicimos polimorfismo sobre isEmtpy porque deberiamos construir una nueva estrucutra de datos que copie todos
+	 los elementos del stack en la incializacion. aun asi, en la inicializacion tendriamos un if o try/catch que viene de
+	 comparar cuando se llega al ultimo elemento del stack"
 ! !
 
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
