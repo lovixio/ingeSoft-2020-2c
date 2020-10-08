@@ -1,4 +1,4 @@
-!classDefinition: #OOStackTest category: 'Stack-Exercise'!
+!classDefinition: #OOStackTest category: #'Stack-Exercise'!
 TestCase subclass: #OOStackTest
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -137,7 +137,7 @@ test10CanNotTopWhenThereAreNoObjectsInTheStack
 ! !
 
 
-!classDefinition: #SentenceFinderByPrefixTest category: 'Stack-Exercise'!
+!classDefinition: #SentenceFinderByPrefixTest category: #'Stack-Exercise'!
 TestCase subclass: #SentenceFinderByPrefixTest
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -291,7 +291,7 @@ test09AFinderWontChangeTheStack
 ! !
 
 
-!classDefinition: #OOStack category: 'Stack-Exercise'!
+!classDefinition: #OOStack category: #'Stack-Exercise'!
 Object subclass: #OOStack
 	instanceVariableNames: 'lastElement'
 	classVariableNames: ''
@@ -346,7 +346,7 @@ top
 
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
-!classDefinition: 'OOStack class' category: 'Stack-Exercise'!
+!classDefinition: 'OOStack class' category: #'Stack-Exercise'!
 OOStack class
 	instanceVariableNames: ''!
 
@@ -362,7 +362,7 @@ new
 	^self basicNew initializeEmpty.! !
 
 
-!classDefinition: #OOStackElement category: 'Stack-Exercise'!
+!classDefinition: #OOStackElement category: #'Stack-Exercise'!
 Object subclass: #OOStackElement
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -384,14 +384,8 @@ value
 	self subclassResponsibility.
 ! !
 
-
-!OOStackElement methodsFor: 'initialization' stamp: 'LH 10/6/2020 19:54:52'!
-initializeWith: aValue andPredecessor: anElement
-
-	self subclassResponsibility ! !
-
 
-!classDefinition: #OOStackElementBase category: 'Stack-Exercise'!
+!classDefinition: #OOStackElementBase category: #'Stack-Exercise'!
 OOStackElement subclass: #OOStackElementBase
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -415,7 +409,7 @@ value
 
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
-!classDefinition: 'OOStackElementBase class' category: 'Stack-Exercise'!
+!classDefinition: 'OOStackElementBase class' category: #'Stack-Exercise'!
 OOStackElementBase class
 	instanceVariableNames: ''!
 
@@ -425,7 +419,7 @@ new
 ! !
 
 
-!classDefinition: #OOStackElementBody category: 'Stack-Exercise'!
+!classDefinition: #OOStackElementBody category: #'Stack-Exercise'!
 OOStackElement subclass: #OOStackElementBody
 	instanceVariableNames: 'value previous'
 	classVariableNames: ''
@@ -456,7 +450,7 @@ value
 
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
-!classDefinition: 'OOStackElementBody class' category: 'Stack-Exercise'!
+!classDefinition: 'OOStackElementBody class' category: #'Stack-Exercise'!
 OOStackElementBody class
 	instanceVariableNames: ''!
 
@@ -465,7 +459,7 @@ with: aValue andPredecessor: anElement
 	^self basicNew initializeWith: aValue andPredecessor: anElement! !
 
 
-!classDefinition: #SentenceFinderByPrefix category: 'Stack-Exercise'!
+!classDefinition: #SentenceFinderByPrefix category: #'Stack-Exercise'!
 Object subclass: #SentenceFinderByPrefix
 	instanceVariableNames: 'stack'
 	classVariableNames: ''
@@ -478,36 +472,39 @@ initializeNewIn: aStackToFindIn
 	stack := aStackToFindIn.! !
 
 
-!SentenceFinderByPrefix methodsFor: 'prefix testing' stamp: 'LH 10/7/2020 15:42:13'!
-aPrefixIsValid: aPrefix
+!SentenceFinderByPrefix methodsFor: 'prefix testing' stamp: 'IO 10/8/2020 15:44:41'!
+validatePrefix: aPrefix
 	"revisamos si aPrefix es vacio o si tiene espacios vacios. En tales casos, devolvemos un error"
 	
 	(aPrefix = '') ifTrue: [^self error: SentenceFinderByPrefix prefixIsEmptyErrorDescription].
-	((aPrefix select:[:anASCIIVAlue | anASCIIVAlue = $ ]) = '') ifFalse: [^self error: SentenceFinderByPrefix prefixHasEmptySpaceErrorDescription].
-	! !
+	((aPrefix select: [:anASCIIVAlue | anASCIIVAlue = $ ]) = '') ifFalse: [^self error: SentenceFinderByPrefix prefixHasEmptySpaceErrorDescription].
+! !
 
 
-!SentenceFinderByPrefix methodsFor: 'finding tools' stamp: 'LH 10/7/2020 16:35:12'!
-find: aPrefix
-	|aSentenceFromStack anOrderedCollectionOfSentences|
-	
-	self aPrefixIsValid: aPrefix.
-	
-	(stack isEmpty) 
-		ifFalse:[aSentenceFromStack := stack pop.
+!SentenceFinderByPrefix methodsFor: 'finding tools' stamp: 'IO 10/8/2020 15:43:57'!
+find: aPrefix	
+	self validatePrefix: aPrefix.
+	^self findWithValidPrefix: aPrefix.
+! !
+
+!SentenceFinderByPrefix methodsFor: 'finding tools' stamp: 'IO 10/8/2020 15:38:32'!
+findWithValidPrefix: aPrefix
+	(stack isEmpty)
+		ifTrue: [^OrderedCollection new]
+		ifFalse: [
+			| anOrderedCollectionOfSentences aSentenceFromStack |
+			aSentenceFromStack := stack pop.
 			anOrderedCollectionOfSentences := self find: aPrefix. 
-			
-			(aPrefix = (aSentenceFromStack copyFrom:1 to: aPrefix size)) 
-				ifTrue:[anOrderedCollectionOfSentences addLast: aSentenceFromStack].
-			
-			stack push: aSentenceFromStack. ] 
-		ifTrue:[anOrderedCollectionOfSentences := OrderedCollection new].
-	^anOrderedCollectionOfSentences.
-	! !
+			stack push: aSentenceFromStack.
+
+			(aPrefix = (aSentenceFromStack copyFrom:1 to: aPrefix size)) ifTrue:[
+				anOrderedCollectionOfSentences addLast: aSentenceFromStack].
+			^anOrderedCollectionOfSentences].
+! !
 
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
-!classDefinition: 'SentenceFinderByPrefix class' category: 'Stack-Exercise'!
+!classDefinition: 'SentenceFinderByPrefix class' category: #'Stack-Exercise'!
 SentenceFinderByPrefix class
 	instanceVariableNames: ''!
 
@@ -526,27 +523,3 @@ prefixHasEmptySpaceErrorDescription
 prefixIsEmptyErrorDescription
 
 	^'Prefix cannot be Empty'! !
-
-
-!classDefinition: #SentenceFinderElement category: 'Stack-Exercise'!
-Object subclass: #SentenceFinderElement
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
-	category: 'Stack-Exercise'!
-
-
-!classDefinition: #SentenceFinderElementBase category: 'Stack-Exercise'!
-SentenceFinderElement subclass: #SentenceFinderElementBase
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
-	category: 'Stack-Exercise'!
-
-
-!classDefinition: #SentenceFinderElementBody category: 'Stack-Exercise'!
-SentenceFinderElement subclass: #SentenceFinderElementBody
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
-	category: 'Stack-Exercise'!
