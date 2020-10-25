@@ -193,8 +193,8 @@ test04AFinderReturnNothingWithMultipleSentencesThatDontMatch
 	
 	self assert: OrderedCollection new equals: (aFinder find: aPrefix).! !
 
-!SentenceFinderByPrefixTest methodsFor: 'test' stamp: 'IO 10/8/2020 16:33:20'!
-test05AFinderReturnAccurateWithMultipleSentencesThatMatch
+!SentenceFinderByPrefixTest methodsFor: 'test' stamp: 'LH 10/7/2020 17:01:09'!
+test05AFinderReturnAccurateWithMultipleSentences
 	|aFinder aPrefix firstSentence secondSentece thirdSentence aStack correctCollection|
 	
 	aStack := OOStack new.
@@ -207,7 +207,7 @@ test05AFinderReturnAccurateWithMultipleSentencesThatMatch
 	aStack push: thirdSentence.
 	aFinder := SentenceFinderByPrefix newIn: aStack.	
 		
-	correctCollection := OrderedCollection with: firstSentence with: secondSentece.
+	correctCollection := OrderedCollection with: secondSentece with: firstSentence.
 	
 	self assert: correctCollection equals: (aFinder find: aPrefix).! !
 
@@ -243,7 +243,7 @@ test07PrefixCannotHaveEmptySpaces
 		withExceptionDo: [ :anError |
 			self assert: anError messageText = SentenceFinderByPrefix prefixHasEmptySpaceErrorDescription ]! !
 
-!SentenceFinderByPrefixTest methodsFor: 'test' stamp: 'LH 10/7/2020 15:57:25'!
+!SentenceFinderByPrefixTest methodsFor: 'test' stamp: 'LH 10/7/2020 17:01:44'!
 test08AFinderReturnAccurateWithMultipleSentencesWithMixedOrder
 	|aFinder aPrefix firstSentence secondSentence thirdSentence fourthSentence aStack correctCollection|
 	
@@ -259,7 +259,7 @@ test08AFinderReturnAccurateWithMultipleSentencesWithMixedOrder
 	aStack push: fourthSentence.
 	aFinder := SentenceFinderByPrefix newIn: aStack.	
 		
-	correctCollection := OrderedCollection with: firstSentence with: thirdSentence.
+	correctCollection := OrderedCollection with: thirdSentence with: firstSentence .
 	
 	self assert: correctCollection equals: (aFinder find: aPrefix).! !
 
@@ -515,6 +515,7 @@ validatePrefix: aPrefix
 ! !
 
 
+<<<<<<< HEAD
 !SentenceFinderByPrefix methodsFor: 'finding tools' stamp: 'IO 10/8/2020 15:55:34'!
 find: aString
 	^self findWithPrefix: (SentecePrefix newWith: aString).
@@ -538,6 +539,37 @@ findWithPrefix: aPrefix
 	 los elementos del stack en la incializacion. aun asi, en la inicializacion tendriamos un if o try/catch que viene de
 	 comparar cuando se llega al ultimo elemento del stack"
 ! !
+=======
+!SentenceFinderByPrefix methodsFor: 'finding tools' stamp: 'LH 10/7/2020 16:59:06'!
+find: aPrefix
+	|aSentenceFromStack anOrderedCollectionOfSentences anOrderedCollectionOfMatches|
+	
+	self aPrefixIsValid: aPrefix.
+	anOrderedCollectionOfSentences := OrderedCollection new.
+	anOrderedCollectionOfMatches := OrderedCollection new.
+	
+	1 to: stack size do:[:index|aSentenceFromStack := stack pop.
+					anOrderedCollectionOfSentences addFirst: aSentenceFromStack.
+					(aPrefix = (aSentenceFromStack copyFrom:1 to: aPrefix size)) 
+						ifTrue:[anOrderedCollectionOfMatches addLast: aSentenceFromStack].
+					].
+					
+	1 to: anOrderedCollectionOfSentences size do: [:index | aSentenceFromStack := anOrderedCollectionOfSentences at: index.
+												stack push: aSentenceFromStack. 
+										 ].
+	
+	"(stack isEmpty) 
+		ifFalse:[aSentenceFromStack := stack pop.
+			anOrderedCollectionOfSentences := self find: aPrefix. 
+			
+			(aPrefix = (aSentenceFromStack copyFrom:1 to: aPrefix size)) 
+				ifTrue:[anOrderedCollectionOfSentences addLast: aSentenceFromStack].
+			
+			stack push: aSentenceFromStack. ] 
+		ifTrue:[anOrderedCollectionOfSentences := OrderedCollection new]."
+	^anOrderedCollectionOfMatches.
+	! !
+>>>>>>> finder sin ifs (?)
 
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
