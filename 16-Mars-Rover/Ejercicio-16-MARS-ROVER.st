@@ -180,6 +180,36 @@ assertReturnsAMarsRoverThatMovedForwardAndFailed
 
 ! !
 
+
+!MarsRoverTest methodsFor: 'as yet unclassified' stamp: 'IO 10/25/2020 21:27:00'!
+test17marsRoverIntegration
+
+	"this test was built without TDD"
+	
+	| aMarsRover |
+	aMarsRover := MarsRover at: 0@0 pointingTo: North.
+
+
+	self
+		should: [	aMarsRover execute: 'fflfxrb'.]
+		raise: Error
+		withMessageText: MarsRover invalidCommandError.
+		
+	self assert: 2@1 equals: aMarsRover position.
+	self assert: East equals: aMarsRover orientation.
+	
+	aMarsRover execute: 'rb'.
+	
+	self assert: 1@1 equals: aMarsRover position.
+	self assert: North equals: aMarsRover orientation.
+	
+	aMarsRover execute: 'rfffrb'.
+	
+	self assert: 2@-2 equals: aMarsRover position.
+	self assert: South equals: aMarsRover orientation.
+
+! !
+
 
 !classDefinition: #CardinalDirection category: 'Ejercicio-16-MARS-ROVER'!
 Object subclass: #CardinalDirection
