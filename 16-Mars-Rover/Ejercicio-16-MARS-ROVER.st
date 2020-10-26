@@ -181,7 +181,7 @@ assertReturnsAMarsRoverThatMovedForwardAndFailed
 ! !
 
 
-!MarsRoverTest methodsFor: 'as yet unclassified' stamp: 'IO 10/25/2020 21:27:00'!
+!MarsRoverTest methodsFor: 'integration test' stamp: 'IO 10/25/2020 21:27:00'!
 test17marsRoverIntegration
 
 	"this test was built without TDD"

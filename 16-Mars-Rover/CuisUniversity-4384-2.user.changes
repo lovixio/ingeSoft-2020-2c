@@ -35504,3 +35504,60 @@ PASSED!
 ----SNAPSHOT----(25 October 2020 21:30:08) CuisUniversity-4384.image priorSource: 17399496!
 
 ----QUIT----(25 October 2020 21:30:14) CuisUniversity-4384.image priorSource: 17402276!
+
+----STARTUP---- (25 October 2020 21:35:49) as /Users/ilanolkies/uba/ingsoft1/macos64 3/CuisUniversity-4384.image!
+
+
+!testRun: #MarsRoverTest #test17marsRoverIntegration stamp: 'IO 10/25/2020 21:36:24'!
+PASSED!
+
+!testRun: #MarsRoverTest #test01marsRoverMovesForward stamp: 'IO 10/25/2020 21:36:24'!
+PASSED!
+
+!testRun: #MarsRoverTest #test02marsRoverMovesBackwards stamp: 'IO 10/25/2020 21:36:24'!
+PASSED!
+
+!testRun: #MarsRoverTest #test03marsRoverMovesForwardToNorth stamp: 'IO 10/25/2020 21:36:24'!
+PASSED!
+
+!testRun: #MarsRoverTest #test04marsRoverMovesForwardToEast stamp: 'IO 10/25/2020 21:36:24'!
+PASSED!
+
+!testRun: #MarsRoverTest #test05marsRoverMovesForwardToWest stamp: 'IO 10/25/2020 21:36:24'!
+PASSED!
+
+!testRun: #MarsRoverTest #test06marsRoverRotatesLeftFromSouth stamp: 'IO 10/25/2020 21:36:24'!
+PASSED!
+
+!testRun: #MarsRoverTest #test07marsRoverRotatesLeftFromWest stamp: 'IO 10/25/2020 21:36:24'!
+PASSED!
+
+!testRun: #MarsRoverTest #test08marsRoverRotatesLeftFromNorth stamp: 'IO 10/25/2020 21:36:24'!
+PASSED!
+
+!testRun: #MarsRoverTest #test09marsRoverRotatesLeftFromEast stamp: 'IO 10/25/2020 21:36:24'!
+PASSED!
+
+!testRun: #MarsRoverTest #test10marsRoverRotatesRigthFromEast stamp: 'IO 10/25/2020 21:36:24'!
+PASSED!
+
+!testRun: #MarsRoverTest #test11marsRoverRotatesRigthFromNorth stamp: 'IO 10/25/2020 21:36:24'!
+PASSED!
+
+!testRun: #MarsRoverTest #test12marsRoverRotatesRigthFromWest stamp: 'IO 10/25/2020 21:36:24'!
+PASSED!
+
+!testRun: #MarsRoverTest #test13marsRoverRotatesRigthFromSouth stamp: 'IO 10/25/2020 21:36:24'!
+PASSED!
+
+!testRun: #MarsRoverTest #test14marsRoverExecutesPacksWithMoreThanOneCommand stamp: 'IO 10/25/2020 21:36:24'!
+PASSED!
+
+!testRun: #MarsRoverTest #test15marsRoverSignalsOnErrorAndStopsExecuting stamp: 'IO 10/25/2020 21:36:24'!
+PASSED!
+
+!testRun: #MarsRoverTest #test16marsRoverStartsExecutingAgainOnNewPackAfterError stamp: 'IO 10/25/2020 21:36:24'!
+PASSED!
+
+!testRun: #MarsRoverTest #test17marsRoverIntegration stamp: 'IO 10/25/2020 21:36:24'!
+PASSED!
