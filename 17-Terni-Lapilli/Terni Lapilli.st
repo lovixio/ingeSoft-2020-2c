@@ -5,8 +5,8 @@ TestCase subclass: #TerniLapilliGameTest
 	poolDictionaries: ''
 	category: 'Terni Lapilli'!
 
-!TerniLapilliGameTest methodsFor: 'put tokens phase' stamp: 'IO 10/31/2020 11:22:21'!
-test01
+!TerniLapilliGameTest methodsFor: 'put tokens phase' stamp: 'LH 11/1/2020 13:36:17'!
+test01XCanPutAToken
 	"x pone en 0@0"
 	| aGame |
 	aGame := TerniLapilliGame new.
@@ -16,8 +16,8 @@ test01
 	self assert: (aGame includesColorXAt: (0@0)).
 ! !
 
-!TerniLapilliGameTest methodsFor: 'put tokens phase' stamp: 'IO 10/31/2020 11:22:21'!
-test02
+!TerniLapilliGameTest methodsFor: 'put tokens phase' stamp: 'LH 11/1/2020 13:38:29'!
+test02puttingDoesNotAffectOtherPositions
 	"x pone en 0@0 pero no en 0@1"
 	| aGame |
 	aGame := TerniLapilliGame new.
@@ -27,8 +27,8 @@ test02
 	self deny: (aGame includesColorXAt: 0@1).
 ! !
 
-!TerniLapilliGameTest methodsFor: 'put tokens phase' stamp: 'IO 10/31/2020 11:22:21'!
-test03
+!TerniLapilliGameTest methodsFor: 'put tokens phase' stamp: 'LH 11/1/2020 13:38:10'!
+test03XCanPutInOtherPositions
 	"x pone en 0@1"
 	| aGame |
 	aGame := TerniLapilliGame new.
@@ -38,8 +38,8 @@ test03
 	self assert: (aGame includesColorXAt: 0@1).
 ! !
 
-!TerniLapilliGameTest methodsFor: 'put tokens phase' stamp: 'IO 10/31/2020 11:22:02'!
-test04
+!TerniLapilliGameTest methodsFor: 'put tokens phase' stamp: 'LH 11/1/2020 13:38:39'!
+test04OCanPut
 	"o pone en 0@0"
 	| aGame |
 	aGame := TerniLapilliGame new.
@@ -51,8 +51,8 @@ test04
 ! !
 
 
-!TerniLapilliGameTest methodsFor: 'move tokens phase' stamp: 'IO 10/31/2020 19:12:19'!
-test05
+!TerniLapilliGameTest methodsFor: 'move tokens phase' stamp: 'LH 11/1/2020 13:39:04'!
+test05XCanMove
 	"movimiento legal desp de haber jugado las tres fichas :D"
 	| aGame |
 	aGame := self createGameInMovePhase.
@@ -62,8 +62,8 @@ test05
 	self assert: (aGame includesColorXAt: (1@0)).
 ! !
 
-!TerniLapilliGameTest methodsFor: 'move tokens phase' stamp: 'IO 10/31/2020 19:12:37'!
-test06
+!TerniLapilliGameTest methodsFor: 'move tokens phase' stamp: 'LH 11/1/2020 13:39:11'!
+test06OCanMove
 	"movimiento legal de O desp de haber jugado las tres fichas :D"
 	| aGame |
 	aGame := self createGameInMovePhase.
@@ -75,8 +75,8 @@ test06
 ! !
 
 
-!TerniLapilliGameTest methodsFor: 'winning positions' stamp: 'IO 10/31/2020 11:50:31'!
-test07
+!TerniLapilliGameTest methodsFor: 'winning positions' stamp: 'LH 11/1/2020 13:40:14'!
+test07XWinsWithTheFirstColumn
 	"primer posicion ganadora para X, la primer columna"
 	| aGame |
 	aGame := TerniLapilliGame new.
@@ -90,8 +90,8 @@ test07
 	self assert: aGame xHasWon.
 ! !
 
-!TerniLapilliGameTest methodsFor: 'winning positions' stamp: 'IO 10/31/2020 11:43:59'!
-test08
+!TerniLapilliGameTest methodsFor: 'winning positions' stamp: 'LH 11/1/2020 13:41:25'!
+test08XHasntWonYet
 	"X todavia no gano"
 	| aGame |
 	aGame := TerniLapilliGame new.
@@ -105,8 +105,8 @@ test08
 	self deny: aGame xHasWon.
 ! !
 
-!TerniLapilliGameTest methodsFor: 'winning positions' stamp: 'IO 10/31/2020 21:01:11'!
-test09
+!TerniLapilliGameTest methodsFor: 'winning positions' stamp: 'LH 11/1/2020 13:41:34'!
+test09XWinsWithTheSecondColumn
 	"X gana competando la segunda columna"
 	| aGame |
 	aGame := TerniLapilliGame new.
@@ -120,8 +120,8 @@ test09
 	self assert: aGame xHasWon.
 ! !
 
-!TerniLapilliGameTest methodsFor: 'winning positions' stamp: 'IO 10/31/2020 12:43:19'!
-test10
+!TerniLapilliGameTest methodsFor: 'winning positions' stamp: 'LH 11/1/2020 13:41:42'!
+test10XWinsWithTheThirdColumn
 	"ahora X gana competando la tercer columna"
 	| aGame |
 	aGame := TerniLapilliGame new.
@@ -135,8 +135,8 @@ test10
 	self assert: aGame xHasWon.
 ! !
 
-!TerniLapilliGameTest methodsFor: 'winning positions' stamp: 'IO 10/31/2020 16:38:52'!
-test11
+!TerniLapilliGameTest methodsFor: 'winning positions' stamp: 'LH 11/1/2020 13:41:53'!
+test11XWinsWithTheFirstRow
 	"X gana completando la primer fila"
 	| aGame |
 	aGame := TerniLapilliGame new.
@@ -150,8 +150,8 @@ test11
 	self assert: aGame xHasWon.
 ! !
 
-!TerniLapilliGameTest methodsFor: 'winning positions' stamp: 'IO 10/31/2020 12:45:31'!
-test12
+!TerniLapilliGameTest methodsFor: 'winning positions' stamp: 'LH 11/1/2020 13:42:14'!
+test12XWinsWithTheSecondRow
 	"X gana competando la segunda fila"
 	| aGame |
 	aGame := TerniLapilliGame new.
@@ -165,8 +165,8 @@ test12
 	self assert: aGame xHasWon.
 ! !
 
-!TerniLapilliGameTest methodsFor: 'winning positions' stamp: 'IO 10/31/2020 12:45:15'!
-test13
+!TerniLapilliGameTest methodsFor: 'winning positions' stamp: 'LH 11/1/2020 13:42:26'!
+test13XWinsWithTheThirdRow
 	"X gana competando la tercer fila"
 	| aGame |
 	aGame := TerniLapilliGame new.
@@ -180,8 +180,8 @@ test13
 	self assert: aGame xHasWon.
 ! !
 
-!TerniLapilliGameTest methodsFor: 'winning positions' stamp: 'IO 10/31/2020 13:06:25'!
-test14
+!TerniLapilliGameTest methodsFor: 'winning positions' stamp: 'LH 11/1/2020 13:42:43'!
+test14XWinsWithTheCrescentDiagonal
 	"X gana competando la diagonal creciente"
 	| aGame |
 	aGame := TerniLapilliGame new.
@@ -195,8 +195,8 @@ test14
 	self assert: aGame xHasWon.
 ! !
 
-!TerniLapilliGameTest methodsFor: 'winning positions' stamp: 'IO 10/31/2020 13:06:45'!
-test15
+!TerniLapilliGameTest methodsFor: 'winning positions' stamp: 'LH 11/1/2020 13:43:00'!
+test15XWinsWithTheDescendantDiagonal
 	"X gana competando la diagonal decreciente"
 	| aGame |
 	aGame := TerniLapilliGame new.
@@ -210,8 +210,8 @@ test15
 	self assert: aGame xHasWon.
 ! !
 
-!TerniLapilliGameTest methodsFor: 'winning positions' stamp: 'IO 10/31/2020 13:09:19'!
-test16
+!TerniLapilliGameTest methodsFor: 'winning positions' stamp: 'LH 11/1/2020 13:43:07'!
+test16OWnis
 	"ahora gana O!!"
 	| aGame |
 	aGame := TerniLapilliGame new.
@@ -227,8 +227,8 @@ test16
 ! !
 
 
-!TerniLapilliGameTest methodsFor: 'ilegal turns' stamp: 'IO 10/31/2020 17:08:30'!
-test17
+!TerniLapilliGameTest methodsFor: 'ilegal turns' stamp: 'LH 11/1/2020 13:53:30'!
+test17OCantStartPutting
 	"empieza poniendo X"
 	| aGame |
 	aGame := TerniLapilliGame new.
@@ -238,8 +238,8 @@ test17
 
 ! !
 
-!TerniLapilliGameTest methodsFor: 'ilegal turns' stamp: 'IO 10/31/2020 17:08:35'!
-test18
+!TerniLapilliGameTest methodsFor: 'ilegal turns' stamp: 'LH 11/1/2020 13:45:09'!
+test18XCantPutTwiceInARow
 	"despues de X pone Y"
 	| aGame |
 	aGame := TerniLapilliGame new.
@@ -250,14 +250,38 @@ test18
 
 ! !
 
-!TerniLapilliGameTest methodsFor: 'ilegal turns' stamp: 'IO 10/31/2020 19:12:55'!
-test19
+!TerniLapilliGameTest methodsFor: 'ilegal turns' stamp: 'LH 11/1/2020 13:45:25'!
+test19XCantMoveTwiceInARow
 	"x no puede mover dos veces seguidas"
 	| aGame |
 	aGame := self createGameInMovePhase.
 	
 	aGame xMoves: (2@0) to: (1@0).
 	self should: [aGame xMoves: (1@0) to: (2@0).] raise: Error withMessageText: TerniLapilliGame wrongTurnErrorMessage.
+! !
+
+!TerniLapilliGameTest methodsFor: 'ilegal turns' stamp: 'LH 11/1/2020 13:49:40'!
+test20OCantPutTwiceInARow
+	"despues de X pone Y"
+	| aGame |
+	aGame := TerniLapilliGame new.
+	
+	aGame xPutsOn: (0@0).	aGame oPutsOn:(0@1).
+
+	self should: [aGame oPutsOn: (0@2)] raise: Error withMessageText: TerniLapilliGame wrongTurnErrorMessage.
+
+
+! !
+
+!TerniLapilliGameTest methodsFor: 'ilegal turns' stamp: 'LH 11/1/2020 13:52:15'!
+test21OCantMoveTwiceInARow
+	"x no puede mover dos veces seguidas"
+	| aGame |
+	aGame := self createGameInMovePhase.
+	
+	aGame xMoves: (2@0) to: (1@0).	aGame oMoves: (2@1) to: (1@1).
+
+	self should: [aGame oMoves: (1@1) to: (2@1).] raise: Error withMessageText: TerniLapilliGame wrongTurnErrorMessage.
 ! !
 
 
@@ -278,8 +302,8 @@ createGameInMovePhase
 ! !
 
 
-!TerniLapilliGameTest methodsFor: 'ilegal moves' stamp: 'IO 10/31/2020 19:37:15'!
-test20
+!TerniLapilliGameTest methodsFor: 'ilegal moves' stamp: 'LH 11/1/2020 13:54:33'!
+test22XCantMoveOnTheirFirstTurn
 	"x no puede mover en su primer turno"
 	| aGame |
 	aGame := TerniLapilliGame new.
@@ -288,8 +312,8 @@ test20
 
 	! !
 
-!TerniLapilliGameTest methodsFor: 'ilegal moves' stamp: 'IO 10/31/2020 19:35:57'!
-test21
+!TerniLapilliGameTest methodsFor: 'ilegal moves' stamp: 'LH 11/1/2020 13:55:06'!
+test23XCantMoveOnTheirSecondTurn
 	"x no puede mover en su segundo turno"
 	| aGame |
 	aGame := TerniLapilliGame new.
@@ -301,8 +325,8 @@ test21
 
 	! !
 
-!TerniLapilliGameTest methodsFor: 'ilegal moves' stamp: 'IO 10/31/2020 19:37:27'!
-test22
+!TerniLapilliGameTest methodsFor: 'ilegal moves' stamp: 'LH 11/1/2020 13:56:13'!
+test24XCantMoveOnTheirThirdTurn
 	"x no puede mover en su tercer turno"
 	| aGame |
 	aGame := TerniLapilliGame new.
@@ -315,8 +339,8 @@ test22
 	self should: [aGame xMoves: (1@0) to: (2@0).] raise: Error withMessageText: TerniLapilliGame cannotMoveErrorMessage.
 ! !
 
-!TerniLapilliGameTest methodsFor: 'ilegal moves' stamp: 'IO 10/31/2020 19:37:37'!
-test23
+!TerniLapilliGameTest methodsFor: 'ilegal moves' stamp: 'LH 11/1/2020 13:56:08'!
+test25OCantMoveOnTheirFirstTurn
 	"o no puede mover en su primer turno"
 	| aGame |
 	aGame := TerniLapilliGame new.
@@ -327,8 +351,8 @@ test23
 
 	! !
 
-!TerniLapilliGameTest methodsFor: 'ilegal moves' stamp: 'IO 10/31/2020 20:59:54'!
-test24
+!TerniLapilliGameTest methodsFor: 'ilegal moves' stamp: 'LH 11/1/2020 13:56:57'!
+test26OCantMoveOnTheirSecondTurn
 	"o no puede mover en su segundo turno"
 	| aGame |
 	aGame := TerniLapilliGame new.
@@ -341,8 +365,8 @@ test24
 
 	! !
 
-!TerniLapilliGameTest methodsFor: 'ilegal moves' stamp: 'IO 10/31/2020 20:51:35'!
-test25
+!TerniLapilliGameTest methodsFor: 'ilegal moves' stamp: 'LH 11/1/2020 13:57:09'!
+test27OCantMoveOnTheirThirdTurn
 	"o no puede mover en su tercer turno"
 	| aGame |
 	aGame := TerniLapilliGame new.
@@ -357,8 +381,8 @@ test25
 
 	! !
 
-!TerniLapilliGameTest methodsFor: 'ilegal moves' stamp: 'IO 10/31/2020 21:00:09'!
-test26
+!TerniLapilliGameTest methodsFor: 'ilegal moves' stamp: 'LH 11/1/2020 13:57:36'!
+test28XCantPutAfterTheirThirdTurn
 	"x no puedo poner despues de su tercer turno"
 	| aGame |
 	aGame := self createGameInMovePhase.
@@ -367,8 +391,8 @@ test26
 
 	! !
 
-!TerniLapilliGameTest methodsFor: 'ilegal moves' stamp: 'IO 10/31/2020 21:00:17'!
-test27
+!TerniLapilliGameTest methodsFor: 'ilegal moves' stamp: 'LH 11/1/2020 13:57:55'!
+test29OCantPutAfterTheirThirdTurn
 	"o no puede poner despues de su tercer turno"
 	| aGame |
 	aGame := self createGameInMovePhase.
@@ -379,8 +403,8 @@ test27
 
 	! !
 
-!TerniLapilliGameTest methodsFor: 'ilegal moves' stamp: 'IO 10/31/2020 21:23:56'!
-test28
+!TerniLapilliGameTest methodsFor: 'ilegal moves' stamp: 'LH 11/1/2020 13:58:13'!
+test30OCantPutAfterXWon
 	"O no puede poner despues de que X gano"
 	| aGame |
 	aGame := TerniLapilliGame new.
@@ -394,8 +418,8 @@ test28
 	self should: [aGame oPutsOn: (2@2).] raise: Error withMessageText: TerniLapilliGame gameEndedErrorMessage.
 ! !
 
-!TerniLapilliGameTest methodsFor: 'ilegal moves' stamp: 'IO 10/31/2020 21:24:02'!
-test29
+!TerniLapilliGameTest methodsFor: 'ilegal moves' stamp: 'LH 11/1/2020 13:58:30'!
+test31OCantMoveAfterXWon
 	"O no puede mover despues de que X gano"
 	| aGame |
 	aGame := TerniLapilliGame new.
@@ -412,8 +436,8 @@ test29
 	self should: [aGame oMoves: (2@2) to: (1@2)] raise: Error withMessageText: TerniLapilliGame gameEndedErrorMessage.
 ! !
 
-!TerniLapilliGameTest methodsFor: 'ilegal moves' stamp: 'IO 10/31/2020 21:24:46'!
-test30
+!TerniLapilliGameTest methodsFor: 'ilegal moves' stamp: 'LH 11/1/2020 13:58:53'!
+test32XCantMoveAfterOWon
 	"X no puede mover despues de que O gano"
 	| aGame |
 	aGame := TerniLapilliGame new.
@@ -428,8 +452,8 @@ test30
 	self should: [aGame xMoves: (1@1) to: (0@1).] raise: Error withMessageText: TerniLapilliGame gameEndedErrorMessage.
 ! !
 
-!TerniLapilliGameTest methodsFor: 'ilegal moves' stamp: 'IO 10/31/2020 21:24:52'!
-test31
+!TerniLapilliGameTest methodsFor: 'ilegal moves' stamp: 'LH 11/1/2020 14:00:32'!
+test33XCantPutAfterOWon
 	"X no puede poner despues de que O gano"
 	| aGame |
 	aGame := TerniLapilliGame new.
@@ -445,20 +469,196 @@ test31
 ! !
 
 
-!TerniLapilliGameTest methodsFor: 'ilegal positions' stamp: 'IO 10/31/2020 21:28:11'!
-test32
+!TerniLapilliGameTest methodsFor: 'ilegal positions' stamp: 'LH 11/1/2020 14:10:25'!
+test34XCantPutInAnOccupiedSpace
 	"X no puede poner en un lugar ocupado"
 	
-	"
+
 	| aGame |
+	
 	aGame := TerniLapilliGame new.
 	
 	aGame xPutsOn: 0@0.
 	aGame oPutsOn: 2@0.
 
-	self should: [	aGame xPutsOn: 0@0.] raise: Error withMessageText: TerniLapilliGame gameEndedErrorMessage.
-	"
+	self should: [	aGame xPutsOn: 0@0.] raise: Error withMessageText: TerniLapilliGame cannotPutErrorMessage .
+	self should: [	aGame xPutsOn: 2@0.] raise: Error withMessageText: TerniLapilliGame cannotPutErrorMessage .
 ! !
+
+!TerniLapilliGameTest methodsFor: 'ilegal positions' stamp: 'LH 11/1/2020 14:11:29'!
+test35OCantPutInAnOccupiedSpace
+	"O no puede poner en un lugar ocupado"
+	
+
+	| aGame |
+	
+	aGame := TerniLapilliGame new.
+	
+	aGame xPutsOn: 0@0.
+	aGame oPutsOn: 0@1.
+	aGame xPutsOn: 0@2.
+
+	self should: [	aGame oPutsOn: 0@0.] raise: Error withMessageText: TerniLapilliGame cannotPutErrorMessage .
+	self should: [	aGame oPutsOn: 0@1.] raise: Error withMessageText: TerniLapilliGame cannotPutErrorMessage .
+! !
+
+!TerniLapilliGameTest methodsFor: 'ilegal positions' stamp: 'LH 11/1/2020 14:06:05'!
+test36XCantMoveToAnOccupiedSpace
+	"X no puede mover en un lugar ocupado"
+	
+
+	| aGame |
+	
+	aGame := self createGameInMovePhase .
+	
+	self should: [	aGame xMoves: 1@2 to: 2@1.] raise: Error withMessageText: TerniLapilliGame cannotMoveErrorMessage .
+! !
+
+!TerniLapilliGameTest methodsFor: 'ilegal positions' stamp: 'LH 11/1/2020 14:05:59'!
+test37OCantMoveToAnOccupiedSpace
+	"O no puede mover en un lugar ocupado"
+	
+
+	| aGame |
+	
+	aGame := self createGameInMovePhase .
+	aGame xMoves: 0@1 to: 0@0.
+	
+	self should: [	aGame oMoves: 2@1 to: 1@2.] raise: Error withMessageText: TerniLapilliGame cannotMoveErrorMessage .
+! !
+
+!TerniLapilliGameTest methodsFor: 'ilegal positions' stamp: 'LH 11/1/2020 14:06:47'!
+test38XCantPutOutsideTheBoardUnderXAxis
+	"X no puede poner afuera del tablero por x, por abajo"
+	
+
+	| aGame |
+	
+	aGame := TerniLapilliGame new.
+	
+	self should: [	aGame xPutsOn: -1@1.] raise: Error withMessageText: TerniLapilliGame cannotPutErrorMessage .
+! !
+
+!TerniLapilliGameTest methodsFor: 'ilegal positions' stamp: 'LH 11/1/2020 14:07:16'!
+test39XCantPutOutsideTheBoardAboveXAxis
+	"X no puede poner afuera del tablero por x, por arriba"
+	
+
+	| aGame |
+	
+	aGame := TerniLapilliGame new.
+	
+	self should: [	aGame xPutsOn: 3@1.] raise: Error withMessageText: TerniLapilliGame cannotPutErrorMessage .
+! !
+
+!TerniLapilliGameTest methodsFor: 'ilegal positions' stamp: 'LH 11/1/2020 14:08:01'!
+test40XCantPutOutsideTheBoardUnderNorAboveTheYAxis
+	"X no puede poner afuera del tablero por y"
+	
+
+	| aGame |
+	
+	aGame := TerniLapilliGame new.
+	
+	self should: [	aGame xPutsOn: 1@-1.] raise: Error withMessageText: TerniLapilliGame cannotPutErrorMessage .
+	self should: [	aGame xPutsOn: 1@3.] raise: Error withMessageText: TerniLapilliGame cannotPutErrorMessage .
+! !
+
+!TerniLapilliGameTest methodsFor: 'ilegal positions' stamp: 'LH 11/1/2020 14:15:20'!
+test41OCantPutOutsideTheBoard
+	"O no puede mover hacía afuera del tablero"
+	
+
+	| aGame |
+
+	aGame := TerniLapilliGame new.
+	aGame xPutsOn: 0@0.
+	
+	self should: [	aGame oPutsOn: 0@3.] raise: Error withMessageText: TerniLapilliGame cannotPutErrorMessage. 
+	self should: [	aGame oPutsOn: 0@-1.] raise: Error withMessageText: TerniLapilliGame cannotPutErrorMessage. 
+	self should: [	aGame oPutsOn: 3@0.] raise: Error withMessageText: TerniLapilliGame cannotPutErrorMessage. 
+	self should: [	aGame oPutsOn: -1@0.] raise: Error withMessageText: TerniLapilliGame cannotPutErrorMessage. 
+! !
+
+!TerniLapilliGameTest methodsFor: 'ilegal positions' stamp: 'LH 11/1/2020 14:17:37'!
+test42XCantMoveToOutsideTheBoard
+	"X no puede mover hacía afuera del tablero"
+	
+
+	| aGame |
+
+	aGame := self createGameInMovePhase .
+	
+	self should: [	aGame xMoves: 0@1 to: -1@1.] raise: Error withMessageText: TerniLapilliGame cannotMoveErrorMessage. 
+	self should: [	aGame xMoves: 0@1 to: 3@1.] raise: Error withMessageText: TerniLapilliGame cannotMoveErrorMessage. 
+	self should: [	aGame xMoves: 0@1 to: 1@-1.] raise: Error withMessageText: TerniLapilliGame cannotMoveErrorMessage. 
+	self should: [	aGame xMoves: 0@1 to: 1@3.] raise: Error withMessageText: TerniLapilliGame cannotMoveErrorMessage. 
+! !
+
+!TerniLapilliGameTest methodsFor: 'ilegal positions' stamp: 'LH 11/1/2020 14:18:35'!
+test43OCantMoveToOutsideTheBoard
+	"O no puede mover hacía afuera del tablero"
+	
+
+	| aGame |
+
+	aGame := self createGameInMovePhase .
+	aGame xMoves: 0@1 to: 0@0.
+	
+	self should: [	aGame oMoves: 0@2 to: -1@1.] raise: Error withMessageText: TerniLapilliGame cannotMoveErrorMessage. 
+	self should: [	aGame oMoves: 0@2 to: 3@1.] raise: Error withMessageText: TerniLapilliGame cannotMoveErrorMessage. 
+	self should: [	aGame oMoves: 0@2 to: 1@-1.] raise: Error withMessageText: TerniLapilliGame cannotMoveErrorMessage. 
+	self should: [	aGame oMoves: 0@2 to: 1@3.] raise: Error withMessageText: TerniLapilliGame cannotMoveErrorMessage. 
+	
+! !
+
+!TerniLapilliGameTest methodsFor: 'ilegal positions' stamp: 'LH 11/1/2020 14:21:09'!
+test44XCantMoveTokensThatDontBelongToThem
+	"X no puede mover fichas que no sea suyas"
+	
+
+	| aGame |
+
+	aGame := self createGameInMovePhase .
+	
+	self should: [	aGame xMoves: 0@2 to: 1@1.] raise: Error withMessageText: TerniLapilliGame cannotMoveErrorMessage.
+	self should: [	aGame xMoves: 3@2 to: 1@1.] raise: Error withMessageText: TerniLapilliGame cannotMoveErrorMessage.! !
+
+!TerniLapilliGameTest methodsFor: 'ilegal positions' stamp: 'LH 11/1/2020 14:21:22'!
+test45OCantMoveTokensThatDontBelongToThem
+	"O no puede mover fichas que no sea suyas"
+	
+
+	| aGame |
+
+	aGame := self createGameInMovePhase .
+	aGame xMoves: 0@1 to: 1@1.
+	
+	self should: [	aGame oMoves: 1@1 to: 0@1.] raise: Error withMessageText: TerniLapilliGame cannotMoveErrorMessage.
+	self should: [	aGame oMoves: 3@1 to: 0@1.] raise: Error withMessageText: TerniLapilliGame cannotMoveErrorMessage.! !
+
+!TerniLapilliGameTest methodsFor: 'ilegal positions' stamp: 'LH 11/1/2020 14:20:11'!
+test46XCantMoveaTokenOutsideItsNeighbors
+	"X no puede mover fichas hacia más de 1 vecinidad"
+	
+
+	| aGame |
+
+	aGame := self createGameInMovePhase .
+	
+	self should: [	aGame xMoves: 2@0 to: 0@0.] raise: Error withMessageText: TerniLapilliGame cannotMoveErrorMessage.! !
+
+!TerniLapilliGameTest methodsFor: 'ilegal positions' stamp: 'LH 11/1/2020 14:20:35'!
+test47OCantMoveATokenOutsideItsNeighbors
+	"O no puede mover fichas hacia más de 1 vecinidad"
+	
+
+	| aGame |
+
+	aGame := self createGameInMovePhase .
+	aGame xMoves: 0@1 to: 0@0.
+	
+	self should: [	aGame oMoves: 2@1 to: 0@1.] raise: Error withMessageText: TerniLapilliGame cannotMoveErrorMessage.! !
 
 
 !classDefinition: #TerniLapilliGame category: 'Terni Lapilli'!
@@ -473,6 +673,9 @@ initialize
 	state := TerniLapilliGameState new.
 ! !
 
+
+!TerniLapilliGame methodsFor: 'testing' stamp: 'LH 10/31/2020 22:01:52'!
+includesColorAt: aPosition	^(state includesColorOAt: aPosition) or: (state includesColorXAt: aPosition).! !
 
 !TerniLapilliGame methodsFor: 'testing' stamp: 'IO 10/31/2020 18:07:48'!
 includesColorOAt: aPosition 
@@ -495,24 +698,39 @@ xHasWon
 ! !
 
 
-!TerniLapilliGame methodsFor: 'moves' stamp: 'IO 10/31/2020 18:33:42'!
+!TerniLapilliGame methodsFor: 'moves' stamp: 'LH 11/1/2020 11:34:29'!
 oMoves: sourcePosition to: destinationPosition
+
+	(self includesColorAt: destinationPosition ) ifTrue:[^self error: TerniLapilliGame cannotMoveErrorMessage ] .
+	
 	state := state oMoves: sourcePosition to: destinationPosition.
 ! !
 
-!TerniLapilliGame methodsFor: 'moves' stamp: 'IO 10/31/2020 18:33:45'!
+!TerniLapilliGame methodsFor: 'moves' stamp: 'LH 11/1/2020 10:59:58'!
 oPutsOn: aPosition
+
+	(self includesColorAt: aPosition ) ifTrue:[^self error: TerniLapilliGame cannotPutErrorMessage ] .
+	
+	
 	state := state oPutsOn: aPosition.
 ! !
 
-!TerniLapilliGame methodsFor: 'moves' stamp: 'IO 10/31/2020 18:33:48'!
+!TerniLapilliGame methodsFor: 'moves' stamp: 'LH 11/1/2020 11:34:24'!
 xMoves: sourcePosition to: destinationPosition
-	state := state xMoves: sourcePosition to: destinationPosition.
 
+	(self includesColorAt: destinationPosition ) ifTrue:[^self error: TerniLapilliGame cannotMoveErrorMessage ] .
+
+	state := state xMoves: sourcePosition to: destinationPosition.
+	
+	
 ! !
 
-!TerniLapilliGame methodsFor: 'moves' stamp: 'IO 10/31/2020 18:33:50'!
+!TerniLapilliGame methodsFor: 'moves' stamp: 'LH 11/1/2020 10:59:53'!
 xPutsOn: aPosition
+
+	(self includesColorAt: aPosition ) ifTrue:[^self error: TerniLapilliGame cannotPutErrorMessage ] .
+	
+	
 	state := state xPutsOn: aPosition.
 ! !
 
@@ -628,9 +846,9 @@ errorIlegalTurn
 TerniLapilliGameState class
 	instanceVariableNames: ''!
 
-!TerniLapilliGameState class methodsFor: 'as yet unclassified' stamp: 'IO 10/31/2020 20:39:11'!
+!TerniLapilliGameState class methodsFor: 'as yet unclassified' stamp: 'LH 10/31/2020 21:53:19'!
 new
-	^TerniLapilliGameStatePutsX new.
+	^XIsPlacing new.
 ! !
 
 !TerniLapilliGameState class methodsFor: 'as yet unclassified' stamp: 'IO 10/31/2020 18:17:46'!
@@ -639,71 +857,72 @@ withXTokens: nextXTokens oTokens: nextOTokens.
 ! !
 
 
-!classDefinition: #TerniLapilliGameStateOver category: 'Terni Lapilli'!
-TerniLapilliGameState subclass: #TerniLapilliGameStateOver
+!classDefinition: #GameIsOver category: 'Terni Lapilli'!
+TerniLapilliGameState subclass: #GameIsOver
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'Terni Lapilli'!
 
-!TerniLapilliGameStateOver methodsFor: 'as yet unclassified' stamp: 'IO 10/31/2020 21:38:25'!
-errorGameEnded
-	^self error: TerniLapilliGame gameEndedErrorMessage.
-! !
-
-!TerniLapilliGameStateOver methodsFor: 'as yet unclassified' stamp: 'IO 10/31/2020 21:39:00'!
+!GameIsOver methodsFor: 'moves' stamp: 'IO 10/31/2020 21:39:00'!
 oMoves: sourcePosition to: destinationPosition
 	^self errorGameEnded.
 ! !
 
-!TerniLapilliGameStateOver methodsFor: 'as yet unclassified' stamp: 'IO 10/31/2020 21:38:58'!
+!GameIsOver methodsFor: 'moves' stamp: 'IO 10/31/2020 21:38:58'!
 oPutsOn: aPosition
 	^self errorGameEnded.
 ! !
 
-!TerniLapilliGameStateOver methodsFor: 'as yet unclassified' stamp: 'IO 10/31/2020 21:38:54'!
+!GameIsOver methodsFor: 'moves' stamp: 'IO 10/31/2020 21:38:54'!
 xMoves: sourcePosition to: destinationPosition
 	^self errorGameEnded.
 ! !
 
-!TerniLapilliGameStateOver methodsFor: 'as yet unclassified' stamp: 'IO 10/31/2020 21:38:08'!
+!GameIsOver methodsFor: 'moves' stamp: 'IO 10/31/2020 21:38:08'!
 xPutsOn: aPosition
 	^self errorGameEnded.
 ! !
 
+
+!GameIsOver methodsFor: 'error signaling' stamp: 'IO 10/31/2020 21:38:25'!
+errorGameEnded
+	^self error: TerniLapilliGame gameEndedErrorMessage.
+! !
+
 
-!classDefinition: #TerniLapilliGameStatePlaysO category: 'Terni Lapilli'!
-TerniLapilliGameState subclass: #TerniLapilliGameStatePlaysO
+!classDefinition: #OIsPlaying category: 'Terni Lapilli'!
+TerniLapilliGameState subclass: #OIsPlaying
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'Terni Lapilli'!
 
-!TerniLapilliGameStatePlaysO methodsFor: 'moves' stamp: 'IO 10/31/2020 20:49:23'!
+!OIsPlaying methodsFor: 'moves' stamp: 'IO 10/31/2020 20:49:23'!
 oMoves: sourcePosition to: destinationPosition
 	^self subclassResponsibility.
 ! !
 
-!TerniLapilliGameStatePlaysO methodsFor: 'moves' stamp: 'IO 10/31/2020 19:02:26'!
+!OIsPlaying methodsFor: 'moves' stamp: 'IO 10/31/2020 19:02:26'!
 oPutsOn: aPosition
 	oTokens add: aPosition.
 	^self passTurn.
 
 ! !
 
-!TerniLapilliGameStatePlaysO methodsFor: 'moves' stamp: 'IO 10/31/2020 19:02:15'!
+!OIsPlaying methodsFor: 'moves' stamp: 'LH 10/31/2020 21:52:30'!
 passTurn
-	^TerniLapilliGameStatePlaysX withXTokens: xTokens oTokens: oTokens.
+	^XIsPlaying withXTokens: xTokens oTokens: oTokens.
 
 ! !
 
-!TerniLapilliGameStatePlaysO methodsFor: 'moves' stamp: 'IO 10/31/2020 19:56:20'!
+!OIsPlaying methodsFor: 'moves' stamp: 'IO 10/31/2020 19:56:20'!
 xMoves: sourcePosition to: destinationPosition
 	self errorIlegalTurn.
 
 ! !
 
-!TerniLapilliGameStatePlaysO methodsFor: 'moves' stamp: 'IO 10/31/2020 19:56:20'!
+!OIsPlaying methodsFor: 'moves' stamp: 'IO 10/31/2020 19:56:20'!
 xPutsOn: aPosition
 	self errorIlegalTurn.
 
@@ -711,61 +930,61 @@ xPutsOn: aPosition
 
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
-!classDefinition: 'TerniLapilliGameStatePlaysO class' category: 'Terni Lapilli'!
-TerniLapilliGameStatePlaysO class
+!classDefinition: 'OIsPlaying class' category: 'Terni Lapilli'!
+OIsPlaying class
 	instanceVariableNames: ''!
 
-!TerniLapilliGameStatePlaysO class methodsFor: 'as yet unclassified' stamp: 'IO 10/31/2020 21:12:17'!
+!OIsPlaying class methodsFor: 'as yet unclassified' stamp: 'LH 11/1/2020 10:50:59'!
 withXTokens: nextXTokens oTokens: nextOTokens
-	(nextXTokens areInWinningPosition) ifTrue: [^TerniLapilliGameStateOver withXTokens: nextXTokens oTokens: nextOTokens].
-	(nextOTokens size < 3) ifTrue: [^TerniLapilliGameStatePutsO withXTokens: nextXTokens oTokens: nextOTokens].
-	^TerniLapilliGameStateMovesO withXTokens: nextXTokens oTokens: nextOTokens.
+	(nextXTokens areInWinningPosition) ifTrue: [^GameIsOver withXTokens: nextXTokens oTokens: nextOTokens].
+	(nextOTokens size < 3) ifTrue: [^OIsPlacing withXTokens: nextXTokens oTokens: nextOTokens].
+	^OIsMoving withXTokens: nextXTokens oTokens: nextOTokens.
 ! !
 
 
-!classDefinition: #TerniLapilliGameStateMovesO category: 'Terni Lapilli'!
-TerniLapilliGameStatePlaysO subclass: #TerniLapilliGameStateMovesO
+!classDefinition: #OIsMoving category: 'Terni Lapilli'!
+OIsPlaying subclass: #OIsMoving
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'Terni Lapilli'!
 
-!TerniLapilliGameStateMovesO methodsFor: 'as yet unclassified' stamp: 'IO 10/31/2020 20:48:04'!
+!OIsMoving methodsFor: 'moves' stamp: 'IO 10/31/2020 20:48:04'!
 oMoves: sourcePosition to: destinationPosition
 	oTokens move: sourcePosition to: destinationPosition.
 	^self passTurn.
 
 ! !
 
-!TerniLapilliGameStateMovesO methodsFor: 'as yet unclassified' stamp: 'IO 10/31/2020 21:34:35'!
+!OIsMoving methodsFor: 'moves' stamp: 'IO 10/31/2020 21:34:35'!
 oPutsOn: aPosition
 	^self errorCannotPut.
 ! !
 
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
-!classDefinition: 'TerniLapilliGameStateMovesO class' category: 'Terni Lapilli'!
-TerniLapilliGameStateMovesO class
+!classDefinition: 'OIsMoving class' category: 'Terni Lapilli'!
+OIsMoving class
 	instanceVariableNames: ''!
 
-!TerniLapilliGameStateMovesO class methodsFor: 'as yet unclassified' stamp: 'IO 10/31/2020 20:50:11'!
+!OIsMoving class methodsFor: 'as yet unclassified' stamp: 'IO 10/31/2020 20:50:11'!
 withXTokens: nextXTokens oTokens: nextOTokens
 	^self basicNew intializeWithXTokens: nextXTokens oTokens: nextOTokens.
 ! !
 
 
-!classDefinition: #TerniLapilliGameStatePutsO category: 'Terni Lapilli'!
-TerniLapilliGameStatePlaysO subclass: #TerniLapilliGameStatePutsO
+!classDefinition: #OIsPlacing category: 'Terni Lapilli'!
+OIsPlaying subclass: #OIsPlacing
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'Terni Lapilli'!
 
-!TerniLapilliGameStatePutsO methodsFor: 'as yet unclassified' stamp: 'IO 10/31/2020 21:35:10'!
+!OIsPlacing methodsFor: 'moves' stamp: 'IO 10/31/2020 21:35:10'!
 oMoves: sourcePosition to: destinationPosition
 	^self errorCannotMove.! !
 
-!TerniLapilliGameStatePutsO methodsFor: 'as yet unclassified' stamp: 'IO 10/31/2020 21:11:33'!
+!OIsPlacing methodsFor: 'moves' stamp: 'IO 10/31/2020 21:11:33'!
 oPutsOn: aPosition
 	oTokens add: aPosition.
 	^self passTurn.
@@ -773,91 +992,94 @@ oPutsOn: aPosition
 
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
-!classDefinition: 'TerniLapilliGameStatePutsO class' category: 'Terni Lapilli'!
-TerniLapilliGameStatePutsO class
+!classDefinition: 'OIsPlacing class' category: 'Terni Lapilli'!
+OIsPlacing class
 	instanceVariableNames: ''!
 
-!TerniLapilliGameStatePutsO class methodsFor: 'as yet unclassified' stamp: 'IO 10/31/2020 20:49:55'!
+!OIsPlacing class methodsFor: 'as yet unclassified' stamp: 'IO 10/31/2020 20:49:55'!
 withXTokens: nextXTokens oTokens: nextOTokens
 	^self basicNew intializeWithXTokens: nextXTokens oTokens: nextOTokens.! !
 
 
-!classDefinition: #TerniLapilliGameStatePlaysX category: 'Terni Lapilli'!
-TerniLapilliGameState subclass: #TerniLapilliGameStatePlaysX
+!classDefinition: #XIsPlaying category: 'Terni Lapilli'!
+TerniLapilliGameState subclass: #XIsPlaying
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'Terni Lapilli'!
 
-!TerniLapilliGameStatePlaysX methodsFor: 'initializtion' stamp: 'IO 10/31/2020 18:30:39'!
+!XIsPlaying methodsFor: 'initializtion' stamp: 'IO 10/31/2020 18:30:39'!
 initialize
 	xTokens := TerniLapilliPlayerTokens new.
 	oTokens := TerniLapilliPlayerTokens new.
 ! !
 
 
-!TerniLapilliGameStatePlaysX methodsFor: 'moves' stamp: 'IO 10/31/2020 19:56:20'!
+!XIsPlaying methodsFor: 'moves' stamp: 'IO 10/31/2020 19:56:20'!
 oMoves: sourcePosition to: destinationPosition
 	self errorIlegalTurn.
 ! !
 
-!TerniLapilliGameStatePlaysX methodsFor: 'moves' stamp: 'IO 10/31/2020 19:56:20'!
+!XIsPlaying methodsFor: 'moves' stamp: 'IO 10/31/2020 19:56:20'!
 oPutsOn: aPosition
 	self errorIlegalTurn.
 
 ! !
 
-!TerniLapilliGameStatePlaysX methodsFor: 'moves' stamp: 'IO 10/31/2020 19:02:56'!
+!XIsPlaying methodsFor: 'moves' stamp: 'LH 10/31/2020 21:51:49'!
 passTurn
-	^TerniLapilliGameStatePlaysO withXTokens: xTokens oTokens: oTokens.
+	^OIsPlaying withXTokens: xTokens oTokens: oTokens.
 ! !
 
-!TerniLapilliGameStatePlaysX methodsFor: 'moves' stamp: 'IO 10/31/2020 21:36:24'!
+!XIsPlaying methodsFor: 'moves' stamp: 'IO 10/31/2020 21:36:24'!
 xMoves: sourcePosition to: destinationPosition
 	^self subclassResponsibility.
 
 
 ! !
 
-!TerniLapilliGameStatePlaysX methodsFor: 'moves' stamp: 'IO 10/31/2020 20:54:38'!
+!XIsPlaying methodsFor: 'moves' stamp: 'IO 10/31/2020 20:54:38'!
 xPutsOn: aPosition
 	^self subclassResponsibility.
 ! !
 
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
-!classDefinition: 'TerniLapilliGameStatePlaysX class' category: 'Terni Lapilli'!
-TerniLapilliGameStatePlaysX class
+!classDefinition: 'XIsPlaying class' category: 'Terni Lapilli'!
+XIsPlaying class
 	instanceVariableNames: ''!
 
-!TerniLapilliGameStatePlaysX class methodsFor: 'as yet unclassified' stamp: 'IO 10/31/2020 18:04:44'!
+!XIsPlaying class methodsFor: 'instance creation' stamp: 'IO 10/31/2020 18:04:44'!
 new
 	^self basicNew initialize.
 ! !
 
-!TerniLapilliGameStatePlaysX class methodsFor: 'as yet unclassified' stamp: 'IO 10/31/2020 21:22:09'!
+!XIsPlaying class methodsFor: 'instance creation' stamp: 'LH 11/1/2020 12:44:26'!
 withXTokens: nextXTokens oTokens: nextOTokens
-	(nextOTokens areInWinningPosition) ifTrue: [^TerniLapilliGameStateOver withXTokens: nextXTokens oTokens: nextOTokens].
-	(nextXTokens size < 3) ifTrue: [^TerniLapilliGameStatePutsX withXTokens: nextXTokens oTokens: nextOTokens].
-	^TerniLapilliGameStateMovesX withXTokens: nextXTokens oTokens: nextOTokens.
+	(nextOTokens areInWinningPosition) ifTrue: [^GameIsOver withXTokens: nextXTokens oTokens: nextOTokens].
+	
+	(nextXTokens size < 3) ifTrue: [^XIsPlacing withXTokens: nextXTokens oTokens: nextOTokens].
+	
+	^XIsMoving withXTokens: nextXTokens oTokens: nextOTokens.
+	
 ! !
 
 
-!classDefinition: #TerniLapilliGameStateMovesX category: 'Terni Lapilli'!
-TerniLapilliGameStatePlaysX subclass: #TerniLapilliGameStateMovesX
+!classDefinition: #XIsMoving category: 'Terni Lapilli'!
+XIsPlaying subclass: #XIsMoving
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'Terni Lapilli'!
 
-!TerniLapilliGameStateMovesX methodsFor: 'as yet unclassified' stamp: 'IO 10/31/2020 21:35:36'!
+!XIsMoving methodsFor: 'moves' stamp: 'IO 10/31/2020 21:35:36'!
 xMoves: sourcePosition to: destinationPosition
 	xTokens move: sourcePosition to: destinationPosition.
 	^self passTurn.
 
 ! !
 
-!TerniLapilliGameStateMovesX methodsFor: 'as yet unclassified' stamp: 'IO 10/31/2020 21:35:46'!
+!XIsMoving methodsFor: 'moves' stamp: 'IO 10/31/2020 21:35:46'!
 xPutsOn: aPosition
 	^self errorCannotPut.
 
@@ -866,29 +1088,29 @@ xPutsOn: aPosition
 
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
-!classDefinition: 'TerniLapilliGameStateMovesX class' category: 'Terni Lapilli'!
-TerniLapilliGameStateMovesX class
+!classDefinition: 'XIsMoving class' category: 'Terni Lapilli'!
+XIsMoving class
 	instanceVariableNames: ''!
 
-!TerniLapilliGameStateMovesX class methodsFor: 'as yet unclassified' stamp: 'IO 10/31/2020 20:30:34'!
+!XIsMoving class methodsFor: 'as yet unclassified' stamp: 'IO 10/31/2020 20:30:34'!
 withXTokens: nextXTokens oTokens: nextOTokens
 	^self basicNew intializeWithXTokens: nextXTokens oTokens: nextOTokens.! !
 
 
-!classDefinition: #TerniLapilliGameStatePutsX category: 'Terni Lapilli'!
-TerniLapilliGameStatePlaysX subclass: #TerniLapilliGameStatePutsX
+!classDefinition: #XIsPlacing category: 'Terni Lapilli'!
+XIsPlaying subclass: #XIsPlacing
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'Terni Lapilli'!
 
-!TerniLapilliGameStatePutsX methodsFor: 'as yet unclassified' stamp: 'IO 10/31/2020 21:35:57'!
+!XIsPlacing methodsFor: 'moves' stamp: 'IO 10/31/2020 21:35:57'!
 xMoves: sourcePosition to: destinationPosition
 	^self errorCannotMove.
 
 ! !
 
-!TerniLapilliGameStatePutsX methodsFor: 'as yet unclassified' stamp: 'IO 10/31/2020 20:54:04'!
+!XIsPlacing methodsFor: 'moves' stamp: 'IO 10/31/2020 20:54:04'!
 xPutsOn: aPosition
 	xTokens add: aPosition.
 	^self passTurn.
@@ -896,11 +1118,11 @@ xPutsOn: aPosition
 
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
-!classDefinition: 'TerniLapilliGameStatePutsX class' category: 'Terni Lapilli'!
-TerniLapilliGameStatePutsX class
+!classDefinition: 'XIsPlacing class' category: 'Terni Lapilli'!
+XIsPlacing class
 	instanceVariableNames: ''!
 
-!TerniLapilliGameStatePutsX class methodsFor: 'as yet unclassified' stamp: 'IO 10/31/2020 20:30:51'!
+!XIsPlacing class methodsFor: 'as yet unclassified' stamp: 'IO 10/31/2020 20:30:51'!
 withXTokens: nextXTokens oTokens: nextOTokens
 	^self basicNew intializeWithXTokens: nextXTokens oTokens: nextOTokens.! !
 
@@ -912,13 +1134,18 @@ Object subclass: #TerniLapilliPlayerTokens
 	poolDictionaries: ''
 	category: 'Terni Lapilli'!
 
-!TerniLapilliPlayerTokens methodsFor: 'moves' stamp: 'IO 10/31/2020 11:34:15'!
+!TerniLapilliPlayerTokens methodsFor: 'moves' stamp: 'LH 11/1/2020 13:18:21'!
 add: aPosition
+
+	self validateIsInBoard: aPosition withErrorMessage: TerniLapilliGame cannotPutErrorMessage.
 
 	tokens add: aPosition.! !
 
-!TerniLapilliPlayerTokens methodsFor: 'moves' stamp: 'IO 10/31/2020 11:34:15'!
+!TerniLapilliPlayerTokens methodsFor: 'moves' stamp: 'LH 11/1/2020 13:25:50'!
 move: sourcePosition to: destinationPosition
+
+	self validateIsLegalMoveFrom: sourcePosition to: destinationPosition.
+
 	tokens remove: sourcePosition.
 	tokens add: destinationPosition.! !
 
@@ -973,6 +1200,26 @@ size
 !TerniLapilliPlayerTokens methodsFor: 'initializtion' stamp: 'IO 10/31/2020 11:34:15'!
 initialize
 	tokens := Set new.! !
+
+
+!TerniLapilliPlayerTokens methodsFor: 'validations' stamp: 'LH 11/1/2020 13:17:19'!
+validateIsInBoard: aPosition withErrorMessage: errorMessage
+
+	aPosition x < 3 ifFalse:[^self error: errorMessage ].
+	aPosition x >= 0 ifFalse:[^self error: errorMessage ].
+	aPosition y < 3 ifFalse:[^self error: errorMessage ].
+	aPosition y >= 0 ifFalse:[^self error: errorMessage ].! !
+
+!TerniLapilliPlayerTokens methodsFor: 'validations' stamp: 'LH 11/1/2020 13:25:09'!
+validateIsLegalMoveFrom: sourcePosition to: destinationPosition
+
+	(self includes: sourcePosition ) ifFalse:[^self error: TerniLapilliGame cannotMoveErrorMessage ] .
+
+	(sourcePosition eightNeighbors includes: destinationPosition) ifFalse: [^self error: TerniLapilliGame cannotMoveErrorMessage ] .
+	
+	
+	self validateIsInBoard: destinationPosition withErrorMessage: TerniLapilliGame cannotMoveErrorMessage.
+! !
 
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
