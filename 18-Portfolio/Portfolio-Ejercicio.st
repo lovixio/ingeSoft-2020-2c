@@ -1,4 +1,98 @@
-!classDefinition: #ReceptiveAccountTest category: #'Portfolio-Ejercicio'!
+!classDefinition: #PortfolioTest category: 'Portfolio-Ejercicio'!
+TestCase subclass: #PortfolioTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Portfolio-Ejercicio'!
+
+!PortfolioTest methodsFor: 'tests' stamp: 'LH 11/2/2020 20:58:28'!
+test01AnAccountCanBeAddedToAPortfolio
+	|anAccount aPortfolio|
+	
+	anAccount :=  ReceptiveAccount new.
+	Deposit register: 100 on: anAccount.
+	
+	aPortfolio := Portfolio new.
+	aPortfolio addAccount: anAccount.
+	
+	self assert: (aPortfolio includesAccount: anAccount).
+! !
+
+!PortfolioTest methodsFor: 'tests' stamp: 'LH 11/2/2020 20:58:52'!
+test02APortfolioDoesNotHaveMoreAccountsThanAdded
+	|anAccount1 anAccount2 aPortfolio|
+	
+	anAccount1 :=  ReceptiveAccount new.
+	Deposit register: 100 on: anAccount1.
+	anAccount2 :=  ReceptiveAccount new.
+	Deposit register: 200 on: anAccount2.
+	
+	aPortfolio := Portfolio new.
+	aPortfolio addAccount: anAccount1.
+	
+	self assert: (aPortfolio includesAccount: anAccount1).
+	self deny: (aPortfolio includesAccount: anAccount2).
+! !
+
+!PortfolioTest methodsFor: 'tests' stamp: 'LH 11/2/2020 20:59:00'!
+test03MoreThanOneAccountCanBeAddedToAPortfolio
+	|anAccount1 anAccount2 aPortfolio|
+	
+	anAccount1 :=  ReceptiveAccount new.
+	Deposit register: 100 on: anAccount1.
+	anAccount2 :=  ReceptiveAccount new.
+	Deposit register: 200 on: anAccount2.
+	
+	aPortfolio := Portfolio new.
+	aPortfolio addAccount: anAccount1.
+	aPortfolio addAccount: anAccount2.
+	
+	self assert: (aPortfolio includesAccount: anAccount1).
+	self assert: (aPortfolio includesAccount: anAccount2).
+! !
+
+!PortfolioTest methodsFor: 'tests' stamp: 'LH 11/2/2020 20:52:15'!
+test04AnEmptyPortfolioHasABalanceOf0
+	|aPortfolio|
+	
+	aPortfolio := Portfolio new.
+	
+	self assert: 0 equals: aPortfolio balance.
+! !
+
+!PortfolioTest methodsFor: 'tests' stamp: 'LH 11/2/2020 20:58:07'!
+test05APortfolioWithOneAccountShouldHaveABalanceEqualToThatOfTheAccount
+	|aPortfolio anAccount|
+	
+	anAccount :=  ReceptiveAccount new.
+	Deposit register: 100 on: anAccount.
+	aPortfolio := Portfolio new.
+	
+	aPortfolio addAccount: anAccount.
+	
+	self assert: anAccount balance equals: aPortfolio balance.
+! !
+
+!PortfolioTest methodsFor: 'tests' stamp: 'LH 11/2/2020 21:14:26'!
+test06APortfolioWithManyAccountsShouldHaveABalanceEqualToTheSumOfItsAccounts
+	|aPortfolio anAccount1 anAccount2|
+	
+	anAccount1 :=  ReceptiveAccount new.
+	Deposit register: 100 on: anAccount1.
+	anAccount2 :=  ReceptiveAccount new.
+	Deposit register: 200 on: anAccount2.
+	aPortfolio := Portfolio new.
+	
+	aPortfolio addAccount: anAccount1.
+	aPortfolio addAccount: anAccount2.
+	
+	self 
+		assert: (anAccount1 balance + anAccount2 balance)
+		equals: aPortfolio balance.
+! !
+
+
+!classDefinition: #ReceptiveAccountTest category: 'Portfolio-Ejercicio'!
 TestCase subclass: #ReceptiveAccountTest
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -89,21 +183,32 @@ test07AccountKnowsItsTransactions
 ! !
 
 
-!classDefinition: #AccountTransaction category: #'Portfolio-Ejercicio'!
+!classDefinition: #AccountTransaction category: 'Portfolio-Ejercicio'!
 Object subclass: #AccountTransaction
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'Portfolio-Ejercicio'!
 
+!AccountTransaction methodsFor: 'value' stamp: 'LH 11/2/2020 19:27:17'!
+balanceValue
+	"returns the value as how it impacts the balance of an account"
+	
+	self subclassResponsibility ! !
+
 !AccountTransaction methodsFor: 'value' stamp: 'HernanWilkinson 9/12/2011 12:25'!
 value 
 
 	self subclassResponsibility ! !
 
+
+!AccountTransaction methodsFor: 'balance operations' stamp: 'LH 11/2/2020 20:37:15'!
+addToBalance: aBalance 
+	self subclassResponsibility ! !
+
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
-!classDefinition: 'AccountTransaction class' category: #'Portfolio-Ejercicio'!
+!classDefinition: 'AccountTransaction class' category: 'Portfolio-Ejercicio'!
 AccountTransaction class
 	instanceVariableNames: ''!
 
@@ -118,7 +223,7 @@ register: aValue on: account
 	^ transaction! !
 
 
-!classDefinition: #Deposit category: #'Portfolio-Ejercicio'!
+!classDefinition: #Deposit category: 'Portfolio-Ejercicio'!
 AccountTransaction subclass: #Deposit
 	instanceVariableNames: 'value'
 	classVariableNames: ''
@@ -131,14 +236,27 @@ initializeFor: aValue
 	value := aValue ! !
 
 
+!Deposit methodsFor: 'value' stamp: 'LH 11/2/2020 19:27:39'!
+balanceValue
+	"see superclass"
+
+	^ value.! !
+
 !Deposit methodsFor: 'value' stamp: 'HernanWilkinson 7/13/2011 18:38'!
 value
 
 	^ value! !
 
+
+!Deposit methodsFor: 'balance operations' stamp: 'LH 11/2/2020 20:39:54'!
+addToBalance: aBalance
+	"see superclass"
+
+	^aBalance + value.! !
+
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
-!classDefinition: 'Deposit class' category: #'Portfolio-Ejercicio'!
+!classDefinition: 'Deposit class' category: 'Portfolio-Ejercicio'!
 Deposit class
 	instanceVariableNames: ''!
 
@@ -148,7 +266,7 @@ for: aValue
 	^ self new initializeFor: aValue ! !
 
 
-!classDefinition: #Withdraw category: #'Portfolio-Ejercicio'!
+!classDefinition: #Withdraw category: 'Portfolio-Ejercicio'!
 AccountTransaction subclass: #Withdraw
 	instanceVariableNames: 'value'
 	classVariableNames: ''
@@ -161,14 +279,26 @@ initializeFor: aValue
 	value := aValue ! !
 
 
+!Withdraw methodsFor: 'value' stamp: 'LH 11/2/2020 19:27:46'!
+balanceValue
+	"see superclass"
+	
+	^value negated.! !
+
 !Withdraw methodsFor: 'value' stamp: 'HernanWilkinson 7/13/2011 18:33'!
 value
 
 	^ value! !
 
+
+!Withdraw methodsFor: 'balance operations' stamp: 'LH 11/2/2020 20:38:33'!
+addToBalance: aBalance
+
+	^aBalance - value.! !
+
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
-!classDefinition: 'Withdraw class' category: #'Portfolio-Ejercicio'!
+!classDefinition: 'Withdraw class' category: 'Portfolio-Ejercicio'!
 Withdraw class
 	instanceVariableNames: ''!
 
@@ -178,7 +308,40 @@ for: aValue
 	^ self new initializeFor: aValue ! !
 
 
-!classDefinition: #ReceptiveAccount category: #'Portfolio-Ejercicio'!
+!classDefinition: #Portfolio category: 'Portfolio-Ejercicio'!
+Object subclass: #Portfolio
+	instanceVariableNames: 'accounts'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Portfolio-Ejercicio'!
+
+!Portfolio methodsFor: 'adding' stamp: 'LH 11/2/2020 20:47:27'!
+addAccount: anAccount
+
+	accounts add: anAccount.! !
+
+
+!Portfolio methodsFor: 'testing' stamp: 'LH 11/2/2020 20:49:20'!
+includesAccount: anAccount 
+
+	^accounts includes: anAccount.! !
+
+
+!Portfolio methodsFor: 'initialization' stamp: 'LH 11/2/2020 20:48:50'!
+initialize
+
+	accounts := OrderedCollection new.! !
+
+
+!Portfolio methodsFor: 'accesing' stamp: 'LH 11/2/2020 21:15:50'!
+balance
+	|aBalance|
+	aBalance := 0.
+	accounts do: [:anAccount | aBalance:= aBalance + anAccount balance].
+	^aBalance.! !
+
+
+!classDefinition: #ReceptiveAccount category: 'Portfolio-Ejercicio'!
 Object subclass: #ReceptiveAccount
 	instanceVariableNames: 'transactions'
 	classVariableNames: ''
@@ -203,10 +366,16 @@ transactions
 	^ transactions copy! !
 
 
-!ReceptiveAccount methodsFor: 'balance' stamp: 'HAW 5/23/2019 15:19:32'!
+!ReceptiveAccount methodsFor: 'balance' stamp: 'LH 11/2/2020 20:40:03'!
 balance
-
-	^transactions sum: [ :aTransaction | aTransaction value ] ifEmpty: [ 0 ]! !
+	|aBalance|
+	aBalance := 0.
+	transactions do: [ :aTransaction |aBalance:= aTransaction addToBalance: aBalance].
+	^aBalance
+	
+	"
+	^transactions sum: [ :aTransaction | aTransaction balanceValue] ifEmpty: [ 0 ]
+	"! !
 
 
 !ReceptiveAccount methodsFor: 'testing' stamp: 'NR 10/17/2019 03:28:43'!
