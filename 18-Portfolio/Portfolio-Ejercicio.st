@@ -5,7 +5,6 @@ TestCase subclass: #PortfolioTest
 	poolDictionaries: ''
 	category: 'Portfolio-Ejercicio'!
 
-
 !PortfolioTest methodsFor: 'accounts in portfolios' stamp: 'IO 11/5/2020 14:37:14'!
 test01AnAccountCanBeAddedToAPortfolio
 
@@ -104,8 +103,8 @@ test06
 	self assert: (portfolio1 includesPortfolio: portfolio2).
 ! !
 
-!PortfolioTest methodsFor: 'portfolios in portfolios' stamp: 'IO 11/5/2020 14:51:29'!
-test08
+!PortfolioTest methodsFor: 'portfolios in portfolios' stamp: 'LH 11/7/2020 11:09:53'!
+test07
 	
 	"a un portfolio se le puede agregar mas de un portfolio sin cuentas"
 	
@@ -122,8 +121,8 @@ test08
 	self assert: (portfolio1 includesPortfolio: portfolio3).
 ! !
 
-!PortfolioTest methodsFor: 'portfolios in portfolios' stamp: 'IO 11/5/2020 15:00:18'!
-test09
+!PortfolioTest methodsFor: 'portfolios in portfolios' stamp: 'LH 11/7/2020 11:09:58'!
+test08
 	
 	"a un portfolio se le pueden agregar portfolios"
 	
@@ -154,8 +153,8 @@ test09
 	self assert: (portfolio1 includesAccount: account4).
 ! !
 
-!PortfolioTest methodsFor: 'portfolios in portfolios' stamp: 'IO 11/5/2020 15:12:58'!
-test10
+!PortfolioTest methodsFor: 'portfolios in portfolios' stamp: 'LH 11/7/2020 11:10:02'!
+test09
 	
 	"a un portfolio se le pueden agregar portfolios con portfolios"
 	
@@ -172,8 +171,8 @@ test10
 
 ! !
 
-!PortfolioTest methodsFor: 'portfolios in portfolios' stamp: 'IO 11/5/2020 15:12:06'!
-test11
+!PortfolioTest methodsFor: 'portfolios in portfolios' stamp: 'LH 11/7/2020 11:10:07'!
+test10
 	
 	"no pueden haber cuentas repetidas en un portfolio"
 	
@@ -192,8 +191,8 @@ test11
 
 ! !
 
-!PortfolioTest methodsFor: 'portfolios in portfolios' stamp: 'IO 11/5/2020 15:12:04'!
-test12
+!PortfolioTest methodsFor: 'portfolios in portfolios' stamp: 'LH 11/7/2020 11:10:18'!
+test11
 	
 	"no pueden haber prtfolios repetidos en un portfolio"
 	
@@ -211,11 +210,11 @@ test12
 ! !
 
 
-!PortfolioTest methodsFor: 'invalid topolgies adding accounts in child portfolios' stamp: 'IO 11/7/2020 10:38:12'!
-test13
+!PortfolioTest methodsFor: 'invalid topolgies adding accounts in child portfolios' stamp: 'LH 11/7/2020 11:10:26'!
+test12
 	
 	"no se pueden agregar una cueanta a un portfolio (hijo) de un portfolio (padre), cuando la cuenta ya estaba en el portfolio (padre)"
-	"
+	
 	| portfolio1 portfolio2 account1 |
 	
 	portfolio1 := Portfolio new.
@@ -227,7 +226,46 @@ test13
 	portfolio1 addPortfolio: portfolio2.
 
 	self should: [	portfolio2 addAccount: account1.] raise: Error withMessageText: Portfolio errorMessageAccountAlreadyAdded.
-	"
+! !
+
+!PortfolioTest methodsFor: 'invalid topolgies adding accounts in child portfolios' stamp: 'LH 11/7/2020 11:10:29'!
+test13
+	
+	"no se pueden agregar una cueanta a un portfolio (hijo) de un portfolio (padre), cuando la cuenta ya estaba en el portfolio (padre), con varios padres"
+	
+	| portfolio1 portfolio2 portfolio3 account1 |
+	
+	portfolio1 := Portfolio new.
+	portfolio2 := Portfolio new.
+	portfolio3 := Portfolio new.
+	
+	account1 := ReceptiveAccount new.
+	
+	portfolio2 addAccount: account1.
+	portfolio2 addPortfolio: portfolio3.
+	portfolio1 addPortfolio: portfolio3.
+
+	self should: [	portfolio3 addAccount: account1.] raise: Error withMessageText: Portfolio errorMessageAccountAlreadyAdded.
+! !
+
+!PortfolioTest methodsFor: 'invalid topolgies adding accounts in child portfolios' stamp: 'LH 11/7/2020 11:18:05'!
+test14
+	
+	"no se pueden agregar una cueanta a un hijo si esa cuenta está en el padre de su padre"
+	
+	| portfolio1 portfolio2 portfolio3 account1 |
+	
+	portfolio1 := Portfolio new.
+	portfolio2 := Portfolio new.
+	portfolio3 := Portfolio new.
+	
+	account1 := ReceptiveAccount new.
+	
+	portfolio1 addAccount: account1.
+	portfolio1 addPortfolio: portfolio2.
+	portfolio2 addPortfolio: portfolio3.
+
+	self should: [	portfolio3 addAccount: account1.] raise: Error withMessageText: Portfolio errorMessageAccountAlreadyAdded.
 ! !
 
 
@@ -449,23 +487,32 @@ for: aValue
 
 !classDefinition: #Portfolio category: 'Portfolio-Ejercicio'!
 Object subclass: #Portfolio
-	instanceVariableNames: 'accounts portfolios'
+	instanceVariableNames: 'accounts portfolios fatherPortfolios'
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'Portfolio-Ejercicio'!
 
-!Portfolio methodsFor: 'initialization' stamp: 'IO 11/5/2020 14:48:39'!
+!Portfolio methodsFor: 'initialization' stamp: 'LH 11/7/2020 11:03:37'!
 initialize
 
 	accounts := OrderedCollection new.
-	portfolios := OrderedCollection new.! !
+	portfolios := OrderedCollection new.
+	
+	fatherPortfolios := OrderedCollection new.
+	! !
 
 
-!Portfolio methodsFor: 'portfolios' stamp: 'IO 11/5/2020 15:13:55'!
+!Portfolio methodsFor: 'portfolios' stamp: 'LH 11/7/2020 11:06:18'!
+addAsFather: aPortfolio 
+
+	fatherPortfolios add: aPortfolio.! !
+
+!Portfolio methodsFor: 'portfolios' stamp: 'LH 11/7/2020 10:51:34'!
 addPortfolio: aPortfolio
 	(self includesPortfolio: aPortfolio) ifTrue: [self error: Portfolio errorMessagePortfolioAlreadyAdded].
+	
 	portfolios add: aPortfolio.
-
+	aPortfolio addAsFather: self. 
 ! !
 
 !Portfolio methodsFor: 'portfolios' stamp: 'IO 11/5/2020 15:13:35'!
@@ -477,10 +524,11 @@ includesPortfolio: aPortfolio
 ! !
 
 
-!Portfolio methodsFor: 'accounts' stamp: 'IO 11/5/2020 15:07:59'!
+!Portfolio methodsFor: 'accounts' stamp: 'LH 11/7/2020 11:41:33'!
 addAccount: anAccount
 
-	(self includesAccount: anAccount) ifTrue: [^self error: Portfolio errorMessageAccountAlreadyAdded].
+	self validateAccountNotInParents: anAccount.
+	
 	accounts add: anAccount.! !
 
 !Portfolio methodsFor: 'accounts' stamp: 'IO 11/5/2020 15:07:22'!
@@ -488,6 +536,20 @@ includesAccount: anAccount
 
 	portfolios do: [ :portfolio | (portfolio includesAccount: anAccount) ifTrue: [^true]].
 	^accounts includes: anAccount.! !
+
+
+!Portfolio methodsFor: 'validations' stamp: 'LH 11/7/2020 11:13:47'!
+validateAccountNotAlredyAdded: anAccount
+
+
+	(self includesAccount: anAccount) ifTrue: [^self error: Portfolio errorMessageAccountAlreadyAdded].
+! !
+
+!Portfolio methodsFor: 'validations' stamp: 'LH 11/7/2020 11:36:26'!
+validateAccountNotInParents: anAccount
+	
+	self validateAccountNotAlredyAdded: anAccount.
+	fatherPortfolios do: [:aPortfolio | aPortfolio validateAccountNotInParents: anAccount].! !
 
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
