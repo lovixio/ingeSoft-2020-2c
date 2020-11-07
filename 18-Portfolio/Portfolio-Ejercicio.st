@@ -5,8 +5,12 @@ TestCase subclass: #PortfolioTest
 	poolDictionaries: ''
 	category: 'Portfolio-Ejercicio'!
 
-!PortfolioTest methodsFor: 'tests' stamp: 'LH 11/2/2020 20:58:28'!
+
+!PortfolioTest methodsFor: 'accounts in portfolios' stamp: 'IO 11/5/2020 14:37:14'!
 test01AnAccountCanBeAddedToAPortfolio
+
+	"una cuenta puede ser agregada a un prtfolio"
+
 	|anAccount aPortfolio|
 	
 	anAccount :=  ReceptiveAccount new.
@@ -18,8 +22,26 @@ test01AnAccountCanBeAddedToAPortfolio
 	self assert: (aPortfolio includesAccount: anAccount).
 ! !
 
-!PortfolioTest methodsFor: 'tests' stamp: 'LH 11/2/2020 20:58:52'!
-test02APortfolioDoesNotHaveMoreAccountsThanAdded
+!PortfolioTest methodsFor: 'accounts in portfolios' stamp: 'IO 11/5/2020 14:37:27'!
+test02APortfolioHasNoAccountsInitially
+
+	"un portfolio no tiene cuentas inicialmente"
+
+	|anAccount1 aPortfolio|
+	
+	anAccount1 :=  ReceptiveAccount new.
+	Deposit register: 100 on: anAccount1.
+	
+	aPortfolio := Portfolio new.
+
+	self deny: (aPortfolio includesAccount: anAccount1).
+! !
+
+!PortfolioTest methodsFor: 'accounts in portfolios' stamp: 'IO 11/5/2020 14:40:07'!
+test03APortfolioDoesNotHaveMoreAccountsThanAdded
+
+	"una cuenta que no fue agregada a un portfolio no esta en un portfolio"
+
 	|anAccount1 anAccount2 aPortfolio|
 	
 	anAccount1 :=  ReceptiveAccount new.
@@ -29,13 +51,15 @@ test02APortfolioDoesNotHaveMoreAccountsThanAdded
 	
 	aPortfolio := Portfolio new.
 	aPortfolio addAccount: anAccount1.
-	
-	self assert: (aPortfolio includesAccount: anAccount1).
+
 	self deny: (aPortfolio includesAccount: anAccount2).
 ! !
 
-!PortfolioTest methodsFor: 'tests' stamp: 'LH 11/2/2020 20:59:00'!
-test03MoreThanOneAccountCanBeAddedToAPortfolio
+!PortfolioTest methodsFor: 'accounts in portfolios' stamp: 'IO 11/5/2020 14:40:16'!
+test04MoreThanOneAccountCanBeAddedToAPortfolio
+
+	"se puede agregar mas de una cuenta a un portfolio"
+
 	|anAccount1 anAccount2 aPortfolio|
 	
 	anAccount1 :=  ReceptiveAccount new.
@@ -51,44 +75,159 @@ test03MoreThanOneAccountCanBeAddedToAPortfolio
 	self assert: (aPortfolio includesAccount: anAccount2).
 ! !
 
-!PortfolioTest methodsFor: 'tests' stamp: 'LH 11/2/2020 20:52:15'!
-test04AnEmptyPortfolioHasABalanceOf0
-	|aPortfolio|
+
+!PortfolioTest methodsFor: 'portfolios in portfolios' stamp: 'IO 11/5/2020 14:51:29'!
+test05
 	
-	aPortfolio := Portfolio new.
+	"un portfolio no tiene portfolios inicialmente"
 	
-	self assert: 0 equals: aPortfolio balance.
+	| portfolio1 portfolio2 |
+	
+	portfolio1 := Portfolio new.
+	portfolio2 := Portfolio new.
+	
+	self deny: (portfolio1 includesPortfolio: portfolio2).
 ! !
 
-!PortfolioTest methodsFor: 'tests' stamp: 'LH 11/2/2020 20:58:07'!
-test05APortfolioWithOneAccountShouldHaveABalanceEqualToThatOfTheAccount
-	|aPortfolio anAccount|
+!PortfolioTest methodsFor: 'portfolios in portfolios' stamp: 'IO 11/5/2020 14:51:29'!
+test06
 	
-	anAccount :=  ReceptiveAccount new.
-	Deposit register: 100 on: anAccount.
-	aPortfolio := Portfolio new.
+	"a un portfolio se le puede agregar un portfolio sin cuentas"
 	
-	aPortfolio addAccount: anAccount.
+	| portfolio1 portfolio2 |
 	
-	self assert: anAccount balance equals: aPortfolio balance.
+	portfolio1 := Portfolio new.
+	portfolio2 := Portfolio new.
+	
+	portfolio1 addPortfolio: portfolio2.
+	
+	self assert: (portfolio1 includesPortfolio: portfolio2).
 ! !
 
-!PortfolioTest methodsFor: 'tests' stamp: 'LH 11/2/2020 21:14:26'!
-test06APortfolioWithManyAccountsShouldHaveABalanceEqualToTheSumOfItsAccounts
-	|aPortfolio anAccount1 anAccount2|
+!PortfolioTest methodsFor: 'portfolios in portfolios' stamp: 'IO 11/5/2020 14:51:29'!
+test08
 	
-	anAccount1 :=  ReceptiveAccount new.
-	Deposit register: 100 on: anAccount1.
-	anAccount2 :=  ReceptiveAccount new.
-	Deposit register: 200 on: anAccount2.
-	aPortfolio := Portfolio new.
+	"a un portfolio se le puede agregar mas de un portfolio sin cuentas"
 	
-	aPortfolio addAccount: anAccount1.
-	aPortfolio addAccount: anAccount2.
+	| portfolio1 portfolio2 portfolio3 |
 	
-	self 
-		assert: (anAccount1 balance + anAccount2 balance)
-		equals: aPortfolio balance.
+	portfolio1 := Portfolio new.
+	portfolio2 := Portfolio new.
+	portfolio3 := Portfolio new.
+	
+	portfolio1 addPortfolio: portfolio2.
+	portfolio1 addPortfolio: portfolio3.
+	
+	self assert: (portfolio1 includesPortfolio: portfolio2).
+	self assert: (portfolio1 includesPortfolio: portfolio3).
+! !
+
+!PortfolioTest methodsFor: 'portfolios in portfolios' stamp: 'IO 11/5/2020 15:00:18'!
+test09
+	
+	"a un portfolio se le pueden agregar portfolios"
+	
+	| portfolio1 portfolio2 portfolio3 portfolio4 account1 account2 account3 account4 |
+	
+	portfolio1 := Portfolio new.
+	portfolio2 := Portfolio new.
+	portfolio3 := Portfolio new.
+	portfolio4 := Portfolio new.
+	
+	account1 := ReceptiveAccount new.
+	account2 := ReceptiveAccount new.
+	account3 := ReceptiveAccount new.
+	account4 := ReceptiveAccount new.
+	
+	portfolio1 addPortfolio: portfolio2.
+	portfolio1 addPortfolio: portfolio3.
+	portfolio2 addPortfolio: portfolio4. "portfolio anidado"
+	
+	portfolio2 addAccount: account1.
+	portfolio2 addAccount: account2.
+	portfolio3 addAccount: account3.
+	portfolio4 addAccount: account4.
+	
+	self assert: (portfolio1 includesAccount: account1).
+	self assert: (portfolio1 includesAccount: account2).
+	self assert: (portfolio1 includesAccount: account3).
+	self assert: (portfolio1 includesAccount: account4).
+! !
+
+!PortfolioTest methodsFor: 'portfolios in portfolios' stamp: 'IO 11/5/2020 15:12:58'!
+test10
+	
+	"a un portfolio se le pueden agregar portfolios con portfolios"
+	
+	| portfolio1 portfolio2 portfolio3 |
+	
+	portfolio1 := Portfolio new.
+	portfolio2 := Portfolio new.
+	portfolio3 := Portfolio new.
+
+	portfolio1 addPortfolio: portfolio2.
+	portfolio2 addPortfolio: portfolio3.
+
+	self assert: (portfolio1 includesPortfolio: portfolio3).
+
+! !
+
+!PortfolioTest methodsFor: 'portfolios in portfolios' stamp: 'IO 11/5/2020 15:12:06'!
+test11
+	
+	"no pueden haber cuentas repetidas en un portfolio"
+	
+	| portfolio1 portfolio2 account1 |
+	
+	portfolio1 := Portfolio new.
+	portfolio2 := Portfolio new.
+	
+	account1 := ReceptiveAccount new.
+	
+	portfolio1 addPortfolio: portfolio2.
+	portfolio2 addAccount: account1.
+
+	
+	self should: [portfolio1 addAccount: account1] raise: Error withMessageText: Portfolio errorMessageAccountAlreadyAdded.
+
+! !
+
+!PortfolioTest methodsFor: 'portfolios in portfolios' stamp: 'IO 11/5/2020 15:12:04'!
+test12
+	
+	"no pueden haber prtfolios repetidos en un portfolio"
+	
+	| portfolio1 portfolio2 portfolio3 |
+	
+	portfolio1 := Portfolio new.
+	portfolio2 := Portfolio new.
+	portfolio3 := Portfolio new.
+	
+	portfolio1 addPortfolio: portfolio2.
+	portfolio2 addPortfolio: portfolio3.
+
+	self should: [portfolio1 addPortfolio: portfolio3] raise: Error withMessageText: Portfolio errorMessagePortfolioAlreadyAdded.
+
+! !
+
+
+!PortfolioTest methodsFor: 'invalid topolgies adding accounts in child portfolios' stamp: 'IO 11/7/2020 10:38:12'!
+test13
+	
+	"no se pueden agregar una cueanta a un portfolio (hijo) de un portfolio (padre), cuando la cuenta ya estaba en el portfolio (padre)"
+	"
+	| portfolio1 portfolio2 account1 |
+	
+	portfolio1 := Portfolio new.
+	portfolio2 := Portfolio new.
+	
+	account1 := ReceptiveAccount new.
+	
+	portfolio1 addAccount: account1.
+	portfolio1 addPortfolio: portfolio2.
+
+	self should: [	portfolio2 addAccount: account1.] raise: Error withMessageText: Portfolio errorMessageAccountAlreadyAdded.
+	"
 ! !
 
 
@@ -310,35 +449,59 @@ for: aValue
 
 !classDefinition: #Portfolio category: 'Portfolio-Ejercicio'!
 Object subclass: #Portfolio
-	instanceVariableNames: 'accounts'
+	instanceVariableNames: 'accounts portfolios'
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'Portfolio-Ejercicio'!
 
-!Portfolio methodsFor: 'adding' stamp: 'LH 11/2/2020 20:47:27'!
-addAccount: anAccount
-
-	accounts add: anAccount.! !
-
-
-!Portfolio methodsFor: 'testing' stamp: 'LH 11/2/2020 20:49:20'!
-includesAccount: anAccount 
-
-	^accounts includes: anAccount.! !
-
-
-!Portfolio methodsFor: 'initialization' stamp: 'LH 11/2/2020 20:48:50'!
+!Portfolio methodsFor: 'initialization' stamp: 'IO 11/5/2020 14:48:39'!
 initialize
 
-	accounts := OrderedCollection new.! !
+	accounts := OrderedCollection new.
+	portfolios := OrderedCollection new.! !
 
 
-!Portfolio methodsFor: 'accesing' stamp: 'LH 11/2/2020 21:15:50'!
-balance
-	|aBalance|
-	aBalance := 0.
-	accounts do: [:anAccount | aBalance:= aBalance + anAccount balance].
-	^aBalance.! !
+!Portfolio methodsFor: 'portfolios' stamp: 'IO 11/5/2020 15:13:55'!
+addPortfolio: aPortfolio
+	(self includesPortfolio: aPortfolio) ifTrue: [self error: Portfolio errorMessagePortfolioAlreadyAdded].
+	portfolios add: aPortfolio.
+
+! !
+
+!Portfolio methodsFor: 'portfolios' stamp: 'IO 11/5/2020 15:13:35'!
+includesPortfolio: aPortfolio 
+
+	portfolios do: [ :portfolio | (portfolio includesPortfolio: aPortfolio) ifTrue: [^true]].
+	^portfolios includes: aPortfolio.
+
+! !
+
+
+!Portfolio methodsFor: 'accounts' stamp: 'IO 11/5/2020 15:07:59'!
+addAccount: anAccount
+
+	(self includesAccount: anAccount) ifTrue: [^self error: Portfolio errorMessageAccountAlreadyAdded].
+	accounts add: anAccount.! !
+
+!Portfolio methodsFor: 'accounts' stamp: 'IO 11/5/2020 15:07:22'!
+includesAccount: anAccount 
+
+	portfolios do: [ :portfolio | (portfolio includesAccount: anAccount) ifTrue: [^true]].
+	^accounts includes: anAccount.! !
+
+"-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
+
+!classDefinition: 'Portfolio class' category: 'Portfolio-Ejercicio'!
+Portfolio class
+	instanceVariableNames: ''!
+
+!Portfolio class methodsFor: 'error messages' stamp: 'IO 11/5/2020 15:06:47'!
+errorMessageAccountAlreadyAdded
+	^'This protfolio already includes this account.'! !
+
+!Portfolio class methodsFor: 'error messages' stamp: 'IO 11/5/2020 15:10:35'!
+errorMessagePortfolioAlreadyAdded
+	^'This protfolio already includes the given portfolio.'! !
 
 
 !classDefinition: #ReceptiveAccount category: 'Portfolio-Ejercicio'!
@@ -366,16 +529,13 @@ transactions
 	^ transactions copy! !
 
 
-!ReceptiveAccount methodsFor: 'balance' stamp: 'LH 11/2/2020 20:40:03'!
+!ReceptiveAccount methodsFor: 'balance' stamp: 'IO 11/5/2020 14:33:02'!
 balance
 	|aBalance|
 	aBalance := 0.
 	transactions do: [ :aTransaction |aBalance:= aTransaction addToBalance: aBalance].
 	^aBalance
-	
-	"
-	^transactions sum: [ :aTransaction | aTransaction balanceValue] ifEmpty: [ 0 ]
-	"! !
+! !
 
 
 !ReceptiveAccount methodsFor: 'testing' stamp: 'NR 10/17/2019 03:28:43'!
