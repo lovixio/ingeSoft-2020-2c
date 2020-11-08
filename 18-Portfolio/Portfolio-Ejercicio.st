@@ -75,8 +75,8 @@ test04MoreThanOneAccountCanBeAddedToAPortfolio
 ! !
 
 
-!PortfolioTest methodsFor: 'adding portfolios' stamp: 'IO 11/5/2020 14:51:29'!
-test05
+!PortfolioTest methodsFor: 'adding portfolios' stamp: 'LH 11/7/2020 21:11:48'!
+test05APortfolioDoesNotHavePortfoliosInitialy
 	
 	"un portfolio no tiene portfolios inicialmente"
 	
@@ -88,8 +88,8 @@ test05
 	self deny: (portfolio1 includesPortfolio: portfolio2).
 ! !
 
-!PortfolioTest methodsFor: 'adding portfolios' stamp: 'IO 11/5/2020 14:51:29'!
-test06
+!PortfolioTest methodsFor: 'adding portfolios' stamp: 'LH 11/7/2020 21:12:18'!
+test06AnEmptyPortfolioCanBeAddedToAPortfolio
 	
 	"a un portfolio se le puede agregar un portfolio sin cuentas"
 	
@@ -103,8 +103,8 @@ test06
 	self assert: (portfolio1 includesPortfolio: portfolio2).
 ! !
 
-!PortfolioTest methodsFor: 'adding portfolios' stamp: 'LH 11/7/2020 11:09:53'!
-test07
+!PortfolioTest methodsFor: 'adding portfolios' stamp: 'LH 11/7/2020 21:12:42'!
+test07VariousEmptyPortfoliosCanBeAddedToAPortfolio
 	
 	"a un portfolio se le puede agregar mas de un portfolio sin cuentas"
 	
@@ -121,8 +121,8 @@ test07
 	self assert: (portfolio1 includesPortfolio: portfolio3).
 ! !
 
-!PortfolioTest methodsFor: 'adding portfolios' stamp: 'LH 11/7/2020 11:09:58'!
-test08
+!PortfolioTest methodsFor: 'adding portfolios' stamp: 'LH 11/7/2020 21:13:24'!
+test08PortfoliosCanBeAddedToAPortfolio
 	
 	"a un portfolio se le pueden agregar portfolios"
 	
@@ -153,8 +153,8 @@ test08
 	self assert: (portfolio1 includesAccount: account4).
 ! !
 
-!PortfolioTest methodsFor: 'adding portfolios' stamp: 'LH 11/7/2020 11:10:02'!
-test09
+!PortfolioTest methodsFor: 'adding portfolios' stamp: 'LH 11/7/2020 21:16:23'!
+test09APortfolioWithPortfoliosCanBeAddedToAportfolio
 	
 	"a un portfolio se le pueden agregar portfolios con portfolios"
 	
@@ -172,10 +172,10 @@ test09
 ! !
 
 
-!PortfolioTest methodsFor: 'errors adding accounts by children' stamp: 'IO 11/7/2020 17:04:41'!
-test10
+!PortfolioTest methodsFor: 'errors adding accounts by children' stamp: 'LH 11/7/2020 21:22:42'!
+test10CanNotAddAnAccountToAPortfolioWhosePortfolioHasTheAccount
 	
-	"no se pueden agregar una cueanta a un portfolio (hijo) de un portfolio (padre), cuando la cuenta ya estaba en el portfolio (padre)"
+	"no se pueden agregar una cueanta a un portfolio (padre) con un portfolio (hijo), cuando la cuenta ya estaba en el portfolio (hijo)"
 	
 	| portfolio1 portfolio2 account1 |
 	
@@ -190,10 +190,10 @@ test10
 	self should: [	portfolio1 addAccount: account1.] raise: Error withMessageText: Portfolio errorMessageAccountAlreadyAdded.
 ! !
 
-!PortfolioTest methodsFor: 'errors adding accounts by children' stamp: 'IO 11/7/2020 17:04:44'!
-test11
+!PortfolioTest methodsFor: 'errors adding accounts by children' stamp: 'LH 11/7/2020 21:23:19'!
+test11CanNotAddAnAccountToAPortfolioWhoHasAPortfolioWithTheAccount
 	
-	"no se pueden agregar una cueanta a un portfolio (hijo) de un portfolio (padre), cuando la cuenta ya estaba en el portfolio (padre)"
+	"no se pueden agregar una cueanta a un portfolio (padre) con un portfolio (hijo) con un portfolio (nieto), cuando la cuenta ya estaba en el portfolio (nieto)"
 	
 	| portfolio1 portfolio2 portfolio3 account1 |
 	
@@ -211,8 +211,8 @@ test11
 ! !
 
 
-!PortfolioTest methodsFor: 'errors adding portfolios by childern' stamp: 'IO 11/7/2020 17:04:30'!
-test12
+!PortfolioTest methodsFor: 'errors adding portfolios by childern' stamp: 'LH 11/7/2020 21:20:31'!
+test12APortfolioCantHaveRepeatedAccounts
 	
 	"no pueden haber cuentas repetidas en un portfolio"
 	
@@ -231,8 +231,8 @@ test12
 
 ! !
 
-!PortfolioTest methodsFor: 'errors adding portfolios by childern' stamp: 'IO 11/7/2020 17:04:34'!
-test13
+!PortfolioTest methodsFor: 'errors adding portfolios by childern' stamp: 'LH 11/7/2020 21:20:56'!
+test13APortfolioCanNotHaveRepeatedPortfolios
 	
 	"no pueden haber prtfolios repetidos en un portfolio"
 	
@@ -249,27 +249,20 @@ test13
 
 ! !
 
-
-!PortfolioTest methodsFor: 'errors adding accounts by parents' stamp: 'IO 11/7/2020 17:04:14'!
-test14
+!PortfolioTest methodsFor: 'errors adding portfolios by childern' stamp: 'LH 11/7/2020 22:13:32'!
+test14APortffolioCantHaveItself
+	"un portfolio no se puede tener a si mismo"
 	
-	"no se pueden agregar una cueanta a un portfolio (hijo) de un portfolio (padre), cuando la cuenta ya estaba en el portfolio (padre)"
-	
-	| portfolio1 portfolio2 account1 |
+	| portfolio1 |
 	
 	portfolio1 := Portfolio new.
-	portfolio2 := Portfolio new.
 	
-	account1 := ReceptiveAccount new.
-	
-	portfolio1 addAccount: account1.
-	portfolio1 addPortfolio: portfolio2.
-
-	self should: [	portfolio2 addAccount: account1.] raise: Error withMessageText: Portfolio errorMessageAccountAlreadyAdded.
+	self should: [portfolio1 addPortfolio: portfolio1] raise: Error withMessageText: Portfolio errorMessagePortfolioAlreadyAdded.
 ! !
 
-!PortfolioTest methodsFor: 'errors adding accounts by parents' stamp: 'IO 11/7/2020 17:03:31'!
-test15
+
+!PortfolioTest methodsFor: 'errors adding accounts by parents' stamp: 'LH 11/7/2020 21:24:41'!
+test15CanNotAddAnAccountToAPortfolioWithAParentThatHasTheAccount
 	
 	"no se pueden agregar una cueanta a un portfolio (hijo) de un portfolio (padre), cuando la cuenta ya estaba en el portfolio (padre), con varios padres"
 	
@@ -288,8 +281,26 @@ test15
 	self should: [	portfolio3 addAccount: account1.] raise: Error withMessageText: Portfolio errorMessageAccountAlreadyAdded.
 ! !
 
-!PortfolioTest methodsFor: 'errors adding accounts by parents' stamp: 'IO 11/7/2020 17:03:27'!
-test16
+!PortfolioTest methodsFor: 'errors adding accounts by parents' stamp: 'LH 11/7/2020 22:16:09'!
+test16CanNotAddAnAccountToAPortfolioWhoseParentHasTheAccount
+	
+	"no se pueden agregar una cueanta a un portfolio (hijo) de un portfolio (padre), cuando la cuenta ya estaba en el portfolio (padre)"
+	
+	| portfolio1 portfolio2 account1 |
+	
+	portfolio1 := Portfolio new.
+	portfolio2 := Portfolio new.
+	
+	account1 := ReceptiveAccount new.
+	
+	portfolio1 addAccount: account1.
+	portfolio1 addPortfolio: portfolio2.
+
+	self should: [	portfolio2 addAccount: account1.] raise: Error withMessageText: Portfolio errorMessageAccountAlreadyAdded.
+! !
+
+!PortfolioTest methodsFor: 'errors adding accounts by parents' stamp: 'LH 11/7/2020 22:16:14'!
+test17CanNotAddAnAccountToAPortfolioWithAPredecesorsThatHasTheAccount
 	
 	"no se pueden agregar una cueanta a un hijo si esa cuenta está en el padre de su padre"
 	
@@ -309,8 +320,8 @@ test16
 ! !
 
 
-!PortfolioTest methodsFor: 'errors adding portfolios by parents' stamp: 'IO 11/7/2020 17:33:55'!
-test17
+!PortfolioTest methodsFor: 'errors adding portfolios by parents' stamp: 'LH 11/7/2020 22:16:21'!
+test18CantAddAPortfolioWhenItIsAParent
 	
 	"
 		no se pueden agregar un portfolio cuando el padre ya tiene ese portfolio
@@ -327,8 +338,8 @@ test17
 	self should: [	portfolio2 addPortfolio: portfolio1.] raise: Error withMessageText: Portfolio errorMessagePortfolioAlreadyAdded.
 ! !
 
-!PortfolioTest methodsFor: 'errors adding portfolios by parents' stamp: 'IO 11/7/2020 17:33:38'!
-test18
+!PortfolioTest methodsFor: 'errors adding portfolios by parents' stamp: 'LH 11/7/2020 22:18:37'!
+test19CantAddAPortfolioWhenItIsAPredecesor
 	
 	"
 		no se pueden agregar un portfolio cuando el padre del padre ya tiene ese portfolio
@@ -347,8 +358,8 @@ test18
 	self should: [	portfolio3 addPortfolio: portfolio1.] raise: Error withMessageText: Portfolio errorMessagePortfolioAlreadyAdded.
 ! !
 
-!PortfolioTest methodsFor: 'errors adding portfolios by parents' stamp: 'IO 11/7/2020 17:41:41'!
-test19
+!PortfolioTest methodsFor: 'errors adding portfolios by parents' stamp: 'LH 11/7/2020 22:18:32'!
+test20CantAddAPortfolioWhenAPredecesorAlredyHasIt
 	
 	"
 		no se pueden agregar un portfolio cuando el padre del padre ya tiene ese portfolio
@@ -368,9 +379,45 @@ test19
 	self should: [	portfolio3 addPortfolio: portfolio2.] raise: Error withMessageText: Portfolio errorMessagePortfolioAlreadyAdded.
 ! !
 
+!PortfolioTest methodsFor: 'errors adding portfolios by parents' stamp: 'LH 11/7/2020 22:16:32'!
+test35CanNotAddAPortfolioWithAccountsAlredyInTheParentsOfTheRevceiver
+	
+	"
+		no se pueden agregar un portfolio cuando tiene cuentas repetidas en los padres del receptor 
+		p1 ->	p2 -> p4 -x p5 -> a3,a2,a1|
+		     -> a1| -> a2|
+			 p3 -> p3|
+			      -> a3|
+	"
+	
+	| portfolio1 portfolio2 portfolio3 portfolio4 portfolio5 account1 account2 account3 |
+	
+	portfolio1 := Portfolio new.
+	portfolio2 := Portfolio new.
+	portfolio3 := Portfolio new.
+	portfolio4 := Portfolio new.
+	portfolio5 := Portfolio new.
+	
+	account1 := ReceptiveAccount new.
+	account2 := ReceptiveAccount new.
+	account3 := ReceptiveAccount new.	
+	
+	portfolio1 addPortfolio: portfolio2.
+	portfolio2 addPortfolio: portfolio4.
+	portfolio3 addPortfolio: portfolio4.
+	portfolio1 addAccount: account1.
+	portfolio2 addAccount: account2.
+	portfolio3 addAccount: account3.
+	portfolio5 addAccount: account1.
+	portfolio5 addAccount: account2.
+	portfolio5 addAccount: account3.
 
-!PortfolioTest methodsFor: 'accounts' stamp: 'IO 11/7/2020 18:21:05'!
-test20
+	self should: [	portfolio4 addPortfolio: portfolio5.] raise: Error withMessageText: Portfolio errorMessageAccountAlreadyAdded.
+! !
+
+
+!PortfolioTest methodsFor: 'accounts' stamp: 'LH 11/7/2020 22:18:22'!
+test22APortfolioKnowsItsDirectAccounts
 	
 	"un portfolio expone sus cuentas"
 	
@@ -388,8 +435,8 @@ test20
 	
 ! !
 
-!PortfolioTest methodsFor: 'accounts' stamp: 'IO 11/7/2020 18:46:01'!
-test21
+!PortfolioTest methodsFor: 'accounts' stamp: 'LH 11/7/2020 22:18:17'!
+test22APortfolioKnowsTheAccountsOfHisPortfolios
 	
 	"un portfolio expone las cuentas de sus portfolios"
 	
@@ -420,8 +467,8 @@ test21
 ! !
 
 
-!PortfolioTest methodsFor: 'balance' stamp: 'IO 11/7/2020 18:53:12'!
-test22
+!PortfolioTest methodsFor: 'balance' stamp: 'LH 11/7/2020 22:18:10'!
+test23AnEmptyPortfolioHasABalanceOf0
 
 	"un portfolio vacio responde balance 0"
 
@@ -432,8 +479,8 @@ test22
 	self assert: (portfolio1 balance) equals: 0.
 ! !
 
-!PortfolioTest methodsFor: 'balance' stamp: 'IO 11/7/2020 18:57:58'!
-test23
+!PortfolioTest methodsFor: 'balance' stamp: 'LH 11/7/2020 22:18:06'!
+test24APortfolioWithOneAccountHasTheBalanceOfThatAccount
 
 	"un portfolio reponde por el balance de su unico hijo"
 
@@ -451,8 +498,8 @@ test23
 	self assert: (portfolio1 balance) equals: 50.
 ! !
 
-!PortfolioTest methodsFor: 'balance' stamp: 'IO 11/7/2020 18:57:42'!
-test24
+!PortfolioTest methodsFor: 'balance' stamp: 'LH 11/7/2020 22:18:02'!
+test25TheBalanceOfAPortfolioWithNoPortfoliosIsTheSumOfHisAccounts
 
 	"un portfolio reponde por el balance de sus hijos"
 
@@ -473,8 +520,8 @@ test24
 	self assert: (portfolio1 balance) equals: 150.
 ! !
 
-!PortfolioTest methodsFor: 'balance' stamp: 'IO 11/7/2020 18:58:47'!
-test25
+!PortfolioTest methodsFor: 'balance' stamp: 'LH 11/7/2020 22:17:55'!
+test26TheBalanceOfAPortfolioIsTheSumOfHisAccountsAndPortfolios
 
 	"un portfolio reponde por el balance de los hijos de sus portfolios"
 
@@ -499,8 +546,8 @@ test25
 ! !
 
 
-!PortfolioTest methodsFor: 'has registered' stamp: 'IO 11/7/2020 19:10:19'!
-test26
+!PortfolioTest methodsFor: 'has registered' stamp: 'LH 11/7/2020 22:17:47'!
+test27AnEmptyPortfolioHasNoRegisteredTransactions
 
 	"un portfolio vacio no registro ninguna transaccion"
 	
@@ -514,8 +561,8 @@ test26
 	self deny: (portfolio1 hasRegistered:withdraw).
 ! !
 
-!PortfolioTest methodsFor: 'has registered' stamp: 'IO 11/7/2020 19:13:25'!
-test27
+!PortfolioTest methodsFor: 'has registered' stamp: 'LH 11/7/2020 22:17:37'!
+test28APortfolioWithOneAccountHasItsRegisteredTransactions
 
 	"un portfolio con una cuenta registro sus transacciones"
 	
@@ -532,8 +579,8 @@ test27
 	self assert: (portfolio1 hasRegistered:withdraw).
 ! !
 
-!PortfolioTest methodsFor: 'has registered' stamp: 'IO 11/7/2020 19:15:41'!
-test28
+!PortfolioTest methodsFor: 'has registered' stamp: 'LH 11/7/2020 22:17:29'!
+test29APortfolioWithManyAccountsHasItsAccountsRegisteredTransactions
 
 	"un portfolio con varias cuentas registro todas sus transacciones"
 	
@@ -557,8 +604,8 @@ test28
 	self assert: (portfolio1 hasRegistered:withdraw2).
 ! !
 
-!PortfolioTest methodsFor: 'has registered' stamp: 'IO 11/7/2020 19:19:27'!
-test29
+!PortfolioTest methodsFor: 'has registered' stamp: 'LH 11/7/2020 22:17:22'!
+test30APortfolioHasItsPortfoliosAndAccountsRegisteredTransactions
 
 	"un portfolio con varias cuentas en sus portfolios registro todas sus transacciones"
 	
@@ -587,8 +634,8 @@ test29
 ! !
 
 
-!PortfolioTest methodsFor: 'transactions' stamp: 'IO 11/7/2020 19:28:41'!
-test30
+!PortfolioTest methodsFor: 'transactions' stamp: 'LH 11/7/2020 22:17:11'!
+test31AnEmptyPortfolioHasNoTransactions
 
 	"un portfolio vacio no tiene transacciones"
 	
@@ -600,8 +647,8 @@ test30
 
 ! !
 
-!PortfolioTest methodsFor: 'transactions' stamp: 'IO 11/7/2020 19:30:04'!
-test31
+!PortfolioTest methodsFor: 'transactions' stamp: 'LH 11/7/2020 22:17:01'!
+test32APortfolioWithOneAccountHasItsTransactions
 
 	"un portfolio con una cuenta retorna sus transacciones"
 	
@@ -618,8 +665,8 @@ test31
 
 ! !
 
-!PortfolioTest methodsFor: 'transactions' stamp: 'IO 11/7/2020 19:32:25'!
-test32
+!PortfolioTest methodsFor: 'transactions' stamp: 'LH 11/7/2020 22:16:55'!
+test33APortfolioWithManyAccountsHasItsAccountsTransactions
 
 	"un portfolio con varias cuentas retorna todas sus transacciones"
 	
@@ -641,8 +688,8 @@ test32
 
 ! !
 
-!PortfolioTest methodsFor: 'transactions' stamp: 'IO 11/7/2020 19:34:31'!
-test33
+!PortfolioTest methodsFor: 'transactions' stamp: 'LH 11/7/2020 22:16:38'!
+test34APortfolioHasItsPortfoliosAndAccountsTransaction
 
 	"un portfolio con varias cuentas en sus portfolios retorna todas sus transacciones"
 	
@@ -925,111 +972,134 @@ initialize
 	! !
 
 
-!Portfolio methodsFor: 'portfolios' stamp: 'LH 11/7/2020 11:06:18'!
+!Portfolio methodsFor: 'portfolios' stamp: 'LH 11/7/2020 21:50:16'!
 addAsFather: aPortfolio 
+	"Set aPortfolio as a father"
 
 	fatherPortfolios add: aPortfolio.! !
 
-!Portfolio methodsFor: 'portfolios' stamp: 'IO 11/7/2020 17:56:07'!
+!Portfolio methodsFor: 'portfolios' stamp: 'LH 11/7/2020 21:51:16'!
 addPortfolio: aPortfolio
+	"Add aPortfolio to the Portfolio"
+
 	self validatePortfolioBeforeAdding: aPortfolio.
 
 	portfolios add: aPortfolio.
 	aPortfolio addAsFather: self. 
 ! !
 
-!Portfolio methodsFor: 'portfolios' stamp: 'IO 11/7/2020 17:25:48'!
-includesFatherPortfolio: aPortfolio
-	^fatherPortfolios includes: aPortfolio.
-! !
 
-!Portfolio methodsFor: 'portfolios' stamp: 'IO 11/7/2020 17:20:31'!
-includesPortfolio: aPortfolio 
-
-	portfolios do: [ :portfolio | (portfolio includesPortfolio: aPortfolio) ifTrue: [^true]].
-
-	^portfolios includes: aPortfolio.
-
-! !
-
-
-!Portfolio methodsFor: 'accounts' stamp: 'IO 11/7/2020 17:06:30'!
+!Portfolio methodsFor: 'accounts' stamp: 'LH 11/7/2020 21:51:53'!
 addAccount: anAccount
+	"add anAccount to the Portfolio"
 
 	self validateAccountBeforeAdding: anAccount.
 	
 	accounts add: anAccount.! !
 
-!Portfolio methodsFor: 'accounts' stamp: 'IO 11/5/2020 15:07:22'!
-includesAccount: anAccount 
 
-	portfolios do: [ :portfolio | (portfolio includesAccount: anAccount) ifTrue: [^true]].
-	^accounts includes: anAccount.! !
-
-
-!Portfolio methodsFor: 'validations' stamp: 'IO 11/7/2020 17:06:30'!
+!Portfolio methodsFor: 'validations' stamp: 'LH 11/7/2020 21:57:58'!
 validateAccountBeforeAdding: anAccount
-	
+	"validate that anAccount is not alredy in the portfolio or it's predecessors"
+
 	self validateAccountNotAlredyAdded: anAccount.
 	fatherPortfolios do: [:aPortfolio | aPortfolio validateAccountBeforeAdding: anAccount].! !
 
-!Portfolio methodsFor: 'validations' stamp: 'LH 11/7/2020 11:13:47'!
+!Portfolio methodsFor: 'validations' stamp: 'LH 11/7/2020 21:53:33'!
 validateAccountNotAlredyAdded: anAccount
-
+	"if anAccount is in the portfolio, return an error"
 
 	(self includesAccount: anAccount) ifTrue: [^self error: Portfolio errorMessageAccountAlreadyAdded].
 ! !
 
-!Portfolio methodsFor: 'validations' stamp: 'IO 11/7/2020 17:42:42'!
+!Portfolio methodsFor: 'validations' stamp: 'LH 11/7/2020 22:19:41'!
 validateNotAlreadyAddedPortfolio: aPortfolio
-	(self includesPortfolio: aPortfolio) ifTrue: [self error: Portfolio errorMessagePortfolioAlreadyAdded].
-	(self includesFatherPortfolio: aPortfolio) ifTrue: [self error: Portfolio errorMessagePortfolioAlreadyAdded].
+	"If aPortfolio is in the portfolio or it's predecesor, return an error"
+
+	(self includesPortfolio: aPortfolio) ifTrue: [self error: Portfolio errorMessagePortfolioAlreadyAdded].	(self = aPortfolio) ifTrue:[self error: Portfolio errorMessagePortfolioAlreadyAdded].
+
+	"(self includesFatherPortfolio: aPortfolio) ifTrue: [self error: Portfolio errorMessagePortfolioAlreadyAdded]."
 ! !
 
-!Portfolio methodsFor: 'validations' stamp: 'IO 11/7/2020 17:36:38'!
+!Portfolio methodsFor: 'validations' stamp: 'LH 11/7/2020 21:56:30'!
 validatePortfolioBeforeAdding: aPortfolio
-	self validateNotAlreadyAddedPortfolio: aPortfolio.
-	fatherPortfolios do: [ :fatherPortfolio | (fatherPortfolio validatePortfolioBeforeAdding: aPortfolio)].
+	"validate that aPortfolio is not in the portfolio nor it's predecesors; and that the portfolio's accounts arent in the portfolio not it's predecesors"
 
+	self validateNotAlreadyAddedPortfolio: aPortfolio.
+	
+	aPortfolio accounts do:[:anAccount | self validateAccountBeforeAdding: anAccount].
+	
+	fatherPortfolios do: [ :fatherPortfolio | (fatherPortfolio validatePortfolioBeforeAdding: aPortfolio)].
 ! !
 
 
-
-!Portfolio methodsFor: 'accessing' stamp: 'IO 11/7/2020 18:16:33'!
+!Portfolio methodsFor: 'accessing' stamp: 'LH 11/7/2020 21:47:44'!
 accounts
+	"Returns all the accounts of the Portfolio and it's portfolios"
+	
 	| allAccounts |
 	allAccounts := accounts copy.
 	portfolios do: [ :portfolio | allAccounts addAll: portfolio accounts ].
 	^allAccounts.
 ! !
 
-
-!Portfolio methodsFor: 'as yet unclassified' stamp: 'IO 11/7/2020 19:23:48'!
-accountsAndPortfoliosDo: anAction
-	accounts do: [ :account | anAction value: account.].
-	portfolios do: [ :portfolio | anAction value: portfolio.].
-! !
-
-!Portfolio methodsFor: 'as yet unclassified' stamp: 'IO 11/7/2020 19:24:46'!
+!Portfolio methodsFor: 'accessing' stamp: 'LH 11/7/2020 21:58:52'!
 balance
+	"return the balance of the portfolio's accounts's + portfolios's "
+	
 	| balance |
 	balance := 0.
 	self accountsAndPortfoliosDo: [ :aThing | balance := balance + aThing balance].
 	^balance.
 ! !
 
-!Portfolio methodsFor: 'as yet unclassified' stamp: 'IO 11/7/2020 19:25:39'!
-hasRegistered: aDeposit
-	self accountsAndPortfoliosDo: [ :aThing | (aThing hasRegistered: aDeposit) ifTrue: [^true]].
-	^false.
-! !
-
-!Portfolio methodsFor: 'as yet unclassified' stamp: 'IO 11/7/2020 19:35:17'!
+!Portfolio methodsFor: 'accessing' stamp: 'LH 11/7/2020 21:59:29'!
 transactions
+	"return the transactions of the portfolio's accounts and portfolios"
+
 	| transactions |
 	transactions := OrderedCollection new.
 	self accountsAndPortfoliosDo: [ :account | transactions addAll: account transactions].
 	^transactions.
+! !
+
+
+!Portfolio methodsFor: 'method tools' stamp: 'LH 11/7/2020 21:48:56'!
+accountsAndPortfoliosDo: anAction
+	"A method for doing anAction to a Portfolio's accounts and portfolios"
+
+	accounts do: [ :account | anAction value: account.].
+	portfolios do: [ :portfolio | anAction value: portfolio.].
+! !
+
+
+!Portfolio methodsFor: 'testing' stamp: 'LH 11/7/2020 22:07:22'!
+hasRegistered: aTransaction
+	"return if the portfolio has aTransaction as a transaction"
+	
+	"self accountsAndPortfoliosDo: [ :aThing | (aThing hasRegistered: aDeposit) ifTrue: [^true]]
+	^false.."
+	
+	^self transactions includes: aTransaction.
+	
+! !
+
+!Portfolio methodsFor: 'testing' stamp: 'LH 11/7/2020 22:07:54'!
+includesAccount: anAccount 
+	"return if the portfolio has anAccount or not"
+
+	^ self accounts includes: anAccount.
+
+	"portfolios do: [ :portfolio | (portfolio includesAccount: anAccount) ifTrue: [^true]].
+	^accounts includes: anAccount."! !
+
+!Portfolio methodsFor: 'testing' stamp: 'LH 11/7/2020 22:08:43'!
+includesPortfolio: aPortfolio 
+	"return if the portfolio has aPortfolio or not"
+
+	portfolios do: [ :portfolio | (portfolio includesPortfolio: aPortfolio) ifTrue: [^true]].
+	
+	^portfolios includes: aPortfolio.
 ! !
 
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
