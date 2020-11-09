@@ -5,7 +5,7 @@ TestCase subclass: #PortfolioTest
 	poolDictionaries: ''
 	category: 'Portfolio-Ejercicio'!
 
-!PortfolioTest methodsFor: 'adding accounts' stamp: 'IO 11/5/2020 14:37:14'!
+!PortfolioTest methodsFor: 'adding accounts' stamp: 'LH 11/8/2020 21:34:55'!
 test01AnAccountCanBeAddedToAPortfolio
 
 	"una cuenta puede ser agregada a un prtfolio"
@@ -18,10 +18,10 @@ test01AnAccountCanBeAddedToAPortfolio
 	aPortfolio := Portfolio new.
 	aPortfolio addAccount: anAccount.
 	
-	self assert: (aPortfolio includesAccount: anAccount).
+	self assert: (aPortfolio includes: anAccount).
 ! !
 
-!PortfolioTest methodsFor: 'adding accounts' stamp: 'IO 11/5/2020 14:37:27'!
+!PortfolioTest methodsFor: 'adding accounts' stamp: 'LH 11/8/2020 21:35:06'!
 test02APortfolioHasNoAccountsInitially
 
 	"un portfolio no tiene cuentas inicialmente"
@@ -33,10 +33,10 @@ test02APortfolioHasNoAccountsInitially
 	
 	aPortfolio := Portfolio new.
 
-	self deny: (aPortfolio includesAccount: anAccount1).
+	self deny: (aPortfolio includes: anAccount1).
 ! !
 
-!PortfolioTest methodsFor: 'adding accounts' stamp: 'IO 11/5/2020 14:40:07'!
+!PortfolioTest methodsFor: 'adding accounts' stamp: 'LH 11/8/2020 21:35:18'!
 test03APortfolioDoesNotHaveMoreAccountsThanAdded
 
 	"una cuenta que no fue agregada a un portfolio no esta en un portfolio"
@@ -51,10 +51,10 @@ test03APortfolioDoesNotHaveMoreAccountsThanAdded
 	aPortfolio := Portfolio new.
 	aPortfolio addAccount: anAccount1.
 
-	self deny: (aPortfolio includesAccount: anAccount2).
+	self deny: (aPortfolio includes: anAccount2).
 ! !
 
-!PortfolioTest methodsFor: 'adding accounts' stamp: 'IO 11/5/2020 14:40:16'!
+!PortfolioTest methodsFor: 'adding accounts' stamp: 'LH 11/8/2020 21:35:25'!
 test04MoreThanOneAccountCanBeAddedToAPortfolio
 
 	"se puede agregar mas de una cuenta a un portfolio"
@@ -70,12 +70,12 @@ test04MoreThanOneAccountCanBeAddedToAPortfolio
 	aPortfolio addAccount: anAccount1.
 	aPortfolio addAccount: anAccount2.
 	
-	self assert: (aPortfolio includesAccount: anAccount1).
-	self assert: (aPortfolio includesAccount: anAccount2).
+	self assert: (aPortfolio includes: anAccount1).
+	self assert: (aPortfolio includes: anAccount2).
 ! !
 
 
-!PortfolioTest methodsFor: 'adding portfolios' stamp: 'LH 11/7/2020 21:11:48'!
+!PortfolioTest methodsFor: 'adding portfolios' stamp: 'LH 11/8/2020 21:35:47'!
 test05APortfolioDoesNotHavePortfoliosInitialy
 	
 	"un portfolio no tiene portfolios inicialmente"
@@ -85,10 +85,10 @@ test05APortfolioDoesNotHavePortfoliosInitialy
 	portfolio1 := Portfolio new.
 	portfolio2 := Portfolio new.
 	
-	self deny: (portfolio1 includesPortfolio: portfolio2).
+	self deny: (portfolio1 includes: portfolio2).
 ! !
 
-!PortfolioTest methodsFor: 'adding portfolios' stamp: 'LH 11/7/2020 21:12:18'!
+!PortfolioTest methodsFor: 'adding portfolios' stamp: 'LH 11/8/2020 21:35:52'!
 test06AnEmptyPortfolioCanBeAddedToAPortfolio
 	
 	"a un portfolio se le puede agregar un portfolio sin cuentas"
@@ -100,10 +100,10 @@ test06AnEmptyPortfolioCanBeAddedToAPortfolio
 	
 	portfolio1 addPortfolio: portfolio2.
 	
-	self assert: (portfolio1 includesPortfolio: portfolio2).
+	self assert: (portfolio1 includes: portfolio2).
 ! !
 
-!PortfolioTest methodsFor: 'adding portfolios' stamp: 'LH 11/7/2020 21:12:42'!
+!PortfolioTest methodsFor: 'adding portfolios' stamp: 'LH 11/8/2020 21:35:58'!
 test07VariousEmptyPortfoliosCanBeAddedToAPortfolio
 	
 	"a un portfolio se le puede agregar mas de un portfolio sin cuentas"
@@ -117,11 +117,11 @@ test07VariousEmptyPortfoliosCanBeAddedToAPortfolio
 	portfolio1 addPortfolio: portfolio2.
 	portfolio1 addPortfolio: portfolio3.
 	
-	self assert: (portfolio1 includesPortfolio: portfolio2).
-	self assert: (portfolio1 includesPortfolio: portfolio3).
+	self assert: (portfolio1 includes: portfolio2).
+	self assert: (portfolio1 includes: portfolio3).
 ! !
 
-!PortfolioTest methodsFor: 'adding portfolios' stamp: 'LH 11/7/2020 21:13:24'!
+!PortfolioTest methodsFor: 'adding portfolios' stamp: 'LH 11/8/2020 21:35:36'!
 test08PortfoliosCanBeAddedToAPortfolio
 	
 	"a un portfolio se le pueden agregar portfolios"
@@ -147,13 +147,13 @@ test08PortfoliosCanBeAddedToAPortfolio
 	portfolio3 addAccount: account3.
 	portfolio4 addAccount: account4.
 	
-	self assert: (portfolio1 includesAccount: account1).
-	self assert: (portfolio1 includesAccount: account2).
-	self assert: (portfolio1 includesAccount: account3).
-	self assert: (portfolio1 includesAccount: account4).
+	self assert: (portfolio1 includes: account1).
+	self assert: (portfolio1 includes: account2).
+	self assert: (portfolio1 includes: account3).
+	self assert: (portfolio1 includes: account4).
 ! !
 
-!PortfolioTest methodsFor: 'adding portfolios' stamp: 'LH 11/7/2020 21:16:23'!
+!PortfolioTest methodsFor: 'adding portfolios' stamp: 'LH 11/8/2020 21:36:02'!
 test09APortfolioWithPortfoliosCanBeAddedToAportfolio
 	
 	"a un portfolio se le pueden agregar portfolios con portfolios"
@@ -167,7 +167,7 @@ test09APortfolioWithPortfoliosCanBeAddedToAportfolio
 	portfolio1 addPortfolio: portfolio2.
 	portfolio2 addPortfolio: portfolio3.
 
-	self assert: (portfolio1 includesPortfolio: portfolio3).
+	self assert: (portfolio1 includes: portfolio3).
 
 ! !
 
@@ -999,29 +999,30 @@ ParentPortfolios subclass: #Body
 	poolDictionaries: ''
 	category: 'Portfolio-Ejercicio'!
 
-!Body methodsFor: 'validations' stamp: 'IO 11/8/2020 19:14:25'!
-parentPortfoliosDo: aBlock
+!Body methodsFor: 'validations' stamp: 'LH 11/8/2020 21:21:30'!
+parentPortfoliosDo: aMessage with: aTransactionContainer
 
 	"perform an action over all the parent portfolios of this parent portfolio"
 	
-	parentPortfolios do: [ :aParentPortfolio | aBlock  value: aParentPortfolio ].
+	parentPortfolios do: [ :aParentPortfolio |   aMessage sendTo: aParentPortfolio with: aTransactionContainer].
 ! !
 
-!Body methodsFor: 'validations' stamp: 'IO 11/8/2020 19:14:34'!
+!Body methodsFor: 'validations' stamp: 'LH 11/8/2020 21:41:03'!
 validateAccountBeforeAdding: anAccount
 
 	"see superclass"
 	
-	self parentPortfoliosDo: [ :aParentPortfolio | aParentPortfolio validateAccountBeforeAdding: anAccount].
+	self parentPortfoliosDo: #validateAccountBeforeAdding: with: anAccount. 
+	
 ! !
 
-!Body methodsFor: 'validations' stamp: 'IO 11/8/2020 19:14:37'!
+!Body methodsFor: 'validations' stamp: 'LH 11/8/2020 21:41:07'!
 validatePortfoliosBeforeAdding: aPortfolioToAdd
 
 	"see superclass"
 	
-	self parentPortfoliosDo: [ :aParentPortfolio | aParentPortfolio validatePortfolioBeforeAdding: aPortfolioToAdd].
-! !
+	self parentPortfoliosDo: #validatePortfolioBeforeAdding: with: aPortfolioToAdd. 
+	! !
 
 
 !Body methodsFor: 'intiliazing' stamp: 'IO 11/8/2020 19:13:18'!
@@ -1070,7 +1071,7 @@ initialize: aPortfolio
 ! !
 
 
-!Root methodsFor: 'validations' stamp: 'IO 11/8/2020 19:20:29'!
+!Root methodsFor: 'validations' stamp: 'LH 11/8/2020 21:34:28'!
 validateAccountBeforeAdding: anAccount
 
 	"
@@ -1079,10 +1080,10 @@ validateAccountBeforeAdding: anAccount
 			is found in one of the chidlren, the given account cannot be added to the portfolio
 	"
 
-	(childPortfolio includesAccount: anAccount) ifTrue: [^self error: Portfolio errorMessageAccountAlreadyAdded].
+	(childPortfolio includes: anAccount) ifTrue: [^self error: Portfolio errorMessageAccountAlreadyAdded].
 ! !
 
-!Root methodsFor: 'validations' stamp: 'IO 11/8/2020 19:57:00'!
+!Root methodsFor: 'validations' stamp: 'LH 11/8/2020 21:34:10'!
 validatePortfoliosBeforeAdding: aPortfolioToAdd
 
 	"
@@ -1092,7 +1093,7 @@ validatePortfoliosBeforeAdding: aPortfolioToAdd
 	"
 
 	(childPortfolio = aPortfolioToAdd) ifTrue: [self error: Portfolio errorMessagePortfolioAlreadyAdded].
-	(childPortfolio includesPortfolio: aPortfolioToAdd) ifTrue: [self error: Portfolio errorMessagePortfolioAlreadyAdded].
+	(childPortfolio includes: aPortfolioToAdd) ifTrue: [self error: Portfolio errorMessagePortfolioAlreadyAdded].
 	aPortfolioToAdd accounts do: [ :anAccount | childPortfolio validateAccountBeforeAdding: anAccount].
 ! !
 
@@ -1116,6 +1117,12 @@ Object subclass: #TransactionContainer
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'Portfolio-Ejercicio'!
+
+!TransactionContainer methodsFor: 'accesing' stamp: 'LH 11/8/2020 21:14:38'!
+accounts
+	"returns all the accounts asociated with this container"
+	
+	self subclassResponsibility ! !
 
 !TransactionContainer methodsFor: 'accesing' stamp: 'IO 11/8/2020 18:36:35'!
 balance
@@ -1142,22 +1149,26 @@ hasRegistered: aTransaction
 	^self subclassResponsibility.
 ! !
 
+!TransactionContainer methodsFor: 'testing' stamp: 'LH 11/8/2020 21:37:13'!
+includes: aTransactionContainer
+	"returns true if this container is parent of a Transaction Container"
+	
+	self subclassResponsibility ! !
+
 
 !classDefinition: #Portfolio category: 'Portfolio-Ejercicio'!
 TransactionContainer subclass: #Portfolio
-	instanceVariableNames: 'accounts portfolios parentPortfolios'
+	instanceVariableNames: 'children parentPortfolios'
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'Portfolio-Ejercicio'!
 
-!Portfolio methodsFor: 'initialization' stamp: 'IO 11/8/2020 18:16:51'!
+!Portfolio methodsFor: 'initialization' stamp: 'LH 11/8/2020 20:56:21'!
 initialize
 
 	"create a portfolio with no accounts and no sub-portfolios"
 
-	accounts := OrderedCollection new.
-	portfolios := OrderedCollection new.
-	
+	children := OrderedCollection new.
 	parentPortfolios := ParentPortfolios forPortfolio: self.
 ! !
 
@@ -1179,20 +1190,20 @@ validatePortfolioBeforeAdding: aPortfolio
 ! !
 
 
-!Portfolio methodsFor: 'accessing' stamp: 'IO 11/8/2020 19:02:35'!
+!Portfolio methodsFor: 'accessing' stamp: 'LH 11/8/2020 21:43:08'!
 accounts
 
 	"return all the accounts in this Portfolio and it's portfolios"
 
 	| allAccounts |
 
-	allAccounts := accounts copy.
-	self portfoliosDo: [ :portfolio | allAccounts addAll: portfolio accounts].
+	allAccounts := OrderedCollection new.
+	self childrenDo: [ :aTransactionContainer | allAccounts addAll: aTransactionContainer accounts].
 
 	^allAccounts.
 ! !
 
-!Portfolio methodsFor: 'accessing' stamp: 'IO 11/8/2020 20:08:53'!
+!Portfolio methodsFor: 'accessing' stamp: 'LH 11/8/2020 21:43:19'!
 balance
 
 	"
@@ -1204,12 +1215,12 @@ balance
 	| balance |
 
 	balance := 0.
-	self accountsAndPortfoliosDo: [ :aTransactionContainer | balance := balance + aTransactionContainer balance].
+	self childrenDo: [ :aTransactionContainer | balance := balance + aTransactionContainer balance].
 
 	^balance.
 ! !
 
-!Portfolio methodsFor: 'accessing' stamp: 'IO 11/8/2020 20:03:50'!
+!Portfolio methodsFor: 'accessing' stamp: 'LH 11/8/2020 21:43:30'!
 transactions
 
 	"see superclass"
@@ -1217,7 +1228,7 @@ transactions
 	| transactions |
 
 	transactions := OrderedCollection new.
-	self accountsAndPortfoliosDo: [ :account | transactions addAll: account transactions].
+	self childrenDo: [ :aTransactionContainer | transactions addAll: aTransactionContainer transactions].
 
 	^transactions.
 ! !
@@ -1232,66 +1243,41 @@ hasRegistered: aTransaction
 	
 ! !
 
-!Portfolio methodsFor: 'testing' stamp: 'IO 11/8/2020 19:59:34'!
-includesAccount: anAccount 
-
-	"return true if this portfolio includes anAccount"
-
-	^self accounts includes: anAccount.
-! !
-
-!Portfolio methodsFor: 'testing' stamp: 'IO 11/8/2020 19:59:50'!
-includesPortfolio: aPortfolio
+!Portfolio methodsFor: 'testing' stamp: 'LH 11/8/2020 21:43:42'!
+includes: aTransactionContainer
 
 	"return true if this portfolio includes aPortfolio"
 
-	self portfoliosDo: [ :portfolio | (portfolio includesPortfolio: aPortfolio) ifTrue: [^true]].
-	^portfolios includes: aPortfolio.
+	self childrenDo: [ :aChildOfThisPortfolio | (aChildOfThisPortfolio includes: aTransactionContainer) ifTrue: [^true]].
+	^self = aTransactionContainer.
 ! !
 
 
-!Portfolio methodsFor: 'iterating' stamp: 'IO 11/8/2020 20:00:07'!
-accountsAndPortfoliosDo: aBlock
+!Portfolio methodsFor: 'iterating' stamp: 'LH 11/8/2020 21:44:39'!
+childrenDo: aBlock
 
-	"perform a block over the child portfolios and accounts of this portfolio (not all the subportfolios)"
+	"perform a block over the children of this portfolio (not all the subContainers)"
 
-	self accountsDo: [ :account | aBlock value: account.].
-	self portfoliosDo: [ :portfolio | aBlock value: portfolio.].
-! !
-
-!Portfolio methodsFor: 'iterating' stamp: 'IO 11/8/2020 19:25:34'!
-accountsDo: aBlock
-
-	"perform a block over the accounts of this portfolio (not all the subportfolios)"
-
-	accounts do: [ :account | aBlock value: account.].
-! !
-
-!Portfolio methodsFor: 'iterating' stamp: 'IO 11/8/2020 19:25:12'!
-portfoliosDo: aBlock
-
-	"perform a block over the child portfolios of this portfolio (not all the subportfolios)"
-
-	portfolios do: [ :portfolio | aBlock value: portfolio ].
+	children do: [ :portfolio | aBlock value: portfolio ].
 ! !
 
 
-!Portfolio methodsFor: 'adding' stamp: 'IO 11/8/2020 18:22:41'!
+!Portfolio methodsFor: 'adding' stamp: 'LH 11/8/2020 21:01:25'!
 addAccount: anAccount
 
 	"add anAccount to this Portfolio"
 
 	self validateAccountBeforeAdding: anAccount.
-	accounts add: anAccount.
+	children add: anAccount.
 ! !
 
-!Portfolio methodsFor: 'adding' stamp: 'IO 11/8/2020 18:59:25'!
+!Portfolio methodsFor: 'adding' stamp: 'LH 11/8/2020 21:01:31'!
 addPortfolio: aPortfolio
 
 	"add aPortfolio to this Portfolio"
 
 	self validatePortfolioBeforeAdding: aPortfolio.
-	portfolios add: aPortfolio.
+	children add: aPortfolio.
 	aPortfolio addAsParent: self.
 ! !
 
@@ -1378,3 +1364,14 @@ hasRegistered: aTransaction
 	^transactions includes: aTransaction.
 
 ! !
+
+!ReceptiveAccount methodsFor: 'testing' stamp: 'LH 11/8/2020 21:33:30'!
+includes: aTransactionOperation
+	"see superclass"
+	^self = aTransactionOperation ! !
+
+
+!ReceptiveAccount methodsFor: 'accesing' stamp: 'LH 11/8/2020 21:15:02'!
+accounts
+	"returns the account asociated with this account: itself"
+	^OrderedCollection with: self.! !
