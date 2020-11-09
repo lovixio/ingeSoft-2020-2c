@@ -5,7 +5,7 @@ TestCase subclass: #PortfolioTest
 	poolDictionaries: ''
 	category: 'Portfolio-Ejercicio'!
 
-!PortfolioTest methodsFor: 'adding accounts' stamp: 'LH 11/8/2020 21:34:55'!
+!PortfolioTest methodsFor: 'adding accounts' stamp: 'LH 11/9/2020 14:15:17'!
 test01AnAccountCanBeAddedToAPortfolio
 
 	"una cuenta puede ser agregada a un prtfolio"
@@ -21,9 +21,8 @@ test01AnAccountCanBeAddedToAPortfolio
 	self assert: (aPortfolio includes: anAccount).
 ! !
 
-!PortfolioTest methodsFor: 'adding accounts' stamp: 'LH 11/8/2020 21:35:06'!
+!PortfolioTest methodsFor: 'adding accounts' stamp: 'LH 11/9/2020 14:15:51'!
 test02APortfolioHasNoAccountsInitially
-
 	"un portfolio no tiene cuentas inicialmente"
 
 	|anAccount1 aPortfolio|
@@ -36,7 +35,7 @@ test02APortfolioHasNoAccountsInitially
 	self deny: (aPortfolio includes: anAccount1).
 ! !
 
-!PortfolioTest methodsFor: 'adding accounts' stamp: 'LH 11/8/2020 21:35:18'!
+!PortfolioTest methodsFor: 'adding accounts' stamp: 'LH 11/9/2020 14:16:11'!
 test03APortfolioDoesNotHaveMoreAccountsThanAdded
 
 	"una cuenta que no fue agregada a un portfolio no esta en un portfolio"
@@ -54,7 +53,7 @@ test03APortfolioDoesNotHaveMoreAccountsThanAdded
 	self deny: (aPortfolio includes: anAccount2).
 ! !
 
-!PortfolioTest methodsFor: 'adding accounts' stamp: 'LH 11/8/2020 21:35:25'!
+!PortfolioTest methodsFor: 'adding accounts' stamp: 'LH 11/9/2020 14:16:32'!
 test04MoreThanOneAccountCanBeAddedToAPortfolio
 
 	"se puede agregar mas de una cuenta a un portfolio"
@@ -1023,12 +1022,12 @@ validateBeforeAdding: aTransactionContainer
 	aTransactionContainer accounts do: [ :account | self validateTransactionContainerNotIncludedIn: account].
 ! !
 
-!Root methodsFor: 'validations' stamp: 'IO 11/9/2020 02:39:12'!
+!Root methodsFor: 'validations' stamp: 'LH 11/9/2020 14:13:12'!
 validateTransactionContainerNotIncludedIn: aTransactionContainer
 
 	"validate the given transaction container is not in included in the child of this parent portfolio"
 
-	(childPortfolio includes: aTransactionContainer) ifTrue: [self error: aTransactionContainer class errorMessageAlreadyAdded].
+	(childPortfolio includes: aTransactionContainer) ifTrue: [^self error: aTransactionContainer class errorMessageAlreadyAdded].
 
 ! !
 
@@ -1135,8 +1134,8 @@ initialize
 ! !
 
 
-!Portfolio methodsFor: 'validations' stamp: 'IO 11/9/2020 02:41:39'!
-validateBeforeAdding: aPortfolio
+!Portfolio methodsFor: 'validations' stamp: 'LH 11/9/2020 14:11:06'!
+validateBeforeAdding: aTransactionContainer
 
 	"
 		validate a portfolio before adding it to this portfolio
@@ -1144,8 +1143,8 @@ validateBeforeAdding: aPortfolio
 			prtfolios to lookup for tthe portfolio to be added and its accounts
 	"
 
-	(self = aPortfolio) ifTrue: [self error: Portfolio errorMessagePortfolioAlreadyAdded].
-	parentPortfolios validateBeforeAdding: aPortfolio.
+	(self = aTransactionContainer) ifTrue: [^self error: Portfolio errorMessagePortfolioAlreadyAdded].
+	parentPortfolios validateBeforeAdding: aTransactionContainer.
 ! !
 
 
