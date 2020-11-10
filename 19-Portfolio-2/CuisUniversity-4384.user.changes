@@ -28409,3 +28409,710 @@ test02AnAccountSummaryOfAnAccountWithATransactionReturnsItAndTheBalance
 
 
 ----QUIT----(9 November 2020 22:15:52) CuisUniversity-4384.image priorSource: 17219996!
+
+----STARTUP---- (10 November 2020 17:05:18) as C:\Users\Usuario\Desktop\labo\inge1\Cuis\windows64\CuisUniversity-4384.image!
+
+!TransferTest methodsFor: 'test' stamp: 'LH 11/10/2020 17:06:24'!
+test01ATransferDecreasesBalanceOfSenderAndIncreasesOnReceiver
+	|account1 account2|
+	
+	account1 := ReceptiveAccount new.
+	account2 := ReceptiveAccount new.
+	
+	Transfer from: account1 to: account2 of: 100.
+	
+	self assert: 100 equals: account2 balance.
+	self assert: -100 equals: account1 balance.! !
+
+!testRun: #TransferTest #test01ATransferDecreasesBalanceOfSenderAndIncreasesOnReceiver stamp: 'LH 11/10/2020 17:06:25'!
+PASSED!
+
+!testRun: #TransferTest #test01ATransferDecreasesBalanceOfSenderAndIncreasesOnReceiver stamp: 'LH 11/10/2020 17:06:25'!
+PASSED!
+!TransferTest methodsFor: 'test' stamp: 'LH 11/10/2020 17:06:42'!
+test02ATransferRegistersATransferDepositAndATransferWithdraw
+	|aTransference account1 account2|
+	
+	account1 := ReceptiveAccount new.
+	account2 := ReceptiveAccount new.
+	
+	aTransference := Transfer from: account1 to: account2 of: 100.
+	
+	self assert: (account2 hasRegistered: aTransference deposit).
+	self assert: (account1 hasRegistered: aTransference withdraw).! !
+!TransferTest methodsFor: 'test' stamp: 'LH 11/10/2020 17:06:57'!
+test03ATransferWithdrawAndDepositKnowTheirTransfer
+	|aTransfer account1 account2|
+	
+	account1 := ReceptiveAccount new.
+	account2 := ReceptiveAccount new.
+	
+	aTransfer := Transfer from: account1 to: account2 of: 100.
+	
+	self assert: aTransfer equals: aTransfer deposit transfer.
+	self assert: aTransfer equals: aTransfer withdraw transfer.
+! !
+
+!testRun: #TransferTest #test03ATransferWithdrawAndDepositKnowTheirTransfer stamp: 'LH 11/10/2020 17:06:59'!
+PASSED!
+
+!testRun: #TransferTest #test01ATransferDecreasesBalanceOfSenderAndIncreasesOnReceiver stamp: 'LH 11/10/2020 17:07:00'!
+PASSED!
+
+!testRun: #TransferTest #test02ATransferRegistersATransferDepositAndATransferWithdraw stamp: 'LH 11/10/2020 17:07:00'!
+PASSED!
+
+!testRun: #TransferTest #test03ATransferWithdrawAndDepositKnowTheirTransfer stamp: 'LH 11/10/2020 17:07:00'!
+PASSED!
+
+!methodRemoval: ReceptiveAccountTest #test08ATransferDecreasesBalanceOfSenderAndIncreasesOnReceiver stamp: 'LH 11/10/2020 17:07:09'!
+test08ATransferDecreasesBalanceOfSenderAndIncreasesOnReceiver
+	|account1 account2|
+	
+	account1 := ReceptiveAccount new.
+	account2 := ReceptiveAccount new.
+	
+	Transfer from: account1 to: account2 of: 100.
+	
+	self assert: 100 equals: account2 balance.
+	self assert: -100 equals: account1 balance.
+!
+
+!methodRemoval: ReceptiveAccountTest #test09ATransferRegistersATransferDepositAndATransferWithdraw stamp: 'LH 11/10/2020 17:07:11'!
+test09ATransferRegistersATransferDepositAndATransferWithdraw
+	|aTransference account1 account2|
+	
+	account1 := ReceptiveAccount new.
+	account2 := ReceptiveAccount new.
+	
+	aTransference := Transfer from: account1 to: account2 of: 100.
+	
+	self assert: (account2 hasRegistered: aTransference deposit).
+	self assert: (account1 hasRegistered: aTransference withdraw).
+!
+
+!methodRemoval: ReceptiveAccountTest #test10ATransferWithdrawAndDepositKnowTheirTransfer stamp: 'LH 11/10/2020 17:07:12'!
+test10ATransferWithdrawAndDepositKnowTheirTransfer
+	|aTransfer account1 account2|
+	
+	account1 := ReceptiveAccount new.
+	account2 := ReceptiveAccount new.
+	
+	aTransfer := Transfer from: account1 to: account2 of: 100.
+	
+	self assert: aTransfer equals: aTransfer deposit transfer.
+	self assert: aTransfer equals: aTransfer withdraw transfer.
+!
+!TransferTest methodsFor: 'test' stamp: 'LH 11/10/2020 17:28:15'!
+test04ATransferCantBeDoneBetweenTheSameAccount
+	|aTransfer account1|
+	
+	account1 := ReceptiveAccount new.
+	
+	self should:[aTransfer := Transfer from: account1 to: account1 of: 100.]
+		raise: Error
+		withMessageText: Transfer caNotTransferBeetweenTheSameAccount.
+	! !
+!TransferTest methodsFor: 'test' stamp: 'LH 11/10/2020 17:28:31' prior: 50869895!
+test04ATransferCantBeDoneBetweenTheSameAccount
+	|account1|
+	
+	account1 := ReceptiveAccount new.
+	
+	self should:[Transfer from: account1 to: account1 of: 100.]
+		raise: Error
+		withMessageText: Transfer caNotTransferBeetweenTheSameAccount.
+	! !
+
+!testRun: #TransferTest #test04ATransferCantBeDoneBetweenTheSameAccount stamp: 'LH 11/10/2020 17:28:32'!
+ERROR!
+!Transfer class methodsFor: 'error description' stamp: 'LH 11/10/2020 17:28:56'!
+caNotTransferBeetweenTheSameAccount
+	self shouldBeImplemented.! !
+!Transfer class methodsFor: 'error description' stamp: 'LH 11/10/2020 17:29:28' prior: 50869920!
+caNotTransferBeetweenTheSameAccount
+	^'Can not make a transfer between the same account'! !
+
+!testRun: #TransferTest #test04ATransferCantBeDoneBetweenTheSameAccount stamp: 'LH 11/10/2020 17:29:29'!
+FAILURE!
+!Transfer class methodsFor: 'instance creation' stamp: 'LH 11/10/2020 17:30:45' prior: 50869329!
+from: aSenderAccount to: aRecipientAccount of: aValue
+	|aTransfer aTransferDeposit aTransferWithdraw|
+	
+	aSenderAccount = aRecipientAccount  ifTrue: [^self error: Transfer caNotTransferBeetweenTheSameAccount ].
+	aTransfer := Transfer new.
+	aTransferDeposit := TransferDeposit register: aTransfer on: aRecipientAccount.
+	aTransferWithdraw := TransferWithdraw register: aTransfer on: aSenderAccount.
+	
+	^aTransfer initializeFrom: aTransferWithdraw to: aTransferDeposit of: aValue.! !
+
+!testRun: #TransferTest #test04ATransferCantBeDoneBetweenTheSameAccount stamp: 'LH 11/10/2020 17:30:46'!
+PASSED!
+
+!testRun: #TransferTest #test01ATransferDecreasesBalanceOfSenderAndIncreasesOnReceiver stamp: 'LH 11/10/2020 17:30:46'!
+PASSED!
+
+!testRun: #TransferTest #test02ATransferRegistersATransferDepositAndATransferWithdraw stamp: 'LH 11/10/2020 17:30:46'!
+PASSED!
+
+!testRun: #TransferTest #test03ATransferWithdrawAndDepositKnowTheirTransfer stamp: 'LH 11/10/2020 17:30:46'!
+PASSED!
+
+!testRun: #TransferTest #test04ATransferCantBeDoneBetweenTheSameAccount stamp: 'LH 11/10/2020 17:30:46'!
+PASSED!
+!Transfer class methodsFor: 'error description' stamp: 'LH 11/10/2020 17:31:10'!
+canNotTransferBeetweenTheSameAccount
+	^'Can not make a transfer between the same account'! !
+!TransferTest methodsFor: 'as yet unclassified' stamp: 'LH 11/10/2020 17:31:10' prior: 50869906!
+test04ATransferCantBeDoneBetweenTheSameAccount
+	|account1|
+	
+	account1 := ReceptiveAccount new.
+	
+	self should:[Transfer from: account1 to: account1 of: 100.]
+		raise: Error
+		withMessageText: Transfer canNotTransferBeetweenTheSameAccount.
+	! !
+!Transfer class methodsFor: 'as yet unclassified' stamp: 'LH 11/10/2020 17:31:10' prior: 50869936!
+from: aSenderAccount to: aRecipientAccount of: aValue
+	|aTransfer aTransferDeposit aTransferWithdraw|
+	
+	aSenderAccount = aRecipientAccount  ifTrue: [^self error: Transfer canNotTransferBeetweenTheSameAccount ].
+	aTransfer := Transfer new.
+	aTransferDeposit := TransferDeposit register: aTransfer on: aRecipientAccount.
+	aTransferWithdraw := TransferWithdraw register: aTransfer on: aSenderAccount.
+	
+	^aTransfer initializeFrom: aTransferWithdraw to: aTransferDeposit of: aValue.! !
+
+!methodRemoval: Transfer class #caNotTransferBeetweenTheSameAccount stamp: 'LH 11/10/2020 17:31:10'!
+caNotTransferBeetweenTheSameAccount
+	^'Can not make a transfer between the same account'!
+
+!testRun: #TransferTest #test01ATransferDecreasesBalanceOfSenderAndIncreasesOnReceiver stamp: 'LH 11/10/2020 17:31:15'!
+PASSED!
+
+!testRun: #TransferTest #test02ATransferRegistersATransferDepositAndATransferWithdraw stamp: 'LH 11/10/2020 17:31:15'!
+PASSED!
+
+!testRun: #TransferTest #test03ATransferWithdrawAndDepositKnowTheirTransfer stamp: 'LH 11/10/2020 17:31:15'!
+PASSED!
+
+!testRun: #TransferTest #test04ATransferCantBeDoneBetweenTheSameAccount stamp: 'LH 11/10/2020 17:31:15'!
+PASSED!
+!TransferTest methodsFor: 'test' stamp: 'LH 11/10/2020 17:32:16'!
+test05ATransferCantBeDoneBeOf0Value
+	|account1 account2|
+	
+	account1 := ReceptiveAccount new.
+	account2 := ReceptiveAccount new.
+	
+	self should:[Transfer from: account1 to: account2 of: 0.]
+		raise: Error
+		withMessageText: Transfer canNotTransfer0.
+	! !
+
+!testRun: #TransferTest #test05ATransferCantBeDoneBeOf0Value stamp: 'LH 11/10/2020 17:32:21'!
+ERROR!
+!Transfer class methodsFor: 'error description' stamp: 'LH 11/10/2020 17:32:30'!
+canNotTransfer0
+	self shouldBeImplemented.! !
+!Transfer class methodsFor: 'error description' stamp: 'LH 11/10/2020 17:32:46' prior: 50870043!
+canNotTransfer0
+	^'Can not transfer a value of 0'! !
+!Transfer class methodsFor: 'error description' stamp: 'LH 11/10/2020 17:33:18' prior: 50870048!
+canNotTransfer0
+	^'Invalid value for a transfer'! !
+
+!testRun: #TransferTest #test05ATransferCantBeDoneBeOf0Value stamp: 'LH 11/10/2020 17:33:19'!
+FAILURE!
+!Transfer class methodsFor: 'instance creation' stamp: 'LH 11/10/2020 17:34:17' prior: 50869990!
+from: aSenderAccount to: aRecipientAccount of: aValue
+	|aTransfer aTransferDeposit aTransferWithdraw|
+	
+	aSenderAccount = aRecipientAccount  ifTrue: [^self error: Transfer canNotTransferBeetweenTheSameAccount ].
+	aValue = 0 ifTrue:[^self error: Transfer canNotTransfer0 ].
+	
+	aTransfer := Transfer new.
+	aTransferDeposit := TransferDeposit register: aTransfer on: aRecipientAccount.
+	aTransferWithdraw := TransferWithdraw register: aTransfer on: aSenderAccount.
+	
+	^aTransfer initializeFrom: aTransferWithdraw to: aTransferDeposit of: aValue.! !
+
+!testRun: #TransferTest #test05ATransferCantBeDoneBeOf0Value stamp: 'LH 11/10/2020 17:34:18'!
+PASSED!
+
+!testRun: #TransferTest #test01ATransferDecreasesBalanceOfSenderAndIncreasesOnReceiver stamp: 'LH 11/10/2020 17:34:18'!
+PASSED!
+
+!testRun: #TransferTest #test02ATransferRegistersATransferDepositAndATransferWithdraw stamp: 'LH 11/10/2020 17:34:18'!
+PASSED!
+
+!testRun: #TransferTest #test03ATransferWithdrawAndDepositKnowTheirTransfer stamp: 'LH 11/10/2020 17:34:18'!
+PASSED!
+
+!testRun: #TransferTest #test04ATransferCantBeDoneBetweenTheSameAccount stamp: 'LH 11/10/2020 17:34:19'!
+PASSED!
+
+!testRun: #TransferTest #test05ATransferCantBeDoneBeOf0Value stamp: 'LH 11/10/2020 17:34:19'!
+PASSED!
+!Transfer class methodsFor: 'error description' stamp: 'LH 11/10/2020 17:34:53'!
+invalidValue
+	^'Invalid value for a transfer'! !
+!TransferTest methodsFor: 'as yet unclassified' stamp: 'LH 11/10/2020 17:34:53' prior: 50870029!
+test05ATransferCantBeDoneBeOf0Value
+	|account1 account2|
+	
+	account1 := ReceptiveAccount new.
+	account2 := ReceptiveAccount new.
+	
+	self should:[Transfer from: account1 to: account2 of: 0.]
+		raise: Error
+		withMessageText: Transfer invalidValue.
+	! !
+!Transfer class methodsFor: 'as yet unclassified' stamp: 'LH 11/10/2020 17:34:53' prior: 50870061!
+from: aSenderAccount to: aRecipientAccount of: aValue
+	|aTransfer aTransferDeposit aTransferWithdraw|
+	
+	aSenderAccount = aRecipientAccount  ifTrue: [^self error: Transfer canNotTransferBeetweenTheSameAccount ].
+	aValue = 0 ifTrue:[^self error: Transfer invalidValue ].
+	
+	aTransfer := Transfer new.
+	aTransferDeposit := TransferDeposit register: aTransfer on: aRecipientAccount.
+	aTransferWithdraw := TransferWithdraw register: aTransfer on: aSenderAccount.
+	
+	^aTransfer initializeFrom: aTransferWithdraw to: aTransferDeposit of: aValue.! !
+
+!methodRemoval: Transfer class #canNotTransfer0 stamp: 'LH 11/10/2020 17:34:53'!
+canNotTransfer0
+	^'Invalid value for a transfer'!
+
+!testRun: #TransferTest #test01ATransferDecreasesBalanceOfSenderAndIncreasesOnReceiver stamp: 'LH 11/10/2020 17:34:59'!
+PASSED!
+
+!testRun: #TransferTest #test02ATransferRegistersATransferDepositAndATransferWithdraw stamp: 'LH 11/10/2020 17:34:59'!
+PASSED!
+
+!testRun: #TransferTest #test03ATransferWithdrawAndDepositKnowTheirTransfer stamp: 'LH 11/10/2020 17:34:59'!
+PASSED!
+
+!testRun: #TransferTest #test04ATransferCantBeDoneBetweenTheSameAccount stamp: 'LH 11/10/2020 17:34:59'!
+PASSED!
+
+!testRun: #TransferTest #test05ATransferCantBeDoneBeOf0Value stamp: 'LH 11/10/2020 17:34:59'!
+PASSED!
+!TransferTest methodsFor: 'test' stamp: 'LH 11/10/2020 17:35:27'!
+test06ATransferCantBeOfNegativeValue
+	|account1 account2|
+	
+	account1 := ReceptiveAccount new.
+	account2 := ReceptiveAccount new.
+	
+	self should:[Transfer from: account1 to: account2 of: -1.]
+		raise: Error
+		withMessageText: Transfer invalidValue.
+	! !
+
+!testRun: #TransferTest #test06ATransferCantBeOfNegativeValue stamp: 'LH 11/10/2020 17:35:28'!
+FAILURE!
+!Transfer class methodsFor: 'instance creation' stamp: 'LH 11/10/2020 17:35:47' prior: 50870119!
+from: aSenderAccount to: aRecipientAccount of: aValue
+	|aTransfer aTransferDeposit aTransferWithdraw|
+	
+	aSenderAccount = aRecipientAccount  ifTrue: [^self error: Transfer canNotTransferBeetweenTheSameAccount ].
+	aValue <= 0 ifTrue:[^self error: Transfer invalidValue ].
+	
+	aTransfer := Transfer new.
+	aTransferDeposit := TransferDeposit register: aTransfer on: aRecipientAccount.
+	aTransferWithdraw := TransferWithdraw register: aTransfer on: aSenderAccount.
+	
+	^aTransfer initializeFrom: aTransferWithdraw to: aTransferDeposit of: aValue.! !
+
+!testRun: #TransferTest #test06ATransferCantBeOfNegativeValue stamp: 'LH 11/10/2020 17:35:48'!
+PASSED!
+
+!testRun: #TransferTest #test01ATransferDecreasesBalanceOfSenderAndIncreasesOnReceiver stamp: 'LH 11/10/2020 17:35:48'!
+PASSED!
+
+!testRun: #TransferTest #test02ATransferRegistersATransferDepositAndATransferWithdraw stamp: 'LH 11/10/2020 17:35:48'!
+PASSED!
+
+!testRun: #TransferTest #test03ATransferWithdrawAndDepositKnowTheirTransfer stamp: 'LH 11/10/2020 17:35:48'!
+PASSED!
+
+!testRun: #TransferTest #test04ATransferCantBeDoneBetweenTheSameAccount stamp: 'LH 11/10/2020 17:35:48'!
+PASSED!
+
+!testRun: #TransferTest #test05ATransferCantBeDoneBeOf0Value stamp: 'LH 11/10/2020 17:35:48'!
+PASSED!
+
+!testRun: #TransferTest #test06ATransferCantBeOfNegativeValue stamp: 'LH 11/10/2020 17:35:48'!
+PASSED!
+!Transfer class methodsFor: 'instance creation' stamp: 'LH 11/10/2020 17:40:41'!
+ifAnEvaluation: aClosureEvaluation sendTheTransferError: aMessageForErorText
+	
+	
+	aClosureEvaluation value  ifTrue: [^self error: (aMessageForErorText sendTo: Transfer)].
+! !
+!Transfer class methodsFor: 'instance creation' stamp: 'LH 11/10/2020 17:42:12' prior: 50870176!
+from: aSenderAccount to: aRecipientAccount of: aValue
+	|aTransfer aTransferDeposit aTransferWithdraw|
+	
+	self ifAnEvaluation: [aSenderAccount = aRecipientAccount] sendTheTransferError: #canNotTransferBeetweenTheSameAccount.
+	self ifAnEvaluation: [aValue <= 0] sendTheTransferError: #invalidValue.
+
+	
+	aTransfer := Transfer new.
+	aTransferDeposit := TransferDeposit register: aTransfer on: aRecipientAccount.
+	aTransferWithdraw := TransferWithdraw register: aTransfer on: aSenderAccount.
+	
+	^aTransfer initializeFrom: aTransferWithdraw to: aTransferDeposit of: aValue.! !
+
+!testRun: #TransferTest #test01ATransferDecreasesBalanceOfSenderAndIncreasesOnReceiver stamp: 'LH 11/10/2020 17:42:14'!
+PASSED!
+
+!testRun: #TransferTest #test02ATransferRegistersATransferDepositAndATransferWithdraw stamp: 'LH 11/10/2020 17:42:14'!
+PASSED!
+
+!testRun: #TransferTest #test03ATransferWithdrawAndDepositKnowTheirTransfer stamp: 'LH 11/10/2020 17:42:14'!
+PASSED!
+
+!testRun: #TransferTest #test04ATransferCantBeDoneBetweenTheSameAccount stamp: 'LH 11/10/2020 17:42:14'!
+PASSED!
+
+!testRun: #TransferTest #test05ATransferCantBeDoneBeOf0Value stamp: 'LH 11/10/2020 17:42:14'!
+PASSED!
+
+!testRun: #TransferTest #test06ATransferCantBeOfNegativeValue stamp: 'LH 11/10/2020 17:42:14'!
+PASSED!
+!Transfer class methodsFor: 'instance creation' stamp: 'LH 11/10/2020 17:42:39' prior: 50870230!
+from: aSenderAccount to: aRecipientAccount of: aValue
+	|aTransfer aTransferDeposit aTransferWithdraw|
+	
+	self ifAnEvaluation: [aSenderAccount = aRecipientAccount] sendTheTransferError: #canNotTransferBeetweenTheSameAccount.
+	self ifAnEvaluation: [aValue <= 0] sendTheTransferError: #invalidValue.
+
+	aTransfer := Transfer new.
+	aTransferDeposit := TransferDeposit register: aTransfer on: aRecipientAccount.
+	aTransferWithdraw := TransferWithdraw register: aTransfer on: aSenderAccount.
+	
+	^aTransfer initializeFrom: aTransferWithdraw to: aTransferDeposit of: aValue.! !
+
+!testRun: #TransferTest #test01ATransferDecreasesBalanceOfSenderAndIncreasesOnReceiver stamp: 'LH 11/10/2020 17:42:40'!
+PASSED!
+
+!testRun: #TransferTest #test02ATransferRegistersATransferDepositAndATransferWithdraw stamp: 'LH 11/10/2020 17:42:40'!
+PASSED!
+
+!testRun: #TransferTest #test03ATransferWithdrawAndDepositKnowTheirTransfer stamp: 'LH 11/10/2020 17:42:40'!
+PASSED!
+
+!testRun: #TransferTest #test04ATransferCantBeDoneBetweenTheSameAccount stamp: 'LH 11/10/2020 17:42:40'!
+PASSED!
+
+!testRun: #TransferTest #test05ATransferCantBeDoneBeOf0Value stamp: 'LH 11/10/2020 17:42:40'!
+PASSED!
+
+!testRun: #TransferTest #test06ATransferCantBeOfNegativeValue stamp: 'LH 11/10/2020 17:42:40'!
+PASSED!
+
+----SNAPSHOT----(10 November 2020 17:43:42) CuisUniversity-4384.image priorSource: 17220211!
+!TransferComponents methodsFor: 'balance' stamp: 'LH 11/10/2020 17:46:43' prior: 50869140 overrides: 50868388!
+affectBalance: aBalance
+	"includes the net value of this transaction in aBalance"
+	self subclassResponsibility ! !
+!TransferComponents methodsFor: 'value' stamp: 'LH 11/10/2020 17:47:03' prior: 50869169 overrides: 50868384!
+value
+	"returns the value of this transaction"
+	self subclassResponsibility.! !
+!TransferComponents methodsFor: 'accessing' stamp: 'LH 11/10/2020 17:47:47' prior: 50869563!
+transfer
+	"returns the transfer from wich this transaction originates"
+	^transfer! !
+!TransferDeposit methodsFor: 'balance' stamp: 'LH 11/10/2020 17:48:04' prior: 50869179 overrides: 50870319!
+affectBalance: aBalance
+	"see superclass"
+	^aBalance + self value.! !
+!TransferDeposit methodsFor: 'value' stamp: 'LH 11/10/2020 17:48:12' prior: 50869174 overrides: 50870326!
+value
+	"see superclass"
+	^transfer value.! !
+!TransferWithdraw methodsFor: 'balance' stamp: 'LH 11/10/2020 17:48:18' prior: 50869379 overrides: 50870319!
+affectBalance: aBalance
+	"see superclass"
+	^aBalance - self value.! !
+!TransferComponents methodsFor: 'value' stamp: 'LH 11/10/2020 17:48:39' prior: 50870326 overrides: 50868384!
+value
+	"returns the value of this transaction"
+	^transfer value.! !
+
+!methodRemoval: TransferDeposit #value stamp: 'LH 11/10/2020 17:48:50'!
+value
+	"see superclass"
+	^transfer value.!
+
+!methodRemoval: TransferWithdraw #value stamp: 'LH 11/10/2020 17:48:54'!
+value
+
+	^transfer value.!
+
+!testRun: #TransferTest #test01ATransferDecreasesBalanceOfSenderAndIncreasesOnReceiver stamp: 'LH 11/10/2020 17:49:17'!
+PASSED!
+
+!testRun: #TransferTest #test02ATransferRegistersATransferDepositAndATransferWithdraw stamp: 'LH 11/10/2020 17:49:17'!
+PASSED!
+
+!testRun: #TransferTest #test03ATransferWithdrawAndDepositKnowTheirTransfer stamp: 'LH 11/10/2020 17:49:17'!
+PASSED!
+
+!testRun: #TransferTest #test04ATransferCantBeDoneBetweenTheSameAccount stamp: 'LH 11/10/2020 17:49:17'!
+PASSED!
+
+!testRun: #TransferTest #test05ATransferCantBeDoneBeOf0Value stamp: 'LH 11/10/2020 17:49:17'!
+PASSED!
+
+!testRun: #TransferTest #test06ATransferCantBeOfNegativeValue stamp: 'LH 11/10/2020 17:49:17'!
+PASSED!
+!Transfer methodsFor: 'accesing' stamp: 'LH 11/10/2020 17:50:06' prior: 50869275!
+deposit
+	"returns the transferDeposit associated with this transfer"
+	^deposit.! !
+!Transfer methodsFor: 'accesing' stamp: 'LH 11/10/2020 17:50:16' prior: 50869272!
+withdraw
+	"returns the transferWithdraw associated with this transfer"
+	^withdraw.! !
+!Transfer methodsFor: 'accesing' stamp: 'LH 11/10/2020 17:50:31' prior: 50869194 overrides: 16881508!
+value
+	"returns the value of this transfer"
+	^value.! !
+
+TestCase subclass: #TransferTest
+	instanceVariableNames: 'account1 account2 aTransfer'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Portfolio-Solucion'!
+
+TestCase subclass: #TransferTest
+	instanceVariableNames: 'firstAccount secondAccount transfer'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Portfolio-Solucion'!
+
+!classDefinition: #TransferTest category: 'Portfolio-Solucion' stamp: 'LH 11/10/2020 17:56:47'!
+TestCase subclass: #TransferTest
+	instanceVariableNames: 'firstAccount secondAccount transfer'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Portfolio-Solucion'!
+!TransferTest methodsFor: 'test' stamp: 'LH 11/10/2020 17:57:36' overrides: 16927572!
+setUp
+	
+	firstAccount := ReceptiveAccount new.
+	secondAccount := ReceptiveAccount new.
+	! !
+!TransferTest methodsFor: 'test' stamp: 'LH 11/10/2020 17:58:39' prior: 50870426 overrides: 16927572!
+setUp
+	
+	firstAccount := ReceptiveAccount new.
+	secondAccount := ReceptiveAccount new.
+	
+	transfer := Transfer from: firstAccount to: secondAccount of: 100.! !
+!TransferTest methodsFor: 'test' stamp: 'LH 11/10/2020 17:59:13' prior: 50869789!
+test01ATransferDecreasesBalanceOfSenderAndIncreasesOnReceiver
+	
+	self setUp.
+	
+	self assert: 100 equals: secondAccount balance.
+	self assert: -100 equals: firstAccount balance.! !
+
+!testRun: #TransferTest #test01ATransferDecreasesBalanceOfSenderAndIncreasesOnReceiver stamp: 'LH 11/10/2020 17:59:14'!
+PASSED!
+
+!testRun: #TransferTest #test01ATransferDecreasesBalanceOfSenderAndIncreasesOnReceiver stamp: 'LH 11/10/2020 17:59:14'!
+PASSED!
+
+!testRun: #TransferTest #test02ATransferRegistersATransferDepositAndATransferWithdraw stamp: 'LH 11/10/2020 17:59:14'!
+PASSED!
+
+!testRun: #TransferTest #test03ATransferWithdrawAndDepositKnowTheirTransfer stamp: 'LH 11/10/2020 17:59:14'!
+PASSED!
+
+!testRun: #TransferTest #test04ATransferCantBeDoneBetweenTheSameAccount stamp: 'LH 11/10/2020 17:59:14'!
+PASSED!
+
+!testRun: #TransferTest #test05ATransferCantBeDoneBeOf0Value stamp: 'LH 11/10/2020 17:59:14'!
+PASSED!
+
+!testRun: #TransferTest #test06ATransferCantBeOfNegativeValue stamp: 'LH 11/10/2020 17:59:14'!
+PASSED!
+!TransferTest methodsFor: 'test' stamp: 'LH 11/10/2020 17:59:56' prior: 50869809!
+test02ATransferRegistersATransferDepositAndATransferWithdraw
+	
+	self setUp.
+	
+	self assert: (secondAccount hasRegistered: transfer deposit).
+	self assert: (firstAccount hasRegistered: transfer withdraw).! !
+
+!testRun: #TransferTest #test02ATransferRegistersATransferDepositAndATransferWithdraw stamp: 'LH 11/10/2020 17:59:57'!
+PASSED!
+
+!testRun: #TransferTest #test01ATransferDecreasesBalanceOfSenderAndIncreasesOnReceiver stamp: 'LH 11/10/2020 17:59:57'!
+PASSED!
+
+!testRun: #TransferTest #test02ATransferRegistersATransferDepositAndATransferWithdraw stamp: 'LH 11/10/2020 17:59:57'!
+PASSED!
+
+!testRun: #TransferTest #test03ATransferWithdrawAndDepositKnowTheirTransfer stamp: 'LH 11/10/2020 17:59:58'!
+PASSED!
+
+!testRun: #TransferTest #test04ATransferCantBeDoneBetweenTheSameAccount stamp: 'LH 11/10/2020 17:59:58'!
+PASSED!
+
+!testRun: #TransferTest #test05ATransferCantBeDoneBeOf0Value stamp: 'LH 11/10/2020 17:59:58'!
+PASSED!
+
+!testRun: #TransferTest #test06ATransferCantBeOfNegativeValue stamp: 'LH 11/10/2020 17:59:58'!
+PASSED!
+!TransferTest methodsFor: 'test' stamp: 'LH 11/10/2020 18:00:28' prior: 50869823!
+test03ATransferWithdrawAndDepositKnowTheirTransfer
+
+	self setUp.
+	
+	self assert: transfer equals: transfer deposit transfer.
+	self assert: transfer equals: transfer withdraw transfer.
+! !
+
+!testRun: #TransferTest #test03ATransferWithdrawAndDepositKnowTheirTransfer stamp: 'LH 11/10/2020 18:00:32'!
+PASSED!
+
+!testRun: #TransferTest #test01ATransferDecreasesBalanceOfSenderAndIncreasesOnReceiver stamp: 'LH 11/10/2020 18:00:32'!
+PASSED!
+
+!testRun: #TransferTest #test02ATransferRegistersATransferDepositAndATransferWithdraw stamp: 'LH 11/10/2020 18:00:32'!
+PASSED!
+
+!testRun: #TransferTest #test03ATransferWithdrawAndDepositKnowTheirTransfer stamp: 'LH 11/10/2020 18:00:32'!
+PASSED!
+
+!testRun: #TransferTest #test04ATransferCantBeDoneBetweenTheSameAccount stamp: 'LH 11/10/2020 18:00:32'!
+PASSED!
+
+!testRun: #TransferTest #test05ATransferCantBeDoneBeOf0Value stamp: 'LH 11/10/2020 18:00:33'!
+PASSED!
+
+!testRun: #TransferTest #test06ATransferCantBeOfNegativeValue stamp: 'LH 11/10/2020 18:00:33'!
+PASSED!
+!TransferTest methodsFor: 'test' stamp: 'LH 11/10/2020 18:00:59' prior: 50869979!
+test04ATransferCantBeDoneBetweenTheSameAccount
+	
+	self setUp.
+	
+	self should:[Transfer from: firstAccount to: firstAccount of: 100.]
+		raise: Error
+		withMessageText: Transfer canNotTransferBeetweenTheSameAccount.
+	! !
+!TransferTest methodsFor: 'test' stamp: 'LH 11/10/2020 18:01:02' prior: 50870544!
+test04ATransferCantBeDoneBetweenTheSameAccount
+	
+	self setUp.
+	
+	self should:[Transfer from: firstAccount to: firstAccount of: 100.]
+		raise: Error
+		withMessageText: Transfer canNotTransferBeetweenTheSameAccount.
+	! !
+
+!testRun: #TransferTest #test04ATransferCantBeDoneBetweenTheSameAccount stamp: 'LH 11/10/2020 18:01:04'!
+PASSED!
+
+!testRun: #TransferTest #test01ATransferDecreasesBalanceOfSenderAndIncreasesOnReceiver stamp: 'LH 11/10/2020 18:01:04'!
+PASSED!
+
+!testRun: #TransferTest #test02ATransferRegistersATransferDepositAndATransferWithdraw stamp: 'LH 11/10/2020 18:01:04'!
+PASSED!
+
+!testRun: #TransferTest #test03ATransferWithdrawAndDepositKnowTheirTransfer stamp: 'LH 11/10/2020 18:01:04'!
+PASSED!
+
+!testRun: #TransferTest #test04ATransferCantBeDoneBetweenTheSameAccount stamp: 'LH 11/10/2020 18:01:04'!
+PASSED!
+
+!testRun: #TransferTest #test05ATransferCantBeDoneBeOf0Value stamp: 'LH 11/10/2020 18:01:04'!
+PASSED!
+
+!testRun: #TransferTest #test06ATransferCantBeOfNegativeValue stamp: 'LH 11/10/2020 18:01:04'!
+PASSED!
+!TransferTest methodsFor: 'test' stamp: 'LH 11/10/2020 18:01:27' prior: 50870108!
+test05ATransferCantBeDoneBeOf0Value
+
+	self setUp.
+	
+	self should:[Transfer from: firstAccount to: firstAccount of: 0.]
+		raise: Error
+		withMessageText: Transfer invalidValue.
+	! !
+
+!testRun: #TransferTest #test05ATransferCantBeDoneBeOf0Value stamp: 'LH 11/10/2020 18:01:28'!
+FAILURE!
+!TransferTest methodsFor: 'test' stamp: 'LH 11/10/2020 18:01:38' prior: 50870589!
+test05ATransferCantBeDoneBeOf0Value
+
+	self setUp.
+	
+	self should:[Transfer from: firstAccount to: secondAccount of: 0.]
+		raise: Error
+		withMessageText: Transfer invalidValue.
+	! !
+
+!testRun: #TransferTest #test05ATransferCantBeDoneBeOf0Value stamp: 'LH 11/10/2020 18:01:39'!
+PASSED!
+
+!testRun: #TransferTest #test01ATransferDecreasesBalanceOfSenderAndIncreasesOnReceiver stamp: 'LH 11/10/2020 18:01:39'!
+PASSED!
+
+!testRun: #TransferTest #test02ATransferRegistersATransferDepositAndATransferWithdraw stamp: 'LH 11/10/2020 18:01:39'!
+PASSED!
+
+!testRun: #TransferTest #test03ATransferWithdrawAndDepositKnowTheirTransfer stamp: 'LH 11/10/2020 18:01:39'!
+PASSED!
+
+!testRun: #TransferTest #test04ATransferCantBeDoneBetweenTheSameAccount stamp: 'LH 11/10/2020 18:01:39'!
+PASSED!
+
+!testRun: #TransferTest #test05ATransferCantBeDoneBeOf0Value stamp: 'LH 11/10/2020 18:01:39'!
+PASSED!
+
+!testRun: #TransferTest #test06ATransferCantBeOfNegativeValue stamp: 'LH 11/10/2020 18:01:39'!
+PASSED!
+!TransferTest methodsFor: 'test' stamp: 'LH 11/10/2020 18:02:00' prior: 50870161!
+test06ATransferCantBeOfNegativeValue
+	
+	self setUp.
+	
+	self should:[Transfer from: firstAccount to: secondAccount of: -1.]
+		raise: Error
+		withMessageText: Transfer invalidValue.
+	! !
+
+!testRun: #TransferTest #test06ATransferCantBeOfNegativeValue stamp: 'LH 11/10/2020 18:02:01'!
+PASSED!
+
+!testRun: #TransferTest #test01ATransferDecreasesBalanceOfSenderAndIncreasesOnReceiver stamp: 'LH 11/10/2020 18:02:01'!
+PASSED!
+
+!testRun: #TransferTest #test02ATransferRegistersATransferDepositAndATransferWithdraw stamp: 'LH 11/10/2020 18:02:01'!
+PASSED!
+
+!testRun: #TransferTest #test03ATransferWithdrawAndDepositKnowTheirTransfer stamp: 'LH 11/10/2020 18:02:01'!
+PASSED!
+
+!testRun: #TransferTest #test04ATransferCantBeDoneBetweenTheSameAccount stamp: 'LH 11/10/2020 18:02:01'!
+PASSED!
+
+!testRun: #TransferTest #test05ATransferCantBeDoneBeOf0Value stamp: 'LH 11/10/2020 18:02:01'!
+PASSED!
+
+!testRun: #TransferTest #test06ATransferCantBeOfNegativeValue stamp: 'LH 11/10/2020 18:02:01'!
+PASSED!
+
+----SNAPSHOT----(10 November 2020 18:02:17) CuisUniversity-4384.image priorSource: 17237264!
+
+----QUIT----(10 November 2020 18:02:29) CuisUniversity-4384.image priorSource: 17248568!

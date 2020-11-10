@@ -304,46 +304,6 @@ test07AccountKnowsItsTransactions
 	self assert: (account transactions includes: deposit).
 ! !
 
-
-!ReceptiveAccountTest methodsFor: 'test transfer' stamp: 'LH 11/9/2020 21:25:05'!
-test08ATransferDecreasesBalanceOfSenderAndIncreasesOnReceiver
-	|account1 account2|
-	
-	account1 := ReceptiveAccount new.
-	account2 := ReceptiveAccount new.
-	
-	Transfer from: account1 to: account2 of: 100.
-	
-	self assert: 100 equals: account2 balance.
-	self assert: -100 equals: account1 balance.
-! !
-
-!ReceptiveAccountTest methodsFor: 'test transfer' stamp: 'LH 11/9/2020 21:26:14'!
-test09ATransferRegistersATransferDepositAndATransferWithdraw
-	|aTransference account1 account2|
-	
-	account1 := ReceptiveAccount new.
-	account2 := ReceptiveAccount new.
-	
-	aTransference := Transfer from: account1 to: account2 of: 100.
-	
-	self assert: (account2 hasRegistered: aTransference deposit).
-	self assert: (account1 hasRegistered: aTransference withdraw).
-! !
-
-!ReceptiveAccountTest methodsFor: 'test transfer' stamp: 'LH 11/9/2020 21:29:21'!
-test10ATransferWithdrawAndDepositKnowTheirTransfer
-	|aTransfer account1 account2|
-	
-	account1 := ReceptiveAccount new.
-	account2 := ReceptiveAccount new.
-	
-	aTransfer := Transfer from: account1 to: account2 of: 100.
-	
-	self assert: aTransfer equals: aTransfer deposit transfer.
-	self assert: aTransfer equals: aTransfer withdraw transfer.
-! !
-
 
 !classDefinition: #ReportTest category: 'Portfolio-Solucion'!
 TestCase subclass: #ReportTest
@@ -368,10 +328,73 @@ test02AnAccountSummaryOfAnAccountWithADepositReturnsAccurate
 
 !classDefinition: #TransferTest category: 'Portfolio-Solucion'!
 TestCase subclass: #TransferTest
-	instanceVariableNames: ''
+	instanceVariableNames: 'firstAccount secondAccount transfer'
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'Portfolio-Solucion'!
+
+!TransferTest methodsFor: 'test' stamp: 'LH 11/10/2020 17:58:39'!
+setUp
+	
+	firstAccount := ReceptiveAccount new.
+	secondAccount := ReceptiveAccount new.
+	
+	transfer := Transfer from: firstAccount to: secondAccount of: 100.! !
+
+!TransferTest methodsFor: 'test' stamp: 'LH 11/10/2020 17:59:13'!
+test01ATransferDecreasesBalanceOfSenderAndIncreasesOnReceiver
+	
+	self setUp.
+	
+	self assert: 100 equals: secondAccount balance.
+	self assert: -100 equals: firstAccount balance.! !
+
+!TransferTest methodsFor: 'test' stamp: 'LH 11/10/2020 17:59:56'!
+test02ATransferRegistersATransferDepositAndATransferWithdraw
+	
+	self setUp.
+	
+	self assert: (secondAccount hasRegistered: transfer deposit).
+	self assert: (firstAccount hasRegistered: transfer withdraw).! !
+
+!TransferTest methodsFor: 'test' stamp: 'LH 11/10/2020 18:00:28'!
+test03ATransferWithdrawAndDepositKnowTheirTransfer
+
+	self setUp.
+	
+	self assert: transfer equals: transfer deposit transfer.
+	self assert: transfer equals: transfer withdraw transfer.
+! !
+
+!TransferTest methodsFor: 'test' stamp: 'LH 11/10/2020 18:01:02'!
+test04ATransferCantBeDoneBetweenTheSameAccount
+	
+	self setUp.
+	
+	self should:[Transfer from: firstAccount to: firstAccount of: 100.]
+		raise: Error
+		withMessageText: Transfer canNotTransferBeetweenTheSameAccount.
+	! !
+
+!TransferTest methodsFor: 'test' stamp: 'LH 11/10/2020 18:01:38'!
+test05ATransferCantBeDoneBeOf0Value
+
+	self setUp.
+	
+	self should:[Transfer from: firstAccount to: secondAccount of: 0.]
+		raise: Error
+		withMessageText: Transfer invalidValue.
+	! !
+
+!TransferTest methodsFor: 'test' stamp: 'LH 11/10/2020 18:02:00'!
+test06ATransferCantBeOfNegativeValue
+	
+	self setUp.
+	
+	self should:[Transfer from: firstAccount to: secondAccount of: -1.]
+		raise: Error
+		withMessageText: Transfer invalidValue.
+	! !
 
 
 !classDefinition: #Account category: 'Portfolio-Solucion'!
@@ -700,15 +723,15 @@ AccountTransaction subclass: #TransferComponents
 	poolDictionaries: ''
 	category: 'Portfolio-Solucion'!
 
-!TransferComponents methodsFor: 'value' stamp: 'LH 11/9/2020 21:09:54'!
+!TransferComponents methodsFor: 'value' stamp: 'LH 11/10/2020 17:48:39'!
 value
+	"returns the value of this transaction"
+	^transfer value.! !
 
-	self subclassResponsibility.! !
 
-
-!TransferComponents methodsFor: 'balance' stamp: 'LH 11/9/2020 21:04:44'!
+!TransferComponents methodsFor: 'balance' stamp: 'LH 11/10/2020 17:46:43'!
 affectBalance: aBalance
-
+	"includes the net value of this transaction in aBalance"
 	self subclassResponsibility ! !
 
 
@@ -718,9 +741,9 @@ initialization: aTransfer
 	self subclassResponsibility .! !
 
 
-!TransferComponents methodsFor: 'accessing' stamp: 'LH 11/9/2020 21:29:09'!
+!TransferComponents methodsFor: 'accessing' stamp: 'LH 11/10/2020 17:47:47'!
 transfer
-	
+	"returns the transfer from wich this transaction originates"
 	^transfer! !
 
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
@@ -742,9 +765,9 @@ TransferComponents subclass: #TransferDeposit
 	poolDictionaries: ''
 	category: 'Portfolio-Solucion'!
 
-!TransferDeposit methodsFor: 'balance' stamp: 'LH 11/9/2020 21:10:25'!
+!TransferDeposit methodsFor: 'balance' stamp: 'LH 11/10/2020 17:48:04'!
 affectBalance: aBalance
-
+	"see superclass"
 	^aBalance + self value.! !
 
 
@@ -752,12 +775,6 @@ affectBalance: aBalance
 initialize: aTransfer
 
 	transfer := aTransfer .! !
-
-
-!TransferDeposit methodsFor: 'value' stamp: 'LH 11/9/2020 21:10:18'!
-value
-
-	^transfer value.! !
 
 
 !classDefinition: #TransferWithdraw category: 'Portfolio-Solucion'!
@@ -767,16 +784,10 @@ TransferComponents subclass: #TransferWithdraw
 	poolDictionaries: ''
 	category: 'Portfolio-Solucion'!
 
-!TransferWithdraw methodsFor: 'balance' stamp: 'LH 11/9/2020 21:21:22'!
+!TransferWithdraw methodsFor: 'balance' stamp: 'LH 11/10/2020 17:48:18'!
 affectBalance: aBalance
-
+	"see superclass"
 	^aBalance - self value.! !
-
-
-!TransferWithdraw methodsFor: 'value' stamp: 'LH 11/9/2020 21:10:42'!
-value
-
-	^transfer value.! !
 
 
 !TransferWithdraw methodsFor: 'initialization' stamp: 'LH 11/9/2020 21:08:48'!
@@ -837,19 +848,19 @@ initializeFrom: aSenderAccount to: aRecipientAccount of: aValue
 
 
 
-!Transfer methodsFor: 'accesing' stamp: 'LH 11/9/2020 21:19:10'!
+!Transfer methodsFor: 'accesing' stamp: 'LH 11/10/2020 17:50:06'!
 deposit
-
+	"returns the transferDeposit associated with this transfer"
 	^deposit.! !
 
-!Transfer methodsFor: 'accesing' stamp: 'LH 11/9/2020 21:11:05'!
+!Transfer methodsFor: 'accesing' stamp: 'LH 11/10/2020 17:50:31'!
 value
-
+	"returns the value of this transfer"
 	^value.! !
 
-!Transfer methodsFor: 'accesing' stamp: 'LH 11/9/2020 21:18:36'!
+!Transfer methodsFor: 'accesing' stamp: 'LH 11/10/2020 17:50:16'!
 withdraw
-
+	"returns the transferWithdraw associated with this transfer"
 	^withdraw.! !
 
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
@@ -858,12 +869,31 @@ withdraw
 Transfer class
 	instanceVariableNames: ''!
 
-!Transfer class methodsFor: 'instance creation' stamp: 'LH 11/9/2020 21:20:56'!
+!Transfer class methodsFor: 'instance creation' stamp: 'LH 11/10/2020 17:42:39'!
 from: aSenderAccount to: aRecipientAccount of: aValue
 	|aTransfer aTransferDeposit aTransferWithdraw|
 	
+	self ifAnEvaluation: [aSenderAccount = aRecipientAccount] sendTheTransferError: #canNotTransferBeetweenTheSameAccount.
+	self ifAnEvaluation: [aValue <= 0] sendTheTransferError: #invalidValue.
+
 	aTransfer := Transfer new.
 	aTransferDeposit := TransferDeposit register: aTransfer on: aRecipientAccount.
 	aTransferWithdraw := TransferWithdraw register: aTransfer on: aSenderAccount.
 	
 	^aTransfer initializeFrom: aTransferWithdraw to: aTransferDeposit of: aValue.! !
+
+
+!Transfer class methodsFor: 'error description' stamp: 'LH 11/10/2020 17:31:10'!
+canNotTransferBeetweenTheSameAccount
+	^'Can not make a transfer between the same account'! !
+
+!Transfer class methodsFor: 'error description' stamp: 'LH 11/10/2020 17:40:41'!
+ifAnEvaluation: aClosureEvaluation sendTheTransferError: aMessageForErorText
+	
+	
+	aClosureEvaluation value  ifTrue: [^self error: (aMessageForErorText sendTo: Transfer)].
+! !
+
+!Transfer class methodsFor: 'error description' stamp: 'LH 11/10/2020 17:34:53'!
+invalidValue
+	^'Invalid value for a transfer'! !
