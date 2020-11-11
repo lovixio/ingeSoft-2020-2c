@@ -307,23 +307,43 @@ test07AccountKnowsItsTransactions
 
 !classDefinition: #ReportTest category: 'Portfolio-Solucion'!
 TestCase subclass: #ReportTest
-	instanceVariableNames: ''
+	instanceVariableNames: 'firstAccount'
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'Portfolio-Solucion'!
 
-!ReportTest methodsFor: 'test' stamp: 'LH 11/9/2020 21:40:43'!
+!ReportTest methodsFor: 'test' stamp: 'LH 11/11/2020 16:04:57'!
+assertEqualsWithFirstAccountSummary: aCollectionOfStrings
+	
+	self assert: aCollectionOfStrings equals: (firstAccount accountSummary).! !
+
+!ReportTest methodsFor: 'test' stamp: 'LH 11/11/2020 16:01:33'!
+setUp
+	
+	firstAccount := ReceptiveAccount new.! !
+
+!ReportTest methodsFor: 'test' stamp: 'LH 11/11/2020 16:05:35'!
 test01AnAccountSummaryOfAnEmptyAccountReturnsBalanceIs0
 	
-	|account1|
+	self setUp.
 	
-	account1 := ReceptiveAccount new.
-	
-	self assert: (OrderedCollection with: 'Balance = 0') equals: (account1 accountSummary).! !
+	self assertEqualsWithFirstAccountSummary: (OrderedCollection with: 'Balance = 0').! !
 
-!ReportTest methodsFor: 'test' stamp: 'LH 11/9/2020 22:15:18'!
+!ReportTest methodsFor: 'test' stamp: 'LH 11/11/2020 16:06:05'!
 test02AnAccountSummaryOfAnAccountWithADepositReturnsAccurate
-! !
+	
+	self setUp.
+	Deposit register: 100 on: firstAccount.
+	
+	self assertEqualsWithFirstAccountSummary: (OrderedCollection with:'Deposito por 100' with: 'Balance = 100').! !
+
+!ReportTest methodsFor: 'test' stamp: 'LH 11/11/2020 16:06:40'!
+test03AnAccountSummaryOfAnAccountWithAWithdrawReturnsAccurate
+
+	self setUp.
+	Withdraw register: 100 on: firstAccount .
+	
+	self assertEqualsWithFirstAccountSummary: (OrderedCollection with:'Extracción por 100' with: 'Balance = -100').! !
 
 
 !classDefinition: #TransferTest category: 'Portfolio-Solucion'!
@@ -633,16 +653,18 @@ addedTo: aPortfolio
 	! !
 
 
-!ReceptiveAccount methodsFor: 'reports' stamp: 'LH 11/9/2020 22:14:14'!
+!ReceptiveAccount methodsFor: 'reports' stamp: 'LH 11/11/2020 15:59:24'!
 accountSummary
 
-	^OrderedCollection with: 'Balance = 0'.
-	"|aReport|
+	|aReport|
 	aReport := OrderedCollection new.
 	
-	self transactions do:[:aTransaction | (aTransaction isKindOf: Deposit) ifTrue: [aReport add: ('Deposit is ',aTransaction value asString)]].
+	self transactions do:[:aTransaction | 
+						(aTransaction isKindOf: Deposit) ifTrue: [aReport add: ('Deposito por ',aTransaction value asString)].
+						(aTransaction isKindOf: Withdraw) ifTrue: [aReport add: ('Extracción por ',aTransaction value asString)].].
 	
-	^ aReport add: ('Balance = ', self balance asString)."! !
+	aReport add: ('Balance = ', self balance asString).
+	^aReport.! !
 
 
 !classDefinition: #AccountTransaction category: 'Portfolio-Solucion'!
