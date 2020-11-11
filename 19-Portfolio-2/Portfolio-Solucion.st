@@ -329,21 +329,114 @@ test01AnAccountSummaryOfAnEmptyAccountReturnsBalanceIs0
 	
 	self assertEqualsWithFirstAccountSummary: (OrderedCollection with: 'Balance = 0').! !
 
-!ReportTest methodsFor: 'test' stamp: 'LH 11/11/2020 16:06:05'!
+!ReportTest methodsFor: 'test' stamp: 'IO 11/11/2020 19:40:27'!
 test02AnAccountSummaryOfAnAccountWithADepositReturnsAccurate
 	
 	self setUp.
 	Deposit register: 100 on: firstAccount.
 	
-	self assertEqualsWithFirstAccountSummary: (OrderedCollection with:'Deposito por 100' with: 'Balance = 100').! !
+	self assertEqualsWithFirstAccountSummary: (OrderedCollection with:'Depóstio por 100.' with: 'Balance = 100').! !
 
-!ReportTest methodsFor: 'test' stamp: 'LH 11/11/2020 16:06:40'!
+!ReportTest methodsFor: 'test' stamp: 'IO 11/11/2020 19:42:00'!
 test03AnAccountSummaryOfAnAccountWithAWithdrawReturnsAccurate
 
 	self setUp.
-	Withdraw register: 100 on: firstAccount .
+	Withdraw register: 50 on: firstAccount .
 	
-	self assertEqualsWithFirstAccountSummary: (OrderedCollection with:'Extracción por 100' with: 'Balance = -100').! !
+	self assertEqualsWithFirstAccountSummary: (OrderedCollection with:'Extracción por 50.' with: 'Balance = -50').! !
+
+!ReportTest methodsFor: 'test' stamp: 'IO 11/11/2020 19:41:08'!
+test04AnAccountSummaryOfAnAccountWithAnOutgoingTransfer
+
+	| account2 |
+	
+	account2 := ReceptiveAccount new.
+	self setUp.
+	Transfer from: firstAccount to: account2 of: 20.
+	
+	self assertEqualsWithFirstAccountSummary: (OrderedCollection with:'Salida por transferencia de 20.' with: 'Balance = -20').! !
+
+!ReportTest methodsFor: 'test' stamp: 'IO 11/11/2020 19:41:16'!
+test05AnAccountSummaryOfAnAccountWithAnIncommingTransfer
+
+	| account2 |
+	
+	account2 := ReceptiveAccount new.
+	self setUp.
+	Transfer from: account2 to: firstAccount of: 30.
+	
+	self assertEqualsWithFirstAccountSummary: (OrderedCollection with:'Entrada por transferencia de 30.' with: 'Balance = 30').! !
+
+!ReportTest methodsFor: 'test' stamp: 'IO 11/11/2020 19:36:11'!
+test06APortfolioWithNoAccountsHasBalance0
+
+	| portfolio1 |
+
+	portfolio1 := Portfolio new.
+
+	self assert: (OrderedCollection with: 'Balance = 0') equals: portfolio1 accountSummary.! !
+
+!ReportTest methodsFor: 'test' stamp: 'IO 11/11/2020 20:00:50'!
+test07APortfolioWithOneAccountsHasAccountsReport
+
+	| portfolio1 account1 account2 |
+
+	portfolio1 := Portfolio new.
+	account1 := ReceptiveAccount new.
+	account2 := ReceptiveAccount new.	
+	
+	portfolio1 add: account1.
+	
+	Deposit register: 100 on: account1.
+	Withdraw register: 50 on: account1.
+	Transfer from: account1 to: account2 of: 20.
+	Transfer from: account2 to: account1 of: 30.
+
+	self assert: (OrderedCollection
+		with: 'Depóstio por 100.'
+		with: 'Extracción por 50.'
+		with: 'Salida por transferencia de 20.'
+		with: 'Entrada por transferencia de 30.'
+		with: 'Balance = 60'
+	) equals: portfolio1 accountSummary.! !
+
+!ReportTest methodsFor: 'test' stamp: 'IO 11/11/2020 20:06:10'!
+test08APortfolioWithManyAccountsHasCorrectBalanceInReport
+
+	| portfolio1 account1 account2 account3 report |
+
+	portfolio1 := Portfolio new.
+	account1 := ReceptiveAccount new.
+	account2 := ReceptiveAccount new.	
+	account3 := ReceptiveAccount new.
+	
+	portfolio1 add: account1. 
+	portfolio1 add: account2. 	
+
+	Deposit register: 100 on: account1.
+	Withdraw register: 50 on: account1.
+	Transfer from: account1 to: account3 of: 20.
+	Transfer from: account3 to: account1 of: 30.
+	
+	Deposit register: 200 on: account2.
+	Withdraw register: 100 on: account2.
+	Transfer from: account2 to: account3 of: 40.
+	Transfer from: account3 to: account2 of: 60.
+
+	report := OrderedCollection
+		with: 'Depóstio por 100.'
+		with: 'Extracción por 50.'
+		with: 'Salida por transferencia de 20.'
+		with: 'Entrada por transferencia de 30.'.
+
+	report add: 'Depóstio por 200.'.
+	report add: 'Extracción por 100.'.
+	report add: 'Salida por transferencia de 40.'.
+	report add: 'Entrada por transferencia de 60.'.
+	
+	report add: 'Balance = 180'.
+
+	self assert: report equals: portfolio1 accountSummary.! !
 
 
 !classDefinition: #TransferTest category: 'Portfolio-Solucion'!
@@ -457,6 +550,23 @@ addedTo: aPortfolio
 
 	self subclassResponsibility ! !
 
+
+!Account methodsFor: 'reports' stamp: 'IO 11/11/2020 20:06:47'!
+accountSummary
+
+	|aReport|
+	aReport := OrderedCollection new.
+	
+	self transactions do: [ :aTransaction |
+		(aTransaction isKindOf: Deposit) ifTrue: [aReport add: ('Depóstio por ', aTransaction value asString, '.')].
+		(aTransaction isKindOf: Withdraw) ifTrue: [aReport add: ('Extracción por ', aTransaction value asString, '.')].
+		(aTransaction isKindOf: TransferWithdraw) ifTrue: [aReport add: ('Salida por transferencia de ', aTransaction value asString, '.')].
+		(aTransaction isKindOf: TransferDeposit) ifTrue: [aReport add: ('Entrada por transferencia de ', aTransaction value asString, '.')].
+	].
+	
+	aReport add: ('Balance = ', self balance asString).
+	^aReport.! !
+
 
 !classDefinition: #Portfolio category: 'Portfolio-Solucion'!
 Account subclass: #Portfolio
@@ -569,6 +679,7 @@ signalCanNotAddAccount
 	
 	self error: self class canNotAddAccountErrorMessage! !
 
+
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
 !classDefinition: 'Portfolio class' category: 'Portfolio-Solucion'!
@@ -652,19 +763,6 @@ addedTo: aPortfolio
 	
 	! !
 
-
-!ReceptiveAccount methodsFor: 'reports' stamp: 'LH 11/11/2020 15:59:24'!
-accountSummary
-
-	|aReport|
-	aReport := OrderedCollection new.
-	
-	self transactions do:[:aTransaction | 
-						(aTransaction isKindOf: Deposit) ifTrue: [aReport add: ('Deposito por ',aTransaction value asString)].
-						(aTransaction isKindOf: Withdraw) ifTrue: [aReport add: ('Extracción por ',aTransaction value asString)].].
-	
-	aReport add: ('Balance = ', self balance asString).
-	^aReport.! !
 
 
 !classDefinition: #AccountTransaction category: 'Portfolio-Solucion'!
@@ -867,7 +965,6 @@ initializeFrom: aSenderAccount to: aRecipientAccount of: aValue
 	withdraw := aSenderAccount.
 	deposit := aRecipientAccount.
 	value := aValue.! !
-
 
 
 !Transfer methodsFor: 'accesing' stamp: 'LH 11/10/2020 17:50:06'!
