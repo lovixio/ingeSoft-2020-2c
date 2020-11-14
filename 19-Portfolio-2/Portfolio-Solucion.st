@@ -1,3 +1,133 @@
+!classDefinition: #AccountSummaryTest category: 'Portfolio-Solucion'!
+TestCase subclass: #AccountSummaryTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Portfolio-Solucion'!
+
+!AccountSummaryTest methodsFor: 'test' stamp: 'LH 11/14/2020 17:48:30'!
+assert:anAccount hasAccountSummary: aCollectionOfStrings
+	
+	self assert: aCollectionOfStrings equals: (AccountSummary for: anAccount).! !
+
+!AccountSummaryTest methodsFor: 'test' stamp: 'LH 11/14/2020 17:48:30'!
+test01AnAccountSummaryOfAnEmptyAccountReturnsBalanceIs0	
+	|account1|
+	account1 := ReceptiveAccount new.
+	
+	self assert:account1 hasAccountSummary: (OrderedCollection with: 'Balance = 0').! !
+
+!AccountSummaryTest methodsFor: 'test' stamp: 'LH 11/14/2020 17:48:30'!
+test02AnAccountSummaryOfAnAccountWithADepositReturnsAccurate
+	
+	|account1|
+	account1 := ReceptiveAccount new.
+	Deposit register: 100 on: account1.
+	
+	self assert:account1 hasAccountSummary: (OrderedCollection with:'Depóstio por 100.' with: 'Balance = 100').
+! !
+
+!AccountSummaryTest methodsFor: 'test' stamp: 'LH 11/14/2020 17:52:00'!
+test03AnAccountSummaryOfAnAccountWithAWithdrawReturnsAccurate
+
+	|account1|
+	account1 := ReceptiveAccount new.
+	Withdraw register: 100 on: account1.
+	
+	self assert:account1 hasAccountSummary: (OrderedCollection with:'Extracción por 100.' with: 'Balance = -100').! !
+
+!AccountSummaryTest methodsFor: 'test' stamp: 'LH 11/14/2020 17:51:51'!
+test04AnAccountSummaryOfAnAccountWithAnOutgoingTransfer
+
+	|account1 account2 |
+	account1 := ReceptiveAccount new.
+	account2 := ReceptiveAccount new.
+	Transfer from: account1 to: account2 of: 20.	
+	
+	self assert:account1 hasAccountSummary: (OrderedCollection with:'Salida por transferencia de 20.' with: 'Balance = -20').! !
+
+!AccountSummaryTest methodsFor: 'test' stamp: 'LH 11/14/2020 17:51:45'!
+test05AnAccountSummaryOfAnAccountWithAnIncommingTransfer
+
+	|account1 account2 |
+	account1 := ReceptiveAccount new.
+	account2 := ReceptiveAccount new.
+	Transfer from: account2 to: account1 of: 30.	
+	
+	self assert:account1 hasAccountSummary: (OrderedCollection with:'Entrada por transferencia de 30.' with: 'Balance = 30').! !
+
+!AccountSummaryTest methodsFor: 'test' stamp: 'LH 11/14/2020 17:49:17'!
+test06APortfolioWithNoAccountsHasBalance0
+
+	| portfolio1 |
+
+	portfolio1 := Portfolio new.
+
+	self assert: portfolio1 hasAccountSummary: (OrderedCollection with: 'Balance = 0').! !
+
+!AccountSummaryTest methodsFor: 'test' stamp: 'LH 11/14/2020 17:49:42'!
+test07APortfolioWithOneAccountsHasAccountsReport
+
+	| portfolio1 account1 account2 |
+
+	portfolio1 := Portfolio new.
+	account1 := ReceptiveAccount new.
+	account2 := ReceptiveAccount new.	
+	
+	portfolio1 add: account1.
+	
+	Deposit register: 100 on: account1.
+	Withdraw register: 50 on: account1.
+	Transfer from: account1 to: account2 of: 20.
+	Transfer from: account2 to: account1 of: 30.
+
+	self assert: portfolio1 hasAccountSummary: (OrderedCollection
+		with: 'Depóstio por 100.'
+		with: 'Extracción por 50.'
+		with: 'Salida por transferencia de 20.'
+		with: 'Entrada por transferencia de 30.'
+		with: 'Balance = 60'
+	).! !
+
+!AccountSummaryTest methodsFor: 'test' stamp: 'LH 11/14/2020 17:51:33'!
+test08APortfolioWithManyAccountsHasCorrectBalanceInReport
+
+	| portfolio1 account1 account2 account3 report |
+	
+	portfolio1 := Portfolio new.
+	account1 := ReceptiveAccount new.
+	account2 := ReceptiveAccount new.	
+	account3 := ReceptiveAccount new.
+	
+	portfolio1 add: account1. 
+	portfolio1 add: account2. 	
+
+	Deposit register: 100 on: account1.
+	Withdraw register: 50 on: account1.
+	Transfer from: account1 to: account3 of: 20.
+	Transfer from: account3 to: account1 of: 30.
+	
+	Deposit register: 200 on: account2.
+	Withdraw register: 100 on: account2.
+	Transfer from: account2 to: account3 of: 40.
+	Transfer from: account3 to: account2 of: 60.
+
+	report := OrderedCollection
+		with: 'Depóstio por 100.'
+		with: 'Extracción por 50.'
+		with: 'Salida por transferencia de 20.'
+		with: 'Entrada por transferencia de 30.'.
+
+	report add: 'Depóstio por 200.'.
+	report add: 'Extracción por 100.'.
+	report add: 'Salida por transferencia de 40.'.
+	report add: 'Entrada por transferencia de 60.'.
+	
+	report add: 'Balance = 180'.
+
+	self assert: portfolio1 hasAccountSummary: report .! !
+
+
 !classDefinition: #PortfolioTest category: 'Portfolio-Solucion'!
 TestCase subclass: #PortfolioTest
 	instanceVariableNames: ''
@@ -305,183 +435,51 @@ test07AccountKnowsItsTransactions
 ! !
 
 
-!classDefinition: #ReportTest category: 'Portfolio-Solucion'!
-TestCase subclass: #ReportTest
-	instanceVariableNames: 'firstAccount'
-	classVariableNames: ''
-	poolDictionaries: ''
-	category: 'Portfolio-Solucion'!
-
-!ReportTest methodsFor: 'test' stamp: 'LH 11/11/2020 16:04:57'!
-assertEqualsWithFirstAccountSummary: aCollectionOfStrings
-	
-	self assert: aCollectionOfStrings equals: (firstAccount accountSummary).! !
-
-!ReportTest methodsFor: 'test' stamp: 'LH 11/11/2020 16:01:33'!
-setUp
-	
-	firstAccount := ReceptiveAccount new.! !
-
-!ReportTest methodsFor: 'test' stamp: 'LH 11/11/2020 16:05:35'!
-test01AnAccountSummaryOfAnEmptyAccountReturnsBalanceIs0
-	
-	self setUp.
-	
-	self assertEqualsWithFirstAccountSummary: (OrderedCollection with: 'Balance = 0').! !
-
-!ReportTest methodsFor: 'test' stamp: 'IO 11/11/2020 19:40:27'!
-test02AnAccountSummaryOfAnAccountWithADepositReturnsAccurate
-	
-	self setUp.
-	Deposit register: 100 on: firstAccount.
-	
-	self assertEqualsWithFirstAccountSummary: (OrderedCollection with:'Depóstio por 100.' with: 'Balance = 100').! !
-
-!ReportTest methodsFor: 'test' stamp: 'IO 11/11/2020 19:42:00'!
-test03AnAccountSummaryOfAnAccountWithAWithdrawReturnsAccurate
-
-	self setUp.
-	Withdraw register: 50 on: firstAccount .
-	
-	self assertEqualsWithFirstAccountSummary: (OrderedCollection with:'Extracción por 50.' with: 'Balance = -50').! !
-
-!ReportTest methodsFor: 'test' stamp: 'IO 11/11/2020 19:41:08'!
-test04AnAccountSummaryOfAnAccountWithAnOutgoingTransfer
-
-	| account2 |
-	
-	account2 := ReceptiveAccount new.
-	self setUp.
-	Transfer from: firstAccount to: account2 of: 20.
-	
-	self assertEqualsWithFirstAccountSummary: (OrderedCollection with:'Salida por transferencia de 20.' with: 'Balance = -20').! !
-
-!ReportTest methodsFor: 'test' stamp: 'IO 11/11/2020 19:41:16'!
-test05AnAccountSummaryOfAnAccountWithAnIncommingTransfer
-
-	| account2 |
-	
-	account2 := ReceptiveAccount new.
-	self setUp.
-	Transfer from: account2 to: firstAccount of: 30.
-	
-	self assertEqualsWithFirstAccountSummary: (OrderedCollection with:'Entrada por transferencia de 30.' with: 'Balance = 30').! !
-
-!ReportTest methodsFor: 'test' stamp: 'IO 11/11/2020 19:36:11'!
-test06APortfolioWithNoAccountsHasBalance0
-
-	| portfolio1 |
-
-	portfolio1 := Portfolio new.
-
-	self assert: (OrderedCollection with: 'Balance = 0') equals: portfolio1 accountSummary.! !
-
-!ReportTest methodsFor: 'test' stamp: 'IO 11/11/2020 20:00:50'!
-test07APortfolioWithOneAccountsHasAccountsReport
-
-	| portfolio1 account1 account2 |
-
-	portfolio1 := Portfolio new.
-	account1 := ReceptiveAccount new.
-	account2 := ReceptiveAccount new.	
-	
-	portfolio1 add: account1.
-	
-	Deposit register: 100 on: account1.
-	Withdraw register: 50 on: account1.
-	Transfer from: account1 to: account2 of: 20.
-	Transfer from: account2 to: account1 of: 30.
-
-	self assert: (OrderedCollection
-		with: 'Depóstio por 100.'
-		with: 'Extracción por 50.'
-		with: 'Salida por transferencia de 20.'
-		with: 'Entrada por transferencia de 30.'
-		with: 'Balance = 60'
-	) equals: portfolio1 accountSummary.! !
-
-!ReportTest methodsFor: 'test' stamp: 'IO 11/11/2020 20:06:10'!
-test08APortfolioWithManyAccountsHasCorrectBalanceInReport
-
-	| portfolio1 account1 account2 account3 report |
-
-	portfolio1 := Portfolio new.
-	account1 := ReceptiveAccount new.
-	account2 := ReceptiveAccount new.	
-	account3 := ReceptiveAccount new.
-	
-	portfolio1 add: account1. 
-	portfolio1 add: account2. 	
-
-	Deposit register: 100 on: account1.
-	Withdraw register: 50 on: account1.
-	Transfer from: account1 to: account3 of: 20.
-	Transfer from: account3 to: account1 of: 30.
-	
-	Deposit register: 200 on: account2.
-	Withdraw register: 100 on: account2.
-	Transfer from: account2 to: account3 of: 40.
-	Transfer from: account3 to: account2 of: 60.
-
-	report := OrderedCollection
-		with: 'Depóstio por 100.'
-		with: 'Extracción por 50.'
-		with: 'Salida por transferencia de 20.'
-		with: 'Entrada por transferencia de 30.'.
-
-	report add: 'Depóstio por 200.'.
-	report add: 'Extracción por 100.'.
-	report add: 'Salida por transferencia de 40.'.
-	report add: 'Entrada por transferencia de 60.'.
-	
-	report add: 'Balance = 180'.
-
-	self assert: report equals: portfolio1 accountSummary.! !
-
-
 !classDefinition: #TransferTest category: 'Portfolio-Solucion'!
 TestCase subclass: #TransferTest
-	instanceVariableNames: 'firstAccount secondAccount transfer'
+	instanceVariableNames: 'firstAccount secondAccount'
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'Portfolio-Solucion'!
 
-!TransferTest methodsFor: 'test' stamp: 'LH 11/10/2020 17:58:39'!
+!TransferTest methodsFor: 'test' stamp: 'LH 11/14/2020 17:57:06'!
 setUp
 	
 	firstAccount := ReceptiveAccount new.
-	secondAccount := ReceptiveAccount new.
-	
-	transfer := Transfer from: firstAccount to: secondAccount of: 100.! !
+	secondAccount := ReceptiveAccount new.! !
 
-!TransferTest methodsFor: 'test' stamp: 'LH 11/10/2020 17:59:13'!
+!TransferTest methodsFor: 'test' stamp: 'LH 11/14/2020 17:57:00'!
 test01ATransferDecreasesBalanceOfSenderAndIncreasesOnReceiver
 	
 	self setUp.
+	self validTransferOf100Value.
 	
 	self assert: 100 equals: secondAccount balance.
 	self assert: -100 equals: firstAccount balance.! !
 
-!TransferTest methodsFor: 'test' stamp: 'LH 11/10/2020 17:59:56'!
+!TransferTest methodsFor: 'test' stamp: 'LH 11/14/2020 17:57:55'!
 test02ATransferRegistersATransferDepositAndATransferWithdraw
+	|aTransfer|
 	
 	self setUp.
+	aTransfer := self validTransferOf100Value.
 	
-	self assert: (secondAccount hasRegistered: transfer deposit).
-	self assert: (firstAccount hasRegistered: transfer withdraw).! !
+	self assert: (secondAccount hasRegistered: aTransfer deposit).
+	self assert: (firstAccount hasRegistered: aTransfer withdraw).! !
 
-!TransferTest methodsFor: 'test' stamp: 'LH 11/10/2020 18:00:28'!
+!TransferTest methodsFor: 'test' stamp: 'LH 11/14/2020 17:58:35'!
 test03ATransferWithdrawAndDepositKnowTheirTransfer
-
+	|aTransfer|
+	
 	self setUp.
+	aTransfer := self validTransferOf100Value.
 	
-	self assert: transfer equals: transfer deposit transfer.
-	self assert: transfer equals: transfer withdraw transfer.
-! !
+	self assert: aTransfer equals: aTransfer deposit transfer.
+	self assert: aTransfer equals: aTransfer withdraw transfer.! !
 
-!TransferTest methodsFor: 'test' stamp: 'LH 11/10/2020 18:01:02'!
+!TransferTest methodsFor: 'test' stamp: 'LH 11/14/2020 17:58:50'!
 test04ATransferCantBeDoneBetweenTheSameAccount
-	
+
 	self setUp.
 	
 	self should:[Transfer from: firstAccount to: firstAccount of: 100.]
@@ -508,6 +506,11 @@ test06ATransferCantBeOfNegativeValue
 		raise: Error
 		withMessageText: Transfer invalidValue.
 	! !
+
+!TransferTest methodsFor: 'test' stamp: 'LH 11/14/2020 17:56:05'!
+validTransferOf100Value
+
+	^Transfer from: firstAccount to: secondAccount of: 100.! !
 
 
 !classDefinition: #Account category: 'Portfolio-Solucion'!
@@ -551,21 +554,11 @@ addedTo: aPortfolio
 	self subclassResponsibility ! !
 
 
-!Account methodsFor: 'reports' stamp: 'IO 11/11/2020 20:06:47'!
-accountSummary
-
-	|aReport|
-	aReport := OrderedCollection new.
+!Account methodsFor: 'reports' stamp: 'LH 11/14/2020 17:24:59'!
+gatherAccountSummaryIn: anAccountSummary
+	"gathers the data of this account for an account summary"
 	
-	self transactions do: [ :aTransaction |
-		(aTransaction isKindOf: Deposit) ifTrue: [aReport add: ('Depóstio por ', aTransaction value asString, '.')].
-		(aTransaction isKindOf: Withdraw) ifTrue: [aReport add: ('Extracción por ', aTransaction value asString, '.')].
-		(aTransaction isKindOf: TransferWithdraw) ifTrue: [aReport add: ('Salida por transferencia de ', aTransaction value asString, '.')].
-		(aTransaction isKindOf: TransferDeposit) ifTrue: [aReport add: ('Entrada por transferencia de ', aTransaction value asString, '.')].
-	].
-	
-	aReport add: ('Balance = ', self balance asString).
-	^aReport.! !
+	self subclassResponsibility.! !
 
 
 !classDefinition: #Portfolio category: 'Portfolio-Solucion'!
@@ -661,6 +654,13 @@ isComposedBy: anAccount
 	^ self = anAccount or: [ accounts anySatisfy: [ :composedAccount | (composedAccount isComposedBy: anAccount) or: [ anAccount isComposedBy: composedAccount ]]]! !
 
 
+!Portfolio methodsFor: 'reports' stamp: 'LH 11/14/2020 17:25:27'!
+gatherAccountSummaryIn: anAccountSummary
+	"see superclass"
+	
+	accounts do: [:anAccount | anAccount gatherAccountSummaryIn: anAccountSummary ].! !
+
+
 !Portfolio methodsFor: 'account management - private' stamp: 'HAW 5/25/2019 12:17:31'!
 addRootParentsTo: rootParents
 
@@ -678,7 +678,6 @@ assertCanAdd: accountToAdd
 signalCanNotAddAccount
 	
 	self error: self class canNotAddAccountErrorMessage! !
-
 
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
@@ -764,6 +763,76 @@ addedTo: aPortfolio
 	! !
 
 
+!ReceptiveAccount methodsFor: 'report' stamp: 'LH 11/14/2020 17:25:35'!
+gatherAccountSummaryIn: anAccountSummary
+	"see superclass"
+	
+	transactions do: [:aTransaction | aTransaction gatherAccountSummaryIn: anAccountSummary ].! !
+
+
+!classDefinition: #AccountSummary category: 'Portfolio-Solucion'!
+Object subclass: #AccountSummary
+	instanceVariableNames: 'report'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Portfolio-Solucion'!
+
+!AccountSummary methodsFor: 'initialization' stamp: 'LH 11/14/2020 16:36:55'!
+initialize
+	report := OrderedCollection new..! !
+
+!AccountSummary methodsFor: 'initialization' stamp: 'LH 11/14/2020 16:35:29'!
+initializeFor: anAccount
+
+	report := OrderedCollection new..! !
+
+
+!AccountSummary methodsFor: 'evaluating' stamp: 'LH 11/14/2020 17:13:14'!
+accountSummaryFor: anAccount
+
+	anAccount gatherAccountSummaryIn: self.
+	
+	report add: ('Balance = ', anAccount balance asString).
+	
+	^report.! !
+
+
+!AccountSummary methodsFor: 'gathering transactions' stamp: 'LH 11/14/2020 17:18:55'!
+gatherAccountSummaryForDeposit: aDeposit
+	
+	self gatherForTransaction: aDeposit withText: 'Depóstio por '.! !
+
+!AccountSummary methodsFor: 'gathering transactions' stamp: 'LH 11/14/2020 17:19:39'!
+gatherAccountSummaryForTransferDeposit: aTransferDeposit
+
+	self gatherForTransaction: aTransferDeposit withText: 'Entrada por transferencia de '.
+	! !
+
+!AccountSummary methodsFor: 'gathering transactions' stamp: 'LH 11/14/2020 17:20:08'!
+gatherAccountSummaryForTransferWithdraw: aTransferWithdraw
+
+	self gatherForTransaction: aTransferWithdraw withText: 'Salida por transferencia de '.! !
+
+!AccountSummary methodsFor: 'gathering transactions' stamp: 'LH 11/14/2020 17:20:39'!
+gatherAccountSummaryForWithdraw: aWithdraw
+
+	self gatherForTransaction: aWithdraw withText: 'Extracción por '.! !
+
+!AccountSummary methodsFor: 'gathering transactions' stamp: 'LH 11/14/2020 17:17:41'!
+gatherForTransaction: aTransaction withText: reportMessage
+
+	report add: (reportMessage, aTransaction value asString, '.').! !
+
+"-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
+
+!classDefinition: 'AccountSummary class' category: 'Portfolio-Solucion'!
+AccountSummary class
+	instanceVariableNames: ''!
+
+!AccountSummary class methodsFor: 'instance creation' stamp: 'LH 11/14/2020 16:37:37'!
+for: anAccount
+	^self new initialize accountSummaryFor: anAccount! !
+
 
 !classDefinition: #AccountTransaction category: 'Portfolio-Solucion'!
 Object subclass: #AccountTransaction
@@ -781,6 +850,12 @@ value
 !AccountTransaction methodsFor: 'balance' stamp: 'HAW 5/25/2019 11:25:39'!
 affectBalance: aBalance
 
+	self subclassResponsibility ! !
+
+
+!AccountTransaction methodsFor: 'reports' stamp: 'LH 11/14/2020 17:31:47'!
+gatherAccountSummaryIn: anAccountSummary
+	"communicates to an account summary what class this transaction is"
 	self subclassResponsibility ! !
 
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
@@ -817,6 +892,12 @@ initializeFor: aValue
 value
 
 	^ value! !
+
+
+!Deposit methodsFor: 'reports' stamp: 'LH 11/14/2020 17:05:38'!
+gatherAccountSummaryIn: anAccountSummary
+
+	anAccountSummary gatherAccountSummaryForDeposit: self.! !
 
 
 !Deposit methodsFor: 'balance' stamp: 'HAW 5/25/2019 11:25:02'!
@@ -896,6 +977,12 @@ initialize: aTransfer
 
 	transfer := aTransfer .! !
 
+
+!TransferDeposit methodsFor: 'reports' stamp: 'LH 11/14/2020 17:05:38'!
+gatherAccountSummaryIn: anAccountSummary
+
+	anAccountSummary gatherAccountSummaryForTransferDeposit: self.! !
+
 
 !classDefinition: #TransferWithdraw category: 'Portfolio-Solucion'!
 TransferComponents subclass: #TransferWithdraw
@@ -908,6 +995,12 @@ TransferComponents subclass: #TransferWithdraw
 affectBalance: aBalance
 	"see superclass"
 	^aBalance - self value.! !
+
+
+!TransferWithdraw methodsFor: 'reports' stamp: 'LH 11/14/2020 17:05:38'!
+gatherAccountSummaryIn: anAccountSummary
+
+	anAccountSummary gatherAccountSummaryForTransferWithdraw: self.! !
 
 
 !TransferWithdraw methodsFor: 'initialization' stamp: 'LH 11/9/2020 21:08:48'!
@@ -933,6 +1026,12 @@ initializeFor: aValue
 value
 
 	^ value! !
+
+
+!Withdraw methodsFor: 'reports' stamp: 'LH 11/14/2020 17:05:38'!
+gatherAccountSummaryIn: anAccountSummary
+
+	anAccountSummary gatherAccountSummaryForWithdraw: self.! !
 
 
 !Withdraw methodsFor: 'balance' stamp: 'HAW 5/25/2019 11:25:15'!

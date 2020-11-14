@@ -31668,3 +31668,1651 @@ PASSED!
 PASSED!
 
 ----SNAPSHOT----(11 November 2020 20:34:05) CuisUniversity-4384.image priorSource: 17155564!
+
+----STARTUP---- (12 November 2020 14:57:56) as C:\Users\Usuario\Desktop\labo\inge1\Cuis\windows64 Portfolio2\CuisUniversity-4384.image!
+
+
+!classRemoval: #Transfer stamp: 'LH 11/12/2020 14:59:00'!
+Object subclass: #Transfer
+	instanceVariableNames: 'value withdraw deposit'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Portfolio-Solucion'!
+
+!classRemoval: #Withdraw stamp: 'LH 11/12/2020 14:59:01'!
+AccountTransaction subclass: #Withdraw
+	instanceVariableNames: 'value'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Portfolio-Solucion'!
+
+!classRemoval: #TransferWithdraw stamp: 'LH 11/12/2020 14:59:01'!
+TransferComponents subclass: #TransferWithdraw
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Portfolio-Solucion'!
+
+!classRemoval: #TransferDeposit stamp: 'LH 11/12/2020 14:59:01'!
+TransferComponents subclass: #TransferDeposit
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Portfolio-Solucion'!
+
+!classRemoval: #TransferComponents stamp: 'LH 11/12/2020 14:59:02'!
+AccountTransaction subclass: #TransferComponents
+	instanceVariableNames: 'transfer'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Portfolio-Solucion'!
+
+!classRemoval: #Deposit stamp: 'LH 11/12/2020 14:59:02'!
+AccountTransaction subclass: #Deposit
+	instanceVariableNames: 'value'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Portfolio-Solucion'!
+
+!classRemoval: #AccountTransaction stamp: 'LH 11/12/2020 14:59:03'!
+Object subclass: #AccountTransaction
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Portfolio-Solucion'!
+
+!classRemoval: #ReceptiveAccount stamp: 'LH 11/12/2020 14:59:03'!
+Account subclass: #ReceptiveAccount
+	instanceVariableNames: 'transactions'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Portfolio-Solucion'!
+
+!classRemoval: #Portfolio stamp: 'LH 11/12/2020 14:59:03'!
+Account subclass: #Portfolio
+	instanceVariableNames: 'accounts parents'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Portfolio-Solucion'!
+
+!classRemoval: #Account stamp: 'LH 11/12/2020 14:59:04'!
+Object subclass: #Account
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Portfolio-Solucion'!
+
+!classRemoval: #TransferTest stamp: 'LH 11/12/2020 14:59:04'!
+TestCase subclass: #TransferTest
+	instanceVariableNames: 'firstAccount secondAccount transfer'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Portfolio-Solucion'!
+
+!classRemoval: #ReportTest stamp: 'LH 11/12/2020 14:59:05'!
+TestCase subclass: #ReportTest
+	instanceVariableNames: 'firstAccount'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Portfolio-Solucion'!
+
+!classRemoval: #ReceptiveAccountTest stamp: 'LH 11/12/2020 14:59:05'!
+TestCase subclass: #ReceptiveAccountTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Portfolio-Solucion'!
+
+!classRemoval: #PortfolioTest stamp: 'LH 11/12/2020 14:59:05'!
+TestCase subclass: #PortfolioTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Portfolio-Solucion'!
+
+----End fileIn of C:\Users\Usuario\Desktop\labo\inge1\Cuis\windows64 Portfolio2\Portfolio-Solucion.st----!
+
+----QUIT----(12 November 2020 15:02:14) CuisUniversity-4384.image priorSource: 17261509!
+
+----STARTUP---- (12 November 2020 19:52:33) as C:\Users\Usuario\Desktop\labo\inge1\Cuis\windows64 Portfolio2\CuisUniversity-4384.image!
+
+
+----QUIT----(12 November 2020 20:56:30) CuisUniversity-4384.image priorSource: 17301565!
+
+----STARTUP---- (14 November 2020 15:20:34) as C:\Users\Usuario\Desktop\labo\inge1\Cuis\windows64 Portfolio2\CuisUniversity-4384.image!
+
+
+!classDefinition: #AccountSummary category: 'Portfolio-Solucion' stamp: 'LH 11/14/2020 16:34:57'!
+Object subclass: #AccountSummary
+	instanceVariableNames: 'report'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Portfolio-Solucion'!
+!AccountSummary class methodsFor: 'as yet unclassified' stamp: 'LH 11/14/2020 16:34:57'!
+for: anAccount
+	^self new initializeFor: anAccount! !
+!AccountSummary methodsFor: 'as yet unclassified' stamp: 'LH 11/14/2020 16:34:57'!
+initializeFor: anAccount
+	report := anAccount.! !
+!AccountSummary methodsFor: 'as yet unclassified' stamp: 'LH 11/14/2020 16:34:57'!
+accountSummary
+
+	|aReport|
+	aReport := OrderedCollection new.
+	
+	report transactions do: [ :aTransaction |
+		(aTransaction isKindOf: Deposit) ifTrue: [aReport add: ('Depóstio por ', aTransaction value asString, '.')].
+		(aTransaction isKindOf: Withdraw) ifTrue: [aReport add: ('Extracción por ', aTransaction value asString, '.')].
+		(aTransaction isKindOf: TransferWithdraw) ifTrue: [aReport add: ('Salida por transferencia de ', aTransaction value asString, '.')].
+		(aTransaction isKindOf: TransferDeposit) ifTrue: [aReport add: ('Entrada por transferencia de ', aTransaction value asString, '.')].
+	].
+	
+	aReport add: ('Balance = ', report balance asString).
+	^aReport.! !
+!Account methodsFor: 'as yet unclassified' stamp: 'LH 11/14/2020 16:34:57' prior: 50871801!
+accountSummary
+	^(AccountSummary for: self) accountSummary! !
+!AccountSummary methodsFor: 'initialization' stamp: 'LH 11/14/2020 16:35:29' prior: 50872352!
+initializeFor: anAccount
+
+	report := OrderedCollection new..! !
+!AccountSummary methodsFor: 'evaluating' stamp: 'LH 11/14/2020 16:36:00'!
+accountSummary: anAccount
+
+	|aReport|
+	aReport := OrderedCollection new.
+	
+	anAccount transactions do: [ :aTransaction |
+		(aTransaction isKindOf: Deposit) ifTrue: [aReport add: ('Depóstio por ', aTransaction value asString, '.')].
+		(aTransaction isKindOf: Withdraw) ifTrue: [aReport add: ('Extracción por ', aTransaction value asString, '.')].
+		(aTransaction isKindOf: TransferWithdraw) ifTrue: [aReport add: ('Salida por transferencia de ', aTransaction value asString, '.')].
+		(aTransaction isKindOf: TransferDeposit) ifTrue: [aReport add: ('Entrada por transferencia de ', aTransaction value asString, '.')].
+	].
+	
+	aReport add: ('Balance = ', anAccount balance asString).
+	^aReport.! !
+
+!methodRemoval: AccountSummary #accountSummary stamp: 'LH 11/14/2020 16:36:12'!
+accountSummary
+
+	|aReport|
+	aReport := OrderedCollection new.
+	
+	report transactions do: [ :aTransaction |
+		(aTransaction isKindOf: Deposit) ifTrue: [aReport add: ('Depóstio por ', aTransaction value asString, '.')].
+		(aTransaction isKindOf: Withdraw) ifTrue: [aReport add: ('Extracción por ', aTransaction value asString, '.')].
+		(aTransaction isKindOf: TransferWithdraw) ifTrue: [aReport add: ('Salida por transferencia de ', aTransaction value asString, '.')].
+		(aTransaction isKindOf: TransferDeposit) ifTrue: [aReport add: ('Entrada por transferencia de ', aTransaction value asString, '.')].
+	].
+	
+	aReport add: ('Balance = ', report balance asString).
+	^aReport.!
+!AccountSummary methodsFor: 'evaluating' stamp: 'LH 11/14/2020 16:36:34' prior: 50872392!
+accountSummary: anAccount
+	
+	anAccount transactions do: [ :aTransaction |
+		(aTransaction isKindOf: Deposit) ifTrue: [report add: ('Depóstio por ', aTransaction value asString, '.')].
+		(aTransaction isKindOf: Withdraw) ifTrue: [report add: ('Extracción por ', aTransaction value asString, '.')].
+		(aTransaction isKindOf: TransferWithdraw) ifTrue: [report add: ('Salida por transferencia de ', aTransaction value asString, '.')].
+		(aTransaction isKindOf: TransferDeposit) ifTrue: [report add: ('Entrada por transferencia de ', aTransaction value asString, '.')].
+	].
+	
+	report add: ('Balance = ', anAccount balance asString).
+	^report.! !
+!AccountSummary methodsFor: 'initialization' stamp: 'LH 11/14/2020 16:36:55' overrides: 16896425!
+initialize
+	report := OrderedCollection new..! !
+!AccountSummary class methodsFor: 'instance creation' stamp: 'LH 11/14/2020 16:37:10' prior: 50872347!
+for: anAccount
+	^self new initialize accountSummary: anAccount! !
+!AccountSummary methodsFor: 'evaluating' stamp: 'LH 11/14/2020 16:37:37'!
+accountSummaryFor: anAccount
+	
+	anAccount transactions do: [ :aTransaction |
+		(aTransaction isKindOf: Deposit) ifTrue: [report add: ('Depóstio por ', aTransaction value asString, '.')].
+		(aTransaction isKindOf: Withdraw) ifTrue: [report add: ('Extracción por ', aTransaction value asString, '.')].
+		(aTransaction isKindOf: TransferWithdraw) ifTrue: [report add: ('Salida por transferencia de ', aTransaction value asString, '.')].
+		(aTransaction isKindOf: TransferDeposit) ifTrue: [report add: ('Entrada por transferencia de ', aTransaction value asString, '.')].
+	].
+	
+	report add: ('Balance = ', anAccount balance asString).
+	^report.! !
+!AccountSummary class methodsFor: 'as yet unclassified' stamp: 'LH 11/14/2020 16:37:37' prior: 50872470!
+for: anAccount
+	^self new initialize accountSummaryFor: anAccount! !
+
+!methodRemoval: AccountSummary #accountSummary: stamp: 'LH 11/14/2020 16:37:37'!
+accountSummary: anAccount
+	
+	anAccount transactions do: [ :aTransaction |
+		(aTransaction isKindOf: Deposit) ifTrue: [report add: ('Depóstio por ', aTransaction value asString, '.')].
+		(aTransaction isKindOf: Withdraw) ifTrue: [report add: ('Extracción por ', aTransaction value asString, '.')].
+		(aTransaction isKindOf: TransferWithdraw) ifTrue: [report add: ('Salida por transferencia de ', aTransaction value asString, '.')].
+		(aTransaction isKindOf: TransferDeposit) ifTrue: [report add: ('Entrada por transferencia de ', aTransaction value asString, '.')].
+	].
+	
+	report add: ('Balance = ', anAccount balance asString).
+	^report.!
+!ReportTest methodsFor: 'test' stamp: 'LH 11/14/2020 16:38:47' prior: 50871569!
+test01AnAccountSummaryOfAnEmptyAccountReturnsBalanceIs0	
+	|account1|
+	account1 := ReceptiveAccount new.
+	self setUp.
+	
+	self assertEqualsWithFirstAccountSummary: (OrderedCollection with: 'Balance = 0').! !
+!ReportTest methodsFor: 'test' stamp: 'LH 11/14/2020 16:41:09'!
+assertAnAccountSumaryOf:anAccount Equals: aCollectionOfStrings
+	
+	self assert: aCollectionOfStrings equals: (AccountSummary for: anAccount).! !
+!ReportTest methodsFor: 'test' stamp: 'LH 11/14/2020 16:42:08' prior: 50872527!
+test01AnAccountSummaryOfAnEmptyAccountReturnsBalanceIs0	
+	|account1|
+	account1 := ReceptiveAccount new.
+	self setUp.
+	
+	self assertAnAccountSumaryOf:account1 Equals: (OrderedCollection with: 'Balance = 0').
+
+	self assertEqualsWithFirstAccountSummary: (OrderedCollection with: 'Balance = 0').! !
+
+!testRun: #ReportTest #test01AnAccountSummaryOfAnEmptyAccountReturnsBalanceIs0 stamp: 'LH 11/14/2020 16:42:09'!
+ERROR!
+
+!testRun: #ReportTest #test01AnAccountSummaryOfAnEmptyAccountReturnsBalanceIs0 stamp: 'LH 11/14/2020 16:42:52'!
+ERROR!
+!Account methodsFor: 'reports' stamp: 'LH 11/14/2020 16:43:53' prior: 50872382!
+accountSummary
+	^(AccountSummary for: self).! !
+
+!testRun: #ReportTest #test01AnAccountSummaryOfAnEmptyAccountReturnsBalanceIs0 stamp: 'LH 11/14/2020 16:44:13'!
+PASSED!
+
+!testRun: #ReportTest #test01AnAccountSummaryOfAnEmptyAccountReturnsBalanceIs0 stamp: 'LH 11/14/2020 16:44:15'!
+PASSED!
+
+!testRun: #ReportTest #test01AnAccountSummaryOfAnEmptyAccountReturnsBalanceIs0 stamp: 'LH 11/14/2020 16:44:15'!
+PASSED!
+
+!testRun: #ReportTest #test02AnAccountSummaryOfAnAccountWithADepositReturnsAccurate stamp: 'LH 11/14/2020 16:44:15'!
+PASSED!
+
+!testRun: #ReportTest #test03AnAccountSummaryOfAnAccountWithAWithdrawReturnsAccurate stamp: 'LH 11/14/2020 16:44:15'!
+PASSED!
+
+!testRun: #ReportTest #test04AnAccountSummaryOfAnAccountWithAnOutgoingTransfer stamp: 'LH 11/14/2020 16:44:16'!
+PASSED!
+
+!testRun: #ReportTest #test05AnAccountSummaryOfAnAccountWithAnIncommingTransfer stamp: 'LH 11/14/2020 16:44:16'!
+PASSED!
+
+!testRun: #ReportTest #test06APortfolioWithNoAccountsHasBalance0 stamp: 'LH 11/14/2020 16:44:16'!
+PASSED!
+
+!testRun: #ReportTest #test07APortfolioWithOneAccountsHasAccountsReport stamp: 'LH 11/14/2020 16:44:16'!
+PASSED!
+
+!testRun: #ReportTest #test08APortfolioWithManyAccountsHasCorrectBalanceInReport stamp: 'LH 11/14/2020 16:44:16'!
+PASSED!
+!ReportTest methodsFor: 'test' stamp: 'LH 11/14/2020 16:44:29' prior: 50872544!
+test01AnAccountSummaryOfAnEmptyAccountReturnsBalanceIs0	
+	|account1|
+	account1 := ReceptiveAccount new.
+	
+	self assertAnAccountSumaryOf:account1 Equals: (OrderedCollection with: 'Balance = 0').! !
+
+!testRun: #ReportTest #test01AnAccountSummaryOfAnEmptyAccountReturnsBalanceIs0 stamp: 'LH 11/14/2020 16:44:31'!
+PASSED!
+
+!testRun: #ReportTest #test01AnAccountSummaryOfAnEmptyAccountReturnsBalanceIs0 stamp: 'LH 11/14/2020 16:44:31'!
+PASSED!
+
+!testRun: #ReportTest #test02AnAccountSummaryOfAnAccountWithADepositReturnsAccurate stamp: 'LH 11/14/2020 16:44:31'!
+PASSED!
+
+!testRun: #ReportTest #test03AnAccountSummaryOfAnAccountWithAWithdrawReturnsAccurate stamp: 'LH 11/14/2020 16:44:31'!
+PASSED!
+
+!testRun: #ReportTest #test04AnAccountSummaryOfAnAccountWithAnOutgoingTransfer stamp: 'LH 11/14/2020 16:44:31'!
+PASSED!
+
+!testRun: #ReportTest #test05AnAccountSummaryOfAnAccountWithAnIncommingTransfer stamp: 'LH 11/14/2020 16:44:31'!
+PASSED!
+
+!testRun: #ReportTest #test06APortfolioWithNoAccountsHasBalance0 stamp: 'LH 11/14/2020 16:44:31'!
+PASSED!
+
+!testRun: #ReportTest #test07APortfolioWithOneAccountsHasAccountsReport stamp: 'LH 11/14/2020 16:44:31'!
+PASSED!
+
+!testRun: #ReportTest #test08APortfolioWithManyAccountsHasCorrectBalanceInReport stamp: 'LH 11/14/2020 16:44:31'!
+PASSED!
+!ReportTest methodsFor: 'test' stamp: 'LH 11/14/2020 16:45:09' prior: 50871577!
+test02AnAccountSummaryOfAnAccountWithADepositReturnsAccurate
+	
+	|account1|
+	account1 := ReceptiveAccount new.
+	Deposit register: 100 on: account1.
+	
+	self assertAnAccountSumaryOf:account1 Equals: (OrderedCollection with:'Depóstio por 100.' with: 'Balance = 100').
+! !
+
+!testRun: #ReportTest #test02AnAccountSummaryOfAnAccountWithADepositReturnsAccurate stamp: 'LH 11/14/2020 16:45:10'!
+PASSED!
+
+!testRun: #ReportTest #test01AnAccountSummaryOfAnEmptyAccountReturnsBalanceIs0 stamp: 'LH 11/14/2020 16:45:10'!
+PASSED!
+
+!testRun: #ReportTest #test02AnAccountSummaryOfAnAccountWithADepositReturnsAccurate stamp: 'LH 11/14/2020 16:45:10'!
+PASSED!
+
+!testRun: #ReportTest #test03AnAccountSummaryOfAnAccountWithAWithdrawReturnsAccurate stamp: 'LH 11/14/2020 16:45:10'!
+PASSED!
+
+!testRun: #ReportTest #test04AnAccountSummaryOfAnAccountWithAnOutgoingTransfer stamp: 'LH 11/14/2020 16:45:10'!
+PASSED!
+
+!testRun: #ReportTest #test05AnAccountSummaryOfAnAccountWithAnIncommingTransfer stamp: 'LH 11/14/2020 16:45:10'!
+PASSED!
+
+!testRun: #ReportTest #test06APortfolioWithNoAccountsHasBalance0 stamp: 'LH 11/14/2020 16:45:11'!
+PASSED!
+
+!testRun: #ReportTest #test07APortfolioWithOneAccountsHasAccountsReport stamp: 'LH 11/14/2020 16:45:11'!
+PASSED!
+
+!testRun: #ReportTest #test08APortfolioWithManyAccountsHasCorrectBalanceInReport stamp: 'LH 11/14/2020 16:45:11'!
+PASSED!
+!ReportTest methodsFor: 'test' stamp: 'LH 11/14/2020 16:45:42' prior: 50871587!
+test03AnAccountSummaryOfAnAccountWithAWithdrawReturnsAccurate
+	|account1|
+	account1 := ReceptiveAccount new.
+	Withdraw register: 100 on: account1.
+	
+	self assertAnAccountSumaryOf:account1 Equals: (OrderedCollection with:'Extracción por 50.' with: 'Balance = -50').! !
+
+!testRun: #ReportTest #test03AnAccountSummaryOfAnAccountWithAWithdrawReturnsAccurate stamp: 'LH 11/14/2020 16:45:43'!
+FAILURE!
+!ReportTest methodsFor: 'test' stamp: 'LH 11/14/2020 16:46:01' prior: 50872694!
+test03AnAccountSummaryOfAnAccountWithAWithdrawReturnsAccurate
+	|account1|
+	account1 := ReceptiveAccount new.
+	Withdraw register: 100 on: account1.
+	
+	self assertAnAccountSumaryOf:account1 Equals: (OrderedCollection with:'Extracción por 100.' with: 'Balance = -100').! !
+
+!testRun: #ReportTest #test03AnAccountSummaryOfAnAccountWithAWithdrawReturnsAccurate stamp: 'LH 11/14/2020 16:46:02'!
+PASSED!
+
+!testRun: #ReportTest #test01AnAccountSummaryOfAnEmptyAccountReturnsBalanceIs0 stamp: 'LH 11/14/2020 16:46:02'!
+PASSED!
+
+!testRun: #ReportTest #test02AnAccountSummaryOfAnAccountWithADepositReturnsAccurate stamp: 'LH 11/14/2020 16:46:02'!
+PASSED!
+
+!testRun: #ReportTest #test03AnAccountSummaryOfAnAccountWithAWithdrawReturnsAccurate stamp: 'LH 11/14/2020 16:46:02'!
+PASSED!
+
+!testRun: #ReportTest #test04AnAccountSummaryOfAnAccountWithAnOutgoingTransfer stamp: 'LH 11/14/2020 16:46:02'!
+PASSED!
+
+!testRun: #ReportTest #test05AnAccountSummaryOfAnAccountWithAnIncommingTransfer stamp: 'LH 11/14/2020 16:46:02'!
+PASSED!
+
+!testRun: #ReportTest #test06APortfolioWithNoAccountsHasBalance0 stamp: 'LH 11/14/2020 16:46:02'!
+PASSED!
+
+!testRun: #ReportTest #test07APortfolioWithOneAccountsHasAccountsReport stamp: 'LH 11/14/2020 16:46:02'!
+PASSED!
+
+!testRun: #ReportTest #test08APortfolioWithManyAccountsHasCorrectBalanceInReport stamp: 'LH 11/14/2020 16:46:02'!
+PASSED!
+!ReportTest methodsFor: 'test' stamp: 'LH 11/14/2020 16:47:09' prior: 50871597!
+test04AnAccountSummaryOfAnAccountWithAnOutgoingTransfer
+	|account1 account2 |
+	account1 := ReceptiveAccount new.
+	account2 := ReceptiveAccount new.
+	Transfer from: firstAccount to: account2 of: 20.	
+	
+	self assertAnAccountSumaryOf:account1 Equals: (OrderedCollection with:'Salida por transferencia de 20.' with: 'Balance = -20').! !
+
+!testRun: #ReportTest #test04AnAccountSummaryOfAnAccountWithAnOutgoingTransfer stamp: 'LH 11/14/2020 16:47:10'!
+FAILURE!
+!ReportTest methodsFor: 'test' stamp: 'LH 11/14/2020 16:47:18' prior: 50872754!
+test04AnAccountSummaryOfAnAccountWithAnOutgoingTransfer
+	|account1 account2 |
+	account1 := ReceptiveAccount new.
+	account2 := ReceptiveAccount new.
+	Transfer from: account1 to: account2 of: 20.	
+	
+	self assertAnAccountSumaryOf:account1 Equals: (OrderedCollection with:'Salida por transferencia de 20.' with: 'Balance = -20').! !
+
+!testRun: #ReportTest #test04AnAccountSummaryOfAnAccountWithAnOutgoingTransfer stamp: 'LH 11/14/2020 16:47:20'!
+PASSED!
+
+!testRun: #ReportTest #test01AnAccountSummaryOfAnEmptyAccountReturnsBalanceIs0 stamp: 'LH 11/14/2020 16:47:20'!
+PASSED!
+
+!testRun: #ReportTest #test02AnAccountSummaryOfAnAccountWithADepositReturnsAccurate stamp: 'LH 11/14/2020 16:47:20'!
+PASSED!
+
+!testRun: #ReportTest #test03AnAccountSummaryOfAnAccountWithAWithdrawReturnsAccurate stamp: 'LH 11/14/2020 16:47:20'!
+PASSED!
+
+!testRun: #ReportTest #test04AnAccountSummaryOfAnAccountWithAnOutgoingTransfer stamp: 'LH 11/14/2020 16:47:20'!
+PASSED!
+
+!testRun: #ReportTest #test05AnAccountSummaryOfAnAccountWithAnIncommingTransfer stamp: 'LH 11/14/2020 16:47:20'!
+PASSED!
+
+!testRun: #ReportTest #test06APortfolioWithNoAccountsHasBalance0 stamp: 'LH 11/14/2020 16:47:20'!
+PASSED!
+
+!testRun: #ReportTest #test07APortfolioWithOneAccountsHasAccountsReport stamp: 'LH 11/14/2020 16:47:20'!
+PASSED!
+
+!testRun: #ReportTest #test08APortfolioWithManyAccountsHasCorrectBalanceInReport stamp: 'LH 11/14/2020 16:47:20'!
+PASSED!
+!ReportTest methodsFor: 'test' stamp: 'LH 11/14/2020 16:48:14' prior: 50871609!
+test05AnAccountSummaryOfAnAccountWithAnIncommingTransfer
+
+	|account1 account2 |
+	account1 := ReceptiveAccount new.
+	account2 := ReceptiveAccount new.
+	Transfer from: account2 to: firstAccount of: 30.	
+	
+	self assertAnAccountSumaryOf:account1 Equals: (OrderedCollection with:'Entrada por transferencia de 30.' with: 'Balance = 30').! !
+
+!testRun: #ReportTest #test05AnAccountSummaryOfAnAccountWithAnIncommingTransfer stamp: 'LH 11/14/2020 16:48:14'!
+FAILURE!
+!ReportTest methodsFor: 'test' stamp: 'LH 11/14/2020 16:48:22' prior: 50872818!
+test05AnAccountSummaryOfAnAccountWithAnIncommingTransfer
+
+	|account1 account2 |
+	account1 := ReceptiveAccount new.
+	account2 := ReceptiveAccount new.
+	Transfer from: account2 to: account1 of: 30.	
+	
+	self assertAnAccountSumaryOf:account1 Equals: (OrderedCollection with:'Entrada por transferencia de 30.' with: 'Balance = 30').! !
+
+!testRun: #ReportTest #test05AnAccountSummaryOfAnAccountWithAnIncommingTransfer stamp: 'LH 11/14/2020 16:48:22'!
+PASSED!
+
+!testRun: #ReportTest #test01AnAccountSummaryOfAnEmptyAccountReturnsBalanceIs0 stamp: 'LH 11/14/2020 16:48:23'!
+PASSED!
+
+!testRun: #ReportTest #test02AnAccountSummaryOfAnAccountWithADepositReturnsAccurate stamp: 'LH 11/14/2020 16:48:23'!
+PASSED!
+
+!testRun: #ReportTest #test03AnAccountSummaryOfAnAccountWithAWithdrawReturnsAccurate stamp: 'LH 11/14/2020 16:48:23'!
+PASSED!
+
+!testRun: #ReportTest #test04AnAccountSummaryOfAnAccountWithAnOutgoingTransfer stamp: 'LH 11/14/2020 16:48:23'!
+PASSED!
+
+!testRun: #ReportTest #test05AnAccountSummaryOfAnAccountWithAnIncommingTransfer stamp: 'LH 11/14/2020 16:48:23'!
+PASSED!
+
+!testRun: #ReportTest #test06APortfolioWithNoAccountsHasBalance0 stamp: 'LH 11/14/2020 16:48:23'!
+PASSED!
+
+!testRun: #ReportTest #test07APortfolioWithOneAccountsHasAccountsReport stamp: 'LH 11/14/2020 16:48:23'!
+PASSED!
+
+!testRun: #ReportTest #test08APortfolioWithManyAccountsHasCorrectBalanceInReport stamp: 'LH 11/14/2020 16:48:23'!
+PASSED!
+
+!methodRemoval: ReportTest #setUp stamp: 'LH 11/14/2020 16:48:41'!
+setUp
+	
+	firstAccount := ReceptiveAccount new.!
+
+!methodRemoval: ReportTest #assertEqualsWithFirstAccountSummary: stamp: 'LH 11/14/2020 16:48:44'!
+assertEqualsWithFirstAccountSummary: aCollectionOfStrings
+	
+	self assert: aCollectionOfStrings equals: (firstAccount accountSummary).!
+
+TestCase subclass: #ReportTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Portfolio-Solucion'!
+
+!classDefinition: #ReportTest category: 'Portfolio-Solucion' stamp: 'LH 11/14/2020 16:48:50'!
+TestCase subclass: #ReportTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Portfolio-Solucion'!
+!AccountSummary methodsFor: 'evaluating' stamp: 'LH 11/14/2020 16:50:00'!
+gatherAccountSummaryFor: anAccount
+
+	anAccount transactions do: [ :aTransaction |
+		(aTransaction isKindOf: Deposit) ifTrue: [report add: ('Depóstio por ', aTransaction value asString, '.')].
+		(aTransaction isKindOf: Withdraw) ifTrue: [report add: ('Extracción por ', aTransaction value asString, '.')].
+		(aTransaction isKindOf: TransferWithdraw) ifTrue: [report add: ('Salida por transferencia de ', aTransaction value asString, '.')].
+		(aTransaction isKindOf: TransferDeposit) ifTrue: [report add: ('Entrada por transferencia de ', aTransaction value asString, '.')].
+	].! !
+!AccountSummary methodsFor: 'evaluating' stamp: 'LH 11/14/2020 16:50:25' prior: 50872475!
+accountSummaryFor: anAccount
+	self gatherAccountSummaryFor: anAccount.
+	
+	report add: ('Balance = ', anAccount balance asString).
+	^report.! !
+!AccountSummary methodsFor: 'evaluating' stamp: 'LH 11/14/2020 16:50:33' prior: 50872927!
+accountSummaryFor: anAccount
+
+	self gatherAccountSummaryFor: anAccount.
+	
+	report add: ('Balance = ', anAccount balance asString).
+	
+	^report.! !
+
+!testRun: #ReportTest #test01AnAccountSummaryOfAnEmptyAccountReturnsBalanceIs0 stamp: 'LH 11/14/2020 16:50:34'!
+PASSED!
+
+!testRun: #ReportTest #test02AnAccountSummaryOfAnAccountWithADepositReturnsAccurate stamp: 'LH 11/14/2020 16:50:34'!
+PASSED!
+
+!testRun: #ReportTest #test03AnAccountSummaryOfAnAccountWithAWithdrawReturnsAccurate stamp: 'LH 11/14/2020 16:50:34'!
+PASSED!
+
+!testRun: #ReportTest #test04AnAccountSummaryOfAnAccountWithAnOutgoingTransfer stamp: 'LH 11/14/2020 16:50:34'!
+PASSED!
+
+!testRun: #ReportTest #test05AnAccountSummaryOfAnAccountWithAnIncommingTransfer stamp: 'LH 11/14/2020 16:50:34'!
+PASSED!
+
+!testRun: #ReportTest #test06APortfolioWithNoAccountsHasBalance0 stamp: 'LH 11/14/2020 16:50:34'!
+PASSED!
+
+!testRun: #ReportTest #test07APortfolioWithOneAccountsHasAccountsReport stamp: 'LH 11/14/2020 16:50:34'!
+PASSED!
+
+!testRun: #ReportTest #test08APortfolioWithManyAccountsHasCorrectBalanceInReport stamp: 'LH 11/14/2020 16:50:34'!
+PASSED!
+!AccountSummary methodsFor: 'evaluating' stamp: 'LH 11/14/2020 16:51:59'!
+gatherAccountSummaryForDeposit: aDeposit
+
+	report add: ('Depóstio por ', aDeposit value asString, '.').! !
+!AccountSummary methodsFor: 'evaluating' stamp: 'LH 11/14/2020 16:52:26'!
+gatherAccountSummaryForWithdraw: aWithdraw
+
+	report add: ('Extracción por ', aWithdraw value asString, '.').! !
+!AccountSummary methodsFor: 'evaluating' stamp: 'LH 11/14/2020 16:57:13'!
+gatherAccountSummaryForTrasnferWithdraw: aTransferWithdraw
+
+	report add: ('Salida por transferencia de ', aTransferWithdraw value asString, '.').! !
+!AccountSummary methodsFor: 'evaluating' stamp: 'LH 11/14/2020 16:57:41'!
+gatherAccountSummaryForTransferDeposit: aTransferDeposit
+
+	report add: ('Entrada por transferencia de ', aTransferDeposit value asString, '.')! !
+!Deposit methodsFor: 'reports' stamp: 'LH 11/14/2020 16:59:33'!
+accountSummaryGatherIn: anAccountSummary
+
+	anAccountSummary gatherAccountSummaryForDeposit: self.! !
+
+----SNAPSHOT----(14 November 2020 17:00:00) CuisUniversity-4384.image priorSource: 17301793!
+!AccountTransaction methodsFor: 'reports' stamp: 'LH 11/14/2020 17:00:41'!
+accountSummaryGatherIn: anAccountSummary
+
+	self subclassResponsibility ! !
+!TransferDeposit methodsFor: 'reports' stamp: 'LH 11/14/2020 17:01:08' overrides: 50873007!
+accountSummaryGatherIn: anAccountSummary
+
+	anAccountSummary gatherAccountSummaryForTransferDeposit: self.! !
+!TransferWithdraw methodsFor: 'reports' stamp: 'LH 11/14/2020 17:01:38' overrides: 50873007!
+accountSummaryGatherIn: anAccountSummary
+
+	anAccountSummary gatherAccountSummaryForTransferWithdraw: self.! !
+!AccountSummary methodsFor: 'evaluating' stamp: 'LH 11/14/2020 17:02:00'!
+gatherAccountSummaryForTransferWithdraw: aTransferWithdraw
+
+	report add: ('Salida por transferencia de ', aTransferWithdraw value asString, '.').! !
+
+!methodRemoval: AccountSummary #gatherAccountSummaryForTrasnferWithdraw: stamp: 'LH 11/14/2020 17:02:00'!
+gatherAccountSummaryForTrasnferWithdraw: aTransferWithdraw
+
+	report add: ('Salida por transferencia de ', aTransferWithdraw value asString, '.').!
+!Withdraw methodsFor: 'reports' stamp: 'LH 11/14/2020 17:02:42' overrides: 50873007!
+accountSummaryGatherIn: anAccountSummary
+
+	anAccountSummary gatherAccountSummaryForWithdraw: self.! !
+!AccountSummary methodsFor: 'evaluating' stamp: 'LH 11/14/2020 17:04:52' prior: 50872905!
+gatherAccountSummaryFor: anAccount
+
+	anAccount transactions do: [ :aTransaction | aTransaction gatherAccountSummaryIn: self].! !
+!TransferDeposit methodsFor: 'reports' stamp: 'LH 11/14/2020 17:05:38'!
+gatherAccountSummaryIn: anAccountSummary
+
+	anAccountSummary gatherAccountSummaryForTransferDeposit: self.! !
+!TransferWithdraw methodsFor: 'reports' stamp: 'LH 11/14/2020 17:05:38'!
+gatherAccountSummaryIn: anAccountSummary
+
+	anAccountSummary gatherAccountSummaryForTransferWithdraw: self.! !
+!Withdraw methodsFor: 'reports' stamp: 'LH 11/14/2020 17:05:38'!
+gatherAccountSummaryIn: anAccountSummary
+
+	anAccountSummary gatherAccountSummaryForWithdraw: self.! !
+!AccountTransaction methodsFor: 'reports' stamp: 'LH 11/14/2020 17:05:38'!
+gatherAccountSummaryIn: anAccountSummary
+
+	self subclassResponsibility ! !
+!Deposit methodsFor: 'reports' stamp: 'LH 11/14/2020 17:05:38' overrides: 50873073!
+gatherAccountSummaryIn: anAccountSummary
+
+	anAccountSummary gatherAccountSummaryForDeposit: self.! !
+
+!methodRemoval: TransferDeposit #accountSummaryGatherIn: stamp: 'LH 11/14/2020 17:05:38'!
+accountSummaryGatherIn: anAccountSummary
+
+	anAccountSummary gatherAccountSummaryForTransferDeposit: self.!
+
+!methodRemoval: TransferWithdraw #accountSummaryGatherIn: stamp: 'LH 11/14/2020 17:05:38'!
+accountSummaryGatherIn: anAccountSummary
+
+	anAccountSummary gatherAccountSummaryForTransferWithdraw: self.!
+
+!methodRemoval: Withdraw #accountSummaryGatherIn: stamp: 'LH 11/14/2020 17:05:38'!
+accountSummaryGatherIn: anAccountSummary
+
+	anAccountSummary gatherAccountSummaryForWithdraw: self.!
+
+!methodRemoval: AccountTransaction #accountSummaryGatherIn: stamp: 'LH 11/14/2020 17:05:38'!
+accountSummaryGatherIn: anAccountSummary
+
+	self subclassResponsibility !
+
+!methodRemoval: Deposit #accountSummaryGatherIn: stamp: 'LH 11/14/2020 17:05:38'!
+accountSummaryGatherIn: anAccountSummary
+
+	anAccountSummary gatherAccountSummaryForDeposit: self.!
+
+!classRenamed: #ReportTest as: #AccountSummaryTest stamp: 'LH 11/14/2020 17:08:14'!
+Smalltalk renameClassNamed: #ReportTest as: #AccountSummaryTest!
+
+!testRun: #AccountSummaryTest #test01AnAccountSummaryOfAnEmptyAccountReturnsBalanceIs0 stamp: 'LH 11/14/2020 17:08:18'!
+PASSED!
+
+!testRun: #AccountSummaryTest #test02AnAccountSummaryOfAnAccountWithADepositReturnsAccurate stamp: 'LH 11/14/2020 17:08:18'!
+PASSED!
+
+!testRun: #AccountSummaryTest #test03AnAccountSummaryOfAnAccountWithAWithdrawReturnsAccurate stamp: 'LH 11/14/2020 17:08:18'!
+PASSED!
+
+!testRun: #AccountSummaryTest #test04AnAccountSummaryOfAnAccountWithAnOutgoingTransfer stamp: 'LH 11/14/2020 17:08:18'!
+PASSED!
+
+!testRun: #AccountSummaryTest #test05AnAccountSummaryOfAnAccountWithAnIncommingTransfer stamp: 'LH 11/14/2020 17:08:18'!
+PASSED!
+
+!testRun: #AccountSummaryTest #test06APortfolioWithNoAccountsHasBalance0 stamp: 'LH 11/14/2020 17:08:18'!
+PASSED!
+
+!testRun: #AccountSummaryTest #test07APortfolioWithOneAccountsHasAccountsReport stamp: 'LH 11/14/2020 17:08:18'!
+PASSED!
+
+!testRun: #AccountSummaryTest #test08APortfolioWithManyAccountsHasCorrectBalanceInReport stamp: 'LH 11/14/2020 17:08:18'!
+PASSED!
+!AccountSummary methodsFor: 'gathering accounts' stamp: 'LH 11/14/2020 17:09:18'!
+gatherAccountSummaryForReceptiveAccount: aReceptiveAccount
+
+	aReceptiveAccount transactions do: [ :aTransaction | aTransaction gatherAccountSummaryIn: self].! !
+!AccountSummary methodsFor: 'gathering accounts' stamp: 'LH 11/14/2020 17:10:00'!
+gatherAccountSummaryForPortfolio: aPortfolio
+
+	aPortfolio transactions do: [ :aTransaction | aTransaction gatherAccountSummaryIn: self].! !
+
+!methodRemoval: AccountSummary #gatherAccountSummaryForPortfolio: stamp: 'LH 11/14/2020 17:10:09'!
+gatherAccountSummaryForPortfolio: aPortfolio
+
+	aPortfolio transactions do: [ :aTransaction | aTransaction gatherAccountSummaryIn: self].!
+
+!methodRemoval: AccountSummary #gatherAccountSummaryForReceptiveAccount: stamp: 'LH 11/14/2020 17:10:11'!
+gatherAccountSummaryForReceptiveAccount: aReceptiveAccount
+
+	aReceptiveAccount transactions do: [ :aTransaction | aTransaction gatherAccountSummaryIn: self].!
+!Portfolio methodsFor: 'reports' stamp: 'LH 11/14/2020 17:11:51'!
+gatherAccountSummaryIn: anAccountSummary
+
+	accounts do: [:anAccount | anAccount gatherAccountSummaryIn: anAccountSummary ].! !
+!ReceptiveAccount methodsFor: 'report' stamp: 'LH 11/14/2020 17:12:31'!
+gatherAccountSummaryIn: anAccountSummary
+
+	transactions do: [:aTransaction | aTransaction gatherAccountSummaryIn: anAccountSummary ].! !
+!AccountSummary methodsFor: 'evaluating' stamp: 'LH 11/14/2020 17:13:14' prior: 50872935!
+accountSummaryFor: anAccount
+
+	anAccount gatherAccountSummaryIn: self.
+	
+	report add: ('Balance = ', anAccount balance asString).
+	
+	^report.! !
+
+!testRun: #AccountSummaryTest #test01AnAccountSummaryOfAnEmptyAccountReturnsBalanceIs0 stamp: 'LH 11/14/2020 17:13:15'!
+PASSED!
+
+!testRun: #AccountSummaryTest #test02AnAccountSummaryOfAnAccountWithADepositReturnsAccurate stamp: 'LH 11/14/2020 17:13:15'!
+PASSED!
+
+!testRun: #AccountSummaryTest #test03AnAccountSummaryOfAnAccountWithAWithdrawReturnsAccurate stamp: 'LH 11/14/2020 17:13:15'!
+PASSED!
+
+!testRun: #AccountSummaryTest #test04AnAccountSummaryOfAnAccountWithAnOutgoingTransfer stamp: 'LH 11/14/2020 17:13:15'!
+PASSED!
+
+!testRun: #AccountSummaryTest #test05AnAccountSummaryOfAnAccountWithAnIncommingTransfer stamp: 'LH 11/14/2020 17:13:15'!
+PASSED!
+
+!testRun: #AccountSummaryTest #test06APortfolioWithNoAccountsHasBalance0 stamp: 'LH 11/14/2020 17:13:15'!
+PASSED!
+
+!testRun: #AccountSummaryTest #test07APortfolioWithOneAccountsHasAccountsReport stamp: 'LH 11/14/2020 17:13:15'!
+PASSED!
+
+!testRun: #AccountSummaryTest #test08APortfolioWithManyAccountsHasCorrectBalanceInReport stamp: 'LH 11/14/2020 17:13:16'!
+PASSED!
+
+!methodRemoval: AccountSummary #gatherAccountSummaryFor: stamp: 'LH 11/14/2020 17:13:30'!
+gatherAccountSummaryFor: anAccount
+
+	anAccount transactions do: [ :aTransaction | aTransaction gatherAccountSummaryIn: self].!
+
+!testRun: #AccountSummaryTest #test01AnAccountSummaryOfAnEmptyAccountReturnsBalanceIs0 stamp: 'LH 11/14/2020 17:13:43'!
+PASSED!
+
+!testRun: #AccountSummaryTest #test02AnAccountSummaryOfAnAccountWithADepositReturnsAccurate stamp: 'LH 11/14/2020 17:13:43'!
+PASSED!
+
+!testRun: #AccountSummaryTest #test03AnAccountSummaryOfAnAccountWithAWithdrawReturnsAccurate stamp: 'LH 11/14/2020 17:13:43'!
+PASSED!
+
+!testRun: #AccountSummaryTest #test04AnAccountSummaryOfAnAccountWithAnOutgoingTransfer stamp: 'LH 11/14/2020 17:13:43'!
+PASSED!
+
+!testRun: #AccountSummaryTest #test05AnAccountSummaryOfAnAccountWithAnIncommingTransfer stamp: 'LH 11/14/2020 17:13:43'!
+PASSED!
+
+!testRun: #AccountSummaryTest #test06APortfolioWithNoAccountsHasBalance0 stamp: 'LH 11/14/2020 17:13:43'!
+PASSED!
+
+!testRun: #AccountSummaryTest #test07APortfolioWithOneAccountsHasAccountsReport stamp: 'LH 11/14/2020 17:13:43'!
+PASSED!
+
+!testRun: #AccountSummaryTest #test08APortfolioWithManyAccountsHasCorrectBalanceInReport stamp: 'LH 11/14/2020 17:13:43'!
+PASSED!
+!AccountSummary methodsFor: 'gathering transactions' stamp: 'LH 11/14/2020 17:17:41'!
+gatherForTransaction: aTransaction withText: reportMessage
+
+	report add: (reportMessage, aTransaction value asString, '.').! !
+!AccountSummary methodsFor: 'gathering transactions' stamp: 'LH 11/14/2020 17:18:40' prior: 50872972!
+gatherAccountSummaryForDeposit: aDeposit
+	
+	self gatherForTransaction: aDeposit withText: 'Depóstio por '.
+	"report add: ('Depóstio por ', aDeposit value asString, '.')."! !
+
+!testRun: #AccountSummaryTest #test01AnAccountSummaryOfAnEmptyAccountReturnsBalanceIs0 stamp: 'LH 11/14/2020 17:18:41'!
+PASSED!
+
+!testRun: #AccountSummaryTest #test02AnAccountSummaryOfAnAccountWithADepositReturnsAccurate stamp: 'LH 11/14/2020 17:18:41'!
+PASSED!
+
+!testRun: #AccountSummaryTest #test03AnAccountSummaryOfAnAccountWithAWithdrawReturnsAccurate stamp: 'LH 11/14/2020 17:18:41'!
+PASSED!
+
+!testRun: #AccountSummaryTest #test04AnAccountSummaryOfAnAccountWithAnOutgoingTransfer stamp: 'LH 11/14/2020 17:18:41'!
+PASSED!
+
+!testRun: #AccountSummaryTest #test05AnAccountSummaryOfAnAccountWithAnIncommingTransfer stamp: 'LH 11/14/2020 17:18:41'!
+PASSED!
+
+!testRun: #AccountSummaryTest #test06APortfolioWithNoAccountsHasBalance0 stamp: 'LH 11/14/2020 17:18:41'!
+PASSED!
+
+!testRun: #AccountSummaryTest #test07APortfolioWithOneAccountsHasAccountsReport stamp: 'LH 11/14/2020 17:18:41'!
+PASSED!
+
+!testRun: #AccountSummaryTest #test08APortfolioWithManyAccountsHasCorrectBalanceInReport stamp: 'LH 11/14/2020 17:18:41'!
+PASSED!
+!AccountSummary methodsFor: 'gathering transactions' stamp: 'LH 11/14/2020 17:18:55' prior: 50873283!
+gatherAccountSummaryForDeposit: aDeposit
+	
+	self gatherForTransaction: aDeposit withText: 'Depóstio por '.! !
+!AccountSummary methodsFor: 'gathering transactions' stamp: 'LH 11/14/2020 17:19:39' prior: 50872991!
+gatherAccountSummaryForTransferDeposit: aTransferDeposit
+
+	self gatherForTransaction: aTransferDeposit withText: 'Entrada por transferencia de '.
+	! !
+
+!testRun: #AccountSummaryTest #test01AnAccountSummaryOfAnEmptyAccountReturnsBalanceIs0 stamp: 'LH 11/14/2020 17:19:40'!
+PASSED!
+
+!testRun: #AccountSummaryTest #test02AnAccountSummaryOfAnAccountWithADepositReturnsAccurate stamp: 'LH 11/14/2020 17:19:40'!
+PASSED!
+
+!testRun: #AccountSummaryTest #test03AnAccountSummaryOfAnAccountWithAWithdrawReturnsAccurate stamp: 'LH 11/14/2020 17:19:40'!
+PASSED!
+
+!testRun: #AccountSummaryTest #test04AnAccountSummaryOfAnAccountWithAnOutgoingTransfer stamp: 'LH 11/14/2020 17:19:40'!
+PASSED!
+
+!testRun: #AccountSummaryTest #test05AnAccountSummaryOfAnAccountWithAnIncommingTransfer stamp: 'LH 11/14/2020 17:19:40'!
+PASSED!
+
+!testRun: #AccountSummaryTest #test06APortfolioWithNoAccountsHasBalance0 stamp: 'LH 11/14/2020 17:19:40'!
+PASSED!
+
+!testRun: #AccountSummaryTest #test07APortfolioWithOneAccountsHasAccountsReport stamp: 'LH 11/14/2020 17:19:40'!
+PASSED!
+
+!testRun: #AccountSummaryTest #test08APortfolioWithManyAccountsHasCorrectBalanceInReport stamp: 'LH 11/14/2020 17:19:40'!
+PASSED!
+!AccountSummary methodsFor: 'gathering transactions' stamp: 'LH 11/14/2020 17:20:08' prior: 50873026!
+gatherAccountSummaryForTransferWithdraw: aTransferWithdraw
+
+	self gatherForTransaction: aTransferWithdraw withText: 'Salida por transferencia de '.! !
+
+!testRun: #AccountSummaryTest #test01AnAccountSummaryOfAnEmptyAccountReturnsBalanceIs0 stamp: 'LH 11/14/2020 17:20:09'!
+PASSED!
+
+!testRun: #AccountSummaryTest #test02AnAccountSummaryOfAnAccountWithADepositReturnsAccurate stamp: 'LH 11/14/2020 17:20:09'!
+PASSED!
+
+!testRun: #AccountSummaryTest #test03AnAccountSummaryOfAnAccountWithAWithdrawReturnsAccurate stamp: 'LH 11/14/2020 17:20:09'!
+PASSED!
+
+!testRun: #AccountSummaryTest #test04AnAccountSummaryOfAnAccountWithAnOutgoingTransfer stamp: 'LH 11/14/2020 17:20:09'!
+PASSED!
+
+!testRun: #AccountSummaryTest #test05AnAccountSummaryOfAnAccountWithAnIncommingTransfer stamp: 'LH 11/14/2020 17:20:09'!
+PASSED!
+
+!testRun: #AccountSummaryTest #test06APortfolioWithNoAccountsHasBalance0 stamp: 'LH 11/14/2020 17:20:09'!
+PASSED!
+
+!testRun: #AccountSummaryTest #test07APortfolioWithOneAccountsHasAccountsReport stamp: 'LH 11/14/2020 17:20:09'!
+PASSED!
+
+!testRun: #AccountSummaryTest #test08APortfolioWithManyAccountsHasCorrectBalanceInReport stamp: 'LH 11/14/2020 17:20:09'!
+PASSED!
+!AccountSummary methodsFor: 'gathering transactions' stamp: 'LH 11/14/2020 17:20:20' prior: 50872978!
+gatherAccountSummaryForWithdraw: aWithdraw
+
+	report add: ('Extracción por ', aWithdraw value asString, '.').! !
+!AccountSummary methodsFor: 'gathering transactions' stamp: 'LH 11/14/2020 17:20:39' prior: 50873411!
+gatherAccountSummaryForWithdraw: aWithdraw
+
+	self gatherForTransaction: aWithdraw withText: 'Extracción por '.! !
+
+!testRun: #AccountSummaryTest #test01AnAccountSummaryOfAnEmptyAccountReturnsBalanceIs0 stamp: 'LH 11/14/2020 17:20:40'!
+PASSED!
+
+!testRun: #AccountSummaryTest #test02AnAccountSummaryOfAnAccountWithADepositReturnsAccurate stamp: 'LH 11/14/2020 17:20:40'!
+PASSED!
+
+!testRun: #AccountSummaryTest #test03AnAccountSummaryOfAnAccountWithAWithdrawReturnsAccurate stamp: 'LH 11/14/2020 17:20:40'!
+PASSED!
+
+!testRun: #AccountSummaryTest #test04AnAccountSummaryOfAnAccountWithAnOutgoingTransfer stamp: 'LH 11/14/2020 17:20:40'!
+PASSED!
+
+!testRun: #AccountSummaryTest #test05AnAccountSummaryOfAnAccountWithAnIncommingTransfer stamp: 'LH 11/14/2020 17:20:40'!
+PASSED!
+
+!testRun: #AccountSummaryTest #test06APortfolioWithNoAccountsHasBalance0 stamp: 'LH 11/14/2020 17:20:40'!
+PASSED!
+
+!testRun: #AccountSummaryTest #test07APortfolioWithOneAccountsHasAccountsReport stamp: 'LH 11/14/2020 17:20:40'!
+PASSED!
+
+!testRun: #AccountSummaryTest #test08APortfolioWithManyAccountsHasCorrectBalanceInReport stamp: 'LH 11/14/2020 17:20:40'!
+PASSED!
+!Account methodsFor: 'reports' stamp: 'LH 11/14/2020 17:21:27'!
+gatherAccountSummaryIn: anAccountSummary
+
+	self subclassResponsibility.! !
+
+----SNAPSHOT----(14 November 2020 17:21:39) CuisUniversity-4384.image priorSource: 17323300!
+
+!methodRemoval: Account #accountSummary stamp: 'LH 11/14/2020 17:21:42'!
+accountSummary
+	^(AccountSummary for: self).!
+
+!testRun: #AccountSummaryTest #test01AnAccountSummaryOfAnEmptyAccountReturnsBalanceIs0 stamp: 'LH 11/14/2020 17:21:45'!
+PASSED!
+
+!testRun: #AccountSummaryTest #test02AnAccountSummaryOfAnAccountWithADepositReturnsAccurate stamp: 'LH 11/14/2020 17:21:45'!
+PASSED!
+
+!testRun: #AccountSummaryTest #test03AnAccountSummaryOfAnAccountWithAWithdrawReturnsAccurate stamp: 'LH 11/14/2020 17:21:45'!
+PASSED!
+
+!testRun: #AccountSummaryTest #test04AnAccountSummaryOfAnAccountWithAnOutgoingTransfer stamp: 'LH 11/14/2020 17:21:45'!
+PASSED!
+
+!testRun: #AccountSummaryTest #test05AnAccountSummaryOfAnAccountWithAnIncommingTransfer stamp: 'LH 11/14/2020 17:21:45'!
+PASSED!
+
+!testRun: #AccountSummaryTest #test06APortfolioWithNoAccountsHasBalance0 stamp: 'LH 11/14/2020 17:21:45'!
+ERROR!
+
+!testRun: #AccountSummaryTest #test07APortfolioWithOneAccountsHasAccountsReport stamp: 'LH 11/14/2020 17:21:45'!
+ERROR!
+
+!testRun: #AccountSummaryTest #test08APortfolioWithManyAccountsHasCorrectBalanceInReport stamp: 'LH 11/14/2020 17:21:45'!
+ERROR!
+!AccountSummaryTest methodsFor: 'test' stamp: 'LH 11/14/2020 17:22:22' prior: 50871621!
+test06APortfolioWithNoAccountsHasBalance0
+
+	| portfolio1 |
+
+	portfolio1 := Portfolio new.
+
+	self assert: (OrderedCollection with: 'Balance = 0') equals:  (AccountSummary for: portfolio1).! !
+
+!testRun: #AccountSummaryTest #test01AnAccountSummaryOfAnEmptyAccountReturnsBalanceIs0 stamp: 'LH 11/14/2020 17:22:26'!
+PASSED!
+
+!testRun: #AccountSummaryTest #test02AnAccountSummaryOfAnAccountWithADepositReturnsAccurate stamp: 'LH 11/14/2020 17:22:26'!
+PASSED!
+
+!testRun: #AccountSummaryTest #test03AnAccountSummaryOfAnAccountWithAWithdrawReturnsAccurate stamp: 'LH 11/14/2020 17:22:26'!
+PASSED!
+
+!testRun: #AccountSummaryTest #test04AnAccountSummaryOfAnAccountWithAnOutgoingTransfer stamp: 'LH 11/14/2020 17:22:26'!
+PASSED!
+
+!testRun: #AccountSummaryTest #test05AnAccountSummaryOfAnAccountWithAnIncommingTransfer stamp: 'LH 11/14/2020 17:22:26'!
+PASSED!
+
+!testRun: #AccountSummaryTest #test06APortfolioWithNoAccountsHasBalance0 stamp: 'LH 11/14/2020 17:22:26'!
+PASSED!
+
+!testRun: #AccountSummaryTest #test07APortfolioWithOneAccountsHasAccountsReport stamp: 'LH 11/14/2020 17:22:26'!
+ERROR!
+
+!testRun: #AccountSummaryTest #test08APortfolioWithManyAccountsHasCorrectBalanceInReport stamp: 'LH 11/14/2020 17:22:26'!
+ERROR!
+!AccountSummaryTest methodsFor: 'test' stamp: 'LH 11/14/2020 17:23:02' prior: 50871629!
+test07APortfolioWithOneAccountsHasAccountsReport
+
+	| portfolio1 account1 account2 |
+
+	portfolio1 := Portfolio new.
+	account1 := ReceptiveAccount new.
+	account2 := ReceptiveAccount new.	
+	
+	portfolio1 add: account1.
+	
+	Deposit register: 100 on: account1.
+	Withdraw register: 50 on: account1.
+	Transfer from: account1 to: account2 of: 20.
+	Transfer from: account2 to: account1 of: 30.
+
+	self assert: (OrderedCollection
+		with: 'Depóstio por 100.'
+		with: 'Extracción por 50.'
+		with: 'Salida por transferencia de 20.'
+		with: 'Entrada por transferencia de 30.'
+		with: 'Balance = 60'
+	) equals: (AccountSummary for: portfolio1).! !
+
+!testRun: #AccountSummaryTest #test01AnAccountSummaryOfAnEmptyAccountReturnsBalanceIs0 stamp: 'LH 11/14/2020 17:23:05'!
+PASSED!
+
+!testRun: #AccountSummaryTest #test02AnAccountSummaryOfAnAccountWithADepositReturnsAccurate stamp: 'LH 11/14/2020 17:23:05'!
+PASSED!
+
+!testRun: #AccountSummaryTest #test03AnAccountSummaryOfAnAccountWithAWithdrawReturnsAccurate stamp: 'LH 11/14/2020 17:23:05'!
+PASSED!
+
+!testRun: #AccountSummaryTest #test04AnAccountSummaryOfAnAccountWithAnOutgoingTransfer stamp: 'LH 11/14/2020 17:23:05'!
+PASSED!
+
+!testRun: #AccountSummaryTest #test05AnAccountSummaryOfAnAccountWithAnIncommingTransfer stamp: 'LH 11/14/2020 17:23:05'!
+PASSED!
+
+!testRun: #AccountSummaryTest #test06APortfolioWithNoAccountsHasBalance0 stamp: 'LH 11/14/2020 17:23:05'!
+PASSED!
+
+!testRun: #AccountSummaryTest #test07APortfolioWithOneAccountsHasAccountsReport stamp: 'LH 11/14/2020 17:23:05'!
+PASSED!
+
+!testRun: #AccountSummaryTest #test08APortfolioWithManyAccountsHasCorrectBalanceInReport stamp: 'LH 11/14/2020 17:23:05'!
+ERROR!
+
+!testRun: #AccountSummaryTest #test08APortfolioWithManyAccountsHasCorrectBalanceInReport stamp: 'LH 11/14/2020 17:23:05'!
+ERROR!
+!AccountSummaryTest methodsFor: 'test' stamp: 'LH 11/14/2020 17:23:32' prior: 50871652!
+test08APortfolioWithManyAccountsHasCorrectBalanceInReport
+
+	| portfolio1 account1 account2 account3 report |
+
+	portfolio1 := Portfolio new.
+	account1 := ReceptiveAccount new.
+	account2 := ReceptiveAccount new.	
+	account3 := ReceptiveAccount new.
+	
+	portfolio1 add: account1. 
+	portfolio1 add: account2. 	
+
+	Deposit register: 100 on: account1.
+	Withdraw register: 50 on: account1.
+	Transfer from: account1 to: account3 of: 20.
+	Transfer from: account3 to: account1 of: 30.
+	
+	Deposit register: 200 on: account2.
+	Withdraw register: 100 on: account2.
+	Transfer from: account2 to: account3 of: 40.
+	Transfer from: account3 to: account2 of: 60.
+
+	report := OrderedCollection
+		with: 'Depóstio por 100.'
+		with: 'Extracción por 50.'
+		with: 'Salida por transferencia de 20.'
+		with: 'Entrada por transferencia de 30.'.
+
+	report add: 'Depóstio por 200.'.
+	report add: 'Extracción por 100.'.
+	report add: 'Salida por transferencia de 40.'.
+	report add: 'Entrada por transferencia de 60.'.
+	
+	report add: 'Balance = 180'.
+
+	self assert: report equals:  (AccountSummary for: portfolio1).! !
+
+!testRun: #AccountSummaryTest #test08APortfolioWithManyAccountsHasCorrectBalanceInReport stamp: 'LH 11/14/2020 17:23:33'!
+PASSED!
+
+!testRun: #AccountSummaryTest #test01AnAccountSummaryOfAnEmptyAccountReturnsBalanceIs0 stamp: 'LH 11/14/2020 17:23:36'!
+PASSED!
+
+!testRun: #AccountSummaryTest #test02AnAccountSummaryOfAnAccountWithADepositReturnsAccurate stamp: 'LH 11/14/2020 17:23:36'!
+PASSED!
+
+!testRun: #AccountSummaryTest #test03AnAccountSummaryOfAnAccountWithAWithdrawReturnsAccurate stamp: 'LH 11/14/2020 17:23:36'!
+PASSED!
+
+!testRun: #AccountSummaryTest #test04AnAccountSummaryOfAnAccountWithAnOutgoingTransfer stamp: 'LH 11/14/2020 17:23:36'!
+PASSED!
+
+!testRun: #AccountSummaryTest #test05AnAccountSummaryOfAnAccountWithAnIncommingTransfer stamp: 'LH 11/14/2020 17:23:36'!
+PASSED!
+
+!testRun: #AccountSummaryTest #test06APortfolioWithNoAccountsHasBalance0 stamp: 'LH 11/14/2020 17:23:36'!
+PASSED!
+
+!testRun: #AccountSummaryTest #test07APortfolioWithOneAccountsHasAccountsReport stamp: 'LH 11/14/2020 17:23:36'!
+PASSED!
+
+!testRun: #AccountSummaryTest #test08APortfolioWithManyAccountsHasCorrectBalanceInReport stamp: 'LH 11/14/2020 17:23:36'!
+PASSED!
+!Account methodsFor: 'reports' stamp: 'LH 11/14/2020 17:24:59' prior: 50873456!
+gatherAccountSummaryIn: anAccountSummary
+	"gathers the data of this account for an account summary"
+	
+	self subclassResponsibility.! !
+!Portfolio methodsFor: 'reports' stamp: 'LH 11/14/2020 17:25:27' prior: 50873181 overrides: 50873675!
+gatherAccountSummaryIn: anAccountSummary
+	"see superclass"
+	
+	accounts do: [:anAccount | anAccount gatherAccountSummaryIn: anAccountSummary ].! !
+!ReceptiveAccount methodsFor: 'report' stamp: 'LH 11/14/2020 17:25:35' prior: 50873188 overrides: 50873675!
+gatherAccountSummaryIn: anAccountSummary
+	"see superclass"
+	
+	transactions do: [:aTransaction | aTransaction gatherAccountSummaryIn: anAccountSummary ].! !
+!AccountTransaction methodsFor: 'reports' stamp: 'LH 11/14/2020 17:31:47' prior: 50873073!
+gatherAccountSummaryIn: anAccountSummary
+	"communicates to an account summary what class this transaction is"
+	self subclassResponsibility ! !
+
+----SNAPSHOT----(14 November 2020 17:35:39) CuisUniversity-4384.image priorSource: 17337930!
+!AccountSummaryTest methodsFor: 'test' stamp: 'LH 11/14/2020 17:48:18'!
+assert:anAccount hasAccountSummaryReport: aCollectionOfStrings
+	
+	self assert: aCollectionOfStrings equals: (AccountSummary for: anAccount).! !
+!AccountSummaryTest methodsFor: 'as yet unclassified' stamp: 'LH 11/14/2020 17:48:18' prior: 50872709!
+test03AnAccountSummaryOfAnAccountWithAWithdrawReturnsAccurate
+	|account1|
+	account1 := ReceptiveAccount new.
+	Withdraw register: 100 on: account1.
+	
+	self assert:account1 hasAccountSummaryReport: (OrderedCollection with:'Extracción por 100.' with: 'Balance = -100').! !
+!AccountSummaryTest methodsFor: 'as yet unclassified' stamp: 'LH 11/14/2020 17:48:18' prior: 50872771!
+test04AnAccountSummaryOfAnAccountWithAnOutgoingTransfer
+	|account1 account2 |
+	account1 := ReceptiveAccount new.
+	account2 := ReceptiveAccount new.
+	Transfer from: account1 to: account2 of: 20.	
+	
+	self assert:account1 hasAccountSummaryReport: (OrderedCollection with:'Salida por transferencia de 20.' with: 'Balance = -20').! !
+!AccountSummaryTest methodsFor: 'as yet unclassified' stamp: 'LH 11/14/2020 17:48:18' prior: 50872649!
+test02AnAccountSummaryOfAnAccountWithADepositReturnsAccurate
+	
+	|account1|
+	account1 := ReceptiveAccount new.
+	Deposit register: 100 on: account1.
+	
+	self assert:account1 hasAccountSummaryReport: (OrderedCollection with:'Depóstio por 100.' with: 'Balance = 100').
+! !
+!AccountSummaryTest methodsFor: 'as yet unclassified' stamp: 'LH 11/14/2020 17:48:18' prior: 50872835!
+test05AnAccountSummaryOfAnAccountWithAnIncommingTransfer
+
+	|account1 account2 |
+	account1 := ReceptiveAccount new.
+	account2 := ReceptiveAccount new.
+	Transfer from: account2 to: account1 of: 30.	
+	
+	self assert:account1 hasAccountSummaryReport: (OrderedCollection with:'Entrada por transferencia de 30.' with: 'Balance = 30').! !
+!AccountSummaryTest methodsFor: 'as yet unclassified' stamp: 'LH 11/14/2020 17:48:18' prior: 50872606!
+test01AnAccountSummaryOfAnEmptyAccountReturnsBalanceIs0	
+	|account1|
+	account1 := ReceptiveAccount new.
+	
+	self assert:account1 hasAccountSummaryReport: (OrderedCollection with: 'Balance = 0').! !
+
+!methodRemoval: AccountSummaryTest #assertAnAccountSumaryOf:Equals: stamp: 'LH 11/14/2020 17:48:18'!
+assertAnAccountSumaryOf:anAccount Equals: aCollectionOfStrings
+	
+	self assert: aCollectionOfStrings equals: (AccountSummary for: anAccount).!
+!AccountSummaryTest methodsFor: 'test' stamp: 'LH 11/14/2020 17:48:30'!
+assert:anAccount hasAccountSummary: aCollectionOfStrings
+	
+	self assert: aCollectionOfStrings equals: (AccountSummary for: anAccount).! !
+!AccountSummaryTest methodsFor: 'as yet unclassified' stamp: 'LH 11/14/2020 17:48:30' prior: 50873755!
+test05AnAccountSummaryOfAnAccountWithAnIncommingTransfer
+
+	|account1 account2 |
+	account1 := ReceptiveAccount new.
+	account2 := ReceptiveAccount new.
+	Transfer from: account2 to: account1 of: 30.	
+	
+	self assert:account1 hasAccountSummary: (OrderedCollection with:'Entrada por transferencia de 30.' with: 'Balance = 30').! !
+!AccountSummaryTest methodsFor: 'as yet unclassified' stamp: 'LH 11/14/2020 17:48:30' prior: 50873769!
+test01AnAccountSummaryOfAnEmptyAccountReturnsBalanceIs0	
+	|account1|
+	account1 := ReceptiveAccount new.
+	
+	self assert:account1 hasAccountSummary: (OrderedCollection with: 'Balance = 0').! !
+!AccountSummaryTest methodsFor: 'as yet unclassified' stamp: 'LH 11/14/2020 17:48:30' prior: 50873743!
+test02AnAccountSummaryOfAnAccountWithADepositReturnsAccurate
+	
+	|account1|
+	account1 := ReceptiveAccount new.
+	Deposit register: 100 on: account1.
+	
+	self assert:account1 hasAccountSummary: (OrderedCollection with:'Depóstio por 100.' with: 'Balance = 100').
+! !
+!AccountSummaryTest methodsFor: 'as yet unclassified' stamp: 'LH 11/14/2020 17:48:30' prior: 50873717!
+test03AnAccountSummaryOfAnAccountWithAWithdrawReturnsAccurate
+	|account1|
+	account1 := ReceptiveAccount new.
+	Withdraw register: 100 on: account1.
+	
+	self assert:account1 hasAccountSummary: (OrderedCollection with:'Extracción por 100.' with: 'Balance = -100').! !
+!AccountSummaryTest methodsFor: 'as yet unclassified' stamp: 'LH 11/14/2020 17:48:30' prior: 50873729!
+test04AnAccountSummaryOfAnAccountWithAnOutgoingTransfer
+	|account1 account2 |
+	account1 := ReceptiveAccount new.
+	account2 := ReceptiveAccount new.
+	Transfer from: account1 to: account2 of: 20.	
+	
+	self assert:account1 hasAccountSummary: (OrderedCollection with:'Salida por transferencia de 20.' with: 'Balance = -20').! !
+
+!methodRemoval: AccountSummaryTest #assert:hasAccountSummaryReport: stamp: 'LH 11/14/2020 17:48:30'!
+assert:anAccount hasAccountSummaryReport: aCollectionOfStrings
+	
+	self assert: aCollectionOfStrings equals: (AccountSummary for: anAccount).!
+!AccountSummaryTest methodsFor: 'test' stamp: 'LH 11/14/2020 17:49:17' prior: 50873500!
+test06APortfolioWithNoAccountsHasBalance0
+
+	| portfolio1 |
+
+	portfolio1 := Portfolio new.
+
+	self assert: portfolio1 hasAccountSummary: (OrderedCollection with: 'Balance = 0').! !
+
+!testRun: #AccountSummaryTest #test06APortfolioWithNoAccountsHasBalance0 stamp: 'LH 11/14/2020 17:49:18'!
+PASSED!
+
+!testRun: #AccountSummaryTest #test01AnAccountSummaryOfAnEmptyAccountReturnsBalanceIs0 stamp: 'LH 11/14/2020 17:49:18'!
+PASSED!
+
+!testRun: #AccountSummaryTest #test02AnAccountSummaryOfAnAccountWithADepositReturnsAccurate stamp: 'LH 11/14/2020 17:49:18'!
+PASSED!
+
+!testRun: #AccountSummaryTest #test03AnAccountSummaryOfAnAccountWithAWithdrawReturnsAccurate stamp: 'LH 11/14/2020 17:49:18'!
+PASSED!
+
+!testRun: #AccountSummaryTest #test04AnAccountSummaryOfAnAccountWithAnOutgoingTransfer stamp: 'LH 11/14/2020 17:49:18'!
+PASSED!
+
+!testRun: #AccountSummaryTest #test05AnAccountSummaryOfAnAccountWithAnIncommingTransfer stamp: 'LH 11/14/2020 17:49:18'!
+PASSED!
+
+!testRun: #AccountSummaryTest #test06APortfolioWithNoAccountsHasBalance0 stamp: 'LH 11/14/2020 17:49:18'!
+PASSED!
+
+!testRun: #AccountSummaryTest #test07APortfolioWithOneAccountsHasAccountsReport stamp: 'LH 11/14/2020 17:49:18'!
+PASSED!
+
+!testRun: #AccountSummaryTest #test08APortfolioWithManyAccountsHasCorrectBalanceInReport stamp: 'LH 11/14/2020 17:49:18'!
+PASSED!
+!AccountSummaryTest methodsFor: 'test' stamp: 'LH 11/14/2020 17:49:42' prior: 50873541!
+test07APortfolioWithOneAccountsHasAccountsReport
+
+	| portfolio1 account1 account2 |
+
+	portfolio1 := Portfolio new.
+	account1 := ReceptiveAccount new.
+	account2 := ReceptiveAccount new.	
+	
+	portfolio1 add: account1.
+	
+	Deposit register: 100 on: account1.
+	Withdraw register: 50 on: account1.
+	Transfer from: account1 to: account2 of: 20.
+	Transfer from: account2 to: account1 of: 30.
+
+	self assert: portfolio1 hasAccountSummary: (OrderedCollection
+		with: 'Depóstio por 100.'
+		with: 'Extracción por 50.'
+		with: 'Salida por transferencia de 20.'
+		with: 'Entrada por transferencia de 30.'
+		with: 'Balance = 60'
+	).! !
+
+!testRun: #AccountSummaryTest #test07APortfolioWithOneAccountsHasAccountsReport stamp: 'LH 11/14/2020 17:49:44'!
+PASSED!
+
+!testRun: #AccountSummaryTest #test01AnAccountSummaryOfAnEmptyAccountReturnsBalanceIs0 stamp: 'LH 11/14/2020 17:49:44'!
+PASSED!
+
+!testRun: #AccountSummaryTest #test02AnAccountSummaryOfAnAccountWithADepositReturnsAccurate stamp: 'LH 11/14/2020 17:49:44'!
+PASSED!
+
+!testRun: #AccountSummaryTest #test03AnAccountSummaryOfAnAccountWithAWithdrawReturnsAccurate stamp: 'LH 11/14/2020 17:49:44'!
+PASSED!
+
+!testRun: #AccountSummaryTest #test04AnAccountSummaryOfAnAccountWithAnOutgoingTransfer stamp: 'LH 11/14/2020 17:49:44'!
+PASSED!
+
+!testRun: #AccountSummaryTest #test05AnAccountSummaryOfAnAccountWithAnIncommingTransfer stamp: 'LH 11/14/2020 17:49:44'!
+PASSED!
+
+!testRun: #AccountSummaryTest #test06APortfolioWithNoAccountsHasBalance0 stamp: 'LH 11/14/2020 17:49:44'!
+PASSED!
+
+!testRun: #AccountSummaryTest #test07APortfolioWithOneAccountsHasAccountsReport stamp: 'LH 11/14/2020 17:49:44'!
+PASSED!
+
+!testRun: #AccountSummaryTest #test08APortfolioWithManyAccountsHasCorrectBalanceInReport stamp: 'LH 11/14/2020 17:49:44'!
+PASSED!
+!AccountSummaryTest methodsFor: 'test' stamp: 'LH 11/14/2020 17:50:12' prior: 50873601!
+test08APortfolioWithManyAccountsHasCorrectBalanceInReport
+
+	| portfolio1 account1 account2 account3 report |
+
+	portfolio1 := Portfolio new.
+	account1 := ReceptiveAccount new.
+	account2 := ReceptiveAccount new.	
+	account3 := ReceptiveAccount new.
+	
+	portfolio1 add: account1. 
+	portfolio1 add: account2. 	
+
+	Deposit register: 100 on: account1.
+	Withdraw register: 50 on: account1.
+	Transfer from: account1 to: account3 of: 20.
+	Transfer from: account3 to: account1 of: 30.
+	
+	Deposit register: 200 on: account2.
+	Withdraw register: 100 on: account2.
+	Transfer from: account2 to: account3 of: 40.
+	Transfer from: account3 to: account2 of: 60.
+
+	report := OrderedCollection
+		with: 'Depóstio por 100.'
+		with: 'Extracción por 50.'
+		with: 'Salida por transferencia de 20.'
+		with: 'Entrada por transferencia de 30.'.
+
+	report add: 'Depóstio por 200.'.
+	report add: 'Extracción por 100.'.
+	report add: 'Salida por transferencia de 40.'.
+	report add: 'Entrada por transferencia de 60.'.
+	
+	report add: 'Balance = 180'.
+
+	self assert: portfolio1 hasAccountSummary: report .! !
+
+!testRun: #AccountSummaryTest #test08APortfolioWithManyAccountsHasCorrectBalanceInReport stamp: 'LH 11/14/2020 17:50:13'!
+PASSED!
+
+!testRun: #AccountSummaryTest #test01AnAccountSummaryOfAnEmptyAccountReturnsBalanceIs0 stamp: 'LH 11/14/2020 17:50:13'!
+PASSED!
+
+!testRun: #AccountSummaryTest #test02AnAccountSummaryOfAnAccountWithADepositReturnsAccurate stamp: 'LH 11/14/2020 17:50:13'!
+PASSED!
+
+!testRun: #AccountSummaryTest #test03AnAccountSummaryOfAnAccountWithAWithdrawReturnsAccurate stamp: 'LH 11/14/2020 17:50:13'!
+PASSED!
+
+!testRun: #AccountSummaryTest #test04AnAccountSummaryOfAnAccountWithAnOutgoingTransfer stamp: 'LH 11/14/2020 17:50:13'!
+PASSED!
+
+!testRun: #AccountSummaryTest #test05AnAccountSummaryOfAnAccountWithAnIncommingTransfer stamp: 'LH 11/14/2020 17:50:13'!
+PASSED!
+
+!testRun: #AccountSummaryTest #test06APortfolioWithNoAccountsHasBalance0 stamp: 'LH 11/14/2020 17:50:13'!
+PASSED!
+
+!testRun: #AccountSummaryTest #test07APortfolioWithOneAccountsHasAccountsReport stamp: 'LH 11/14/2020 17:50:14'!
+PASSED!
+
+!testRun: #AccountSummaryTest #test08APortfolioWithManyAccountsHasCorrectBalanceInReport stamp: 'LH 11/14/2020 17:50:14'!
+PASSED!
+!AccountSummaryTest methodsFor: 'test' stamp: 'LH 11/14/2020 17:51:33' prior: 50873967!
+test08APortfolioWithManyAccountsHasCorrectBalanceInReport
+
+	| portfolio1 account1 account2 account3 report |
+	
+	portfolio1 := Portfolio new.
+	account1 := ReceptiveAccount new.
+	account2 := ReceptiveAccount new.	
+	account3 := ReceptiveAccount new.
+	
+	portfolio1 add: account1. 
+	portfolio1 add: account2. 	
+
+	Deposit register: 100 on: account1.
+	Withdraw register: 50 on: account1.
+	Transfer from: account1 to: account3 of: 20.
+	Transfer from: account3 to: account1 of: 30.
+	
+	Deposit register: 200 on: account2.
+	Withdraw register: 100 on: account2.
+	Transfer from: account2 to: account3 of: 40.
+	Transfer from: account3 to: account2 of: 60.
+
+	report := OrderedCollection
+		with: 'Depóstio por 100.'
+		with: 'Extracción por 50.'
+		with: 'Salida por transferencia de 20.'
+		with: 'Entrada por transferencia de 30.'.
+
+	report add: 'Depóstio por 200.'.
+	report add: 'Extracción por 100.'.
+	report add: 'Salida por transferencia de 40.'.
+	report add: 'Entrada por transferencia de 60.'.
+	
+	report add: 'Balance = 180'.
+
+	self assert: portfolio1 hasAccountSummary: report .! !
+
+!testRun: #AccountSummaryTest #test08APortfolioWithManyAccountsHasCorrectBalanceInReport stamp: 'LH 11/14/2020 17:51:34'!
+PASSED!
+
+!testRun: #AccountSummaryTest #test01AnAccountSummaryOfAnEmptyAccountReturnsBalanceIs0 stamp: 'LH 11/14/2020 17:51:34'!
+PASSED!
+
+!testRun: #AccountSummaryTest #test02AnAccountSummaryOfAnAccountWithADepositReturnsAccurate stamp: 'LH 11/14/2020 17:51:34'!
+PASSED!
+
+!testRun: #AccountSummaryTest #test03AnAccountSummaryOfAnAccountWithAWithdrawReturnsAccurate stamp: 'LH 11/14/2020 17:51:34'!
+PASSED!
+
+!testRun: #AccountSummaryTest #test04AnAccountSummaryOfAnAccountWithAnOutgoingTransfer stamp: 'LH 11/14/2020 17:51:34'!
+PASSED!
+
+!testRun: #AccountSummaryTest #test05AnAccountSummaryOfAnAccountWithAnIncommingTransfer stamp: 'LH 11/14/2020 17:51:34'!
+PASSED!
+
+!testRun: #AccountSummaryTest #test06APortfolioWithNoAccountsHasBalance0 stamp: 'LH 11/14/2020 17:51:34'!
+PASSED!
+
+!testRun: #AccountSummaryTest #test07APortfolioWithOneAccountsHasAccountsReport stamp: 'LH 11/14/2020 17:51:34'!
+PASSED!
+
+!testRun: #AccountSummaryTest #test08APortfolioWithManyAccountsHasCorrectBalanceInReport stamp: 'LH 11/14/2020 17:51:34'!
+PASSED!
+!AccountSummaryTest methodsFor: 'test' stamp: 'LH 11/14/2020 17:51:45' prior: 50873794!
+test05AnAccountSummaryOfAnAccountWithAnIncommingTransfer
+
+	|account1 account2 |
+	account1 := ReceptiveAccount new.
+	account2 := ReceptiveAccount new.
+	Transfer from: account2 to: account1 of: 30.	
+	
+	self assert:account1 hasAccountSummary: (OrderedCollection with:'Entrada por transferencia de 30.' with: 'Balance = 30').! !
+!AccountSummaryTest methodsFor: 'test' stamp: 'LH 11/14/2020 17:51:51' prior: 50873842!
+test04AnAccountSummaryOfAnAccountWithAnOutgoingTransfer
+
+	|account1 account2 |
+	account1 := ReceptiveAccount new.
+	account2 := ReceptiveAccount new.
+	Transfer from: account1 to: account2 of: 20.	
+	
+	self assert:account1 hasAccountSummary: (OrderedCollection with:'Salida por transferencia de 20.' with: 'Balance = -20').! !
+!AccountSummaryTest methodsFor: 'test' stamp: 'LH 11/14/2020 17:52:00' prior: 50873830!
+test03AnAccountSummaryOfAnAccountWithAWithdrawReturnsAccurate
+
+	|account1|
+	account1 := ReceptiveAccount new.
+	Withdraw register: 100 on: account1.
+	
+	self assert:account1 hasAccountSummary: (OrderedCollection with:'Extracción por 100.' with: 'Balance = -100').! !
+!TransferTest methodsFor: 'test' stamp: 'LH 11/14/2020 17:52:30' prior: 50871729!
+test03ATransferWithdrawAndDepositKnowTheirTransfer
+
+	self setUp.
+	
+	self assert: transfer equals: transfer deposit transfer.
+	self assert: transfer equals: transfer withdraw transfer.! !
+!TransferTest methodsFor: 'test' stamp: 'LH 11/14/2020 17:56:05'!
+validTransferOf100Value
+
+	^Transfer from: firstAccount to: secondAccount of: 100.! !
+!TransferTest methodsFor: 'test' stamp: 'LH 11/14/2020 17:57:00' prior: 50871712!
+test01ATransferDecreasesBalanceOfSenderAndIncreasesOnReceiver
+	
+	self setUp.
+	self validTransferOf100Value.
+	
+	self assert: 100 equals: secondAccount balance.
+	self assert: -100 equals: firstAccount balance.! !
+!TransferTest methodsFor: 'test' stamp: 'LH 11/14/2020 17:57:06' prior: 50871704 overrides: 16927572!
+setUp
+	
+	firstAccount := ReceptiveAccount new.
+	secondAccount := ReceptiveAccount new.! !
+!TransferTest methodsFor: 'test' stamp: 'LH 11/14/2020 17:57:55' prior: 50871720!
+test02ATransferRegistersATransferDepositAndATransferWithdraw
+	|aTransfer|
+	
+	self setUp.
+	aTransfer := self validTransferOf100Value.
+	
+	self assert: (secondAccount hasRegistered: aTransfer deposit).
+	self assert: (firstAccount hasRegistered: aTransfer withdraw).! !
+!TransferTest methodsFor: 'test' stamp: 'LH 11/14/2020 17:58:35' prior: 50874151!
+test03ATransferWithdrawAndDepositKnowTheirTransfer
+	|aTransfer|
+	
+	self setUp.
+	aTransfer := self validTransferOf100Value.
+	
+	self assert: aTransfer equals: aTransfer deposit transfer.
+	self assert: aTransfer equals: aTransfer withdraw transfer.! !
+!TransferTest methodsFor: 'test' stamp: 'LH 11/14/2020 17:58:50' prior: 50871738!
+test04ATransferCantBeDoneBetweenTheSameAccount
+
+	self setUp.
+	
+	self should:[Transfer from: firstAccount to: firstAccount of: 100.]
+		raise: Error
+		withMessageText: Transfer canNotTransferBeetweenTheSameAccount.
+	! !
+
+!testRun: #TransferTest #test04ATransferCantBeDoneBetweenTheSameAccount stamp: 'LH 11/14/2020 17:58:51'!
+PASSED!
+
+!testRun: #TransferTest #test01ATransferDecreasesBalanceOfSenderAndIncreasesOnReceiver stamp: 'LH 11/14/2020 17:58:51'!
+PASSED!
+
+!testRun: #TransferTest #test02ATransferRegistersATransferDepositAndATransferWithdraw stamp: 'LH 11/14/2020 17:58:51'!
+PASSED!
+
+!testRun: #TransferTest #test03ATransferWithdrawAndDepositKnowTheirTransfer stamp: 'LH 11/14/2020 17:58:51'!
+PASSED!
+
+!testRun: #TransferTest #test04ATransferCantBeDoneBetweenTheSameAccount stamp: 'LH 11/14/2020 17:58:51'!
+PASSED!
+
+!testRun: #TransferTest #test05ATransferCantBeDoneBeOf0Value stamp: 'LH 11/14/2020 17:58:51'!
+PASSED!
+
+!testRun: #TransferTest #test06ATransferCantBeOfNegativeValue stamp: 'LH 11/14/2020 17:58:51'!
+PASSED!
+
+TestCase subclass: #TransferTest
+	instanceVariableNames: 'firstAccount secondAccount '
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Portfolio-Solucion'!
+
+!classDefinition: #TransferTest category: 'Portfolio-Solucion' stamp: 'LH 11/14/2020 17:59:05'!
+TestCase subclass: #TransferTest
+	instanceVariableNames: 'firstAccount secondAccount'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Portfolio-Solucion'!
+
+!testRun: #TransferTest #test01ATransferDecreasesBalanceOfSenderAndIncreasesOnReceiver stamp: 'LH 11/14/2020 17:59:08'!
+PASSED!
+
+!testRun: #TransferTest #test02ATransferRegistersATransferDepositAndATransferWithdraw stamp: 'LH 11/14/2020 17:59:08'!
+PASSED!
+
+!testRun: #TransferTest #test03ATransferWithdrawAndDepositKnowTheirTransfer stamp: 'LH 11/14/2020 17:59:08'!
+PASSED!
+
+!testRun: #TransferTest #test04ATransferCantBeDoneBetweenTheSameAccount stamp: 'LH 11/14/2020 17:59:08'!
+PASSED!
+
+!testRun: #TransferTest #test05ATransferCantBeDoneBeOf0Value stamp: 'LH 11/14/2020 17:59:08'!
+PASSED!
+
+!testRun: #TransferTest #test06ATransferCantBeOfNegativeValue stamp: 'LH 11/14/2020 17:59:08'!
+PASSED!
+
+!testRun: #AccountSummaryTest #test01AnAccountSummaryOfAnEmptyAccountReturnsBalanceIs0 stamp: 'LH 11/14/2020 17:59:16'!
+PASSED!
+
+!testRun: #AccountSummaryTest #test02AnAccountSummaryOfAnAccountWithADepositReturnsAccurate stamp: 'LH 11/14/2020 17:59:16'!
+PASSED!
+
+!testRun: #AccountSummaryTest #test03AnAccountSummaryOfAnAccountWithAWithdrawReturnsAccurate stamp: 'LH 11/14/2020 17:59:16'!
+PASSED!
+
+!testRun: #AccountSummaryTest #test04AnAccountSummaryOfAnAccountWithAnOutgoingTransfer stamp: 'LH 11/14/2020 17:59:16'!
+PASSED!
+
+!testRun: #AccountSummaryTest #test05AnAccountSummaryOfAnAccountWithAnIncommingTransfer stamp: 'LH 11/14/2020 17:59:16'!
+PASSED!
+
+!testRun: #AccountSummaryTest #test06APortfolioWithNoAccountsHasBalance0 stamp: 'LH 11/14/2020 17:59:16'!
+PASSED!
+
+!testRun: #AccountSummaryTest #test07APortfolioWithOneAccountsHasAccountsReport stamp: 'LH 11/14/2020 17:59:16'!
+PASSED!
+
+!testRun: #AccountSummaryTest #test08APortfolioWithManyAccountsHasCorrectBalanceInReport stamp: 'LH 11/14/2020 17:59:16'!
+PASSED!
+
+!testRun: #PortfolioTest #test01BalanceOfPortfolioWithoutAccountsIsZero stamp: 'LH 11/14/2020 17:59:16'!
+PASSED!
+
+!testRun: #PortfolioTest #test02BalanceOfPortfolioWithOneAccountIsAccountBalance stamp: 'LH 11/14/2020 17:59:16'!
+PASSED!
+
+!testRun: #PortfolioTest #test03BalanceOfPortfolioIsCalculatedRecursivelyOnPortfolios stamp: 'LH 11/14/2020 17:59:16'!
+PASSED!
+
+!testRun: #PortfolioTest #test04PortfolioWithoutAccountsHasNoRegisteredTransaction stamp: 'LH 11/14/2020 17:59:16'!
+PASSED!
+
+!testRun: #PortfolioTest #test05PortfolioHasRegisteredItsAccountsTransactions stamp: 'LH 11/14/2020 17:59:16'!
+PASSED!
+
+!testRun: #PortfolioTest #test06PortfolioLooksForRegisteredTransactionsRecursively stamp: 'LH 11/14/2020 17:59:16'!
+PASSED!
+
+!testRun: #PortfolioTest #test07PortfolioHasNoTransactionWhenHasNoAccounts stamp: 'LH 11/14/2020 17:59:16'!
+PASSED!
+
+!testRun: #PortfolioTest #test08PortfolioTransactionsIncludesAllItsAccountsTransactions stamp: 'LH 11/14/2020 17:59:16'!
+PASSED!
+
+!testRun: #PortfolioTest #test09PortfolioTransactionsAreCalculatedRecursively stamp: 'LH 11/14/2020 17:59:17'!
+PASSED!
+
+!testRun: #PortfolioTest #test10PortfolioCanNotIncludeTheSameAccountMoreThanOnce stamp: 'LH 11/14/2020 17:59:17'!
+PASSED!
+
+!testRun: #PortfolioTest #test11PortfolioCanNotIncludeAccountOfItsPortfolios stamp: 'LH 11/14/2020 17:59:17'!
+PASSED!
+
+!testRun: #PortfolioTest #test12PortfolioCanNotIncludeItself stamp: 'LH 11/14/2020 17:59:17'!
+PASSED!
+
+!testRun: #PortfolioTest #test13ComposedPortfolioCanNotHaveParentPortfolioAccount stamp: 'LH 11/14/2020 17:59:17'!
+PASSED!
+
+!testRun: #PortfolioTest #test14ComposedPortfolioCanNotHaveAccountOfAnyRootParentRecursively stamp: 'LH 11/14/2020 17:59:17'!
+PASSED!
+
+!testRun: #PortfolioTest #test15PortfolioCanNotIncludeAnyOfTheComposedAccountOfPortfolioToAdd stamp: 'LH 11/14/2020 17:59:17'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test01ReceptiveAccountHaveZeroAsBalanceWhenCreated stamp: 'LH 11/14/2020 17:59:17'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test02DepositIncreasesBalanceOnTransactionValue stamp: 'LH 11/14/2020 17:59:17'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test03WithdrawDecreasesBalanceOnTransactionValue stamp: 'LH 11/14/2020 17:59:17'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test04WithdrawValueMustBePositive stamp: 'LH 11/14/2020 17:59:17'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test05ReceptiveAccountKnowsRegisteredTransactions stamp: 'LH 11/14/2020 17:59:17'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test06ReceptiveAccountDoNotKnowNotRegisteredTransactions stamp: 'LH 11/14/2020 17:59:17'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test07AccountKnowsItsTransactions stamp: 'LH 11/14/2020 17:59:17'!
+PASSED!
+
+!testRun: #TransferTest #test01ATransferDecreasesBalanceOfSenderAndIncreasesOnReceiver stamp: 'LH 11/14/2020 17:59:17'!
+PASSED!
+
+!testRun: #TransferTest #test02ATransferRegistersATransferDepositAndATransferWithdraw stamp: 'LH 11/14/2020 17:59:17'!
+PASSED!
+
+!testRun: #TransferTest #test03ATransferWithdrawAndDepositKnowTheirTransfer stamp: 'LH 11/14/2020 17:59:17'!
+PASSED!
+
+!testRun: #TransferTest #test04ATransferCantBeDoneBetweenTheSameAccount stamp: 'LH 11/14/2020 17:59:17'!
+PASSED!
+
+!testRun: #TransferTest #test05ATransferCantBeDoneBeOf0Value stamp: 'LH 11/14/2020 17:59:17'!
+PASSED!
+
+!testRun: #TransferTest #test06ATransferCantBeOfNegativeValue stamp: 'LH 11/14/2020 17:59:17'!
+PASSED!
+
+----SNAPSHOT----(14 November 2020 17:59:32) CuisUniversity-4384.image priorSource: 17345774!
+
+----QUIT----(14 November 2020 17:59:35) CuisUniversity-4384.image priorSource: 17368326!
