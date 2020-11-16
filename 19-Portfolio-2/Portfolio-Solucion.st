@@ -690,14 +690,6 @@ collectNamesIn: anAccountReporter
 	self subclassResponsibility.
 ! !
 
-!Account methodsFor: 'reports' stamp: 'IO 11/15/2020 22:32:39'!
-collectNamesIn: anAccountSummary withPrefix: aPrefix
-
-	"make all its transactions be collected by a reporter with a given prefix"
-
-	self subclassResponsibility.
-! !
-
 !Account methodsFor: 'reports' stamp: 'IO 11/15/2020 21:59:08'!
 collectTransactionsIn: anAccountReporter
 
@@ -821,22 +813,15 @@ isComposedBy: anAccount
 	^ self = anAccount or: [ accounts anySatisfy: [ :composedAccount | (composedAccount isComposedBy: anAccount) or: [ anAccount isComposedBy: composedAccount ]]]! !
 
 
-!Portfolio methodsFor: 'reports' stamp: 'IO 11/15/2020 22:31:30'!
+!Portfolio methodsFor: 'reports' stamp: 'IO 11/16/2020 00:44:03'!
 collectNamesIn: anAccountSummary
 
 	"see superclass"
 
-	self collectNamesIn: anAccountSummary withPrefix: ''.
-! !
-
-!Portfolio methodsFor: 'reports' stamp: 'IO 11/15/2020 22:31:33'!
-collectNamesIn: anAccountSummary withPrefix: aPrefix
-
-	"see superclass"
-
-	anAccountSummary addNameToReport: (aPrefix, name).
-	accounts do: [ :account | account collectNamesIn: anAccountSummary withPrefix: (aPrefix, '  '). ]
-
+	anAccountSummary addNameToReport: name.
+	anAccountSummary beginHierarchy.
+	accounts do: [ :account | account collectNamesIn: anAccountSummary. ].
+	anAccountSummary endHierarchy.
 ! !
 
 !Portfolio methodsFor: 'reports' stamp: 'IO 11/15/2020 22:31:38'!
@@ -962,20 +947,12 @@ addedTo: aPortfolio
 	! !
 
 
-!ReceptiveAccount methodsFor: 'report' stamp: 'IO 11/15/2020 22:12:50'!
+!ReceptiveAccount methodsFor: 'report' stamp: 'IO 11/16/2020 00:43:20'!
 collectNamesIn: anAccountSummary
 
 	"see superclass"
 
-	self collectNamesIn: anAccountSummary withPrefix: ''.
-! !
-
-!ReceptiveAccount methodsFor: 'report' stamp: 'IO 11/15/2020 22:12:23'!
-collectNamesIn: anAccountSummary withPrefix: aPrefix
-
-	"see superclass"
-
-	anAccountSummary addNameToReport: (aPrefix, name).
+	anAccountSummary addNameToReport: name.
 ! !
 
 !ReceptiveAccount methodsFor: 'report' stamp: 'IO 11/15/2020 21:59:08'!
@@ -1199,7 +1176,7 @@ initializeFor: anAccount
 
 !classDefinition: #AccountTreeReporter category: 'Portfolio-Solucion'!
 AccountReporter subclass: #AccountTreeReporter
-	instanceVariableNames: ''
+	instanceVariableNames: 'indentation'
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'Portfolio-Solucion'!
@@ -1214,16 +1191,27 @@ emitReport
 ! !
 
 
-!AccountTreeReporter methodsFor: 'adding to report' stamp: 'IO 11/15/2020 21:47:23'!
+!AccountTreeReporter methodsFor: 'adding to report' stamp: 'IO 11/16/2020 00:34:22'!
 addNameToReport: aName
-	report add: aName.
+	report add: (indentation, aName).
+! !
+
+!AccountTreeReporter methodsFor: 'adding to report' stamp: 'IO 11/16/2020 00:31:05'!
+beginHierarchy
+	indentation := (indentation, '  ')
+! !
+
+!AccountTreeReporter methodsFor: 'adding to report' stamp: 'IO 11/16/2020 00:42:16'!
+endHierarchy
+	indentation := '' padded: 1 to: indentation size - 2 with: ' '.
 ! !
 
 
-!AccountTreeReporter methodsFor: 'initialization' stamp: 'IO 11/15/2020 21:46:55'!
+!AccountTreeReporter methodsFor: 'initialization' stamp: 'IO 11/16/2020 00:31:52'!
 initializeFor: anAccount
 
 	report := OrderedCollection new.
+	indentation := ''.
 	super initializeFor: anAccount.
 ! !
 
