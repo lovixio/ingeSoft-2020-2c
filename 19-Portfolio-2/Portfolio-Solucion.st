@@ -156,13 +156,18 @@ test12TransferNetForAnAccountWithManyTransfers
 ! !
 
 
-!AccountReporterTest methodsFor: 'testing' stamp: 'IO 11/14/2020 20:14:54'!
+!AccountReporterTest methodsFor: 'assertions' stamp: 'IO 11/14/2020 20:14:54'!
 assert: anAccount hasAccountSummary: aCollectionOfStrings
 
 	self assert: anAccount hasReport: AccountSummaryReporter withResult: aCollectionOfStrings.
 ! !
 
-!AccountReporterTest methodsFor: 'testing' stamp: 'IO 11/14/2020 20:14:39'!
+!AccountReporterTest methodsFor: 'assertions' stamp: 'IO 11/15/2020 22:44:57'!
+assert: anAccount hasAccountTree: anAccountTreeReport
+
+	self assert: anAccount hasReport: AccountTreeReporter withResult: anAccountTreeReport.! !
+
+!AccountReporterTest methodsFor: 'assertions' stamp: 'IO 11/14/2020 20:14:39'!
 assert: anAccount hasReport: aReporterClass withResult: aReportResult
 
 	| reporter |
@@ -170,7 +175,7 @@ assert: anAccount hasReport: aReporterClass withResult: aReportResult
 	self assert: aReportResult equals: (reporter emitReport).
 ! !
 
-!AccountReporterTest methodsFor: 'testing' stamp: 'IO 11/14/2020 20:15:12'!
+!AccountReporterTest methodsFor: 'assertions' stamp: 'IO 11/14/2020 20:15:12'!
 assert: anAccount hasTransferNet: aNetValue
 
 	self assert: anAccount hasReport: TransferNetReporter withResult: aNetValue.
@@ -178,43 +183,37 @@ assert: anAccount hasTransferNet: aNetValue
 ! !
 
 
-!AccountReporterTest methodsFor: 'account tree' stamp: 'IO 11/15/2020 21:39:55'!
+!AccountReporterTest methodsFor: 'account tree' stamp: 'IO 11/15/2020 22:46:06'!
 test13AccountTreeForAnAccount
-	| johnsAccount reporter |
+	| johnsAccount |
 	johnsAccount := ReceptiveAccount named: 'Cuenta de Juan'.
-	
-	reporter := AccountTreeReporter for: johnsAccount.
-	
-	self assert: (OrderedCollection with: 'Cuenta de Juan') equals: reporter emitReport.! !
 
-!AccountReporterTest methodsFor: 'account tree' stamp: 'IO 11/15/2020 22:03:54'!
+	self assert: johnsAccount hasAccountTree: (OrderedCollection with: 'Cuenta de Juan').! !
+
+!AccountReporterTest methodsFor: 'account tree' stamp: 'IO 11/15/2020 22:46:31'!
 test14AccountTreeForAnEmptyPortfolio
-	| childrenPortfolio reporter |
+	| childrenPortfolio |
 	childrenPortfolio := Portfolio named: 'Portfolio de hijos'.
-	
-	reporter := AccountTreeReporter for: childrenPortfolio.
-	
-	self assert: (OrderedCollection with: 'Portfolio de hijos') equals: reporter emitReport.! !
 
-!AccountReporterTest methodsFor: 'account tree' stamp: 'IO 11/15/2020 22:20:19'!
+	self assert: childrenPortfolio hasAccountTree: (OrderedCollection with: 'Portfolio de hijos').! !
+
+!AccountReporterTest methodsFor: 'account tree' stamp: 'IO 11/15/2020 22:46:56'!
 test15AccountTreeForAPortfolioWithAccounts
-	| childrenPortfolio johnsAccount angiesAccount reporter |
+	| childrenPortfolio johnsAccount angiesAccount |
 
 	johnsAccount := ReceptiveAccount named: 'Cuenta de Juan'.
 	angiesAccount := ReceptiveAccount named: 'Cuenta de Angeles'.
 	childrenPortfolio := Portfolio named: 'Portfolio de hijos' with: johnsAccount with: angiesAccount.
-	
-	reporter := AccountTreeReporter for: childrenPortfolio.
-	
-	self assert: (OrderedCollection
+
+	self assert: childrenPortfolio hasAccountTree: (OrderedCollection
 		with: 'Portfolio de hijos'
 		with: '  Cuenta de Juan'
 		with: '  Cuenta de Angeles'
-	) equals: reporter emitReport.! !
+	).! !
 
-!AccountReporterTest methodsFor: 'account tree' stamp: 'IO 11/15/2020 22:30:03'!
+!AccountReporterTest methodsFor: 'account tree' stamp: 'IO 11/15/2020 22:50:20'!
 test16AccountTreeForAPortfolioWithPortfolios
-	| childrenPortfolio johnsAccount angiesAccount myAccount familyPortfolio reporter |
+	| report childrenPortfolio johnsAccount angiesAccount myAccount familyPortfolio |
 
 	johnsAccount := ReceptiveAccount named: 'Cuenta de Juan'.
 	angiesAccount := ReceptiveAccount named: 'Cuenta de Angeles'.
@@ -222,13 +221,14 @@ test16AccountTreeForAPortfolioWithPortfolios
 	myAccount := ReceptiveAccount named: 'Cuenta mia'.
 	familyPortfolio := Portfolio named: 'Portfolio de la familia' with: myAccount with: childrenPortfolio.
 
-	reporter := AccountTreeReporter for: childrenPortfolio.
-	
-	self assert: (OrderedCollection
-		with: 'Portfolio de hijos'
-		with: '  Cuenta de Juan'
-		with: '  Cuenta de Angeles'
-	) equals: reporter emitReport.! !
+	report := OrderedCollection
+		with: 'Portfolio de la familia'
+		with: '  Cuenta mia'
+		with: '  Portfolio de hijos'
+		with: '    Cuenta de Juan'
+		with: '    Cuenta de Angeles'.
+
+	self assert: familyPortfolio hasAccountTree: report.! !
 
 
 !classDefinition: #AccountTest category: 'Portfolio-Solucion'!

@@ -55101,3 +55101,274 @@ PASSED!
 PASSED!
 
 ----SNAPSHOT----(15 November 2020 22:36:54) CuisUniversity-4384.image priorSource: 17779832!
+!AccountReporterTest methodsFor: 'account tree' stamp: 'IO 11/15/2020 22:44:57'!
+assert: anAccount hasAccountTree: anAccountTreeReport
+
+	self assert: anAccount hasReport: AccountTreeReporter withResult: anAccountTreeReport.! !
+!AccountReporterTest methodsFor: 'account tree' stamp: 'IO 11/15/2020 22:45:52' prior: 50887571!
+test13AccountTreeForAnAccount
+	| johnsAccount reporter |
+	johnsAccount := ReceptiveAccount named: 'Cuenta de Juan'.
+	
+	reporter := AccountTreeReporter for: johnsAccount.
+	
+	self assert: johnsAccount hasAccountTree: (OrderedCollection with: 'Cuenta de Juan').! !
+!AccountReporterTest methodsFor: 'account tree' stamp: 'IO 11/15/2020 22:46:06' prior: 50895573!
+test13AccountTreeForAnAccount
+	| johnsAccount |
+	johnsAccount := ReceptiveAccount named: 'Cuenta de Juan'.
+
+	self assert: johnsAccount hasAccountTree: (OrderedCollection with: 'Cuenta de Juan').! !
+
+!testRun: #AccountReporterTest #test13AccountTreeForAnAccount stamp: 'IO 11/15/2020 22:46:08'!
+PASSED!
+
+!testRun: #AccountReporterTest #test01AccountSummaryForAnEmptyAccount stamp: 'IO 11/15/2020 22:46:08'!
+PASSED!
+
+!testRun: #AccountReporterTest #test02AccountSummaryForAnAccountWithADeposit stamp: 'IO 11/15/2020 22:46:08'!
+PASSED!
+
+!testRun: #AccountReporterTest #test03AccountSummaryForAnAccountWithAWithdraw stamp: 'IO 11/15/2020 22:46:08'!
+PASSED!
+
+!testRun: #AccountReporterTest #test04AccountSummaryForAnAccountWithAWithdrawTransfer stamp: 'IO 11/15/2020 22:46:08'!
+PASSED!
+
+!testRun: #AccountReporterTest #test05AccountSummaryOfAnAccountWithADepositTransfer stamp: 'IO 11/15/2020 22:46:08'!
+PASSED!
+
+!testRun: #AccountReporterTest #test06AccountSummaryForAPortfolioWithNoAccounts stamp: 'IO 11/15/2020 22:46:08'!
+PASSED!
+
+!testRun: #AccountReporterTest #test07AccountReportForPortfolioWithOneAccount stamp: 'IO 11/15/2020 22:46:08'!
+PASSED!
+
+!testRun: #AccountReporterTest #test08AccountSummaryForPortfolioWithManyAccounts stamp: 'IO 11/15/2020 22:46:08'!
+PASSED!
+
+!testRun: #AccountReporterTest #test09TransferNetForAnEmptyAccount stamp: 'IO 11/15/2020 22:46:08'!
+PASSED!
+
+!testRun: #AccountReporterTest #test10TransferNetForAnAccountWithADepositTransfer stamp: 'IO 11/15/2020 22:46:08'!
+PASSED!
+
+!testRun: #AccountReporterTest #test11TransferNetForAnAccountWithAWidthdrawTransfer stamp: 'IO 11/15/2020 22:46:08'!
+PASSED!
+
+!testRun: #AccountReporterTest #test12TransferNetForAnAccountWithManyTransfers stamp: 'IO 11/15/2020 22:46:08'!
+PASSED!
+
+!testRun: #AccountReporterTest #test13AccountTreeForAnAccount stamp: 'IO 11/15/2020 22:46:08'!
+PASSED!
+
+!testRun: #AccountReporterTest #test14AccountTreeForAnEmptyPortfolio stamp: 'IO 11/15/2020 22:46:08'!
+PASSED!
+
+!testRun: #AccountReporterTest #test15AccountTreeForAPortfolioWithAccounts stamp: 'IO 11/15/2020 22:46:08'!
+PASSED!
+
+!testRun: #AccountReporterTest #test16AccountTreeForAPortfolioWithPortfolios stamp: 'IO 11/15/2020 22:46:08'!
+PASSED!
+!AccountReporterTest methodsFor: 'account tree' stamp: 'IO 11/15/2020 22:46:31' prior: 50891804!
+test14AccountTreeForAnEmptyPortfolio
+	| childrenPortfolio |
+	childrenPortfolio := Portfolio named: 'Portfolio de hijos'.
+
+	self assert: childrenPortfolio hasAccountTree: (OrderedCollection with: 'Portfolio de hijos').! !
+!AccountReporterTest methodsFor: 'account tree' stamp: 'IO 11/15/2020 22:46:56' prior: 50892993!
+test15AccountTreeForAPortfolioWithAccounts
+	| childrenPortfolio johnsAccount angiesAccount |
+
+	johnsAccount := ReceptiveAccount named: 'Cuenta de Juan'.
+	angiesAccount := ReceptiveAccount named: 'Cuenta de Angeles'.
+	childrenPortfolio := Portfolio named: 'Portfolio de hijos' with: johnsAccount with: angiesAccount.
+
+	self assert: childrenPortfolio hasAccountTree: (OrderedCollection
+		with: 'Portfolio de hijos'
+		with: '  Cuenta de Juan'
+		with: '  Cuenta de Angeles'
+	).! !
+
+!testRun: #AccountReporterTest #test15AccountTreeForAPortfolioWithAccounts stamp: 'IO 11/15/2020 22:46:58'!
+PASSED!
+
+!testRun: #AccountReporterTest #test01AccountSummaryForAnEmptyAccount stamp: 'IO 11/15/2020 22:46:58'!
+PASSED!
+
+!testRun: #AccountReporterTest #test02AccountSummaryForAnAccountWithADeposit stamp: 'IO 11/15/2020 22:46:58'!
+PASSED!
+
+!testRun: #AccountReporterTest #test03AccountSummaryForAnAccountWithAWithdraw stamp: 'IO 11/15/2020 22:46:58'!
+PASSED!
+
+!testRun: #AccountReporterTest #test04AccountSummaryForAnAccountWithAWithdrawTransfer stamp: 'IO 11/15/2020 22:46:58'!
+PASSED!
+
+!testRun: #AccountReporterTest #test05AccountSummaryOfAnAccountWithADepositTransfer stamp: 'IO 11/15/2020 22:46:58'!
+PASSED!
+
+!testRun: #AccountReporterTest #test06AccountSummaryForAPortfolioWithNoAccounts stamp: 'IO 11/15/2020 22:46:58'!
+PASSED!
+
+!testRun: #AccountReporterTest #test07AccountReportForPortfolioWithOneAccount stamp: 'IO 11/15/2020 22:46:58'!
+PASSED!
+
+!testRun: #AccountReporterTest #test08AccountSummaryForPortfolioWithManyAccounts stamp: 'IO 11/15/2020 22:46:58'!
+PASSED!
+
+!testRun: #AccountReporterTest #test09TransferNetForAnEmptyAccount stamp: 'IO 11/15/2020 22:46:58'!
+PASSED!
+
+!testRun: #AccountReporterTest #test10TransferNetForAnAccountWithADepositTransfer stamp: 'IO 11/15/2020 22:46:58'!
+PASSED!
+
+!testRun: #AccountReporterTest #test11TransferNetForAnAccountWithAWidthdrawTransfer stamp: 'IO 11/15/2020 22:46:58'!
+PASSED!
+
+!testRun: #AccountReporterTest #test12TransferNetForAnAccountWithManyTransfers stamp: 'IO 11/15/2020 22:46:58'!
+PASSED!
+
+!testRun: #AccountReporterTest #test13AccountTreeForAnAccount stamp: 'IO 11/15/2020 22:46:58'!
+PASSED!
+
+!testRun: #AccountReporterTest #test14AccountTreeForAnEmptyPortfolio stamp: 'IO 11/15/2020 22:46:58'!
+PASSED!
+
+!testRun: #AccountReporterTest #test15AccountTreeForAPortfolioWithAccounts stamp: 'IO 11/15/2020 22:46:58'!
+PASSED!
+
+!testRun: #AccountReporterTest #test16AccountTreeForAPortfolioWithPortfolios stamp: 'IO 11/15/2020 22:46:58'!
+PASSED!
+!AccountReporterTest methodsFor: 'account tree' stamp: 'IO 11/15/2020 22:47:11' prior: 50894580!
+test16AccountTreeForAPortfolioWithPortfolios
+	| childrenPortfolio johnsAccount angiesAccount myAccount familyPortfolio |
+
+	johnsAccount := ReceptiveAccount named: 'Cuenta de Juan'.
+	angiesAccount := ReceptiveAccount named: 'Cuenta de Angeles'.
+	childrenPortfolio := Portfolio named: 'Portfolio de hijos' with: johnsAccount with: angiesAccount.
+	myAccount := ReceptiveAccount named: 'Cuenta mia'.
+	familyPortfolio := Portfolio named: 'Portfolio de la familia' with: myAccount with: childrenPortfolio.
+
+	self assert: johnsAccount hasAccountTree: (OrderedCollection
+		with: 'Portfolio de hijos'
+		with: '  Cuenta de Juan'
+		with: '  Cuenta de Angeles'
+	)! !
+
+!testRun: #AccountReporterTest #test16AccountTreeForAPortfolioWithPortfolios stamp: 'IO 11/15/2020 22:47:16'!
+FAILURE!
+!AccountReporterTest methodsFor: 'account tree' stamp: 'IO 11/15/2020 22:47:26' prior: 50895748!
+test16AccountTreeForAPortfolioWithPortfolios
+	| childrenPortfolio johnsAccount angiesAccount myAccount familyPortfolio |
+
+	johnsAccount := ReceptiveAccount named: 'Cuenta de Juan'.
+	angiesAccount := ReceptiveAccount named: 'Cuenta de Angeles'.
+	childrenPortfolio := Portfolio named: 'Portfolio de hijos' with: johnsAccount with: angiesAccount.
+	myAccount := ReceptiveAccount named: 'Cuenta mia'.
+	familyPortfolio := Portfolio named: 'Portfolio de la familia' with: myAccount with: childrenPortfolio.
+
+	self assert: familyPortfolio hasAccountTree: (OrderedCollection
+		with: 'Portfolio de hijos'
+		with: '  Cuenta de Juan'
+		with: '  Cuenta de Angeles'
+	)! !
+
+!testRun: #AccountReporterTest #test16AccountTreeForAPortfolioWithPortfolios stamp: 'IO 11/15/2020 22:47:26'!
+FAILURE!
+
+!testRun: #AccountReporterTest #test16AccountTreeForAPortfolioWithPortfolios stamp: 'IO 11/15/2020 22:47:38'!
+FAILURE!
+!AccountReporterTest methodsFor: 'account tree' stamp: 'IO 11/15/2020 22:49:02' prior: 50895776!
+test16AccountTreeForAPortfolioWithPortfolios
+	| report childrenPortfolio johnsAccount angiesAccount myAccount familyPortfolio |
+
+	johnsAccount := ReceptiveAccount named: 'Cuenta de Juan'.
+	angiesAccount := ReceptiveAccount named: 'Cuenta de Angeles'.
+	childrenPortfolio := Portfolio named: 'Portfolio de hijos' with: johnsAccount with: angiesAccount.
+	myAccount := ReceptiveAccount named: 'Cuenta mia'.
+	familyPortfolio := Portfolio named: 'Portfolio de la familia' with: myAccount with: childrenPortfolio.
+
+	report := OrderedCollection
+		with: '  Portfolio de hijos'
+		with: '    Cuenta de Juan'
+		with: '    Cuenta de Angeles'.
+
+	self assert: familyPortfolio hasAccountTree: report.! !
+
+!testRun: #AccountReporterTest #test16AccountTreeForAPortfolioWithPortfolios stamp: 'IO 11/15/2020 22:49:02'!
+FAILURE!
+!AccountReporterTest methodsFor: 'account tree' stamp: 'IO 11/15/2020 22:50:20' prior: 50895808!
+test16AccountTreeForAPortfolioWithPortfolios
+	| report childrenPortfolio johnsAccount angiesAccount myAccount familyPortfolio |
+
+	johnsAccount := ReceptiveAccount named: 'Cuenta de Juan'.
+	angiesAccount := ReceptiveAccount named: 'Cuenta de Angeles'.
+	childrenPortfolio := Portfolio named: 'Portfolio de hijos' with: johnsAccount with: angiesAccount.
+	myAccount := ReceptiveAccount named: 'Cuenta mia'.
+	familyPortfolio := Portfolio named: 'Portfolio de la familia' with: myAccount with: childrenPortfolio.
+
+	report := OrderedCollection
+		with: 'Portfolio de la familia'
+		with: '  Cuenta mia'
+		with: '  Portfolio de hijos'
+		with: '    Cuenta de Juan'
+		with: '    Cuenta de Angeles'.
+
+	self assert: familyPortfolio hasAccountTree: report.! !
+
+!testRun: #AccountReporterTest #test16AccountTreeForAPortfolioWithPortfolios stamp: 'IO 11/15/2020 22:50:21'!
+PASSED!
+
+!testRun: #AccountReporterTest #test01AccountSummaryForAnEmptyAccount stamp: 'IO 11/15/2020 22:50:21'!
+PASSED!
+
+!testRun: #AccountReporterTest #test02AccountSummaryForAnAccountWithADeposit stamp: 'IO 11/15/2020 22:50:21'!
+PASSED!
+
+!testRun: #AccountReporterTest #test03AccountSummaryForAnAccountWithAWithdraw stamp: 'IO 11/15/2020 22:50:21'!
+PASSED!
+
+!testRun: #AccountReporterTest #test04AccountSummaryForAnAccountWithAWithdrawTransfer stamp: 'IO 11/15/2020 22:50:21'!
+PASSED!
+
+!testRun: #AccountReporterTest #test05AccountSummaryOfAnAccountWithADepositTransfer stamp: 'IO 11/15/2020 22:50:21'!
+PASSED!
+
+!testRun: #AccountReporterTest #test06AccountSummaryForAPortfolioWithNoAccounts stamp: 'IO 11/15/2020 22:50:21'!
+PASSED!
+
+!testRun: #AccountReporterTest #test07AccountReportForPortfolioWithOneAccount stamp: 'IO 11/15/2020 22:50:21'!
+PASSED!
+
+!testRun: #AccountReporterTest #test08AccountSummaryForPortfolioWithManyAccounts stamp: 'IO 11/15/2020 22:50:21'!
+PASSED!
+
+!testRun: #AccountReporterTest #test09TransferNetForAnEmptyAccount stamp: 'IO 11/15/2020 22:50:21'!
+PASSED!
+
+!testRun: #AccountReporterTest #test10TransferNetForAnAccountWithADepositTransfer stamp: 'IO 11/15/2020 22:50:21'!
+PASSED!
+
+!testRun: #AccountReporterTest #test11TransferNetForAnAccountWithAWidthdrawTransfer stamp: 'IO 11/15/2020 22:50:21'!
+PASSED!
+
+!testRun: #AccountReporterTest #test12TransferNetForAnAccountWithManyTransfers stamp: 'IO 11/15/2020 22:50:21'!
+PASSED!
+
+!testRun: #AccountReporterTest #test13AccountTreeForAnAccount stamp: 'IO 11/15/2020 22:50:21'!
+PASSED!
+
+!testRun: #AccountReporterTest #test14AccountTreeForAnEmptyPortfolio stamp: 'IO 11/15/2020 22:50:21'!
+PASSED!
+
+!testRun: #AccountReporterTest #test15AccountTreeForAPortfolioWithAccounts stamp: 'IO 11/15/2020 22:50:21'!
+PASSED!
+
+!testRun: #AccountReporterTest #test16AccountTreeForAPortfolioWithPortfolios stamp: 'IO 11/15/2020 22:50:21'!
+PASSED!
+
+!testRun: #AccountReporterTest #test16AccountTreeForAPortfolioWithPortfolios stamp: 'IO 11/15/2020 22:50:24'!
+PASSED!
+
+----SNAPSHOT----(15 November 2020 22:50:32) CuisUniversity-4384.image priorSource: 18045140!
