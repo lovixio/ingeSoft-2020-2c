@@ -13,7 +13,7 @@ test01AccountSummaryForAnEmptyAccount
 	
 	self assert: accounts account1 hasAccountSummary: (OrderedCollection with: 'Balance = 0').! !
 
-!AccountReporterTest methodsFor: 'account summary' stamp: 'IO 11/15/2020 21:34:11'!
+!AccountReporterTest methodsFor: 'account summary' stamp: 'IO 11/16/2020 15:54:40'!
 test02AccountSummaryForAnAccountWithADeposit
 
 	| accounts |
@@ -21,7 +21,7 @@ test02AccountSummaryForAnAccountWithADeposit
 
 	Deposit register: 100 on: accounts account1.
 	
-	self assert: accounts account1 hasAccountSummary: (OrderedCollection with:'Depóstio por 100.' with: 'Balance = 100').
+	self assert: accounts account1 hasAccountSummary: (OrderedCollection with:'Depósito por 100.' with: 'Balance = 100').
 ! !
 
 !AccountReporterTest methodsFor: 'account summary' stamp: 'IO 11/15/2020 21:34:11'!
@@ -79,7 +79,7 @@ test07AccountReportForPortfolioWithOneAccount
 	self assert: accounts portfolio1 hasAccountSummary: report.
 ! !
 
-!AccountReporterTest methodsFor: 'account summary' stamp: 'IO 11/15/2020 21:34:11'!
+!AccountReporterTest methodsFor: 'account summary' stamp: 'IO 11/16/2020 15:54:51'!
 test08AccountSummaryForPortfolioWithManyAccounts
 
 	| accounts account3 report |
@@ -98,7 +98,7 @@ test08AccountSummaryForPortfolioWithManyAccounts
 
 	report := accounts mockedTransactionsAccountSummary.
 
-	report add: 'Depóstio por 200.'.
+	report add: 'Depósito por 200.'.
 	report add: 'Extracción por 100.'.
 	report add: 'Salida por transferencia de 40.'.
 	report add: 'Entrada por transferencia de 60.'.
@@ -160,6 +160,12 @@ test12TransferNetForAnAccountWithManyTransfers
 assert: anAccount hasAccountSummary: aCollectionOfStrings
 
 	self assert: anAccount hasReport: AccountSummaryReporter withResult: aCollectionOfStrings.
+! !
+
+!AccountReporterTest methodsFor: 'assertions' stamp: 'IO 11/16/2020 15:29:31'!
+assert: anAccount hasAccountSummaryTree: aCollectionOfStrings
+
+	self assert: anAccount hasReport: AccountSummaryTreeReporter withResult: aCollectionOfStrings.
 ! !
 
 !AccountReporterTest methodsFor: 'assertions' stamp: 'IO 11/15/2020 22:44:57'!
@@ -229,6 +235,44 @@ test16AccountTreeForAPortfolioWithPortfolios
 		with: '    Cuenta de Angeles'.
 
 	self assert: familyPortfolio hasAccountTree: report.! !
+
+
+!AccountReporterTest methodsFor: 'account summary tree' stamp: 'IO 11/16/2020 15:45:25'!
+test17AccountSummaryTreeForAPortfolioWithPortfoliosAndTransactions
+	| report childrenPortfolio johnsAccount angiesAccount myAccount familyPortfolio externalAccount |
+
+	johnsAccount := ReceptiveAccount named: 'Cuenta de Juan'.
+	angiesAccount := ReceptiveAccount named: 'Cuenta de Angeles'.
+	childrenPortfolio := Portfolio named: 'Portfolio de hijos' with: johnsAccount with: angiesAccount.
+	myAccount := ReceptiveAccount named: 'Cuenta mia'.
+	familyPortfolio := Portfolio named: 'Portfolio de la familia' with: myAccount with: childrenPortfolio.
+	externalAccount := ReceptiveAccount new.
+	
+	Deposit register: 100 on: myAccount.
+	Withdraw register: 50 on: myAccount.
+	Deposit register: 80 on: johnsAccount.
+	Withdraw register: 50 on: johnsAccount.
+	Transfer register: 200 from: angiesAccount to: externalAccount.
+
+	report := OrderedCollection
+		with: 'Portfolio de la familia'
+		with: '  Cuenta mia'
+		with: '    Depósito por 100.'
+		with: '    Extracción por 50.'
+		with: '    Balance = 50'.
+	
+	report add: '  Portfolio de hijos'.
+	report add: '    Cuenta de Juan'.
+	report add: '      Depósito por 80.'.
+	report add: '      Extracción por 50.'.
+	report add: '      Balance = 30'.
+	report add: '    Cuenta de Angeles'.
+	report add: '      Salida por transferencia de 200.'.
+	report add: '      Balance = -200'.
+	report add: '    Balance = -170'.
+	report add: '  Balance = -120'.
+
+	self assert: familyPortfolio hasAccountSummaryTree: report.! !
 
 
 !classDefinition: #AccountTest category: 'Portfolio-Solucion'!
@@ -955,7 +999,16 @@ initializeFor: anAccount
 ! !
 
 
-!AccountReporter methodsFor: 'add to report' stamp: 'IO 11/16/2020 15:18:15'!
+!AccountReporter methodsFor: 'adding to report' stamp: 'IO 11/16/2020 15:58:45'!
+addAccountSummaryTextWith: aPrefix for: aTransaction
+
+	"add a transaction to the report given a prefix"
+
+	self subclassResponsibility.
+
+! !
+
+!AccountReporter methodsFor: 'adding to report' stamp: 'IO 11/16/2020 15:18:15'!
 addAccountToReport: anAccount
 
 	"
@@ -966,7 +1019,7 @@ addAccountToReport: anAccount
 
 	anAccount reportAccountIn: self.! !
 
-!AccountReporter methodsFor: 'add to report' stamp: 'IO 11/16/2020 15:09:31'!
+!AccountReporter methodsFor: 'adding to report' stamp: 'IO 11/16/2020 15:09:31'!
 addDepositToReport: aDeposit
 
 	"
@@ -974,7 +1027,7 @@ addDepositToReport: aDeposit
 		implementation details: by default does nothing, each report should implement how transactions affect the report
 	"! !
 
-!AccountReporter methodsFor: 'add to report' stamp: 'IO 11/16/2020 15:09:45'!
+!AccountReporter methodsFor: 'adding to report' stamp: 'IO 11/16/2020 15:09:45'!
 addTransferDepositToReport: aTDeposit
 
 	"
@@ -982,7 +1035,7 @@ addTransferDepositToReport: aTDeposit
 		implementation details: by default does nothing, each report should implement how transactions affect the report
 	"! !
 
-!AccountReporter methodsFor: 'add to report' stamp: 'IO 11/16/2020 15:10:11'!
+!AccountReporter methodsFor: 'adding to report' stamp: 'IO 11/16/2020 15:10:11'!
 addTransferWithdrawToReport: aTWithdraw
 
 	"
@@ -990,7 +1043,7 @@ addTransferWithdrawToReport: aTWithdraw
 		implementation details: by default does nothing, each report should implement how transactions affect the report
 	"! !
 
-!AccountReporter methodsFor: 'add to report' stamp: 'IO 11/16/2020 15:10:21'!
+!AccountReporter methodsFor: 'adding to report' stamp: 'IO 11/16/2020 15:10:21'!
 addWithdrawToReport: aWithdraw
 
 	"
@@ -1006,6 +1059,39 @@ emitReport
 	
 	self addAccountToReport: account.
 	^report.
+! !
+
+
+!AccountReporter methodsFor: 'transaction texts' stamp: 'IO 11/16/2020 15:59:30'!
+addDepositTextToReport: aDeposit
+
+	"see superclass"
+
+	self addAccountSummaryTextWith: 'Depósito por ' for: aDeposit.! !
+
+!AccountReporter methodsFor: 'transaction texts' stamp: 'IO 11/16/2020 15:57:06'!
+addTransferDepositTextToReport: aTransferDeposit
+
+	"see superclass"
+
+	self addAccountSummaryTextWith: 'Entrada por transferencia de ' for: aTransferDeposit.
+
+	! !
+
+!AccountReporter methodsFor: 'transaction texts' stamp: 'IO 11/16/2020 16:00:35'!
+addTransferWithdrawTextToReport: aTransferWithdraw
+
+	"see superclass"
+
+	self addAccountSummaryTextWith: 'Salida por transferencia de ' for: aTransferWithdraw.
+! !
+
+!AccountReporter methodsFor: 'transaction texts' stamp: 'IO 11/16/2020 16:01:50'!
+addWithdrawTextToReport: aWithdraw
+
+	"see superclass"
+
+	self addAccountSummaryTextWith: 'Extracción por ' for: aWithdraw.
 ! !
 
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
@@ -1029,44 +1115,44 @@ AccountReporter subclass: #AccountSummaryReporter
 	poolDictionaries: ''
 	category: 'Portfolio-Solucion'!
 
-!AccountSummaryReporter methodsFor: 'adding to report' stamp: 'IO 11/15/2020 22:35:18'!
+!AccountSummaryReporter methodsFor: 'adding to report' stamp: 'IO 11/16/2020 15:58:25'!
 addAccountSummaryTextWith: aPrefix for: aTransaction
 
-	"add a transaction to the report given a prefix"
+	"see superclass"
 
 	report add: (aPrefix, aTransaction value asString, '.').
 ! !
 
-!AccountSummaryReporter methodsFor: 'adding to report' stamp: 'IO 11/14/2020 20:12:49'!
+!AccountSummaryReporter methodsFor: 'adding to report' stamp: 'IO 11/16/2020 15:59:25'!
 addDepositToReport: aDeposit
 
 	"see superclass"
 
-	self addAccountSummaryTextWith: 'Depóstio por ' for: aDeposit.! !
+	self addDepositTextToReport: aDeposit.! !
 
-!AccountSummaryReporter methodsFor: 'adding to report' stamp: 'IO 11/14/2020 20:12:52'!
+!AccountSummaryReporter methodsFor: 'adding to report' stamp: 'IO 11/16/2020 15:57:25'!
 addTransferDepositToReport: aTransferDeposit
 
 	"see superclass"
 
-	self addAccountSummaryTextWith: 'Entrada por transferencia de ' for: aTransferDeposit.
+	self addTransferDepositTextToReport: aTransferDeposit.
 
 	! !
 
-!AccountSummaryReporter methodsFor: 'adding to report' stamp: 'IO 11/14/2020 20:12:55'!
+!AccountSummaryReporter methodsFor: 'adding to report' stamp: 'IO 11/16/2020 16:00:29'!
 addTransferWithdrawToReport: aTransferWithdraw
 
 	"see superclass"
 
-	self addAccountSummaryTextWith: 'Salida por transferencia de ' for: aTransferWithdraw.
+	self addTransferWithdrawTextToReport: aTransferWithdraw.
 ! !
 
-!AccountSummaryReporter methodsFor: 'adding to report' stamp: 'IO 11/14/2020 20:12:58'!
+!AccountSummaryReporter methodsFor: 'adding to report' stamp: 'IO 11/16/2020 16:01:12'!
 addWithdrawToReport: aWithdraw
 
 	"see superclass"
 
-	self addAccountSummaryTextWith: 'Extracción por ' for: aWithdraw.
+	self addWithdrawTextToReport: aWithdraw.
 ! !
 
 
@@ -1096,14 +1182,24 @@ AccountReporter subclass: #AccountTreeReporter
 	poolDictionaries: ''
 	category: 'Portfolio-Solucion'!
 
-!AccountTreeReporter methodsFor: 'adding to report' stamp: 'IO 11/16/2020 15:18:32'!
+!AccountTreeReporter methodsFor: 'adding to report' stamp: 'IO 11/16/2020 16:07:52'!
 addAccountToReport: anAccount
 
 	"adds the name of a Portfolio to the report"
+
+	self addAccountToReport: anAccount thenDo: [].! !
+
+!AccountTreeReporter methodsFor: 'adding to report' stamp: 'IO 11/16/2020 16:07:33'!
+addAccountToReport: anAccount thenDo: aBlock
+
+	"
+		adds the name of a Portfolio to the report and executes a given block after each account is added
+	"
 	
 	self addNameToReport: anAccount name.
 	self beginHierarchy.
 	super addAccountToReport: anAccount.
+	aBlock value.
 	self endHierarchy.
 ! !
 
@@ -1130,6 +1226,62 @@ initializeFor: anAccount
 	report := OrderedCollection new.
 	indentation := ''.
 	super initializeFor: anAccount.
+! !
+
+
+!classDefinition: #AccountSummaryTreeReporter category: 'Portfolio-Solucion'!
+AccountTreeReporter subclass: #AccountSummaryTreeReporter
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Portfolio-Solucion'!
+
+!AccountSummaryTreeReporter methodsFor: 'adding to report' stamp: 'IO 11/16/2020 15:51:28'!
+addAccountSummaryTextWith: aPrefix for: aTransaction
+
+	"add a transaction to the report given a prefix"
+
+	report add: (indentation, aPrefix, aTransaction value asString, '.').
+! !
+
+!AccountSummaryTreeReporter methodsFor: 'adding to report' stamp: 'IO 11/16/2020 16:08:42'!
+addAccountToReport: anAccount
+
+	"adds the name of a Portfolio to the report"
+	
+	self addAccountToReport: anAccount thenDo: [report add: (indentation, 'Balance = ', anAccount balance asString).].
+! !
+
+!AccountSummaryTreeReporter methodsFor: 'adding to report' stamp: 'IO 11/16/2020 15:59:40'!
+addDepositToReport: aDeposit
+
+	"see superclass"
+
+	self addDepositTextToReport: aDeposit.! !
+
+!AccountSummaryTreeReporter methodsFor: 'adding to report' stamp: 'IO 11/16/2020 15:56:21'!
+addTransferDepositToReport: aTransferDeposit
+
+	"see superclass"
+
+	self addTransferDepositTextToReport: aTransferDeposit.
+
+	! !
+
+!AccountSummaryTreeReporter methodsFor: 'adding to report' stamp: 'IO 11/16/2020 16:00:47'!
+addTransferWithdrawToReport: aTransferWithdraw
+
+	"see superclass"
+
+	self addTransferWithdrawTextToReport: aTransferWithdraw.
+! !
+
+!AccountSummaryTreeReporter methodsFor: 'adding to report' stamp: 'IO 11/16/2020 16:01:29'!
+addWithdrawToReport: aWithdraw
+
+	"see superclass"
+
+	self addWithdrawTextToReport: aWithdraw.
 ! !
 
 
@@ -1172,6 +1324,7 @@ initializeFor: anAccount
 	report := 0.
 	super initializeFor: anAccount.
 ! !
+
 
 
 !classDefinition: #AccountTestUtility category: 'Portfolio-Solucion'!
@@ -1226,11 +1379,11 @@ mockTransfer
 	^Transfer register: 100 from: account1 to: account2.
 ! !
 
-!AccountTestUtility methodsFor: 'as yet unclassified' stamp: 'IO 11/14/2020 20:51:48'!
+!AccountTestUtility methodsFor: 'as yet unclassified' stamp: 'IO 11/16/2020 15:55:03'!
 mockedTransactionsAccountSummary
 
 	^OrderedCollection
-		with: 'Depóstio por 100.'
+		with: 'Depósito por 100.'
 		with: 'Extracción por 50.'
 		with: 'Salida por transferencia de 20.'
 		with: 'Entrada por transferencia de 30.'.! !
