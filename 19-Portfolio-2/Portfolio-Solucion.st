@@ -633,7 +633,6 @@ test06ATransferCantBeOfNegativeValue
 
 ! !
 
-
 
 !classDefinition: #Account category: 'Portfolio-Solucion'!
 Object subclass: #Account
@@ -653,6 +652,12 @@ isComposedBy: anAccount
 
 	self subclassResponsibility.
 ! !
+
+
+!Account methodsFor: 'name' stamp: 'LH 11/16/2020 13:18:47'!
+name
+
+	^name.! !
 
 
 !Account methodsFor: 'balance' stamp: 'IO 11/14/2020 18:27:11'!
@@ -682,18 +687,10 @@ addedTo: aPortfolio
 ! !
 
 
-!Account methodsFor: 'reports' stamp: 'IO 11/15/2020 22:31:20'!
-collectNamesIn: anAccountReporter
+!Account methodsFor: 'reports' stamp: 'LH 11/16/2020 13:36:22'!
+addToTheReport: aReport
 
-	"make the name be collected by a reporter"
-
-	self subclassResponsibility.
-! !
-
-!Account methodsFor: 'reports' stamp: 'IO 11/15/2020 21:59:08'!
-collectTransactionsIn: anAccountReporter
-
-	"make all its transactions be collected by a reporter"
+	"add this account and it's childrent to a report"
 
 	self subclassResponsibility.
 ! !
@@ -711,7 +708,6 @@ initializeNamed: aName
 !classDefinition: 'Account class' category: 'Portfolio-Solucion'!
 Account class
 	instanceVariableNames: ''!
-
 
 !Account class methodsFor: 'as yet unclassified' stamp: 'IO 11/15/2020 22:02:41'!
 named: aName
@@ -813,23 +809,12 @@ isComposedBy: anAccount
 	^ self = anAccount or: [ accounts anySatisfy: [ :composedAccount | (composedAccount isComposedBy: anAccount) or: [ anAccount isComposedBy: composedAccount ]]]! !
 
 
-!Portfolio methodsFor: 'reports' stamp: 'IO 11/16/2020 00:44:03'!
-collectNamesIn: anAccountSummary
+!Portfolio methodsFor: 'reports' stamp: 'LH 11/16/2020 13:38:35'!
+addToTheReport: aReport
 
 	"see superclass"
-
-	anAccountSummary addNameToReport: name.
-	anAccountSummary beginHierarchy.
-	accounts do: [ :account | account collectNamesIn: anAccountSummary. ].
-	anAccountSummary endHierarchy.
-! !
-
-!Portfolio methodsFor: 'reports' stamp: 'IO 11/15/2020 22:31:38'!
-collectTransactionsIn: anAccountSummary
-
-	"see superclass"
-
-	accounts do: [ :anAccount | anAccount collectTransactionsIn: anAccountSummary ].
+	
+	accounts do: [ :anAccount | aReport addAccountToReport: anAccount ].
 ! !
 
 
@@ -947,20 +932,11 @@ addedTo: aPortfolio
 	! !
 
 
-!ReceptiveAccount methodsFor: 'report' stamp: 'IO 11/16/2020 00:43:20'!
-collectNamesIn: anAccountSummary
+!ReceptiveAccount methodsFor: 'report' stamp: 'LH 11/16/2020 13:40:15'!
+addToTheReport: aReport
 
-	"see superclass"
-
-	anAccountSummary addNameToReport: name.
-! !
-
-!ReceptiveAccount methodsFor: 'report' stamp: 'IO 11/15/2020 21:59:08'!
-collectTransactionsIn: anAccountSummary
-
-	"see superclass"
-
-	transactions do: [ :aTransaction | aTransaction collectTransactionIn: anAccountSummary ].! !
+	transactions do: [:aTransaction | aTransaction addToTheReport: aReport]
+	! !
 
 
 !classDefinition: #AccountReporter category: 'Portfolio-Solucion'!
@@ -979,12 +955,35 @@ initializeFor: anAccount
 ! !
 
 
-!AccountReporter methodsFor: 'emitting' stamp: 'IO 11/15/2020 22:33:53'!
+!AccountReporter methodsFor: 'add to report' stamp: 'LH 11/16/2020 13:24:02'!
+addAccountToReport: anAccount
+
+	anAccount addToTheReport: self.! !
+
+!AccountReporter methodsFor: 'add to report' stamp: 'LH 11/16/2020 13:51:42'!
+addDepositToReport: aDeposit
+	"adds a Deposit to this report. by default does nothing"! !
+
+!AccountReporter methodsFor: 'add to report' stamp: 'LH 11/16/2020 13:52:46'!
+addTransferDepositToReport: aTDeposit
+	"adds a Transfer Deposit to this report. by default does nothing"! !
+
+!AccountReporter methodsFor: 'add to report' stamp: 'LH 11/16/2020 13:52:31'!
+addTransferWithdrawToReport: aTWithdraw
+	"adds a Transfer Withdraw to this report. by default does nothing"! !
+
+!AccountReporter methodsFor: 'add to report' stamp: 'LH 11/16/2020 13:52:12'!
+addWithdrawToReport: aWithdraw
+	"adds a Withdraw to this report. by default does nothing"! !
+
+
+!AccountReporter methodsFor: 'emitting' stamp: 'LH 11/16/2020 13:58:01'!
 emitReport
 
 	"emit this report"
 	
-	self subclassResponsibility.
+	self addAccountToReport: account.
+	^report.
 ! !
 
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
@@ -1007,48 +1006,6 @@ AccountReporter subclass: #AccountTransactionsReporter
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'Portfolio-Solucion'!
-
-!AccountTransactionsReporter methodsFor: 'adding to report' stamp: 'IO 11/15/2020 21:49:55'!
-addDepositToReport: aDeposit
-
-	"add a deposit to this report"
-
-	self subclassResponsibility.
-! !
-
-!AccountTransactionsReporter methodsFor: 'adding to report' stamp: 'IO 11/15/2020 21:50:06'!
-addTransferDepositToReport: aTransferDeposit
-
-	"add a transfer deposit to this report"
-
-	self subclassResponsibility.
-! !
-
-!AccountTransactionsReporter methodsFor: 'adding to report' stamp: 'IO 11/15/2020 21:50:12'!
-addTransferWithdrawToReport: aTransferWithdraw
-
-	"add a transfer withdraw to this report"
-
-	self subclassResponsibility.
-! !
-
-!AccountTransactionsReporter methodsFor: 'adding to report' stamp: 'IO 11/15/2020 21:50:20'!
-addWithdrawToReport: aTransferWithdraw
-
-	"add a withdraw to this report"
-
-	self subclassResponsibility.
-! !
-
-
-!AccountTransactionsReporter methodsFor: 'emitting' stamp: 'IO 11/15/2020 22:33:41'!
-emitReport
-
-	"see superclass"
-
-	account collectTransactionsIn: self.
-	^report.
-! !
 
 
 !classDefinition: #AccountSummaryReporter category: 'Portfolio-Solucion'!
@@ -1125,14 +1082,6 @@ AccountTransactionsReporter subclass: #TransferNetReporter
 	poolDictionaries: ''
 	category: 'Portfolio-Solucion'!
 
-!TransferNetReporter methodsFor: 'adding to report' stamp: 'IO 11/14/2020 20:07:20'!
-addDepositToReport: aDeposit
-
-	"see superclass"
-
-	
-! !
-
 !TransferNetReporter methodsFor: 'adding to report' stamp: 'IO 11/14/2020 20:07:27'!
 addTransferDepositToReport: aTransferDeposit
 
@@ -1156,13 +1105,6 @@ addTransferWithdrawToReport: aTransferWithdraw
 	self addTransferToReport: aTransferWithdraw.
 ! !
 
-!TransferNetReporter methodsFor: 'adding to report' stamp: 'IO 11/14/2020 22:01:12'!
-addWithdrawToReport: aWithdraw
-
-	"see superclass"
-
-! !
-
 
 !TransferNetReporter methodsFor: 'initializaition' stamp: 'IO 11/14/2020 21:54:44'!
 initializeFor: anAccount
@@ -1181,15 +1123,14 @@ AccountReporter subclass: #AccountTreeReporter
 	poolDictionaries: ''
 	category: 'Portfolio-Solucion'!
 
-!AccountTreeReporter methodsFor: 'emitting' stamp: 'IO 11/15/2020 21:53:20'!
-emitReport
-
-	"emit this report"
-
-	account collectNamesIn: self.
-	^report.
-! !
-
+!AccountTreeReporter methodsFor: 'adding to report' stamp: 'LH 11/16/2020 13:33:25'!
+addAccountToReport: anAccount
+	"adds the name of a Portfolio to the report"
+	
+	self addNameToReport: anAccount name.
+	self beginHierarchy.
+	anAccount addToTheReport: self.
+	self endHierarchy.! !
 
 !AccountTreeReporter methodsFor: 'adding to report' stamp: 'IO 11/16/2020 00:34:22'!
 addNameToReport: aName
@@ -1201,9 +1142,10 @@ beginHierarchy
 	indentation := (indentation, '  ')
 ! !
 
-!AccountTreeReporter methodsFor: 'adding to report' stamp: 'IO 11/16/2020 00:42:16'!
+!AccountTreeReporter methodsFor: 'adding to report' stamp: 'LH 11/16/2020 14:15:56'!
 endHierarchy
-	indentation := '' padded: 1 to: indentation size - 2 with: ' '.
+	indentation := indentation copyFrom: 1 to: indentation size - 2.
+	"indentation := '' padded: 1 to: indentation size - 2 with: ' '".
 ! !
 
 
@@ -1328,6 +1270,13 @@ affectBalance: aBalance
 	self subclassResponsibility ! !
 
 
+!AccountTransaction methodsFor: 'reports' stamp: 'LH 11/16/2020 13:35:10'!
+addToTheReport: aReport
+	"adds this transaction to a report"
+	
+	self subclassResponsibility.
+	! !
+
 !AccountTransaction methodsFor: 'reports' stamp: 'IO 11/15/2020 21:58:35'!
 collectTransactionIn: anAccountSummary
 
@@ -1370,6 +1319,12 @@ value
 
 	^ value! !
 
+
+!Deposit methodsFor: 'reports' stamp: 'LH 11/16/2020 13:54:15'!
+addToTheReport: aReport
+	"see superclass"
+	
+	aReport addDepositToReport: self.! !
 
 !Deposit methodsFor: 'reports' stamp: 'IO 11/15/2020 21:58:35'!
 collectTransactionIn: anAccountSummary
@@ -1465,6 +1420,12 @@ affectBalance: aBalance
 ! !
 
 
+!TransferDeposit methodsFor: 'reports' stamp: 'LH 11/16/2020 13:54:08'!
+addToTheReport: aReport
+	"see superclass"
+	
+	aReport addTransferDepositToReport: self.! !
+
 !TransferDeposit methodsFor: 'reports' stamp: 'IO 11/15/2020 21:58:35'!
 collectTransactionIn: anAccountSummary
 
@@ -1487,6 +1448,12 @@ affectBalance: aBalance
 
 	^aBalance - self value.! !
 
+
+!TransferWithdraw methodsFor: 'reports' stamp: 'LH 11/16/2020 13:54:02'!
+addToTheReport: aReport
+	"see superclass"
+
+	aReport addTransferWithdrawToReport: self.! !
 
 !TransferWithdraw methodsFor: 'reports' stamp: 'IO 11/15/2020 21:58:35'!
 collectTransactionIn: anAccountSummary
@@ -1515,6 +1482,12 @@ value
 
 	^ value! !
 
+
+!Withdraw methodsFor: 'reports' stamp: 'LH 11/16/2020 13:53:56'!
+addToTheReport: aReport
+	"see superclass"
+	
+	aReport addWithdrawToReport: self.! !
 
 !Withdraw methodsFor: 'reports' stamp: 'IO 11/15/2020 21:58:35'!
 collectTransactionIn: anAccountSummary
