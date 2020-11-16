@@ -62297,3 +62297,1084 @@ PASSED!
 ----SNAPSHOT----(16 November 2020 16:09:55) CuisUniversity-4384.image priorSource: 18368896!
 
 ----SNAPSHOT----(16 November 2020 16:10:20) CuisUniversity-4384.image priorSource: 18545210!
+
+!classRemoval: #Transfer stamp: 'IO 11/16/2020 16:13:38'!
+Object subclass: #Transfer
+	instanceVariableNames: 'value withdraw deposit'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Portfolio-Solucion'!
+
+!classRemoval: #Withdraw stamp: 'IO 11/16/2020 16:13:39'!
+AccountTransaction subclass: #Withdraw
+	instanceVariableNames: 'value'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Portfolio-Solucion'!
+
+!classRemoval: #TransferWithdraw stamp: 'IO 11/16/2020 16:13:39'!
+TransferComponent subclass: #TransferWithdraw
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Portfolio-Solucion'!
+
+!classRemoval: #TransferDeposit stamp: 'IO 11/16/2020 16:13:39'!
+TransferComponent subclass: #TransferDeposit
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Portfolio-Solucion'!
+
+!classRemoval: #TransferComponent stamp: 'IO 11/16/2020 16:13:39'!
+AccountTransaction subclass: #TransferComponent
+	instanceVariableNames: 'transfer'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Portfolio-Solucion'!
+
+!classRemoval: #Deposit stamp: 'IO 11/16/2020 16:13:39'!
+AccountTransaction subclass: #Deposit
+	instanceVariableNames: 'value'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Portfolio-Solucion'!
+
+!classRemoval: #AccountTransaction stamp: 'IO 11/16/2020 16:13:40'!
+Object subclass: #AccountTransaction
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Portfolio-Solucion'!
+
+!classRemoval: #AccountTestUtility stamp: 'IO 11/16/2020 16:13:40'!
+Object subclass: #AccountTestUtility
+	instanceVariableNames: 'account1 account2 portfolio1'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Portfolio-Solucion'!
+
+!classRemoval: #TransferNetReporter stamp: 'IO 11/16/2020 16:13:40'!
+AccountReporter subclass: #TransferNetReporter
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Portfolio-Solucion'!
+
+!classRemoval: #AccountSummaryTreeReporter stamp: 'IO 11/16/2020 16:13:41'!
+AccountTreeReporter subclass: #AccountSummaryTreeReporter
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Portfolio-Solucion'!
+
+!classRemoval: #AccountTreeReporter stamp: 'IO 11/16/2020 16:13:41'!
+AccountReporter subclass: #AccountTreeReporter
+	instanceVariableNames: 'indentation'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Portfolio-Solucion'!
+
+!classRemoval: #AccountSummaryReporter stamp: 'IO 11/16/2020 16:13:41'!
+AccountReporter subclass: #AccountSummaryReporter
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Portfolio-Solucion'!
+
+!classRemoval: #AccountReporter stamp: 'IO 11/16/2020 16:13:41'!
+Object subclass: #AccountReporter
+	instanceVariableNames: 'account report'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Portfolio-Solucion'!
+
+!classRemoval: #ReceptiveAccount stamp: 'IO 11/16/2020 16:13:42'!
+Account subclass: #ReceptiveAccount
+	instanceVariableNames: 'transactions'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Portfolio-Solucion'!
+
+!classRemoval: #Portfolio stamp: 'IO 11/16/2020 16:13:42'!
+Account subclass: #Portfolio
+	instanceVariableNames: 'accounts parents string receptiveAccount receptiveAccount3'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Portfolio-Solucion'!
+
+!classRemoval: #Account stamp: 'IO 11/16/2020 16:13:42'!
+Object subclass: #Account
+	instanceVariableNames: 'name'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Portfolio-Solucion'!
+
+!classRemoval: #TransferTest stamp: 'IO 11/16/2020 16:13:42'!
+TestCase subclass: #TransferTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Portfolio-Solucion'!
+
+!classRemoval: #ReceptiveAccountTest stamp: 'IO 11/16/2020 16:13:43'!
+AccountTest subclass: #ReceptiveAccountTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Portfolio-Solucion'!
+
+!classRemoval: #PortfolioTest stamp: 'IO 11/16/2020 16:13:43'!
+AccountTest subclass: #PortfolioTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Portfolio-Solucion'!
+
+!classRemoval: #AccountTest stamp: 'IO 11/16/2020 16:13:43'!
+TestCase subclass: #AccountTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Portfolio-Solucion'!
+
+!classRemoval: #AccountReporterTest stamp: 'IO 11/16/2020 16:13:44'!
+TestCase subclass: #AccountReporterTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Portfolio-Solucion'!
+
+----End fileIn of /Users/ilanolkies/uba/ingsoft1/ingeSoft-2020-2c/19-Portfolio-2/Portfolio-Solucion.st----!
+
+!testRun: #AccountReporterTest #test01AccountSummaryForAnEmptyAccount stamp: 'IO 11/16/2020 16:13:50'!
+PASSED!
+
+!testRun: #AccountReporterTest #test02AccountSummaryForAnAccountWithADeposit stamp: 'IO 11/16/2020 16:13:50'!
+PASSED!
+
+!testRun: #AccountReporterTest #test03AccountSummaryForAnAccountWithAWithdraw stamp: 'IO 11/16/2020 16:13:50'!
+PASSED!
+
+!testRun: #AccountReporterTest #test04AccountSummaryForAnAccountWithAWithdrawTransfer stamp: 'IO 11/16/2020 16:13:50'!
+PASSED!
+
+!testRun: #AccountReporterTest #test05AccountSummaryOfAnAccountWithADepositTransfer stamp: 'IO 11/16/2020 16:13:50'!
+PASSED!
+
+!testRun: #AccountReporterTest #test06AccountSummaryForAPortfolioWithNoAccounts stamp: 'IO 11/16/2020 16:13:50'!
+PASSED!
+
+!testRun: #AccountReporterTest #test07AccountReportForPortfolioWithOneAccount stamp: 'IO 11/16/2020 16:13:50'!
+PASSED!
+
+!testRun: #AccountReporterTest #test08AccountSummaryForPortfolioWithManyAccounts stamp: 'IO 11/16/2020 16:13:50'!
+PASSED!
+
+!testRun: #AccountReporterTest #test09TransferNetForAnEmptyAccount stamp: 'IO 11/16/2020 16:13:50'!
+PASSED!
+
+!testRun: #AccountReporterTest #test10TransferNetForAnAccountWithADepositTransfer stamp: 'IO 11/16/2020 16:13:50'!
+PASSED!
+
+!testRun: #AccountReporterTest #test11TransferNetForAnAccountWithAWidthdrawTransfer stamp: 'IO 11/16/2020 16:13:50'!
+PASSED!
+
+!testRun: #AccountReporterTest #test12TransferNetForAnAccountWithManyTransfers stamp: 'IO 11/16/2020 16:13:50'!
+PASSED!
+
+!testRun: #AccountReporterTest #test13AccountTreeForAnAccount stamp: 'IO 11/16/2020 16:13:50'!
+PASSED!
+
+!testRun: #AccountReporterTest #test14AccountTreeForAnEmptyPortfolio stamp: 'IO 11/16/2020 16:13:50'!
+PASSED!
+
+!testRun: #AccountReporterTest #test15AccountTreeForAPortfolioWithAccounts stamp: 'IO 11/16/2020 16:13:50'!
+PASSED!
+
+!testRun: #AccountReporterTest #test16AccountTreeForAPortfolioWithPortfolios stamp: 'IO 11/16/2020 16:13:50'!
+PASSED!
+
+!testRun: #AccountReporterTest #test17AccountSummaryTreeForAPortfolioWithPortfoliosAndTransactions stamp: 'IO 11/16/2020 16:13:50'!
+PASSED!
+
+!testRun: #PortfolioTest #test01BalanceOfPortfolioWithoutAccountsIsZero stamp: 'IO 11/16/2020 16:13:50'!
+PASSED!
+
+!testRun: #PortfolioTest #test02BalanceOfPortfolioWithOneAccountIsAccountBalance stamp: 'IO 11/16/2020 16:13:50'!
+PASSED!
+
+!testRun: #PortfolioTest #test03BalanceOfPortfolioIsCalculatedRecursivelyOnPortfolios stamp: 'IO 11/16/2020 16:13:50'!
+PASSED!
+
+!testRun: #PortfolioTest #test04PortfolioWithoutAccountsHasNoRegisteredTransaction stamp: 'IO 11/16/2020 16:13:50'!
+PASSED!
+
+!testRun: #PortfolioTest #test05PortfolioHasRegisteredItsAccountsTransactions stamp: 'IO 11/16/2020 16:13:50'!
+PASSED!
+
+!testRun: #PortfolioTest #test06PortfolioLooksForRegisteredTransactionsRecursively stamp: 'IO 11/16/2020 16:13:50'!
+PASSED!
+
+!testRun: #PortfolioTest #test07PortfolioHasNoTransactionWhenHasNoAccounts stamp: 'IO 11/16/2020 16:13:50'!
+PASSED!
+
+!testRun: #PortfolioTest #test08PortfolioTransactionsIncludesAllItsAccountsTransactions stamp: 'IO 11/16/2020 16:13:50'!
+PASSED!
+
+!testRun: #PortfolioTest #test09PortfolioTransactionsAreCalculatedRecursively stamp: 'IO 11/16/2020 16:13:50'!
+PASSED!
+
+!testRun: #PortfolioTest #test10PortfolioCanNotIncludeTheSameAccountMoreThanOnce stamp: 'IO 11/16/2020 16:13:50'!
+PASSED!
+
+!testRun: #PortfolioTest #test11PortfolioCanNotIncludeAccountOfItsPortfolios stamp: 'IO 11/16/2020 16:13:50'!
+PASSED!
+
+!testRun: #PortfolioTest #test12PortfolioCanNotIncludeItself stamp: 'IO 11/16/2020 16:13:50'!
+PASSED!
+
+!testRun: #PortfolioTest #test13ComposedPortfolioCanNotHaveParentPortfolioAccount stamp: 'IO 11/16/2020 16:13:50'!
+PASSED!
+
+!testRun: #PortfolioTest #test14ComposedPortfolioCanNotHaveAccountOfAnyRootParentRecursively stamp: 'IO 11/16/2020 16:13:50'!
+PASSED!
+
+!testRun: #PortfolioTest #test15PortfolioCanNotIncludeAnyOfTheComposedAccountOfPortfolioToAdd stamp: 'IO 11/16/2020 16:13:50'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test01ReceptiveAccountHaveZeroAsBalanceWhenCreated stamp: 'IO 11/16/2020 16:13:50'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test02DepositIncreasesBalanceOnTransactionValue stamp: 'IO 11/16/2020 16:13:50'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test03WithdrawDecreasesBalanceOnTransactionValue stamp: 'IO 11/16/2020 16:13:50'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test04WithdrawValueMustBePositive stamp: 'IO 11/16/2020 16:13:50'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test05ReceptiveAccountKnowsRegisteredTransactions stamp: 'IO 11/16/2020 16:13:50'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test06ReceptiveAccountDoNotKnowNotRegisteredTransactions stamp: 'IO 11/16/2020 16:13:50'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test07AccountKnowsItsTransactions stamp: 'IO 11/16/2020 16:13:50'!
+PASSED!
+
+!testRun: #TransferTest #test01ATransferDecreasesBalanceOfSenderAndIncreasesOnReceiver stamp: 'IO 11/16/2020 16:13:50'!
+PASSED!
+
+!testRun: #TransferTest #test02ATransferRegistersATransferDepositAndATransferWithdraw stamp: 'IO 11/16/2020 16:13:50'!
+PASSED!
+
+!testRun: #TransferTest #test03ATransferWithdrawAndDepositKnowTheirTransfer stamp: 'IO 11/16/2020 16:13:50'!
+PASSED!
+
+!testRun: #TransferTest #test04ATransferCantBeDoneBetweenTheSameAccount stamp: 'IO 11/16/2020 16:13:50'!
+PASSED!
+
+!testRun: #TransferTest #test05ATransferCantBeDoneBeOf0Value stamp: 'IO 11/16/2020 16:13:50'!
+PASSED!
+
+!testRun: #TransferTest #test06ATransferCantBeOfNegativeValue stamp: 'IO 11/16/2020 16:13:50'!
+PASSED!
+
+!methodRemoval: AccountReporter #addAccountSummaryTextWith:for: stamp: 'IO 11/16/2020 16:15:39'!
+addAccountSummaryTextWith: aPrefix for: aTransaction
+
+	"add a transaction to the report given a prefix"
+
+	self subclassResponsibility.
+
+!
+!AccountReporter methodsFor: 'adding to report' stamp: 'IO 11/16/2020 16:15:47'!
+addAccountSummaryTextWith: aPrefix for: aTransaction
+
+	"see superclass"
+
+	report add: (aPrefix, aTransaction value asString, '.').
+! !
+
+!methodRemoval: AccountSummaryReporter #addAccountSummaryTextWith:for: stamp: 'IO 11/16/2020 16:15:47'!
+addAccountSummaryTextWith: aPrefix for: aTransaction
+
+	"see superclass"
+
+	report add: (aPrefix, aTransaction value asString, '.').
+!
+!AccountSummaryTreeReporter methodsFor: 'adding to report' stamp: 'IO 11/16/2020 16:16:19' prior: 50912675 overrides: 50913373!
+addAccountSummaryTextWith: aPrefix for: aTransaction
+
+	"add a transaction to the report given a prefix"
+
+	super addAccountSummaryTextWith: (indentation, aPrefix) for: aTransaction.
+! !
+
+!testRun: #AccountReporterTest #test01AccountSummaryForAnEmptyAccount stamp: 'IO 11/16/2020 16:16:20'!
+PASSED!
+
+!testRun: #AccountReporterTest #test02AccountSummaryForAnAccountWithADeposit stamp: 'IO 11/16/2020 16:16:20'!
+PASSED!
+
+!testRun: #AccountReporterTest #test03AccountSummaryForAnAccountWithAWithdraw stamp: 'IO 11/16/2020 16:16:20'!
+PASSED!
+
+!testRun: #AccountReporterTest #test04AccountSummaryForAnAccountWithAWithdrawTransfer stamp: 'IO 11/16/2020 16:16:20'!
+PASSED!
+
+!testRun: #AccountReporterTest #test05AccountSummaryOfAnAccountWithADepositTransfer stamp: 'IO 11/16/2020 16:16:20'!
+PASSED!
+
+!testRun: #AccountReporterTest #test06AccountSummaryForAPortfolioWithNoAccounts stamp: 'IO 11/16/2020 16:16:20'!
+PASSED!
+
+!testRun: #AccountReporterTest #test07AccountReportForPortfolioWithOneAccount stamp: 'IO 11/16/2020 16:16:20'!
+PASSED!
+
+!testRun: #AccountReporterTest #test08AccountSummaryForPortfolioWithManyAccounts stamp: 'IO 11/16/2020 16:16:20'!
+PASSED!
+
+!testRun: #AccountReporterTest #test09TransferNetForAnEmptyAccount stamp: 'IO 11/16/2020 16:16:20'!
+PASSED!
+
+!testRun: #AccountReporterTest #test10TransferNetForAnAccountWithADepositTransfer stamp: 'IO 11/16/2020 16:16:20'!
+PASSED!
+
+!testRun: #AccountReporterTest #test11TransferNetForAnAccountWithAWidthdrawTransfer stamp: 'IO 11/16/2020 16:16:20'!
+PASSED!
+
+!testRun: #AccountReporterTest #test12TransferNetForAnAccountWithManyTransfers stamp: 'IO 11/16/2020 16:16:20'!
+PASSED!
+
+!testRun: #AccountReporterTest #test13AccountTreeForAnAccount stamp: 'IO 11/16/2020 16:16:20'!
+PASSED!
+
+!testRun: #AccountReporterTest #test14AccountTreeForAnEmptyPortfolio stamp: 'IO 11/16/2020 16:16:20'!
+PASSED!
+
+!testRun: #AccountReporterTest #test15AccountTreeForAPortfolioWithAccounts stamp: 'IO 11/16/2020 16:16:20'!
+PASSED!
+
+!testRun: #AccountReporterTest #test16AccountTreeForAPortfolioWithPortfolios stamp: 'IO 11/16/2020 16:16:20'!
+PASSED!
+
+!testRun: #AccountReporterTest #test17AccountSummaryTreeForAPortfolioWithPortfoliosAndTransactions stamp: 'IO 11/16/2020 16:16:20'!
+PASSED!
+
+!testRun: #PortfolioTest #test01BalanceOfPortfolioWithoutAccountsIsZero stamp: 'IO 11/16/2020 16:16:20'!
+PASSED!
+
+!testRun: #PortfolioTest #test02BalanceOfPortfolioWithOneAccountIsAccountBalance stamp: 'IO 11/16/2020 16:16:20'!
+PASSED!
+
+!testRun: #PortfolioTest #test03BalanceOfPortfolioIsCalculatedRecursivelyOnPortfolios stamp: 'IO 11/16/2020 16:16:20'!
+PASSED!
+
+!testRun: #PortfolioTest #test04PortfolioWithoutAccountsHasNoRegisteredTransaction stamp: 'IO 11/16/2020 16:16:20'!
+PASSED!
+
+!testRun: #PortfolioTest #test05PortfolioHasRegisteredItsAccountsTransactions stamp: 'IO 11/16/2020 16:16:20'!
+PASSED!
+
+!testRun: #PortfolioTest #test06PortfolioLooksForRegisteredTransactionsRecursively stamp: 'IO 11/16/2020 16:16:20'!
+PASSED!
+
+!testRun: #PortfolioTest #test07PortfolioHasNoTransactionWhenHasNoAccounts stamp: 'IO 11/16/2020 16:16:20'!
+PASSED!
+
+!testRun: #PortfolioTest #test08PortfolioTransactionsIncludesAllItsAccountsTransactions stamp: 'IO 11/16/2020 16:16:20'!
+PASSED!
+
+!testRun: #PortfolioTest #test09PortfolioTransactionsAreCalculatedRecursively stamp: 'IO 11/16/2020 16:16:20'!
+PASSED!
+
+!testRun: #PortfolioTest #test10PortfolioCanNotIncludeTheSameAccountMoreThanOnce stamp: 'IO 11/16/2020 16:16:20'!
+PASSED!
+
+!testRun: #PortfolioTest #test11PortfolioCanNotIncludeAccountOfItsPortfolios stamp: 'IO 11/16/2020 16:16:20'!
+PASSED!
+
+!testRun: #PortfolioTest #test12PortfolioCanNotIncludeItself stamp: 'IO 11/16/2020 16:16:20'!
+PASSED!
+
+!testRun: #PortfolioTest #test13ComposedPortfolioCanNotHaveParentPortfolioAccount stamp: 'IO 11/16/2020 16:16:20'!
+PASSED!
+
+!testRun: #PortfolioTest #test14ComposedPortfolioCanNotHaveAccountOfAnyRootParentRecursively stamp: 'IO 11/16/2020 16:16:20'!
+PASSED!
+
+!testRun: #PortfolioTest #test15PortfolioCanNotIncludeAnyOfTheComposedAccountOfPortfolioToAdd stamp: 'IO 11/16/2020 16:16:20'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test01ReceptiveAccountHaveZeroAsBalanceWhenCreated stamp: 'IO 11/16/2020 16:16:20'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test02DepositIncreasesBalanceOnTransactionValue stamp: 'IO 11/16/2020 16:16:20'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test03WithdrawDecreasesBalanceOnTransactionValue stamp: 'IO 11/16/2020 16:16:20'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test04WithdrawValueMustBePositive stamp: 'IO 11/16/2020 16:16:20'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test05ReceptiveAccountKnowsRegisteredTransactions stamp: 'IO 11/16/2020 16:16:20'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test06ReceptiveAccountDoNotKnowNotRegisteredTransactions stamp: 'IO 11/16/2020 16:16:20'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test07AccountKnowsItsTransactions stamp: 'IO 11/16/2020 16:16:20'!
+PASSED!
+
+!testRun: #TransferTest #test01ATransferDecreasesBalanceOfSenderAndIncreasesOnReceiver stamp: 'IO 11/16/2020 16:16:20'!
+PASSED!
+
+!testRun: #TransferTest #test02ATransferRegistersATransferDepositAndATransferWithdraw stamp: 'IO 11/16/2020 16:16:20'!
+PASSED!
+
+!testRun: #TransferTest #test03ATransferWithdrawAndDepositKnowTheirTransfer stamp: 'IO 11/16/2020 16:16:20'!
+PASSED!
+
+!testRun: #TransferTest #test04ATransferCantBeDoneBetweenTheSameAccount stamp: 'IO 11/16/2020 16:16:20'!
+PASSED!
+
+!testRun: #TransferTest #test05ATransferCantBeDoneBeOf0Value stamp: 'IO 11/16/2020 16:16:20'!
+PASSED!
+
+!testRun: #TransferTest #test06ATransferCantBeOfNegativeValue stamp: 'IO 11/16/2020 16:16:20'!
+PASSED!
+!AccountReporter methodsFor: 'texts' stamp: 'IO 11/16/2020 16:18:04'!
+getBalanceTextFor: anAccount
+
+	^'Balance = ', anAccount balance asString.
+! !
+!AccountSummaryReporter methodsFor: 'emitting' stamp: 'IO 11/16/2020 16:18:56' prior: 50912591 overrides: 50912488!
+emitReport
+
+	"see superclass"
+
+	super emitReport add: (self getBalanceTextFor: account).
+	^report.! !
+
+!testRun: #AccountReporterTest #test01AccountSummaryForAnEmptyAccount stamp: 'IO 11/16/2020 16:18:57'!
+PASSED!
+
+!testRun: #AccountReporterTest #test02AccountSummaryForAnAccountWithADeposit stamp: 'IO 11/16/2020 16:18:57'!
+PASSED!
+
+!testRun: #AccountReporterTest #test03AccountSummaryForAnAccountWithAWithdraw stamp: 'IO 11/16/2020 16:18:57'!
+PASSED!
+
+!testRun: #AccountReporterTest #test04AccountSummaryForAnAccountWithAWithdrawTransfer stamp: 'IO 11/16/2020 16:18:57'!
+PASSED!
+
+!testRun: #AccountReporterTest #test05AccountSummaryOfAnAccountWithADepositTransfer stamp: 'IO 11/16/2020 16:18:57'!
+PASSED!
+
+!testRun: #AccountReporterTest #test06AccountSummaryForAPortfolioWithNoAccounts stamp: 'IO 11/16/2020 16:18:57'!
+PASSED!
+
+!testRun: #AccountReporterTest #test07AccountReportForPortfolioWithOneAccount stamp: 'IO 11/16/2020 16:18:57'!
+PASSED!
+
+!testRun: #AccountReporterTest #test08AccountSummaryForPortfolioWithManyAccounts stamp: 'IO 11/16/2020 16:18:57'!
+PASSED!
+
+!testRun: #AccountReporterTest #test09TransferNetForAnEmptyAccount stamp: 'IO 11/16/2020 16:18:57'!
+PASSED!
+
+!testRun: #AccountReporterTest #test10TransferNetForAnAccountWithADepositTransfer stamp: 'IO 11/16/2020 16:18:57'!
+PASSED!
+
+!testRun: #AccountReporterTest #test11TransferNetForAnAccountWithAWidthdrawTransfer stamp: 'IO 11/16/2020 16:18:57'!
+PASSED!
+
+!testRun: #AccountReporterTest #test12TransferNetForAnAccountWithManyTransfers stamp: 'IO 11/16/2020 16:18:57'!
+PASSED!
+
+!testRun: #AccountReporterTest #test13AccountTreeForAnAccount stamp: 'IO 11/16/2020 16:18:57'!
+PASSED!
+
+!testRun: #AccountReporterTest #test14AccountTreeForAnEmptyPortfolio stamp: 'IO 11/16/2020 16:18:57'!
+PASSED!
+
+!testRun: #AccountReporterTest #test15AccountTreeForAPortfolioWithAccounts stamp: 'IO 11/16/2020 16:18:57'!
+PASSED!
+
+!testRun: #AccountReporterTest #test16AccountTreeForAPortfolioWithPortfolios stamp: 'IO 11/16/2020 16:18:57'!
+PASSED!
+
+!testRun: #AccountReporterTest #test17AccountSummaryTreeForAPortfolioWithPortfoliosAndTransactions stamp: 'IO 11/16/2020 16:18:57'!
+PASSED!
+
+!testRun: #AccountReporterTest #test01AccountSummaryForAnEmptyAccount stamp: 'IO 11/16/2020 16:19:25'!
+PASSED!
+
+!testRun: #AccountReporterTest #test02AccountSummaryForAnAccountWithADeposit stamp: 'IO 11/16/2020 16:19:25'!
+PASSED!
+
+!testRun: #AccountReporterTest #test03AccountSummaryForAnAccountWithAWithdraw stamp: 'IO 11/16/2020 16:19:25'!
+PASSED!
+
+!testRun: #AccountReporterTest #test04AccountSummaryForAnAccountWithAWithdrawTransfer stamp: 'IO 11/16/2020 16:19:25'!
+PASSED!
+
+!testRun: #AccountReporterTest #test05AccountSummaryOfAnAccountWithADepositTransfer stamp: 'IO 11/16/2020 16:19:25'!
+PASSED!
+
+!testRun: #AccountReporterTest #test06AccountSummaryForAPortfolioWithNoAccounts stamp: 'IO 11/16/2020 16:19:25'!
+PASSED!
+
+!testRun: #AccountReporterTest #test07AccountReportForPortfolioWithOneAccount stamp: 'IO 11/16/2020 16:19:25'!
+PASSED!
+
+!testRun: #AccountReporterTest #test08AccountSummaryForPortfolioWithManyAccounts stamp: 'IO 11/16/2020 16:19:25'!
+PASSED!
+
+!testRun: #AccountReporterTest #test09TransferNetForAnEmptyAccount stamp: 'IO 11/16/2020 16:19:25'!
+PASSED!
+
+!testRun: #AccountReporterTest #test10TransferNetForAnAccountWithADepositTransfer stamp: 'IO 11/16/2020 16:19:25'!
+PASSED!
+
+!testRun: #AccountReporterTest #test11TransferNetForAnAccountWithAWidthdrawTransfer stamp: 'IO 11/16/2020 16:19:25'!
+PASSED!
+
+!testRun: #AccountReporterTest #test12TransferNetForAnAccountWithManyTransfers stamp: 'IO 11/16/2020 16:19:25'!
+PASSED!
+
+!testRun: #AccountReporterTest #test13AccountTreeForAnAccount stamp: 'IO 11/16/2020 16:19:25'!
+PASSED!
+
+!testRun: #AccountReporterTest #test14AccountTreeForAnEmptyPortfolio stamp: 'IO 11/16/2020 16:19:25'!
+PASSED!
+
+!testRun: #AccountReporterTest #test15AccountTreeForAPortfolioWithAccounts stamp: 'IO 11/16/2020 16:19:25'!
+PASSED!
+
+!testRun: #AccountReporterTest #test16AccountTreeForAPortfolioWithPortfolios stamp: 'IO 11/16/2020 16:19:25'!
+PASSED!
+
+!testRun: #AccountReporterTest #test17AccountSummaryTreeForAPortfolioWithPortfoliosAndTransactions stamp: 'IO 11/16/2020 16:19:25'!
+PASSED!
+
+!testRun: #PortfolioTest #test01BalanceOfPortfolioWithoutAccountsIsZero stamp: 'IO 11/16/2020 16:19:25'!
+PASSED!
+
+!testRun: #PortfolioTest #test02BalanceOfPortfolioWithOneAccountIsAccountBalance stamp: 'IO 11/16/2020 16:19:25'!
+PASSED!
+
+!testRun: #PortfolioTest #test03BalanceOfPortfolioIsCalculatedRecursivelyOnPortfolios stamp: 'IO 11/16/2020 16:19:25'!
+PASSED!
+
+!testRun: #PortfolioTest #test04PortfolioWithoutAccountsHasNoRegisteredTransaction stamp: 'IO 11/16/2020 16:19:25'!
+PASSED!
+
+!testRun: #PortfolioTest #test05PortfolioHasRegisteredItsAccountsTransactions stamp: 'IO 11/16/2020 16:19:25'!
+PASSED!
+
+!testRun: #PortfolioTest #test06PortfolioLooksForRegisteredTransactionsRecursively stamp: 'IO 11/16/2020 16:19:25'!
+PASSED!
+
+!testRun: #PortfolioTest #test07PortfolioHasNoTransactionWhenHasNoAccounts stamp: 'IO 11/16/2020 16:19:25'!
+PASSED!
+
+!testRun: #PortfolioTest #test08PortfolioTransactionsIncludesAllItsAccountsTransactions stamp: 'IO 11/16/2020 16:19:25'!
+PASSED!
+
+!testRun: #PortfolioTest #test09PortfolioTransactionsAreCalculatedRecursively stamp: 'IO 11/16/2020 16:19:25'!
+PASSED!
+
+!testRun: #PortfolioTest #test10PortfolioCanNotIncludeTheSameAccountMoreThanOnce stamp: 'IO 11/16/2020 16:19:25'!
+PASSED!
+
+!testRun: #PortfolioTest #test11PortfolioCanNotIncludeAccountOfItsPortfolios stamp: 'IO 11/16/2020 16:19:25'!
+PASSED!
+
+!testRun: #PortfolioTest #test12PortfolioCanNotIncludeItself stamp: 'IO 11/16/2020 16:19:25'!
+PASSED!
+
+!testRun: #PortfolioTest #test13ComposedPortfolioCanNotHaveParentPortfolioAccount stamp: 'IO 11/16/2020 16:19:25'!
+PASSED!
+
+!testRun: #PortfolioTest #test14ComposedPortfolioCanNotHaveAccountOfAnyRootParentRecursively stamp: 'IO 11/16/2020 16:19:25'!
+PASSED!
+
+!testRun: #PortfolioTest #test15PortfolioCanNotIncludeAnyOfTheComposedAccountOfPortfolioToAdd stamp: 'IO 11/16/2020 16:19:25'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test01ReceptiveAccountHaveZeroAsBalanceWhenCreated stamp: 'IO 11/16/2020 16:19:25'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test02DepositIncreasesBalanceOnTransactionValue stamp: 'IO 11/16/2020 16:19:25'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test03WithdrawDecreasesBalanceOnTransactionValue stamp: 'IO 11/16/2020 16:19:25'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test04WithdrawValueMustBePositive stamp: 'IO 11/16/2020 16:19:25'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test05ReceptiveAccountKnowsRegisteredTransactions stamp: 'IO 11/16/2020 16:19:25'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test06ReceptiveAccountDoNotKnowNotRegisteredTransactions stamp: 'IO 11/16/2020 16:19:25'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test07AccountKnowsItsTransactions stamp: 'IO 11/16/2020 16:19:25'!
+PASSED!
+
+!testRun: #TransferTest #test01ATransferDecreasesBalanceOfSenderAndIncreasesOnReceiver stamp: 'IO 11/16/2020 16:19:25'!
+PASSED!
+
+!testRun: #TransferTest #test02ATransferRegistersATransferDepositAndATransferWithdraw stamp: 'IO 11/16/2020 16:19:25'!
+PASSED!
+
+!testRun: #TransferTest #test03ATransferWithdrawAndDepositKnowTheirTransfer stamp: 'IO 11/16/2020 16:19:25'!
+PASSED!
+
+!testRun: #TransferTest #test04ATransferCantBeDoneBetweenTheSameAccount stamp: 'IO 11/16/2020 16:19:25'!
+PASSED!
+
+!testRun: #TransferTest #test05ATransferCantBeDoneBeOf0Value stamp: 'IO 11/16/2020 16:19:25'!
+PASSED!
+
+!testRun: #TransferTest #test06ATransferCantBeOfNegativeValue stamp: 'IO 11/16/2020 16:19:25'!
+PASSED!
+!AccountSummaryTreeReporter methodsFor: 'adding to report' stamp: 'IO 11/16/2020 16:20:12' prior: 50912685 overrides: 50912619!
+addAccountToReport: anAccount
+
+	"adds the name of a Portfolio to the report"
+	
+	self addAccountToReport: anAccount thenDo: [report add: (indentation, self getBalanceTextFor: anAccount).].
+! !
+
+!testRun: #AccountReporterTest #test01AccountSummaryForAnEmptyAccount stamp: 'IO 11/16/2020 16:20:13'!
+PASSED!
+
+!testRun: #AccountReporterTest #test02AccountSummaryForAnAccountWithADeposit stamp: 'IO 11/16/2020 16:20:13'!
+PASSED!
+
+!testRun: #AccountReporterTest #test03AccountSummaryForAnAccountWithAWithdraw stamp: 'IO 11/16/2020 16:20:13'!
+PASSED!
+
+!testRun: #AccountReporterTest #test04AccountSummaryForAnAccountWithAWithdrawTransfer stamp: 'IO 11/16/2020 16:20:13'!
+PASSED!
+
+!testRun: #AccountReporterTest #test05AccountSummaryOfAnAccountWithADepositTransfer stamp: 'IO 11/16/2020 16:20:13'!
+PASSED!
+
+!testRun: #AccountReporterTest #test06AccountSummaryForAPortfolioWithNoAccounts stamp: 'IO 11/16/2020 16:20:13'!
+PASSED!
+
+!testRun: #AccountReporterTest #test07AccountReportForPortfolioWithOneAccount stamp: 'IO 11/16/2020 16:20:13'!
+PASSED!
+
+!testRun: #AccountReporterTest #test08AccountSummaryForPortfolioWithManyAccounts stamp: 'IO 11/16/2020 16:20:13'!
+PASSED!
+
+!testRun: #AccountReporterTest #test09TransferNetForAnEmptyAccount stamp: 'IO 11/16/2020 16:20:13'!
+PASSED!
+
+!testRun: #AccountReporterTest #test10TransferNetForAnAccountWithADepositTransfer stamp: 'IO 11/16/2020 16:20:13'!
+PASSED!
+
+!testRun: #AccountReporterTest #test11TransferNetForAnAccountWithAWidthdrawTransfer stamp: 'IO 11/16/2020 16:20:13'!
+PASSED!
+
+!testRun: #AccountReporterTest #test12TransferNetForAnAccountWithManyTransfers stamp: 'IO 11/16/2020 16:20:13'!
+PASSED!
+
+!testRun: #AccountReporterTest #test13AccountTreeForAnAccount stamp: 'IO 11/16/2020 16:20:13'!
+PASSED!
+
+!testRun: #AccountReporterTest #test14AccountTreeForAnEmptyPortfolio stamp: 'IO 11/16/2020 16:20:13'!
+PASSED!
+
+!testRun: #AccountReporterTest #test15AccountTreeForAPortfolioWithAccounts stamp: 'IO 11/16/2020 16:20:13'!
+PASSED!
+
+!testRun: #AccountReporterTest #test16AccountTreeForAPortfolioWithPortfolios stamp: 'IO 11/16/2020 16:20:13'!
+PASSED!
+
+!testRun: #AccountReporterTest #test17AccountSummaryTreeForAPortfolioWithPortfoliosAndTransactions stamp: 'IO 11/16/2020 16:20:13'!
+ERROR!
+
+!testRun: #PortfolioTest #test01BalanceOfPortfolioWithoutAccountsIsZero stamp: 'IO 11/16/2020 16:20:13'!
+PASSED!
+
+!testRun: #PortfolioTest #test02BalanceOfPortfolioWithOneAccountIsAccountBalance stamp: 'IO 11/16/2020 16:20:13'!
+PASSED!
+
+!testRun: #PortfolioTest #test03BalanceOfPortfolioIsCalculatedRecursivelyOnPortfolios stamp: 'IO 11/16/2020 16:20:13'!
+PASSED!
+
+!testRun: #PortfolioTest #test04PortfolioWithoutAccountsHasNoRegisteredTransaction stamp: 'IO 11/16/2020 16:20:13'!
+PASSED!
+
+!testRun: #PortfolioTest #test05PortfolioHasRegisteredItsAccountsTransactions stamp: 'IO 11/16/2020 16:20:13'!
+PASSED!
+
+!testRun: #PortfolioTest #test06PortfolioLooksForRegisteredTransactionsRecursively stamp: 'IO 11/16/2020 16:20:13'!
+PASSED!
+
+!testRun: #PortfolioTest #test07PortfolioHasNoTransactionWhenHasNoAccounts stamp: 'IO 11/16/2020 16:20:13'!
+PASSED!
+
+!testRun: #PortfolioTest #test08PortfolioTransactionsIncludesAllItsAccountsTransactions stamp: 'IO 11/16/2020 16:20:13'!
+PASSED!
+
+!testRun: #PortfolioTest #test09PortfolioTransactionsAreCalculatedRecursively stamp: 'IO 11/16/2020 16:20:13'!
+PASSED!
+
+!testRun: #PortfolioTest #test10PortfolioCanNotIncludeTheSameAccountMoreThanOnce stamp: 'IO 11/16/2020 16:20:13'!
+PASSED!
+
+!testRun: #PortfolioTest #test11PortfolioCanNotIncludeAccountOfItsPortfolios stamp: 'IO 11/16/2020 16:20:13'!
+PASSED!
+
+!testRun: #PortfolioTest #test12PortfolioCanNotIncludeItself stamp: 'IO 11/16/2020 16:20:13'!
+PASSED!
+
+!testRun: #PortfolioTest #test13ComposedPortfolioCanNotHaveParentPortfolioAccount stamp: 'IO 11/16/2020 16:20:13'!
+PASSED!
+
+!testRun: #PortfolioTest #test14ComposedPortfolioCanNotHaveAccountOfAnyRootParentRecursively stamp: 'IO 11/16/2020 16:20:13'!
+PASSED!
+
+!testRun: #PortfolioTest #test15PortfolioCanNotIncludeAnyOfTheComposedAccountOfPortfolioToAdd stamp: 'IO 11/16/2020 16:20:13'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test01ReceptiveAccountHaveZeroAsBalanceWhenCreated stamp: 'IO 11/16/2020 16:20:13'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test02DepositIncreasesBalanceOnTransactionValue stamp: 'IO 11/16/2020 16:20:13'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test03WithdrawDecreasesBalanceOnTransactionValue stamp: 'IO 11/16/2020 16:20:13'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test04WithdrawValueMustBePositive stamp: 'IO 11/16/2020 16:20:13'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test05ReceptiveAccountKnowsRegisteredTransactions stamp: 'IO 11/16/2020 16:20:13'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test06ReceptiveAccountDoNotKnowNotRegisteredTransactions stamp: 'IO 11/16/2020 16:20:13'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test07AccountKnowsItsTransactions stamp: 'IO 11/16/2020 16:20:13'!
+PASSED!
+
+!testRun: #TransferTest #test01ATransferDecreasesBalanceOfSenderAndIncreasesOnReceiver stamp: 'IO 11/16/2020 16:20:13'!
+PASSED!
+
+!testRun: #TransferTest #test02ATransferRegistersATransferDepositAndATransferWithdraw stamp: 'IO 11/16/2020 16:20:13'!
+PASSED!
+
+!testRun: #TransferTest #test03ATransferWithdrawAndDepositKnowTheirTransfer stamp: 'IO 11/16/2020 16:20:13'!
+PASSED!
+
+!testRun: #TransferTest #test04ATransferCantBeDoneBetweenTheSameAccount stamp: 'IO 11/16/2020 16:20:13'!
+PASSED!
+
+!testRun: #TransferTest #test05ATransferCantBeDoneBeOf0Value stamp: 'IO 11/16/2020 16:20:13'!
+PASSED!
+
+!testRun: #TransferTest #test06ATransferCantBeOfNegativeValue stamp: 'IO 11/16/2020 16:20:13'!
+PASSED!
+
+!testRun: #AccountReporterTest #test17AccountSummaryTreeForAPortfolioWithPortfoliosAndTransactions stamp: 'IO 11/16/2020 16:20:13'!
+ERROR!
+!AccountSummaryTreeReporter methodsFor: 'adding to report' stamp: 'IO 11/16/2020 16:20:21' prior: 50913815 overrides: 50912619!
+addAccountToReport: anAccount
+
+	"adds the name of a Portfolio to the report"
+	
+	self addAccountToReport: anAccount thenDo: [report add: (indentation, (self getBalanceTextFor: anAccount)).].
+! !
+
+!testRun: #AccountReporterTest #test01AccountSummaryForAnEmptyAccount stamp: 'IO 11/16/2020 16:20:22'!
+PASSED!
+
+!testRun: #AccountReporterTest #test02AccountSummaryForAnAccountWithADeposit stamp: 'IO 11/16/2020 16:20:22'!
+PASSED!
+
+!testRun: #AccountReporterTest #test03AccountSummaryForAnAccountWithAWithdraw stamp: 'IO 11/16/2020 16:20:22'!
+PASSED!
+
+!testRun: #AccountReporterTest #test04AccountSummaryForAnAccountWithAWithdrawTransfer stamp: 'IO 11/16/2020 16:20:22'!
+PASSED!
+
+!testRun: #AccountReporterTest #test05AccountSummaryOfAnAccountWithADepositTransfer stamp: 'IO 11/16/2020 16:20:22'!
+PASSED!
+
+!testRun: #AccountReporterTest #test06AccountSummaryForAPortfolioWithNoAccounts stamp: 'IO 11/16/2020 16:20:22'!
+PASSED!
+
+!testRun: #AccountReporterTest #test07AccountReportForPortfolioWithOneAccount stamp: 'IO 11/16/2020 16:20:22'!
+PASSED!
+
+!testRun: #AccountReporterTest #test08AccountSummaryForPortfolioWithManyAccounts stamp: 'IO 11/16/2020 16:20:22'!
+PASSED!
+
+!testRun: #AccountReporterTest #test09TransferNetForAnEmptyAccount stamp: 'IO 11/16/2020 16:20:22'!
+PASSED!
+
+!testRun: #AccountReporterTest #test10TransferNetForAnAccountWithADepositTransfer stamp: 'IO 11/16/2020 16:20:22'!
+PASSED!
+
+!testRun: #AccountReporterTest #test11TransferNetForAnAccountWithAWidthdrawTransfer stamp: 'IO 11/16/2020 16:20:22'!
+PASSED!
+
+!testRun: #AccountReporterTest #test12TransferNetForAnAccountWithManyTransfers stamp: 'IO 11/16/2020 16:20:22'!
+PASSED!
+
+!testRun: #AccountReporterTest #test13AccountTreeForAnAccount stamp: 'IO 11/16/2020 16:20:22'!
+PASSED!
+
+!testRun: #AccountReporterTest #test14AccountTreeForAnEmptyPortfolio stamp: 'IO 11/16/2020 16:20:22'!
+PASSED!
+
+!testRun: #AccountReporterTest #test15AccountTreeForAPortfolioWithAccounts stamp: 'IO 11/16/2020 16:20:22'!
+PASSED!
+
+!testRun: #AccountReporterTest #test16AccountTreeForAPortfolioWithPortfolios stamp: 'IO 11/16/2020 16:20:22'!
+PASSED!
+
+!testRun: #AccountReporterTest #test17AccountSummaryTreeForAPortfolioWithPortfoliosAndTransactions stamp: 'IO 11/16/2020 16:20:22'!
+PASSED!
+
+!testRun: #PortfolioTest #test01BalanceOfPortfolioWithoutAccountsIsZero stamp: 'IO 11/16/2020 16:20:22'!
+PASSED!
+
+!testRun: #PortfolioTest #test02BalanceOfPortfolioWithOneAccountIsAccountBalance stamp: 'IO 11/16/2020 16:20:22'!
+PASSED!
+
+!testRun: #PortfolioTest #test03BalanceOfPortfolioIsCalculatedRecursivelyOnPortfolios stamp: 'IO 11/16/2020 16:20:22'!
+PASSED!
+
+!testRun: #PortfolioTest #test04PortfolioWithoutAccountsHasNoRegisteredTransaction stamp: 'IO 11/16/2020 16:20:22'!
+PASSED!
+
+!testRun: #PortfolioTest #test05PortfolioHasRegisteredItsAccountsTransactions stamp: 'IO 11/16/2020 16:20:22'!
+PASSED!
+
+!testRun: #PortfolioTest #test06PortfolioLooksForRegisteredTransactionsRecursively stamp: 'IO 11/16/2020 16:20:22'!
+PASSED!
+
+!testRun: #PortfolioTest #test07PortfolioHasNoTransactionWhenHasNoAccounts stamp: 'IO 11/16/2020 16:20:22'!
+PASSED!
+
+!testRun: #PortfolioTest #test08PortfolioTransactionsIncludesAllItsAccountsTransactions stamp: 'IO 11/16/2020 16:20:22'!
+PASSED!
+
+!testRun: #PortfolioTest #test09PortfolioTransactionsAreCalculatedRecursively stamp: 'IO 11/16/2020 16:20:22'!
+PASSED!
+
+!testRun: #PortfolioTest #test10PortfolioCanNotIncludeTheSameAccountMoreThanOnce stamp: 'IO 11/16/2020 16:20:22'!
+PASSED!
+
+!testRun: #PortfolioTest #test11PortfolioCanNotIncludeAccountOfItsPortfolios stamp: 'IO 11/16/2020 16:20:22'!
+PASSED!
+
+!testRun: #PortfolioTest #test12PortfolioCanNotIncludeItself stamp: 'IO 11/16/2020 16:20:22'!
+PASSED!
+
+!testRun: #PortfolioTest #test13ComposedPortfolioCanNotHaveParentPortfolioAccount stamp: 'IO 11/16/2020 16:20:22'!
+PASSED!
+
+!testRun: #PortfolioTest #test14ComposedPortfolioCanNotHaveAccountOfAnyRootParentRecursively stamp: 'IO 11/16/2020 16:20:22'!
+PASSED!
+
+!testRun: #PortfolioTest #test15PortfolioCanNotIncludeAnyOfTheComposedAccountOfPortfolioToAdd stamp: 'IO 11/16/2020 16:20:22'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test01ReceptiveAccountHaveZeroAsBalanceWhenCreated stamp: 'IO 11/16/2020 16:20:22'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test02DepositIncreasesBalanceOnTransactionValue stamp: 'IO 11/16/2020 16:20:22'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test03WithdrawDecreasesBalanceOnTransactionValue stamp: 'IO 11/16/2020 16:20:22'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test04WithdrawValueMustBePositive stamp: 'IO 11/16/2020 16:20:22'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test05ReceptiveAccountKnowsRegisteredTransactions stamp: 'IO 11/16/2020 16:20:22'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test06ReceptiveAccountDoNotKnowNotRegisteredTransactions stamp: 'IO 11/16/2020 16:20:22'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test07AccountKnowsItsTransactions stamp: 'IO 11/16/2020 16:20:22'!
+PASSED!
+
+!testRun: #TransferTest #test01ATransferDecreasesBalanceOfSenderAndIncreasesOnReceiver stamp: 'IO 11/16/2020 16:20:22'!
+PASSED!
+
+!testRun: #TransferTest #test02ATransferRegistersATransferDepositAndATransferWithdraw stamp: 'IO 11/16/2020 16:20:22'!
+PASSED!
+
+!testRun: #TransferTest #test03ATransferWithdrawAndDepositKnowTheirTransfer stamp: 'IO 11/16/2020 16:20:22'!
+PASSED!
+
+!testRun: #TransferTest #test04ATransferCantBeDoneBetweenTheSameAccount stamp: 'IO 11/16/2020 16:20:22'!
+PASSED!
+
+!testRun: #TransferTest #test05ATransferCantBeDoneBeOf0Value stamp: 'IO 11/16/2020 16:20:22'!
+PASSED!
+
+!testRun: #TransferTest #test06ATransferCantBeOfNegativeValue stamp: 'IO 11/16/2020 16:20:22'!
+PASSED!
+
+----SNAPSHOT----(16 November 2020 16:21:34) CuisUniversity-4384.image priorSource: 18545304!
+!AccountReporter methodsFor: 'adding to report' stamp: 'IO 11/16/2020 16:22:42' prior: 50913373!
+addAccountSummaryTextWith: aPrefix for: aTransaction
+
+	"add a transaction to the report given a prefix"
+
+	report add: (aPrefix, aTransaction value asString, '.').
+! !
+
+!testRun: #AccountReporterTest #test01AccountSummaryForAnEmptyAccount stamp: 'IO 11/16/2020 16:23:05'!
+PASSED!
+
+!testRun: #AccountReporterTest #test02AccountSummaryForAnAccountWithADeposit stamp: 'IO 11/16/2020 16:23:05'!
+PASSED!
+
+!testRun: #AccountReporterTest #test03AccountSummaryForAnAccountWithAWithdraw stamp: 'IO 11/16/2020 16:23:05'!
+PASSED!
+
+!testRun: #AccountReporterTest #test04AccountSummaryForAnAccountWithAWithdrawTransfer stamp: 'IO 11/16/2020 16:23:05'!
+PASSED!
+
+!testRun: #AccountReporterTest #test05AccountSummaryOfAnAccountWithADepositTransfer stamp: 'IO 11/16/2020 16:23:05'!
+PASSED!
+
+!testRun: #AccountReporterTest #test06AccountSummaryForAPortfolioWithNoAccounts stamp: 'IO 11/16/2020 16:23:05'!
+PASSED!
+
+!testRun: #AccountReporterTest #test07AccountReportForPortfolioWithOneAccount stamp: 'IO 11/16/2020 16:23:05'!
+PASSED!
+
+!testRun: #AccountReporterTest #test08AccountSummaryForPortfolioWithManyAccounts stamp: 'IO 11/16/2020 16:23:05'!
+PASSED!
+
+!testRun: #AccountReporterTest #test09TransferNetForAnEmptyAccount stamp: 'IO 11/16/2020 16:23:05'!
+PASSED!
+
+!testRun: #AccountReporterTest #test10TransferNetForAnAccountWithADepositTransfer stamp: 'IO 11/16/2020 16:23:05'!
+PASSED!
+
+!testRun: #AccountReporterTest #test11TransferNetForAnAccountWithAWidthdrawTransfer stamp: 'IO 11/16/2020 16:23:05'!
+PASSED!
+
+!testRun: #AccountReporterTest #test12TransferNetForAnAccountWithManyTransfers stamp: 'IO 11/16/2020 16:23:05'!
+PASSED!
+
+!testRun: #AccountReporterTest #test13AccountTreeForAnAccount stamp: 'IO 11/16/2020 16:23:05'!
+PASSED!
+
+!testRun: #AccountReporterTest #test14AccountTreeForAnEmptyPortfolio stamp: 'IO 11/16/2020 16:23:05'!
+PASSED!
+
+!testRun: #AccountReporterTest #test15AccountTreeForAPortfolioWithAccounts stamp: 'IO 11/16/2020 16:23:05'!
+PASSED!
+
+!testRun: #AccountReporterTest #test16AccountTreeForAPortfolioWithPortfolios stamp: 'IO 11/16/2020 16:23:05'!
+PASSED!
+
+!testRun: #AccountReporterTest #test17AccountSummaryTreeForAPortfolioWithPortfoliosAndTransactions stamp: 'IO 11/16/2020 16:23:05'!
+PASSED!
+
+!testRun: #PortfolioTest #test01BalanceOfPortfolioWithoutAccountsIsZero stamp: 'IO 11/16/2020 16:23:05'!
+PASSED!
+
+!testRun: #PortfolioTest #test02BalanceOfPortfolioWithOneAccountIsAccountBalance stamp: 'IO 11/16/2020 16:23:05'!
+PASSED!
+
+!testRun: #PortfolioTest #test03BalanceOfPortfolioIsCalculatedRecursivelyOnPortfolios stamp: 'IO 11/16/2020 16:23:05'!
+PASSED!
+
+!testRun: #PortfolioTest #test04PortfolioWithoutAccountsHasNoRegisteredTransaction stamp: 'IO 11/16/2020 16:23:05'!
+PASSED!
+
+!testRun: #PortfolioTest #test05PortfolioHasRegisteredItsAccountsTransactions stamp: 'IO 11/16/2020 16:23:05'!
+PASSED!
+
+!testRun: #PortfolioTest #test06PortfolioLooksForRegisteredTransactionsRecursively stamp: 'IO 11/16/2020 16:23:05'!
+PASSED!
+
+!testRun: #PortfolioTest #test07PortfolioHasNoTransactionWhenHasNoAccounts stamp: 'IO 11/16/2020 16:23:05'!
+PASSED!
+
+!testRun: #PortfolioTest #test08PortfolioTransactionsIncludesAllItsAccountsTransactions stamp: 'IO 11/16/2020 16:23:05'!
+PASSED!
+
+!testRun: #PortfolioTest #test09PortfolioTransactionsAreCalculatedRecursively stamp: 'IO 11/16/2020 16:23:05'!
+PASSED!
+
+!testRun: #PortfolioTest #test10PortfolioCanNotIncludeTheSameAccountMoreThanOnce stamp: 'IO 11/16/2020 16:23:05'!
+PASSED!
+
+!testRun: #PortfolioTest #test11PortfolioCanNotIncludeAccountOfItsPortfolios stamp: 'IO 11/16/2020 16:23:05'!
+PASSED!
+
+!testRun: #PortfolioTest #test12PortfolioCanNotIncludeItself stamp: 'IO 11/16/2020 16:23:05'!
+PASSED!
+
+!testRun: #PortfolioTest #test13ComposedPortfolioCanNotHaveParentPortfolioAccount stamp: 'IO 11/16/2020 16:23:05'!
+PASSED!
+
+!testRun: #PortfolioTest #test14ComposedPortfolioCanNotHaveAccountOfAnyRootParentRecursively stamp: 'IO 11/16/2020 16:23:05'!
+PASSED!
+
+!testRun: #PortfolioTest #test15PortfolioCanNotIncludeAnyOfTheComposedAccountOfPortfolioToAdd stamp: 'IO 11/16/2020 16:23:05'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test01ReceptiveAccountHaveZeroAsBalanceWhenCreated stamp: 'IO 11/16/2020 16:23:05'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test02DepositIncreasesBalanceOnTransactionValue stamp: 'IO 11/16/2020 16:23:05'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test03WithdrawDecreasesBalanceOnTransactionValue stamp: 'IO 11/16/2020 16:23:05'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test04WithdrawValueMustBePositive stamp: 'IO 11/16/2020 16:23:05'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test05ReceptiveAccountKnowsRegisteredTransactions stamp: 'IO 11/16/2020 16:23:05'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test06ReceptiveAccountDoNotKnowNotRegisteredTransactions stamp: 'IO 11/16/2020 16:23:05'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test07AccountKnowsItsTransactions stamp: 'IO 11/16/2020 16:23:05'!
+PASSED!
+
+!testRun: #TransferTest #test01ATransferDecreasesBalanceOfSenderAndIncreasesOnReceiver stamp: 'IO 11/16/2020 16:23:05'!
+PASSED!
+
+!testRun: #TransferTest #test02ATransferRegistersATransferDepositAndATransferWithdraw stamp: 'IO 11/16/2020 16:23:05'!
+PASSED!
+
+!testRun: #TransferTest #test03ATransferWithdrawAndDepositKnowTheirTransfer stamp: 'IO 11/16/2020 16:23:05'!
+PASSED!
+
+!testRun: #TransferTest #test04ATransferCantBeDoneBetweenTheSameAccount stamp: 'IO 11/16/2020 16:23:05'!
+PASSED!
+
+!testRun: #TransferTest #test05ATransferCantBeDoneBeOf0Value stamp: 'IO 11/16/2020 16:23:05'!
+PASSED!
+
+!testRun: #TransferTest #test06ATransferCantBeOfNegativeValue stamp: 'IO 11/16/2020 16:23:05'!
+PASSED!
+
+----SNAPSHOT----(16 November 2020 16:23:15) CuisUniversity-4384.image priorSource: 18640853!

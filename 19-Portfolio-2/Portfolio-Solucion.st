@@ -999,13 +999,12 @@ initializeFor: anAccount
 ! !
 
 
-!AccountReporter methodsFor: 'adding to report' stamp: 'IO 11/16/2020 15:58:45'!
+!AccountReporter methodsFor: 'adding to report' stamp: 'IO 11/16/2020 16:22:42'!
 addAccountSummaryTextWith: aPrefix for: aTransaction
 
 	"add a transaction to the report given a prefix"
 
-	self subclassResponsibility.
-
+	report add: (aPrefix, aTransaction value asString, '.').
 ! !
 
 !AccountReporter methodsFor: 'adding to report' stamp: 'IO 11/16/2020 15:18:15'!
@@ -1094,6 +1093,13 @@ addWithdrawTextToReport: aWithdraw
 	self addAccountSummaryTextWith: 'Extracción por ' for: aWithdraw.
 ! !
 
+
+!AccountReporter methodsFor: 'text utils' stamp: 'IO 11/16/2020 16:18:04'!
+getBalanceTextFor: anAccount
+
+	^'Balance = ', anAccount balance asString.
+! !
+
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
 !classDefinition: 'AccountReporter class' category: 'Portfolio-Solucion'!
@@ -1114,14 +1120,6 @@ AccountReporter subclass: #AccountSummaryReporter
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'Portfolio-Solucion'!
-
-!AccountSummaryReporter methodsFor: 'adding to report' stamp: 'IO 11/16/2020 15:58:25'!
-addAccountSummaryTextWith: aPrefix for: aTransaction
-
-	"see superclass"
-
-	report add: (aPrefix, aTransaction value asString, '.').
-! !
 
 !AccountSummaryReporter methodsFor: 'adding to report' stamp: 'IO 11/16/2020 15:59:25'!
 addDepositToReport: aDeposit
@@ -1156,12 +1154,12 @@ addWithdrawToReport: aWithdraw
 ! !
 
 
-!AccountSummaryReporter methodsFor: 'emitting' stamp: 'IO 11/14/2020 21:59:59'!
+!AccountSummaryReporter methodsFor: 'emitting' stamp: 'IO 11/16/2020 16:18:56'!
 emitReport
 
 	"see superclass"
 
-	super emitReport add: ('Balance = ', account balance asString).
+	super emitReport add: (self getBalanceTextFor: account).
 	^report.! !
 
 
@@ -1236,20 +1234,20 @@ AccountTreeReporter subclass: #AccountSummaryTreeReporter
 	poolDictionaries: ''
 	category: 'Portfolio-Solucion'!
 
-!AccountSummaryTreeReporter methodsFor: 'adding to report' stamp: 'IO 11/16/2020 15:51:28'!
+!AccountSummaryTreeReporter methodsFor: 'adding to report' stamp: 'IO 11/16/2020 16:16:19'!
 addAccountSummaryTextWith: aPrefix for: aTransaction
 
 	"add a transaction to the report given a prefix"
 
-	report add: (indentation, aPrefix, aTransaction value asString, '.').
+	super addAccountSummaryTextWith: (indentation, aPrefix) for: aTransaction.
 ! !
 
-!AccountSummaryTreeReporter methodsFor: 'adding to report' stamp: 'IO 11/16/2020 16:08:42'!
+!AccountSummaryTreeReporter methodsFor: 'adding to report' stamp: 'IO 11/16/2020 16:20:21'!
 addAccountToReport: anAccount
 
 	"adds the name of a Portfolio to the report"
 	
-	self addAccountToReport: anAccount thenDo: [report add: (indentation, 'Balance = ', anAccount balance asString).].
+	self addAccountToReport: anAccount thenDo: [report add: (indentation, (self getBalanceTextFor: anAccount)).].
 ! !
 
 !AccountSummaryTreeReporter methodsFor: 'adding to report' stamp: 'IO 11/16/2020 15:59:40'!
@@ -1324,7 +1322,6 @@ initializeFor: anAccount
 	report := 0.
 	super initializeFor: anAccount.
 ! !
-
 
 
 !classDefinition: #AccountTestUtility category: 'Portfolio-Solucion'!
