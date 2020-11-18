@@ -352,73 +352,76 @@ test19ListPurchasesHasMatchingPassword
 
 !classDefinition: #TusLibros category: 'Ejercicio-20-Tus-Libros'!
 Object subclass: #TusLibros
-	instanceVariableNames: 'carts cartClients clientsPurchases clients catalogue'
+	instanceVariableNames: 'carts cartClients clients catalogue'
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'Ejercicio-20-Tus-Libros'!
 
-!TusLibros methodsFor: 'initialization' stamp: 'IO 11/18/2020 18:29:32'!
+!TusLibros methodsFor: 'initialization' stamp: 'IO 11/18/2020 20:23:29'!
 initializeWithCatalogue: aCatalogue withClients: aClientList 
 
 	catalogue := aCatalogue.
-	clients := aClientList.
 
 	carts := OrderedCollection new.
-	cartClients := OrderedCollection new.
-	clientsPurchases := Dictionary new.
+
+	clients := Dictionary new.
+	aClientList keysDo: [ :clientId | clients add: (
+		Association key: clientId value: (TusLibrosClient for: (aClientList at: clientId)))].
 ! !
 
 
-!TusLibros methodsFor: 'cart' stamp: 'IO 11/18/2020 18:53:15'!
-addToCart: cartId bookIsbn: isbn bookQuantity: quantity
+!TusLibros methodsFor: 'cart' stamp: 'IO 11/18/2020 20:19:03'!
+addToCart: aCartId bookIsbn: anIsbn bookQuantity: aQuantity
 
 	| cart |
 
-	self validateCartId: cartId.
-	(catalogue includes: isbn) ifFalse: [^self error: TusLibros invalidIsbnErrorMessage].
-	(quantity < 1) ifTrue: [^self error: TusLibros invalidQuantityErrorMessage].
+	self validateCartId: aCartId.
+	(catalogue includes: anIsbn) ifFalse: [^self error: TusLibros invalidIsbnErrorMessage].
+	(aQuantity < 1) ifTrue: [^self error: TusLibros invalidQuantityErrorMessage].
 
-	cart := carts at: cartId.
-	cart add: isbn withOccurrences: quantity.
+	cart := carts at: aCartId.
+	cart add: anIsbn withQuantity: aQuantity.
 ! !
 
-!TusLibros methodsFor: 'cart' stamp: 'IO 11/18/2020 18:53:22'!
+!TusLibros methodsFor: 'cart' stamp: 'IO 11/18/2020 20:20:43'!
 listCart: cartId
 
 	self validateCartId: cartId.
 
-	^carts at: cartId copy.
+	^(carts at: cartId) books.
 ! !
 
-!TusLibros methodsFor: 'cart' stamp: 'IO 11/18/2020 19:09:01'!
+!TusLibros methodsFor: 'cart' stamp: 'IO 11/18/2020 20:23:40'!
 newCartForClientId: clientId password: password
+
 	self validateClientId: clientId withPassword: password.
 
-	carts add: Bag new.
-	cartClients add: clientId.
+	carts add: (TusLibrosCart for: clientId).
 	^carts size.
 ! !
 
 
-!TusLibros methodsFor: 'purchases' stamp: 'IO 11/18/2020 19:04:51'!
-checkoutCart: cartId ccn: ccn cced: cced cco: cco 
-	| cart clientId checkout |
+!TusLibros methodsFor: 'purchases' stamp: 'IO 11/18/2020 20:25:29'!
+checkout: aCart for: clientId
 
-	self validateCartId: cartId.
-	cart := carts at: cartId.
-	(cart size = 0) ifTrue: [self error: TusLibros emptyCartErrorMessage].
-
-	clientId := cartClients at: cartId.
-	checkout := clientsPurchases at: clientId ifAbsent: [Bag new].
-	checkout addAll: cart.
-	clientsPurchases at: clientId put: checkout.
+	(clients at: clientId) checkout: aCart.
 ! !
 
-!TusLibros methodsFor: 'purchases' stamp: 'IO 11/18/2020 19:09:13'!
+!TusLibros methodsFor: 'purchases' stamp: 'IO 11/18/2020 20:25:24'!
+checkoutCart: cartId ccn: ccn cced: cced cco: cco
+
+	self validateCartId: cartId.
+
+	(carts at: cartId) checkoutOn: self.
+
+! !
+
+!TusLibros methodsFor: 'purchases' stamp: 'IO 11/18/2020 20:25:36'!
 listPurchasesFor: clientId password: password
+
 	self validateClientId: clientId withPassword: password.
 
-	^clientsPurchases at: clientId ifAbsent: [^Bag new] copy.
+	^(clients at: clientId) purchases.
 ! !
 
 
@@ -426,12 +429,10 @@ listPurchasesFor: clientId password: password
 validateCartId: cartId
 	(cartId > carts size) ifTrue: [^self error: TusLibros invalidCartIdErrorMessage].! !
 
-!TusLibros methodsFor: 'validations' stamp: 'IO 11/18/2020 19:08:36'!
+!TusLibros methodsFor: 'validations' stamp: 'IO 11/18/2020 19:54:48'!
 validateClientId: clientId withPassword: password
-	(
-		(clients at: clientId
-				ifAbsent: [^self error: TusLibros inexistentClientErrorMessage]) = password
-	) ifFalse: [^self error: TusLibros invalidPasswordErrorMessage].
+	(clients at: clientId ifAbsent: [
+		^self error: TusLibros inexistentClientErrorMessage]) validatePassword: password.
 ! !
 
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
@@ -477,3 +478,82 @@ withCatalogue: aCatalogue withClients: aClientList
 
 	^self new initializeWithCatalogue: aCatalogue withClients: aClientList.
  ! !
+
+
+!classDefinition: #TusLibrosCart category: 'Ejercicio-20-Tus-Libros'!
+Object subclass: #TusLibrosCart
+	instanceVariableNames: 'clientId books'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Ejercicio-20-Tus-Libros'!
+
+!TusLibrosCart methodsFor: 'as yet unclassified' stamp: 'IO 11/18/2020 20:13:51'!
+add: aBook withQuantity: aQuantity
+	books add: aBook withOccurrences: aQuantity.
+! !
+
+!TusLibrosCart methodsFor: 'as yet unclassified' stamp: 'IO 11/18/2020 20:14:51'!
+books
+	^books copy.! !
+
+!TusLibrosCart methodsFor: 'as yet unclassified' stamp: 'IO 11/18/2020 20:22:43'!
+checkoutOn: aTusLibros
+	(books size = 0) ifTrue: [self error: TusLibros emptyCartErrorMessage].
+	aTusLibros checkout: self books for: clientId.
+! !
+
+!TusLibrosCart methodsFor: 'as yet unclassified' stamp: 'IO 11/18/2020 20:12:38'!
+initializeFor: aClientId
+	clientId := aClientId.
+	books := Bag new.! !
+
+"-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
+
+!classDefinition: 'TusLibrosCart class' category: 'Ejercicio-20-Tus-Libros'!
+TusLibrosCart class
+	instanceVariableNames: ''!
+
+!TusLibrosCart class methodsFor: 'as yet unclassified' stamp: 'IO 11/18/2020 20:12:18'!
+for: clientId
+	^self basicNew initializeFor: clientId.! !
+
+
+!classDefinition: #TusLibrosClient category: 'Ejercicio-20-Tus-Libros'!
+Object subclass: #TusLibrosClient
+	instanceVariableNames: 'password purchases'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Ejercicio-20-Tus-Libros'!
+
+!TusLibrosClient methodsFor: 'as yet unclassified' stamp: 'IO 11/18/2020 19:49:55'!
+checkout: aCart
+	purchases addAll: aCart.
+! !
+
+!TusLibrosClient methodsFor: 'as yet unclassified' stamp: 'IO 11/18/2020 19:51:17'!
+purchases
+	^purchases copy.! !
+
+!TusLibrosClient methodsFor: 'as yet unclassified' stamp: 'IO 11/18/2020 19:51:01'!
+validatePassword: aPassword
+	(password = aPassword) ifFalse: [^self error: TusLibros invalidPasswordErrorMessage].
+! !
+
+!TusLibrosClient methodsFor: 'as yet unclassified' stamp: 'IO 11/18/2020 19:49:32'!
+with: aPassword
+
+	password := aPassword.
+	purchases := Bag new.
+
+! !
+
+"-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
+
+!classDefinition: 'TusLibrosClient class' category: 'Ejercicio-20-Tus-Libros'!
+TusLibrosClient class
+	instanceVariableNames: ''!
+
+!TusLibrosClient class methodsFor: 'as yet unclassified' stamp: 'IO 11/18/2020 19:59:00'!
+for: aPassword
+
+	^self basicNew with: aPassword.! !
