@@ -30302,3 +30302,3987 @@ PASSED!
 PASSED!
 
 ----SNAPSHOT----(18 November 2020 17:35:01) CuisUniversity-4384.image priorSource: 17160590!
+
+!testRun: #TusLibrosShopTest #test01NewCartIsEmpty stamp: 'IO 11/18/2020 17:39:34'!
+PASSED!
+
+!testRun: #TusLibrosShopTest #test02CanAddABookToCart stamp: 'IO 11/18/2020 17:39:34'!
+PASSED!
+
+!testRun: #TusLibrosShopTest #test03CanAddDifferentBooksToCart stamp: 'IO 11/18/2020 17:39:34'!
+PASSED!
+
+!testRun: #TusLibrosShopTest #test04CanAddMoreThanOneBookToCart stamp: 'IO 11/18/2020 17:39:34'!
+PASSED!
+
+!testRun: #TusLibrosShopTest #test05CanAddMoreThanOneCart stamp: 'IO 11/18/2020 17:39:34'!
+PASSED!
+
+!testRun: #TusLibrosShopTest #test06AClientInitialyHasNowPurchases stamp: 'IO 11/18/2020 17:39:34'!
+PASSED!
+
+!testRun: #TusLibrosShopTest #test07AClientCanCheckoutACart stamp: 'IO 11/18/2020 17:39:34'!
+PASSED!
+
+!testRun: #TusLibrosShopTest #test08AClientCanCheckoutManyTimes stamp: 'IO 11/18/2020 17:39:34'!
+PASSED!
+
+!testRun: #TusLibrosShopTest #test09ManyClientsCanCheckout stamp: 'IO 11/18/2020 17:39:34'!
+PASSED!
+
+!classDefinition: #TusLibrosShop category: 'Ejercicio-20-Tus-Libros' stamp: 'IO 11/18/2020 17:39:42'!
+Object subclass: #TusLibrosShop
+	instanceVariableNames: 'carts cartClients purchases'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Ejercicio-20-Tus-Libros'!
+!TusLibrosShop methodsFor: 'as yet unclassified' stamp: 'IO 11/18/2020 17:39:42' prior: 50870234!
+checkoutCart: cartId ccn: ccn cced: cced cco: cco 
+	| cart clientId checkout |
+	cart := carts at: cartId.
+	clientId := cartClients at: cartId.
+	checkout := purchases at: clientId ifAbsent: [Bag new].
+	checkout addAll: cart.
+	purchases at: clientId put: checkout.
+
+	
+! !
+!TusLibrosShop methodsFor: 'as yet unclassified' stamp: 'IO 11/18/2020 17:39:42' prior: 50869982!
+initializeFromCatalogue: aCatalogue users: users 
+
+	carts := OrderedCollection new.
+	cartClients := OrderedCollection new.
+	purchases := Dictionary new.
+! !
+!TusLibrosShop methodsFor: 'as yet unclassified' stamp: 'IO 11/18/2020 17:39:42' prior: 50870166!
+listPurchasesFor: user password: password
+	
+	^purchases at: user ifAbsent: [^Bag new] copy.! !
+
+!testRun: #TusLibrosShopTest #test01NewCartIsEmpty stamp: 'IO 11/18/2020 17:39:45'!
+PASSED!
+
+!testRun: #TusLibrosShopTest #test02CanAddABookToCart stamp: 'IO 11/18/2020 17:39:45'!
+PASSED!
+
+!testRun: #TusLibrosShopTest #test03CanAddDifferentBooksToCart stamp: 'IO 11/18/2020 17:39:45'!
+PASSED!
+
+!testRun: #TusLibrosShopTest #test04CanAddMoreThanOneBookToCart stamp: 'IO 11/18/2020 17:39:45'!
+PASSED!
+
+!testRun: #TusLibrosShopTest #test05CanAddMoreThanOneCart stamp: 'IO 11/18/2020 17:39:45'!
+PASSED!
+
+!testRun: #TusLibrosShopTest #test06AClientInitialyHasNowPurchases stamp: 'IO 11/18/2020 17:39:45'!
+PASSED!
+
+!testRun: #TusLibrosShopTest #test07AClientCanCheckoutACart stamp: 'IO 11/18/2020 17:39:45'!
+PASSED!
+
+!testRun: #TusLibrosShopTest #test08AClientCanCheckoutManyTimes stamp: 'IO 11/18/2020 17:39:45'!
+PASSED!
+
+!testRun: #TusLibrosShopTest #test09ManyClientsCanCheckout stamp: 'IO 11/18/2020 17:39:45'!
+PASSED!
+!TusLibrosShop methodsFor: 'cart' stamp: 'IO 11/18/2020 17:40:14'!
+addToCart: cartId bookIsbn: isbn bookQuantity: quantity
+	| cart |
+	cart := carts at: cartId.
+	cart add: isbn withOccurrences: quantity.! !
+
+!methodRemoval: TusLibrosShop #addToCart:booksIsbn:bookQuantity: stamp: 'IO 11/18/2020 17:40:14'!
+addToCart: cartId booksIsbn: isbn bookQuantity: quantity
+	| cart |
+	cart := carts at: cartId.
+	cart add: isbn withOccurrences: quantity.!
+
+!testRun: #TusLibrosShopTest #test01NewCartIsEmpty stamp: 'IO 11/18/2020 17:40:17'!
+PASSED!
+
+!testRun: #TusLibrosShopTest #test02CanAddABookToCart stamp: 'IO 11/18/2020 17:40:17'!
+ERROR!
+
+!testRun: #TusLibrosShopTest #test03CanAddDifferentBooksToCart stamp: 'IO 11/18/2020 17:40:17'!
+ERROR!
+
+!testRun: #TusLibrosShopTest #test04CanAddMoreThanOneBookToCart stamp: 'IO 11/18/2020 17:40:17'!
+ERROR!
+
+!testRun: #TusLibrosShopTest #test05CanAddMoreThanOneCart stamp: 'IO 11/18/2020 17:40:17'!
+ERROR!
+
+!testRun: #TusLibrosShopTest #test06AClientInitialyHasNowPurchases stamp: 'IO 11/18/2020 17:40:17'!
+PASSED!
+
+!testRun: #TusLibrosShopTest #test07AClientCanCheckoutACart stamp: 'IO 11/18/2020 17:40:17'!
+ERROR!
+
+!testRun: #TusLibrosShopTest #test08AClientCanCheckoutManyTimes stamp: 'IO 11/18/2020 17:40:17'!
+ERROR!
+
+!testRun: #TusLibrosShopTest #test09ManyClientsCanCheckout stamp: 'IO 11/18/2020 17:40:17'!
+ERROR!
+!TusLibrosShop methodsFor: 'cart' stamp: 'IO 11/18/2020 17:40:25'!
+addToCart: cartId booksIsbn: isbn bookQuantity: quantity
+	| cart |
+	cart := carts at: cartId.
+	cart add: isbn withOccurrences: quantity.! !
+
+!methodRemoval: TusLibrosShop #addToCart:bookIsbn:bookQuantity: stamp: 'IO 11/18/2020 17:40:25'!
+addToCart: cartId bookIsbn: isbn bookQuantity: quantity
+	| cart |
+	cart := carts at: cartId.
+	cart add: isbn withOccurrences: quantity.!
+!TusLibrosShop methodsFor: 'cart' stamp: 'IO 11/18/2020 17:40:30'!
+addToCart: cartId bookIsbn: isbn bookQuantity: quantity
+	| cart |
+	cart := carts at: cartId.
+	cart add: isbn withOccurrences: quantity.! !
+!TusLibrosShopTest methodsFor: 'as yet unclassified' stamp: 'IO 11/18/2020 17:40:30' prior: 50868767!
+test02CanAddABookToCart
+
+	| tusLibros cartId cart |
+
+	tusLibros := self newTusLibros.
+
+	cartId := tusLibros newCartForUser: 'admin' Password: 'password'.
+	
+	tusLibros addToCart: cartId bookIsbn: '0-7645-2641-3' bookQuantity: 1.
+	
+	cart := Bag new.
+	cart add: '0-7645-2641-3'.
+
+	self assert: cart equals: (tusLibros listCart: cartId).
+
+! !
+!TusLibrosShopTest methodsFor: 'as yet unclassified' stamp: 'IO 11/18/2020 17:40:31' prior: 50868825!
+test03CanAddDifferentBooksToCart
+
+	| tusLibros cartId cart |
+
+	tusLibros := self newTusLibros.
+
+	cartId := tusLibros newCartForUser: 'admin' Password: 'password'.
+	
+	tusLibros addToCart: cartId bookIsbn: '0-7645-2641-3' bookQuantity: 1.
+	tusLibros addToCart: cartId bookIsbn: '0-7645-2641-4' bookQuantity: 1.
+
+	cart := Bag new.
+	cart add: '0-7645-2641-3'.
+	cart add: '0-7645-2641-4'.
+
+	self assert: cart equals: (tusLibros listCart: cartId).
+
+! !
+!TusLibrosShopTest methodsFor: 'as yet unclassified' stamp: 'IO 11/18/2020 17:40:31' prior: 50869252!
+test05CanAddMoreThanOneCart
+
+	| tusLibros cartId cartId2 cart |
+
+	tusLibros := self newTusLibros.
+
+	cartId := tusLibros newCartForUser: 'admin' Password: 'password'.
+	cartId2 := tusLibros newCartForUser: 'admin2' Password: 'password'.
+
+	tusLibros addToCart: cartId bookIsbn: '0-7645-2641-3' bookQuantity: 3.
+	tusLibros addToCart: cartId bookIsbn: '0-7645-2641-4' bookQuantity: 2.
+	
+	tusLibros addToCart: cartId2 bookIsbn: '0-7645-2641-3' bookQuantity: 5.
+	tusLibros addToCart: cartId2 bookIsbn: '0-7645-2641-4' bookQuantity: 3.
+
+	cart := Bag new.
+	cart add: '0-7645-2641-3' withOccurrences: 5.
+	cart add: '0-7645-2641-4' withOccurrences: 3.
+
+	self assert: cart equals: (tusLibros listCart: cartId2).
+
+! !
+!TusLibrosShopTest methodsFor: 'as yet unclassified' stamp: 'IO 11/18/2020 17:40:31' prior: 50869708!
+test07AClientCanCheckoutACart
+
+	| tusLibros cartId purchases expectedPurchases |
+
+	tusLibros := self newTusLibros.
+	
+	cartId := tusLibros newCartForUser: 'admin' Password: 'password'.
+	tusLibros addToCart: cartId bookIsbn: '0-7645-2641-3' bookQuantity: 2.
+
+	tusLibros checkoutCart: cartId ccn: '5500 0000 0000 0004' cced: '20/2025' cco: 'Juan'.
+
+	purchases := tusLibros listPurchasesFor: 'admin' password: 'password'.
+
+	expectedPurchases := Bag new.
+	expectedPurchases add: '0-7645-2641-3' withOccurrences: 2.
+
+	self assert: expectedPurchases equals: purchases.
+	self assert: 2 equals: purchases size.
+
+! !
+!TusLibrosShopTest methodsFor: 'as yet unclassified' stamp: 'IO 11/18/2020 17:40:31' prior: 50869765!
+test08AClientCanCheckoutManyTimes
+
+	| tusLibros cartId purchases expectedPurchases |
+
+	tusLibros := self newTusLibros.
+	
+	cartId := tusLibros newCartForUser: 'admin' Password: 'password'.
+	tusLibros addToCart: cartId bookIsbn: '0-7645-2641-3' bookQuantity: 2.
+	tusLibros checkoutCart: cartId ccn: '5500 0000 0000 0004' cced: '20/2025' cco: 'Juan'.
+	
+	cartId := tusLibros newCartForUser: 'admin' Password: 'password'.
+	tusLibros addToCart: cartId bookIsbn: '0-7645-2641-3' bookQuantity: 5.
+	tusLibros addToCart: cartId bookIsbn: '0-7645-2641-4' bookQuantity: 3.
+
+	tusLibros checkoutCart: cartId ccn: '5500 0000 0000 0004' cced: '20/2025' cco: 'Juan'.
+
+	purchases := tusLibros listPurchasesFor: 'admin' password: 'password'.
+
+	expectedPurchases := Bag new.
+	expectedPurchases add: '0-7645-2641-3' withOccurrences: 7.
+	expectedPurchases add: '0-7645-2641-4' withOccurrences: 3.
+
+	self assert: expectedPurchases equals: purchases.
+	self assert: 10 equals: purchases size.
+
+! !
+!TusLibrosShopTest methodsFor: 'as yet unclassified' stamp: 'IO 11/18/2020 17:40:31' prior: 50870310!
+test09ManyClientsCanCheckout
+
+	| tusLibros cartId purchases expectedPurchases |
+
+	tusLibros := self newTusLibros.
+	
+	cartId := tusLibros newCartForUser: 'admin' Password: 'password'.
+	tusLibros addToCart: cartId bookIsbn: '0-7645-2641-3' bookQuantity: 2.
+	tusLibros checkoutCart: cartId ccn: '5500 0000 0000 0004' cced: '20/2025' cco: 'Juan'.
+	
+	cartId := tusLibros newCartForUser: 'admin2' Password: 'password'.
+	tusLibros addToCart: cartId bookIsbn: '0-7645-2641-3' bookQuantity: 5.
+	tusLibros addToCart: cartId bookIsbn: '0-7645-2641-4' bookQuantity: 3.
+
+	tusLibros checkoutCart: cartId ccn: '5500 0000 0000 0004' cced: '20/2025' cco: 'Juan'.
+
+	purchases := tusLibros listPurchasesFor: 'admin2' password: 'password'.
+
+	expectedPurchases := Bag new.
+	expectedPurchases add: '0-7645-2641-3' withOccurrences: 5.
+	expectedPurchases add: '0-7645-2641-4' withOccurrences: 3.
+
+	self assert: expectedPurchases equals: purchases.
+	self assert: 8 equals: purchases size.
+
+! !
+!TusLibrosShopTest methodsFor: 'as yet unclassified' stamp: 'IO 11/18/2020 17:40:31' prior: 50868973!
+test04CanAddMoreThanOneBookToCart
+
+	| tusLibros cartId cart |
+
+	tusLibros := self newTusLibros.
+
+	cartId := tusLibros newCartForUser: 'admin' Password: 'password'.
+	
+	tusLibros addToCart: cartId bookIsbn: '0-7645-2641-3' bookQuantity: 3.
+	tusLibros addToCart: cartId bookIsbn: '0-7645-2641-4' bookQuantity: 2.
+
+	cart := Bag new.
+	cart add: '0-7645-2641-3' withOccurrences: 3.
+	cart add: '0-7645-2641-4' withOccurrences: 2.
+
+	self assert: cart equals: (tusLibros listCart: cartId).
+
+! !
+
+!methodRemoval: TusLibrosShop #addToCart:booksIsbn:bookQuantity: stamp: 'IO 11/18/2020 17:40:31'!
+addToCart: cartId booksIsbn: isbn bookQuantity: quantity
+	| cart |
+	cart := carts at: cartId.
+	cart add: isbn withOccurrences: quantity.!
+
+!testRun: #TusLibrosShopTest #test01NewCartIsEmpty stamp: 'IO 11/18/2020 17:40:33'!
+PASSED!
+
+!testRun: #TusLibrosShopTest #test02CanAddABookToCart stamp: 'IO 11/18/2020 17:40:33'!
+PASSED!
+
+!testRun: #TusLibrosShopTest #test03CanAddDifferentBooksToCart stamp: 'IO 11/18/2020 17:40:33'!
+PASSED!
+
+!testRun: #TusLibrosShopTest #test04CanAddMoreThanOneBookToCart stamp: 'IO 11/18/2020 17:40:33'!
+PASSED!
+
+!testRun: #TusLibrosShopTest #test05CanAddMoreThanOneCart stamp: 'IO 11/18/2020 17:40:33'!
+PASSED!
+
+!testRun: #TusLibrosShopTest #test06AClientInitialyHasNowPurchases stamp: 'IO 11/18/2020 17:40:33'!
+PASSED!
+
+!testRun: #TusLibrosShopTest #test07AClientCanCheckoutACart stamp: 'IO 11/18/2020 17:40:33'!
+PASSED!
+
+!testRun: #TusLibrosShopTest #test08AClientCanCheckoutManyTimes stamp: 'IO 11/18/2020 17:40:33'!
+PASSED!
+
+!testRun: #TusLibrosShopTest #test09ManyClientsCanCheckout stamp: 'IO 11/18/2020 17:40:33'!
+PASSED!
+!TusLibrosShop methodsFor: 'cart' stamp: 'IO 11/18/2020 17:40:38' prior: 50869191!
+listCart: cartId 
+	^(carts at: cartId) copy.
+! !
+!TusLibrosShop methodsFor: 'cart' stamp: 'IO 11/18/2020 17:40:42' prior: 50870738!
+listCart: cartId 
+	^carts at: cartId copy.
+! !
+
+!testRun: #TusLibrosShopTest #test01NewCartIsEmpty stamp: 'IO 11/18/2020 17:40:42'!
+PASSED!
+
+!testRun: #TusLibrosShopTest #test02CanAddABookToCart stamp: 'IO 11/18/2020 17:40:42'!
+PASSED!
+
+!testRun: #TusLibrosShopTest #test03CanAddDifferentBooksToCart stamp: 'IO 11/18/2020 17:40:42'!
+PASSED!
+
+!testRun: #TusLibrosShopTest #test04CanAddMoreThanOneBookToCart stamp: 'IO 11/18/2020 17:40:42'!
+PASSED!
+
+!testRun: #TusLibrosShopTest #test05CanAddMoreThanOneCart stamp: 'IO 11/18/2020 17:40:42'!
+PASSED!
+
+!testRun: #TusLibrosShopTest #test06AClientInitialyHasNowPurchases stamp: 'IO 11/18/2020 17:40:42'!
+PASSED!
+
+!testRun: #TusLibrosShopTest #test07AClientCanCheckoutACart stamp: 'IO 11/18/2020 17:40:42'!
+PASSED!
+
+!testRun: #TusLibrosShopTest #test08AClientCanCheckoutManyTimes stamp: 'IO 11/18/2020 17:40:42'!
+PASSED!
+
+!testRun: #TusLibrosShopTest #test09ManyClientsCanCheckout stamp: 'IO 11/18/2020 17:40:42'!
+PASSED!
+!TusLibrosShop methodsFor: 'cart' stamp: 'IO 11/18/2020 17:40:56' prior: 50869953!
+newCartForUser: user Password: password
+	carts add: Bag new.
+	cartClients add: user.
+	^carts size.
+! !
+
+!testRun: #TusLibrosShopTest #test01NewCartIsEmpty stamp: 'IO 11/18/2020 17:40:57'!
+PASSED!
+
+!testRun: #TusLibrosShopTest #test02CanAddABookToCart stamp: 'IO 11/18/2020 17:40:57'!
+PASSED!
+
+!testRun: #TusLibrosShopTest #test03CanAddDifferentBooksToCart stamp: 'IO 11/18/2020 17:40:57'!
+PASSED!
+
+!testRun: #TusLibrosShopTest #test04CanAddMoreThanOneBookToCart stamp: 'IO 11/18/2020 17:40:57'!
+PASSED!
+
+!testRun: #TusLibrosShopTest #test05CanAddMoreThanOneCart stamp: 'IO 11/18/2020 17:40:57'!
+PASSED!
+
+!testRun: #TusLibrosShopTest #test06AClientInitialyHasNowPurchases stamp: 'IO 11/18/2020 17:40:57'!
+PASSED!
+
+!testRun: #TusLibrosShopTest #test07AClientCanCheckoutACart stamp: 'IO 11/18/2020 17:40:57'!
+PASSED!
+
+!testRun: #TusLibrosShopTest #test08AClientCanCheckoutManyTimes stamp: 'IO 11/18/2020 17:40:57'!
+PASSED!
+
+!testRun: #TusLibrosShopTest #test09ManyClientsCanCheckout stamp: 'IO 11/18/2020 17:40:57'!
+PASSED!
+!TusLibrosShop methodsFor: 'cart' stamp: 'IO 11/18/2020 17:41:29'!
+newCartForClientId: user Password: password
+	carts add: Bag new.
+	cartClients add: user.
+	^carts size.
+! !
+!TusLibrosShopTest methodsFor: 'as yet unclassified' stamp: 'IO 11/18/2020 17:41:29' prior: 50870650!
+test09ManyClientsCanCheckout
+
+	| tusLibros cartId purchases expectedPurchases |
+
+	tusLibros := self newTusLibros.
+	
+	cartId := tusLibros newCartForClientId: 'admin' Password: 'password'.
+	tusLibros addToCart: cartId bookIsbn: '0-7645-2641-3' bookQuantity: 2.
+	tusLibros checkoutCart: cartId ccn: '5500 0000 0000 0004' cced: '20/2025' cco: 'Juan'.
+	
+	cartId := tusLibros newCartForClientId: 'admin2' Password: 'password'.
+	tusLibros addToCart: cartId bookIsbn: '0-7645-2641-3' bookQuantity: 5.
+	tusLibros addToCart: cartId bookIsbn: '0-7645-2641-4' bookQuantity: 3.
+
+	tusLibros checkoutCart: cartId ccn: '5500 0000 0000 0004' cced: '20/2025' cco: 'Juan'.
+
+	purchases := tusLibros listPurchasesFor: 'admin2' password: 'password'.
+
+	expectedPurchases := Bag new.
+	expectedPurchases add: '0-7645-2641-3' withOccurrences: 5.
+	expectedPurchases add: '0-7645-2641-4' withOccurrences: 3.
+
+	self assert: expectedPurchases equals: purchases.
+	self assert: 8 equals: purchases size.
+
+! !
+!TusLibrosShopTest methodsFor: 'as yet unclassified' stamp: 'IO 11/18/2020 17:41:29' prior: 50870593!
+test07AClientCanCheckoutACart
+
+	| tusLibros cartId purchases expectedPurchases |
+
+	tusLibros := self newTusLibros.
+	
+	cartId := tusLibros newCartForClientId: 'admin' Password: 'password'.
+	tusLibros addToCart: cartId bookIsbn: '0-7645-2641-3' bookQuantity: 2.
+
+	tusLibros checkoutCart: cartId ccn: '5500 0000 0000 0004' cced: '20/2025' cco: 'Juan'.
+
+	purchases := tusLibros listPurchasesFor: 'admin' password: 'password'.
+
+	expectedPurchases := Bag new.
+	expectedPurchases add: '0-7645-2641-3' withOccurrences: 2.
+
+	self assert: expectedPurchases equals: purchases.
+	self assert: 2 equals: purchases size.
+
+! !
+!TusLibrosShopTest methodsFor: 'as yet unclassified' stamp: 'IO 11/18/2020 17:41:29' prior: 50870616!
+test08AClientCanCheckoutManyTimes
+
+	| tusLibros cartId purchases expectedPurchases |
+
+	tusLibros := self newTusLibros.
+	
+	cartId := tusLibros newCartForClientId: 'admin' Password: 'password'.
+	tusLibros addToCart: cartId bookIsbn: '0-7645-2641-3' bookQuantity: 2.
+	tusLibros checkoutCart: cartId ccn: '5500 0000 0000 0004' cced: '20/2025' cco: 'Juan'.
+	
+	cartId := tusLibros newCartForClientId: 'admin' Password: 'password'.
+	tusLibros addToCart: cartId bookIsbn: '0-7645-2641-3' bookQuantity: 5.
+	tusLibros addToCart: cartId bookIsbn: '0-7645-2641-4' bookQuantity: 3.
+
+	tusLibros checkoutCart: cartId ccn: '5500 0000 0000 0004' cced: '20/2025' cco: 'Juan'.
+
+	purchases := tusLibros listPurchasesFor: 'admin' password: 'password'.
+
+	expectedPurchases := Bag new.
+	expectedPurchases add: '0-7645-2641-3' withOccurrences: 7.
+	expectedPurchases add: '0-7645-2641-4' withOccurrences: 3.
+
+	self assert: expectedPurchases equals: purchases.
+	self assert: 10 equals: purchases size.
+
+! !
+!TusLibrosShopTest methodsFor: 'as yet unclassified' stamp: 'IO 11/18/2020 17:41:29' prior: 50870684!
+test04CanAddMoreThanOneBookToCart
+
+	| tusLibros cartId cart |
+
+	tusLibros := self newTusLibros.
+
+	cartId := tusLibros newCartForClientId: 'admin' Password: 'password'.
+	
+	tusLibros addToCart: cartId bookIsbn: '0-7645-2641-3' bookQuantity: 3.
+	tusLibros addToCart: cartId bookIsbn: '0-7645-2641-4' bookQuantity: 2.
+
+	cart := Bag new.
+	cart add: '0-7645-2641-3' withOccurrences: 3.
+	cart add: '0-7645-2641-4' withOccurrences: 2.
+
+	self assert: cart equals: (tusLibros listCart: cartId).
+
+! !
+!TusLibrosShopTest methodsFor: 'as yet unclassified' stamp: 'IO 11/18/2020 17:41:29' prior: 50870567!
+test05CanAddMoreThanOneCart
+
+	| tusLibros cartId cartId2 cart |
+
+	tusLibros := self newTusLibros.
+
+	cartId := tusLibros newCartForClientId: 'admin' Password: 'password'.
+	cartId2 := tusLibros newCartForClientId: 'admin2' Password: 'password'.
+
+	tusLibros addToCart: cartId bookIsbn: '0-7645-2641-3' bookQuantity: 3.
+	tusLibros addToCart: cartId bookIsbn: '0-7645-2641-4' bookQuantity: 2.
+	
+	tusLibros addToCart: cartId2 bookIsbn: '0-7645-2641-3' bookQuantity: 5.
+	tusLibros addToCart: cartId2 bookIsbn: '0-7645-2641-4' bookQuantity: 3.
+
+	cart := Bag new.
+	cart add: '0-7645-2641-3' withOccurrences: 5.
+	cart add: '0-7645-2641-4' withOccurrences: 3.
+
+	self assert: cart equals: (tusLibros listCart: cartId2).
+
+! !
+!TusLibrosShopTest methodsFor: 'as yet unclassified' stamp: 'IO 11/18/2020 17:41:29' prior: 50870535!
+test02CanAddABookToCart
+
+	| tusLibros cartId cart |
+
+	tusLibros := self newTusLibros.
+
+	cartId := tusLibros newCartForClientId: 'admin' Password: 'password'.
+	
+	tusLibros addToCart: cartId bookIsbn: '0-7645-2641-3' bookQuantity: 1.
+	
+	cart := Bag new.
+	cart add: '0-7645-2641-3'.
+
+	self assert: cart equals: (tusLibros listCart: cartId).
+
+! !
+!TusLibrosShopTest methodsFor: 'as yet unclassified' stamp: 'IO 11/18/2020 17:41:29' prior: 50870549!
+test03CanAddDifferentBooksToCart
+
+	| tusLibros cartId cart |
+
+	tusLibros := self newTusLibros.
+
+	cartId := tusLibros newCartForClientId: 'admin' Password: 'password'.
+	
+	tusLibros addToCart: cartId bookIsbn: '0-7645-2641-3' bookQuantity: 1.
+	tusLibros addToCart: cartId bookIsbn: '0-7645-2641-4' bookQuantity: 1.
+
+	cart := Bag new.
+	cart add: '0-7645-2641-3'.
+	cart add: '0-7645-2641-4'.
+
+	self assert: cart equals: (tusLibros listCart: cartId).
+
+! !
+!TusLibrosShopTest methodsFor: 'as yet unclassified' stamp: 'IO 11/18/2020 17:41:29' prior: 50868525!
+test01NewCartIsEmpty
+
+	| tusLibros cartId |
+
+	tusLibros := self newTusLibros.
+
+	cartId := tusLibros newCartForClientId: 'admin' Password: 'password'.
+	
+	self assert: 0 equals: (tusLibros listCart: cartId) size.
+! !
+
+!methodRemoval: TusLibrosShop #newCartForUser:Password: stamp: 'IO 11/18/2020 17:41:29'!
+newCartForUser: user Password: password
+	carts add: Bag new.
+	cartClients add: user.
+	^carts size.
+!
+
+!testRun: #TusLibrosShopTest #test01NewCartIsEmpty stamp: 'IO 11/18/2020 17:41:31'!
+PASSED!
+
+!testRun: #TusLibrosShopTest #test02CanAddABookToCart stamp: 'IO 11/18/2020 17:41:31'!
+PASSED!
+
+!testRun: #TusLibrosShopTest #test03CanAddDifferentBooksToCart stamp: 'IO 11/18/2020 17:41:31'!
+PASSED!
+
+!testRun: #TusLibrosShopTest #test04CanAddMoreThanOneBookToCart stamp: 'IO 11/18/2020 17:41:31'!
+PASSED!
+
+!testRun: #TusLibrosShopTest #test05CanAddMoreThanOneCart stamp: 'IO 11/18/2020 17:41:31'!
+PASSED!
+
+!testRun: #TusLibrosShopTest #test06AClientInitialyHasNowPurchases stamp: 'IO 11/18/2020 17:41:31'!
+PASSED!
+
+!testRun: #TusLibrosShopTest #test07AClientCanCheckoutACart stamp: 'IO 11/18/2020 17:41:31'!
+PASSED!
+
+!testRun: #TusLibrosShopTest #test08AClientCanCheckoutManyTimes stamp: 'IO 11/18/2020 17:41:31'!
+PASSED!
+
+!testRun: #TusLibrosShopTest #test09ManyClientsCanCheckout stamp: 'IO 11/18/2020 17:41:31'!
+PASSED!
+
+!testRun: #TusLibrosShopTest #test07AClientCanCheckoutACart stamp: 'IO 11/18/2020 17:45:47'!
+PASSED!
+
+!testRun: #TusLibrosShopTest #test09ManyClientsCanCheckout stamp: 'IO 11/18/2020 17:45:47'!
+PASSED!
+
+!testRun: #TusLibrosShopTest #test08AClientCanCheckoutManyTimes stamp: 'IO 11/18/2020 17:45:47'!
+PASSED!
+!TusLibrosShop methodsFor: 'purchases' stamp: 'IO 11/18/2020 17:46:13' prior: 50870416!
+checkoutCart: cartId ccn: ccn cced: cced cco: cco 
+	| cart clientId checkout |
+	cart := carts at: cartId.
+	clientId := cartClients at: cartId.
+	checkout := purchases at: clientId ifAbsent: [Bag new].
+	checkout addAll: cart.
+	purchases at: clientId put: checkout.
+! !
+!TusLibrosShop methodsFor: 'initialization' stamp: 'IO 11/18/2020 17:48:46'!
+initializeWithCatalogue: aCatalogue withUsers: users 
+
+	carts := OrderedCollection new.
+	cartClients := OrderedCollection new.
+	purchases := Dictionary new.
+! !
+!TusLibrosShop class methodsFor: 'as yet unclassified' stamp: 'IO 11/18/2020 17:48:46' prior: 50868244!
+fromCatalogue: anOrderedCollection users: aDictionary 
+	"DO NOT FORGET TO RENAME COLLABORATORS AND REMOVE THIS COMMENT!!!!"
+
+	^self new initializeWithCatalogue: anOrderedCollection withUsers: aDictionary ! !
+
+!methodRemoval: TusLibrosShop #initializeFromCatalogue:users: stamp: 'IO 11/18/2020 17:48:46'!
+initializeFromCatalogue: aCatalogue users: users 
+
+	carts := OrderedCollection new.
+	cartClients := OrderedCollection new.
+	purchases := Dictionary new.
+!
+!TusLibrosShop class methodsFor: 'instance creation' stamp: 'IO 11/18/2020 17:49:02'!
+withCatalogue: anOrderedCollection withClients: aDictionary 
+	"DO NOT FORGET TO RENAME COLLABORATORS AND REMOVE THIS COMMENT!!!!"
+
+	^self new initializeWithCatalogue: anOrderedCollection withUsers: aDictionary ! !
+!TusLibrosShopTest methodsFor: 'as yet unclassified' stamp: 'IO 11/18/2020 17:49:02' prior: 50869036!
+newTusLibros
+
+	| tusLibros users catalogue |
+	
+	catalogue := OrderedCollection with: '0-7645-2641-3' with: '0-7645-2641-4'.
+	users := Dictionary newFromPairs: #('admin', 'password', 'admin2', 'password').
+	tusLibros := TusLibrosShop withCatalogue: catalogue withClients: users.
+
+	^tusLibros.
+! !
+
+!methodRemoval: TusLibrosShop class #fromCatalogue:users: stamp: 'IO 11/18/2020 17:49:02'!
+fromCatalogue: anOrderedCollection users: aDictionary 
+	"DO NOT FORGET TO RENAME COLLABORATORS AND REMOVE THIS COMMENT!!!!"
+
+	^self new initializeWithCatalogue: anOrderedCollection withUsers: aDictionary !
+
+!testRun: #TusLibrosShopTest #test01NewCartIsEmpty stamp: 'IO 11/18/2020 17:49:04'!
+PASSED!
+
+!testRun: #TusLibrosShopTest #test02CanAddABookToCart stamp: 'IO 11/18/2020 17:49:04'!
+PASSED!
+
+!testRun: #TusLibrosShopTest #test03CanAddDifferentBooksToCart stamp: 'IO 11/18/2020 17:49:04'!
+PASSED!
+
+!testRun: #TusLibrosShopTest #test04CanAddMoreThanOneBookToCart stamp: 'IO 11/18/2020 17:49:04'!
+PASSED!
+
+!testRun: #TusLibrosShopTest #test05CanAddMoreThanOneCart stamp: 'IO 11/18/2020 17:49:04'!
+PASSED!
+
+!testRun: #TusLibrosShopTest #test06AClientInitialyHasNowPurchases stamp: 'IO 11/18/2020 17:49:04'!
+PASSED!
+
+!testRun: #TusLibrosShopTest #test07AClientCanCheckoutACart stamp: 'IO 11/18/2020 17:49:04'!
+PASSED!
+
+!testRun: #TusLibrosShopTest #test08AClientCanCheckoutManyTimes stamp: 'IO 11/18/2020 17:49:04'!
+PASSED!
+
+!testRun: #TusLibrosShopTest #test09ManyClientsCanCheckout stamp: 'IO 11/18/2020 17:49:04'!
+PASSED!
+!TusLibrosShop methodsFor: 'initialization' stamp: 'IO 11/18/2020 17:49:17'!
+initializeWithCatalogue: aCatalogue withClients: users 
+
+	carts := OrderedCollection new.
+	cartClients := OrderedCollection new.
+	purchases := Dictionary new.
+! !
+!TusLibrosShop class methodsFor: 'as yet unclassified' stamp: 'IO 11/18/2020 17:49:17' prior: 50871077!
+withCatalogue: anOrderedCollection withClients: aDictionary 
+	"DO NOT FORGET TO RENAME COLLABORATORS AND REMOVE THIS COMMENT!!!!"
+
+	^self new initializeWithCatalogue: anOrderedCollection withClients: aDictionary ! !
+
+!methodRemoval: TusLibrosShop #initializeWithCatalogue:withUsers: stamp: 'IO 11/18/2020 17:49:17'!
+initializeWithCatalogue: aCatalogue withUsers: users 
+
+	carts := OrderedCollection new.
+	cartClients := OrderedCollection new.
+	purchases := Dictionary new.
+!
+!TusLibrosShop methodsFor: 'initialization' stamp: 'IO 11/18/2020 17:49:48' prior: 50871137!
+initializeWithCatalogue: aCatalogue withClients: clients 
+
+	carts := OrderedCollection new.
+	cartClients := OrderedCollection new.
+	purchases := Dictionary new.
+! !
+!TusLibrosShop class methodsFor: 'instance creation' stamp: 'IO 11/18/2020 17:50:12' prior: 50871146!
+withCatalogue: aCatalogue withClients: clients 
+
+	^self new initializeWithCatalogue: aCatalogue withClients: clients.
+ ! !
+!TusLibrosShop methodsFor: 'purchases' stamp: 'IO 11/18/2020 17:50:27' prior: 50870436!
+listPurchasesFor: user password: password
+	
+	^purchases at: user ifAbsent: [^Bag new] copy.
+! !
+!TusLibrosShop methodsFor: 'purchases' stamp: 'IO 11/18/2020 17:51:06' prior: 50871180!
+listPurchasesFor: clientId password: password
+	
+	^purchases at: clientId ifAbsent: [^Bag new] copy.
+! !
+!TusLibrosShop methodsFor: 'cart' stamp: 'IO 11/18/2020 17:51:16' prior: 50870810!
+newCartForClientId: clientId Password: password
+	carts add: Bag new.
+	cartClients add: clientId.
+	^carts size.
+! !
+
+Object subclass: #TusLibros
+	instanceVariableNames: 'carts cartClients purchases'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Ejercicio-20-Tus-Libros'!
+
+!classDefinition: #TusLibros category: 'Ejercicio-20-Tus-Libros' stamp: 'IO 11/18/2020 17:52:51'!
+Object subclass: #TusLibros
+	instanceVariableNames: 'carts cartClients purchases'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Ejercicio-20-Tus-Libros'!
+
+!classRemoval: #TusLibros stamp: 'IO 11/18/2020 17:52:54'!
+Object subclass: #TusLibros
+	instanceVariableNames: 'carts cartClients purchases'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Ejercicio-20-Tus-Libros'!
+
+!classRenamed: #TusLibrosShop as: #TusLibros stamp: 'IO 11/18/2020 17:52:57'!
+Smalltalk renameClassNamed: #TusLibrosShop as: #TusLibros!
+!TusLibrosShopTest methodsFor: 'as yet unclassified' stamp: 'IO 11/18/2020 17:52:57' prior: 50871087!
+newTusLibros
+
+	| tusLibros users catalogue |
+	
+	catalogue := OrderedCollection with: '0-7645-2641-3' with: '0-7645-2641-4'.
+	users := Dictionary newFromPairs: #('admin', 'password', 'admin2', 'password').
+	tusLibros := TusLibros withCatalogue: catalogue withClients: users.
+
+	^tusLibros.
+! !
+
+!classRenamed: #TusLibrosShopTest as: #TusLibrosTest stamp: 'IO 11/18/2020 17:53:03'!
+Smalltalk renameClassNamed: #TusLibrosShopTest as: #TusLibrosTest!
+
+!testRun: #TusLibrosTest #test01NewCartIsEmpty stamp: 'IO 11/18/2020 17:53:05'!
+PASSED!
+
+!testRun: #TusLibrosTest #test02CanAddABookToCart stamp: 'IO 11/18/2020 17:53:05'!
+PASSED!
+
+!testRun: #TusLibrosTest #test03CanAddDifferentBooksToCart stamp: 'IO 11/18/2020 17:53:05'!
+PASSED!
+
+!testRun: #TusLibrosTest #test04CanAddMoreThanOneBookToCart stamp: 'IO 11/18/2020 17:53:05'!
+PASSED!
+
+!testRun: #TusLibrosTest #test05CanAddMoreThanOneCart stamp: 'IO 11/18/2020 17:53:05'!
+PASSED!
+
+!testRun: #TusLibrosTest #test06AClientInitialyHasNowPurchases stamp: 'IO 11/18/2020 17:53:05'!
+PASSED!
+
+!testRun: #TusLibrosTest #test07AClientCanCheckoutACart stamp: 'IO 11/18/2020 17:53:05'!
+PASSED!
+
+!testRun: #TusLibrosTest #test08AClientCanCheckoutManyTimes stamp: 'IO 11/18/2020 17:53:05'!
+PASSED!
+
+!testRun: #TusLibrosTest #test09ManyClientsCanCheckout stamp: 'IO 11/18/2020 17:53:05'!
+PASSED!
+
+!classDefinition: #TusLibros category: 'Ejercicio-20-Tus-Libros' stamp: 'IO 11/18/2020 17:53:38'!
+Object subclass: #TusLibros
+	instanceVariableNames: 'carts cartClients clientPurchases'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Ejercicio-20-Tus-Libros'!
+!TusLibros methodsFor: 'as yet unclassified' stamp: 'IO 11/18/2020 17:53:38' prior: 50871039!
+checkoutCart: cartId ccn: ccn cced: cced cco: cco 
+	| cart clientId checkout |
+	cart := carts at: cartId.
+	clientId := cartClients at: cartId.
+	checkout := clientPurchases at: clientId ifAbsent: [Bag new].
+	checkout addAll: cart.
+	clientPurchases at: clientId put: checkout.
+! !
+!TusLibros methodsFor: 'as yet unclassified' stamp: 'IO 11/18/2020 17:53:38' prior: 50871164!
+initializeWithCatalogue: aCatalogue withClients: clients 
+
+	carts := OrderedCollection new.
+	cartClients := OrderedCollection new.
+	clientPurchases := Dictionary new.
+! !
+!TusLibros methodsFor: 'as yet unclassified' stamp: 'IO 11/18/2020 17:53:38' prior: 50871186!
+listPurchasesFor: clientId password: password
+	
+	^clientPurchases at: clientId ifAbsent: [^Bag new] copy.
+! !
+
+!classDefinition: #TusLibros category: 'Ejercicio-20-Tus-Libros' stamp: 'IO 11/18/2020 17:53:52'!
+Object subclass: #TusLibros
+	instanceVariableNames: 'carts cartClients clientsPurchases'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Ejercicio-20-Tus-Libros'!
+!TusLibros methodsFor: 'as yet unclassified' stamp: 'IO 11/18/2020 17:53:52' prior: 50871277!
+checkoutCart: cartId ccn: ccn cced: cced cco: cco 
+	| cart clientId checkout |
+	cart := carts at: cartId.
+	clientId := cartClients at: cartId.
+	checkout := clientsPurchases at: clientId ifAbsent: [Bag new].
+	checkout addAll: cart.
+	clientsPurchases at: clientId put: checkout.
+! !
+!TusLibros methodsFor: 'as yet unclassified' stamp: 'IO 11/18/2020 17:53:52' prior: 50871289!
+initializeWithCatalogue: aCatalogue withClients: clients 
+
+	carts := OrderedCollection new.
+	cartClients := OrderedCollection new.
+	clientsPurchases := Dictionary new.
+! !
+!TusLibros methodsFor: 'as yet unclassified' stamp: 'IO 11/18/2020 17:53:52' prior: 50871298!
+listPurchasesFor: clientId password: password
+	
+	^clientsPurchases at: clientId ifAbsent: [^Bag new] copy.
+! !
+
+Object subclass: #TusLibrosClientPurchases
+	instanceVariableNames: 'purchases'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Ejercicio-20-Tus-Libros'!
+
+!classDefinition: #TusLibrosClientPurchases category: 'Ejercicio-20-Tus-Libros' stamp: 'IO 11/18/2020 17:54:13'!
+Object subclass: #TusLibrosClientPurchases
+	instanceVariableNames: 'purchases'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Ejercicio-20-Tus-Libros'!
+!TusLibros methodsFor: 'purchases' stamp: 'IO 11/18/2020 17:55:12' prior: 50871313!
+checkoutCart: cartId ccn: ccn cced: cced cco: cco 
+	| cart clientId checkout |
+	cart := carts at: cartId.
+	clientId := cartClients at: cartId.
+	checkout := clientsPurchases at: clientId ifAbsent: [TusLibrosClientPurchases new].
+	checkout addAll: cart.
+	clientsPurchases at: clientId put: checkout.
+! !
+!TusLibros methodsFor: 'purchases' stamp: 'IO 11/18/2020 17:55:24' prior: 50871354!
+checkoutCart: cartId ccn: ccn cced: cced cco: cco 
+	| cart clientId checkout |
+	cart := carts at: cartId.
+	clientId := cartClients at: cartId.
+	checkout := clientsPurchases at: clientId ifAbsent: [TusLibrosClientPurchases new].
+	checkout addCart: cart.
+	clientsPurchases at: clientId put: checkout.
+! !
+!TusLibros methodsFor: 'purchases' stamp: 'IO 11/18/2020 17:55:29' prior: 50871367!
+checkoutCart: cartId ccn: ccn cced: cced cco: cco 
+	| cart clientId checkout |
+	cart := carts at: cartId.
+	clientId := cartClients at: cartId.
+	checkout := clientsPurchases at: clientId ifAbsent: [TusLibrosClientPurchases new].
+	checkout addCart: cart.
+! !
+!TusLibrosClientPurchases methodsFor: 'no messages' stamp: 'IO 11/18/2020 17:55:56'!
+addCart: aCart
+	purchases addAll: aCart.
+! !
+!TusLibros methodsFor: 'purchases' stamp: 'IO 11/18/2020 17:56:39' prior: 50871334!
+listPurchasesFor: clientId password: password
+	
+	^clientsPurchases at: clientId ifAbsent: [^TusLibrosClientPurchases new] copy.
+! !
+!TusLibros methodsFor: 'purchases' stamp: 'IO 11/18/2020 17:57:06' prior: 50871380!
+checkoutCart: cartId ccn: ccn cced: cced cco: cco 
+	| cart clientId checkout |
+	cart := carts at: cartId.
+	clientId := cartClients at: cartId.
+	checkout := clientsPurchases at: clientId ifAbsent: [TusLibrosClientPurchases new].
+	checkout addCart: cart.
+	clientsPurchases at: clientId put: checkout.
+! !
+!TusLibros methodsFor: 'purchases' stamp: 'IO 11/18/2020 17:58:23' prior: 50871396!
+listPurchasesFor: clientId password: password
+	
+	
+	^clientsPurchases at: clientId ifAbsent: [^Bag new] copy.
+! !
+!TusLibros methodsFor: 'purchases' stamp: 'IO 11/18/2020 17:58:27' prior: 50871403!
+checkoutCart: cartId ccn: ccn cced: cced cco: cco 
+	| cart clientId checkout |
+	cart := carts at: cartId.
+	clientId := cartClients at: cartId.
+	checkout := clientsPurchases at: clientId ifAbsent: [Bag new].
+	checkout addCart: cart.
+	clientsPurchases at: clientId put: checkout.
+! !
+
+!classRemoval: #TusLibrosClientPurchases stamp: 'IO 11/18/2020 17:58:30'!
+Object subclass: #TusLibrosClientPurchases
+	instanceVariableNames: 'purchases'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Ejercicio-20-Tus-Libros'!
+
+!testRun: #TusLibrosTest #test01NewCartIsEmpty stamp: 'IO 11/18/2020 17:58:31'!
+PASSED!
+
+!testRun: #TusLibrosTest #test02CanAddABookToCart stamp: 'IO 11/18/2020 17:58:31'!
+PASSED!
+
+!testRun: #TusLibrosTest #test03CanAddDifferentBooksToCart stamp: 'IO 11/18/2020 17:58:31'!
+PASSED!
+
+!testRun: #TusLibrosTest #test04CanAddMoreThanOneBookToCart stamp: 'IO 11/18/2020 17:58:31'!
+PASSED!
+
+!testRun: #TusLibrosTest #test05CanAddMoreThanOneCart stamp: 'IO 11/18/2020 17:58:31'!
+PASSED!
+
+!testRun: #TusLibrosTest #test06AClientInitialyHasNowPurchases stamp: 'IO 11/18/2020 17:58:31'!
+PASSED!
+
+!testRun: #TusLibrosTest #test07AClientCanCheckoutACart stamp: 'IO 11/18/2020 17:58:31'!
+ERROR!
+
+!testRun: #TusLibrosTest #test08AClientCanCheckoutManyTimes stamp: 'IO 11/18/2020 17:58:31'!
+ERROR!
+
+!testRun: #TusLibrosTest #test09ManyClientsCanCheckout stamp: 'IO 11/18/2020 17:58:31'!
+ERROR!
+!TusLibros methodsFor: 'purchases' stamp: 'IO 11/18/2020 17:58:41' prior: 50871423!
+checkoutCart: cartId ccn: ccn cced: cced cco: cco 
+	| cart clientId checkout |
+	cart := carts at: cartId.
+	clientId := cartClients at: cartId.
+	checkout := clientsPurchases at: clientId ifAbsent: [Bag new].
+	checkout add: cart.
+	clientsPurchases at: clientId put: checkout.
+! !
+
+!testRun: #TusLibrosTest #test01NewCartIsEmpty stamp: 'IO 11/18/2020 17:58:42'!
+PASSED!
+
+!testRun: #TusLibrosTest #test02CanAddABookToCart stamp: 'IO 11/18/2020 17:58:42'!
+PASSED!
+
+!testRun: #TusLibrosTest #test03CanAddDifferentBooksToCart stamp: 'IO 11/18/2020 17:58:42'!
+PASSED!
+
+!testRun: #TusLibrosTest #test04CanAddMoreThanOneBookToCart stamp: 'IO 11/18/2020 17:58:42'!
+PASSED!
+
+!testRun: #TusLibrosTest #test05CanAddMoreThanOneCart stamp: 'IO 11/18/2020 17:58:42'!
+PASSED!
+
+!testRun: #TusLibrosTest #test06AClientInitialyHasNowPurchases stamp: 'IO 11/18/2020 17:58:42'!
+PASSED!
+
+!testRun: #TusLibrosTest #test07AClientCanCheckoutACart stamp: 'IO 11/18/2020 17:58:42'!
+FAILURE!
+
+!testRun: #TusLibrosTest #test08AClientCanCheckoutManyTimes stamp: 'IO 11/18/2020 17:58:42'!
+FAILURE!
+
+!testRun: #TusLibrosTest #test09ManyClientsCanCheckout stamp: 'IO 11/18/2020 17:58:42'!
+FAILURE!
+!TusLibros methodsFor: 'purchases' stamp: 'IO 11/18/2020 17:58:46' prior: 50871470!
+checkoutCart: cartId ccn: ccn cced: cced cco: cco 
+	| cart clientId checkout |
+	cart := carts at: cartId.
+	clientId := cartClients at: cartId.
+	checkout := clientsPurchases at: clientId ifAbsent: [Bag new].
+	checkout addAll: cart.
+	clientsPurchases at: clientId put: checkout.
+! !
+
+!testRun: #TusLibrosTest #test01NewCartIsEmpty stamp: 'IO 11/18/2020 17:58:47'!
+PASSED!
+
+!testRun: #TusLibrosTest #test02CanAddABookToCart stamp: 'IO 11/18/2020 17:58:47'!
+PASSED!
+
+!testRun: #TusLibrosTest #test03CanAddDifferentBooksToCart stamp: 'IO 11/18/2020 17:58:47'!
+PASSED!
+
+!testRun: #TusLibrosTest #test04CanAddMoreThanOneBookToCart stamp: 'IO 11/18/2020 17:58:47'!
+PASSED!
+
+!testRun: #TusLibrosTest #test05CanAddMoreThanOneCart stamp: 'IO 11/18/2020 17:58:47'!
+PASSED!
+
+!testRun: #TusLibrosTest #test06AClientInitialyHasNowPurchases stamp: 'IO 11/18/2020 17:58:47'!
+PASSED!
+
+!testRun: #TusLibrosTest #test07AClientCanCheckoutACart stamp: 'IO 11/18/2020 17:58:47'!
+PASSED!
+
+!testRun: #TusLibrosTest #test08AClientCanCheckoutManyTimes stamp: 'IO 11/18/2020 17:58:47'!
+PASSED!
+
+!testRun: #TusLibrosTest #test09ManyClientsCanCheckout stamp: 'IO 11/18/2020 17:58:47'!
+PASSED!
+
+Object subclass: #TusLibrosClientCarts
+	instanceVariableNames: 'clientId carts'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Ejercicio-20-Tus-Libros'!
+
+!classDefinition: #TusLibrosClientCarts category: 'Ejercicio-20-Tus-Libros' stamp: 'IO 11/18/2020 18:00:25'!
+Object subclass: #TusLibrosClientCarts
+	instanceVariableNames: 'clientId carts'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Ejercicio-20-Tus-Libros'!
+!TusLibros methodsFor: 'cart' stamp: 'IO 11/18/2020 18:00:51' prior: 50871192!
+newCartForClientId: clientId Password: password
+	carts add: Bag new.
+	cartClients add: clientId.
+	^carts size.
+! !
+
+Object subclass: #TusLibros
+	instanceVariableNames: 'carts cartClients clientsPurchases clientsCarts'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Ejercicio-20-Tus-Libros'!
+
+!classDefinition: #TusLibros category: 'Ejercicio-20-Tus-Libros' stamp: 'IO 11/18/2020 18:01:01'!
+Object subclass: #TusLibros
+	instanceVariableNames: 'carts cartClients clientsPurchases clientsCarts'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Ejercicio-20-Tus-Libros'!
+!TusLibros methodsFor: 'cart' stamp: 'IO 11/18/2020 18:01:35' prior: 50871562!
+newCartForClientId: clientId Password: password
+	carts add: Bag new.
+	cartClients add: clientId.
+	clientsCarts add: TusLibrosClientCarts new.
+	^carts size.
+! !
+
+!testRun: #TusLibrosTest #test01NewCartIsEmpty stamp: 'IO 11/18/2020 18:01:40'!
+ERROR!
+
+!testRun: #TusLibrosTest #test02CanAddABookToCart stamp: 'IO 11/18/2020 18:01:40'!
+ERROR!
+
+!testRun: #TusLibrosTest #test03CanAddDifferentBooksToCart stamp: 'IO 11/18/2020 18:01:40'!
+ERROR!
+
+!testRun: #TusLibrosTest #test04CanAddMoreThanOneBookToCart stamp: 'IO 11/18/2020 18:01:40'!
+ERROR!
+
+!testRun: #TusLibrosTest #test05CanAddMoreThanOneCart stamp: 'IO 11/18/2020 18:01:40'!
+ERROR!
+
+!testRun: #TusLibrosTest #test06AClientInitialyHasNowPurchases stamp: 'IO 11/18/2020 18:01:40'!
+PASSED!
+
+!testRun: #TusLibrosTest #test07AClientCanCheckoutACart stamp: 'IO 11/18/2020 18:01:40'!
+ERROR!
+
+!testRun: #TusLibrosTest #test08AClientCanCheckoutManyTimes stamp: 'IO 11/18/2020 18:01:40'!
+ERROR!
+
+!testRun: #TusLibrosTest #test09ManyClientsCanCheckout stamp: 'IO 11/18/2020 18:01:40'!
+ERROR!
+
+!testRun: #TusLibrosTest #test01NewCartIsEmpty stamp: 'IO 11/18/2020 18:01:51'!
+ERROR!
+
+!testRun: #TusLibrosTest #test02CanAddABookToCart stamp: 'IO 11/18/2020 18:01:51'!
+ERROR!
+
+!testRun: #TusLibrosTest #test03CanAddDifferentBooksToCart stamp: 'IO 11/18/2020 18:01:51'!
+ERROR!
+
+!testRun: #TusLibrosTest #test04CanAddMoreThanOneBookToCart stamp: 'IO 11/18/2020 18:01:51'!
+ERROR!
+
+!testRun: #TusLibrosTest #test05CanAddMoreThanOneCart stamp: 'IO 11/18/2020 18:01:51'!
+ERROR!
+
+!testRun: #TusLibrosTest #test06AClientInitialyHasNowPurchases stamp: 'IO 11/18/2020 18:01:51'!
+PASSED!
+
+!testRun: #TusLibrosTest #test07AClientCanCheckoutACart stamp: 'IO 11/18/2020 18:01:51'!
+ERROR!
+
+!testRun: #TusLibrosTest #test08AClientCanCheckoutManyTimes stamp: 'IO 11/18/2020 18:01:51'!
+ERROR!
+
+!testRun: #TusLibrosTest #test09ManyClientsCanCheckout stamp: 'IO 11/18/2020 18:01:51'!
+ERROR!
+
+!testRun: #TusLibrosTest #test01NewCartIsEmpty stamp: 'IO 11/18/2020 18:01:56'!
+ERROR!
+!TusLibros methodsFor: 'initialization' stamp: 'IO 11/18/2020 18:02:44' prior: 50871325!
+initializeWithCatalogue: aCatalogue withClients: clients 
+
+	carts := OrderedCollection new.
+	cartClients := OrderedCollection new.
+	clientsCarts := OrderedCollection new.
+	clientsPurchases := Dictionary new.
+! !
+
+!testRun: #TusLibrosTest #test01NewCartIsEmpty stamp: 'IO 11/18/2020 18:02:45'!
+PASSED!
+
+!testRun: #TusLibrosTest #test02CanAddABookToCart stamp: 'IO 11/18/2020 18:02:45'!
+PASSED!
+
+!testRun: #TusLibrosTest #test03CanAddDifferentBooksToCart stamp: 'IO 11/18/2020 18:02:45'!
+PASSED!
+
+!testRun: #TusLibrosTest #test04CanAddMoreThanOneBookToCart stamp: 'IO 11/18/2020 18:02:45'!
+PASSED!
+
+!testRun: #TusLibrosTest #test05CanAddMoreThanOneCart stamp: 'IO 11/18/2020 18:02:45'!
+PASSED!
+
+!testRun: #TusLibrosTest #test06AClientInitialyHasNowPurchases stamp: 'IO 11/18/2020 18:02:45'!
+PASSED!
+
+!testRun: #TusLibrosTest #test07AClientCanCheckoutACart stamp: 'IO 11/18/2020 18:02:45'!
+PASSED!
+
+!testRun: #TusLibrosTest #test08AClientCanCheckoutManyTimes stamp: 'IO 11/18/2020 18:02:45'!
+PASSED!
+
+!testRun: #TusLibrosTest #test09ManyClientsCanCheckout stamp: 'IO 11/18/2020 18:02:45'!
+PASSED!
+!TusLibros methodsFor: 'cart' stamp: 'IO 11/18/2020 18:02:59' prior: 50870527!
+addToCart: cartId bookIsbn: isbn bookQuantity: quantity
+	| cart |
+	cart := carts at: cartId.
+	cart add: isbn withOccurrences: quantity.! !
+!TusLibros methodsFor: 'cart' stamp: 'IO 11/18/2020 18:04:22' prior: 50871686!
+addToCart: cartId bookIsbn: isbn bookQuantity: quantity
+
+	| cart clientCart |
+	cart := carts at: cartId.
+	cart add: isbn withOccurrences: quantity.
+	
+	clientCart add: isbn withOccurrences: quantity.! !
+!TusLibros methodsFor: 'cart' stamp: 'IO 11/18/2020 18:04:38' prior: 50871693!
+addToCart: cartId bookIsbn: isbn bookQuantity: quantity
+
+	| cart clientCart |
+	cart := carts at: cartId.
+	cart add: isbn withOccurrences: quantity.
+	
+	clientCart := clientsCarts at: cartId.
+	clientCart add: isbn withOccurrences: quantity.! !
+
+!testRun: #TusLibrosTest #test01NewCartIsEmpty stamp: 'IO 11/18/2020 18:04:39'!
+PASSED!
+
+!testRun: #TusLibrosTest #test02CanAddABookToCart stamp: 'IO 11/18/2020 18:04:39'!
+ERROR!
+
+!testRun: #TusLibrosTest #test03CanAddDifferentBooksToCart stamp: 'IO 11/18/2020 18:04:39'!
+ERROR!
+
+!testRun: #TusLibrosTest #test04CanAddMoreThanOneBookToCart stamp: 'IO 11/18/2020 18:04:39'!
+ERROR!
+
+!testRun: #TusLibrosTest #test05CanAddMoreThanOneCart stamp: 'IO 11/18/2020 18:04:39'!
+ERROR!
+
+!testRun: #TusLibrosTest #test06AClientInitialyHasNowPurchases stamp: 'IO 11/18/2020 18:04:39'!
+PASSED!
+
+!testRun: #TusLibrosTest #test07AClientCanCheckoutACart stamp: 'IO 11/18/2020 18:04:39'!
+ERROR!
+
+!testRun: #TusLibrosTest #test08AClientCanCheckoutManyTimes stamp: 'IO 11/18/2020 18:04:39'!
+ERROR!
+
+!testRun: #TusLibrosTest #test09ManyClientsCanCheckout stamp: 'IO 11/18/2020 18:04:39'!
+ERROR!
+!TusLibrosClientCarts methodsFor: 'nil' stamp: 'IO 11/18/2020 18:04:49'!
+add: isbn withOccurrences: quantity.
+	! !
+
+!classDefinition: #TusLibrosClientCarts category: 'Ejercicio-20-Tus-Libros' stamp: 'IO 11/18/2020 18:05:13'!
+Object subclass: #TusLibrosClientCarts
+	instanceVariableNames: 'clientId carts bag'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Ejercicio-20-Tus-Libros'!
+!TusLibros methodsFor: 'cart' stamp: 'IO 11/18/2020 18:05:39' prior: 50871702!
+addToCart: cartId bookIsbn: isbn bookQuantity: quantity
+
+	| cart clientCart |
+	cart := carts at: cartId.
+	cart add: isbn withOccurrences: quantity.
+	! !
+!TusLibros methodsFor: 'cart' stamp: 'IO 11/18/2020 18:05:41' prior: 50871753!
+addToCart: cartId bookIsbn: isbn bookQuantity: quantity
+
+	| cart |
+	cart := carts at: cartId.
+	cart add: isbn withOccurrences: quantity.
+! !
+!TusLibros methodsFor: 'cart' stamp: 'IO 11/18/2020 18:05:50' prior: 50871583!
+newCartForClientId: clientId Password: password
+	carts add: Bag new.
+	cartClients add: clientId.
+	^carts size.
+! !
+
+Object subclass: #TusLibros
+	instanceVariableNames: 'carts cartClients clientsPurchases'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Ejercicio-20-Tus-Libros'!
+
+!classDefinition: #TusLibros category: 'Ejercicio-20-Tus-Libros' stamp: 'IO 11/18/2020 18:05:55'!
+Object subclass: #TusLibros
+	instanceVariableNames: 'carts cartClients clientsPurchases'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Ejercicio-20-Tus-Libros'!
+
+!testRun: #TusLibrosTest #test01NewCartIsEmpty stamp: 'IO 11/18/2020 18:05:57'!
+PASSED!
+
+!testRun: #TusLibrosTest #test02CanAddABookToCart stamp: 'IO 11/18/2020 18:05:57'!
+PASSED!
+
+!testRun: #TusLibrosTest #test03CanAddDifferentBooksToCart stamp: 'IO 11/18/2020 18:05:57'!
+PASSED!
+
+!testRun: #TusLibrosTest #test04CanAddMoreThanOneBookToCart stamp: 'IO 11/18/2020 18:05:57'!
+PASSED!
+
+!testRun: #TusLibrosTest #test05CanAddMoreThanOneCart stamp: 'IO 11/18/2020 18:05:57'!
+PASSED!
+
+!testRun: #TusLibrosTest #test06AClientInitialyHasNowPurchases stamp: 'IO 11/18/2020 18:05:57'!
+PASSED!
+
+!testRun: #TusLibrosTest #test07AClientCanCheckoutACart stamp: 'IO 11/18/2020 18:05:57'!
+PASSED!
+
+!testRun: #TusLibrosTest #test08AClientCanCheckoutManyTimes stamp: 'IO 11/18/2020 18:05:57'!
+PASSED!
+
+!testRun: #TusLibrosTest #test09ManyClientsCanCheckout stamp: 'IO 11/18/2020 18:05:57'!
+PASSED!
+
+!classRemoval: #TusLibrosClientCarts stamp: 'IO 11/18/2020 18:06:00'!
+Object subclass: #TusLibrosClientCarts
+	instanceVariableNames: 'clientId carts bag'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Ejercicio-20-Tus-Libros'!
+
+!testRun: #TusLibrosTest #test01NewCartIsEmpty stamp: 'IO 11/18/2020 18:06:01'!
+PASSED!
+
+!testRun: #TusLibrosTest #test02CanAddABookToCart stamp: 'IO 11/18/2020 18:06:01'!
+PASSED!
+
+!testRun: #TusLibrosTest #test03CanAddDifferentBooksToCart stamp: 'IO 11/18/2020 18:06:01'!
+PASSED!
+
+!testRun: #TusLibrosTest #test04CanAddMoreThanOneBookToCart stamp: 'IO 11/18/2020 18:06:01'!
+PASSED!
+
+!testRun: #TusLibrosTest #test05CanAddMoreThanOneCart stamp: 'IO 11/18/2020 18:06:01'!
+PASSED!
+
+!testRun: #TusLibrosTest #test06AClientInitialyHasNowPurchases stamp: 'IO 11/18/2020 18:06:01'!
+PASSED!
+
+!testRun: #TusLibrosTest #test07AClientCanCheckoutACart stamp: 'IO 11/18/2020 18:06:01'!
+PASSED!
+
+!testRun: #TusLibrosTest #test08AClientCanCheckoutManyTimes stamp: 'IO 11/18/2020 18:06:01'!
+PASSED!
+
+!testRun: #TusLibrosTest #test09ManyClientsCanCheckout stamp: 'IO 11/18/2020 18:06:01'!
+PASSED!
+!TusLibros methodsFor: 'initialization' stamp: 'IO 11/18/2020 18:06:07' prior: 50871649!
+initializeWithCatalogue: aCatalogue withClients: clients 
+
+	carts := OrderedCollection new.
+	cartClients := OrderedCollection new.
+
+	clientsPurchases := Dictionary new.
+! !
+
+!testRun: #TusLibrosTest #test01NewCartIsEmpty stamp: 'IO 11/18/2020 18:06:08'!
+PASSED!
+
+!testRun: #TusLibrosTest #test02CanAddABookToCart stamp: 'IO 11/18/2020 18:06:08'!
+PASSED!
+
+!testRun: #TusLibrosTest #test03CanAddDifferentBooksToCart stamp: 'IO 11/18/2020 18:06:08'!
+PASSED!
+
+!testRun: #TusLibrosTest #test04CanAddMoreThanOneBookToCart stamp: 'IO 11/18/2020 18:06:08'!
+PASSED!
+
+!testRun: #TusLibrosTest #test05CanAddMoreThanOneCart stamp: 'IO 11/18/2020 18:06:08'!
+PASSED!
+
+!testRun: #TusLibrosTest #test06AClientInitialyHasNowPurchases stamp: 'IO 11/18/2020 18:06:08'!
+PASSED!
+
+!testRun: #TusLibrosTest #test07AClientCanCheckoutACart stamp: 'IO 11/18/2020 18:06:08'!
+PASSED!
+
+!testRun: #TusLibrosTest #test08AClientCanCheckoutManyTimes stamp: 'IO 11/18/2020 18:06:08'!
+PASSED!
+
+!testRun: #TusLibrosTest #test09ManyClientsCanCheckout stamp: 'IO 11/18/2020 18:06:08'!
+PASSED!
+!TusLibros methodsFor: 'initialization' stamp: 'IO 11/18/2020 18:06:10' prior: 50871851!
+initializeWithCatalogue: aCatalogue withClients: clients 
+
+	carts := OrderedCollection new.
+	cartClients := OrderedCollection new.
+	clientsPurchases := Dictionary new.
+! !
+!TusLibrosTest methodsFor: 'cart' stamp: 'IO 11/18/2020 18:08:38'!
+test10ClientIdExists
+
+	| tusLibros cartId |
+
+	tusLibros := self newTusLibros.
+
+	cartId := tusLibros newCartForClientId: 'admin3' Password: 'password'.
+	
+	self should: [] raise: Error withMessageText: TusLibros inexistentClient.
+! !
+!TusLibrosTest methodsFor: 'cart' stamp: 'IO 11/18/2020 18:08:58' prior: 50871895!
+test10ClientIdExists
+
+	| tusLibros |
+
+	tusLibros := self newTusLibros.
+	
+	self should: [tusLibros newCartForClientId: 'admin3' Password: 'password'.]
+		raise: Error
+		withMessageText: TusLibros inexistentClient.
+! !
+
+!testRun: #TusLibrosTest #test10ClientIdExists stamp: 'IO 11/18/2020 18:09:01'!
+ERROR!
+!TusLibros class methodsFor: 'error messages' stamp: 'IO 11/18/2020 18:09:23'!
+inexistentClient
+	self shouldBeImplemented.! !
+!TusLibros class methodsFor: 'error messages' stamp: 'IO 11/18/2020 18:09:39' prior: 50871917!
+inexistentClient
+	^'Client id not existent'.
+! !
+
+!testRun: #TusLibrosTest #test10ClientIdExists stamp: 'IO 11/18/2020 18:09:42'!
+FAILURE!
+!TusLibros methodsFor: 'cart' stamp: 'IO 11/18/2020 18:10:06' prior: 50871768!
+newCartForClientId: clientId Password: password
+	
+	
+	carts add: Bag new.
+	cartClients add: clientId.
+	^carts size.
+! !
+!TusLibros class methodsFor: 'instance creation' stamp: 'IO 11/18/2020 18:10:56' prior: 50871173!
+withCatalogue: aCatalogue withClients: aClientList 
+
+	^self new initializeWithCatalogue: aCatalogue withClients: aClientList.
+ ! !
+!TusLibros methodsFor: 'initialization' stamp: 'IO 11/18/2020 18:11:07' prior: 50871887!
+initializeWithCatalogue: aCatalogue withClients: aClientList 
+
+	carts := OrderedCollection new.
+	cartClients := OrderedCollection new.
+	clientsPurchases := Dictionary new.
+! !
+
+!classDefinition: #TusLibros category: 'Ejercicio-20-Tus-Libros' stamp: 'IO 11/18/2020 18:11:16'!
+Object subclass: #TusLibros
+	instanceVariableNames: 'carts cartClients clientsPurchases clients'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Ejercicio-20-Tus-Libros'!
+!TusLibros methodsFor: 'initialization' stamp: 'IO 11/18/2020 18:11:14' prior: 50871943!
+initializeWithCatalogue: aCatalogue withClients: aClientList 
+
+	clients := aClientList.
+
+	carts := OrderedCollection new.
+	cartClients := OrderedCollection new.
+	clientsPurchases := Dictionary new.
+! !
+!TusLibros methodsFor: 'cart' stamp: 'IO 11/18/2020 18:12:20' prior: 50871929!
+newCartForClientId: clientId Password: password
+	(clients ) ifTrue: [^self error: TusLibros].
+	
+	carts add: Bag new.
+	cartClients add: clientId.
+	^carts size.
+! !
+!TusLibros class methodsFor: 'error messages' stamp: 'IO 11/18/2020 18:12:32'!
+inexistentClientErrorMessage
+	^'Client id not existent'.
+! !
+!TusLibrosTest methodsFor: 'as yet unclassified' stamp: 'IO 11/18/2020 18:12:32' prior: 50871905!
+test10ClientIdExists
+
+	| tusLibros |
+
+	tusLibros := self newTusLibros.
+	
+	self should: [tusLibros newCartForClientId: 'admin3' Password: 'password'.]
+		raise: Error
+		withMessageText: TusLibros inexistentClientErrorMessage.
+! !
+
+!methodRemoval: TusLibros class #inexistentClient stamp: 'IO 11/18/2020 18:12:32'!
+inexistentClient
+	^'Client id not existent'.
+!
+!TusLibros methodsFor: 'cart' stamp: 'IO 11/18/2020 18:12:43' prior: 50871970!
+newCartForClientId: clientId Password: password
+	(clients ) ifTrue: [^self error: TusLibros inexistentClientErrorMessage].
+	
+	carts add: Bag new.
+	cartClients add: clientId.
+	^carts size.
+! !
+!TusLibros methodsFor: 'cart' stamp: 'IO 11/18/2020 18:13:51' prior: 50871997!
+newCartForClientId: clientId Password: password
+	(clients includes: clientId negated) ifTrue: [^self error: TusLibros inexistentClientErrorMessage].
+	
+	carts add: Bag new.
+	cartClients add: clientId.
+	^carts size.
+! !
+
+!testRun: #TusLibrosTest #test01NewCartIsEmpty stamp: 'IO 11/18/2020 18:13:53'!
+ERROR!
+
+!testRun: #TusLibrosTest #test02CanAddABookToCart stamp: 'IO 11/18/2020 18:13:53'!
+ERROR!
+
+!testRun: #TusLibrosTest #test03CanAddDifferentBooksToCart stamp: 'IO 11/18/2020 18:13:53'!
+ERROR!
+
+!testRun: #TusLibrosTest #test04CanAddMoreThanOneBookToCart stamp: 'IO 11/18/2020 18:13:53'!
+ERROR!
+
+!testRun: #TusLibrosTest #test05CanAddMoreThanOneCart stamp: 'IO 11/18/2020 18:13:53'!
+ERROR!
+
+!testRun: #TusLibrosTest #test06AClientInitialyHasNowPurchases stamp: 'IO 11/18/2020 18:13:53'!
+PASSED!
+
+!testRun: #TusLibrosTest #test07AClientCanCheckoutACart stamp: 'IO 11/18/2020 18:13:53'!
+ERROR!
+
+!testRun: #TusLibrosTest #test08AClientCanCheckoutManyTimes stamp: 'IO 11/18/2020 18:13:53'!
+ERROR!
+
+!testRun: #TusLibrosTest #test09ManyClientsCanCheckout stamp: 'IO 11/18/2020 18:13:53'!
+ERROR!
+
+!testRun: #TusLibrosTest #test10ClientIdExists stamp: 'IO 11/18/2020 18:13:53'!
+FAILURE!
+!TusLibros methodsFor: 'cart' stamp: 'IO 11/18/2020 18:14:10' prior: 50872006!
+newCartForClientId: clientId Password: password
+	(clients includesKey: clientId negated) ifTrue: [^self error: TusLibros inexistentClientErrorMessage].
+	
+	carts add: Bag new.
+	cartClients add: clientId.
+	^carts size.
+! !
+
+!testRun: #TusLibrosTest #test01NewCartIsEmpty stamp: 'IO 11/18/2020 18:14:11'!
+ERROR!
+
+!testRun: #TusLibrosTest #test02CanAddABookToCart stamp: 'IO 11/18/2020 18:14:11'!
+ERROR!
+
+!testRun: #TusLibrosTest #test03CanAddDifferentBooksToCart stamp: 'IO 11/18/2020 18:14:11'!
+ERROR!
+
+!testRun: #TusLibrosTest #test04CanAddMoreThanOneBookToCart stamp: 'IO 11/18/2020 18:14:11'!
+ERROR!
+
+!testRun: #TusLibrosTest #test05CanAddMoreThanOneCart stamp: 'IO 11/18/2020 18:14:11'!
+ERROR!
+
+!testRun: #TusLibrosTest #test06AClientInitialyHasNowPurchases stamp: 'IO 11/18/2020 18:14:11'!
+PASSED!
+
+!testRun: #TusLibrosTest #test07AClientCanCheckoutACart stamp: 'IO 11/18/2020 18:14:11'!
+ERROR!
+
+!testRun: #TusLibrosTest #test08AClientCanCheckoutManyTimes stamp: 'IO 11/18/2020 18:14:11'!
+ERROR!
+
+!testRun: #TusLibrosTest #test09ManyClientsCanCheckout stamp: 'IO 11/18/2020 18:14:11'!
+ERROR!
+
+!testRun: #TusLibrosTest #test10ClientIdExists stamp: 'IO 11/18/2020 18:14:11'!
+FAILURE!
+!TusLibros methodsFor: 'cart' stamp: 'IO 11/18/2020 18:14:26' prior: 50872046!
+newCartForClientId: clientId Password: password
+	((clients includesKey: clientId) negated) ifTrue: [^self error: TusLibros inexistentClientErrorMessage].
+	
+	carts add: Bag new.
+	cartClients add: clientId.
+	^carts size.
+! !
+
+!testRun: #TusLibrosTest #test01NewCartIsEmpty stamp: 'IO 11/18/2020 18:14:27'!
+ERROR!
+!TusLibros methodsFor: 'cart' stamp: 'IO 11/18/2020 18:14:37' prior: 50872086!
+newCartForClientId: clientId Password: password
+	((clients includesKey: clientId) not) ifTrue: [^self error: TusLibros inexistentClientErrorMessage].
+	
+	carts add: Bag new.
+	cartClients add: clientId.
+	^carts size.
+! !
+
+!testRun: #TusLibrosTest #test01NewCartIsEmpty stamp: 'IO 11/18/2020 18:14:38'!
+PASSED!
+
+!testRun: #TusLibrosTest #test02CanAddABookToCart stamp: 'IO 11/18/2020 18:14:38'!
+PASSED!
+
+!testRun: #TusLibrosTest #test03CanAddDifferentBooksToCart stamp: 'IO 11/18/2020 18:14:38'!
+PASSED!
+
+!testRun: #TusLibrosTest #test04CanAddMoreThanOneBookToCart stamp: 'IO 11/18/2020 18:14:38'!
+PASSED!
+
+!testRun: #TusLibrosTest #test05CanAddMoreThanOneCart stamp: 'IO 11/18/2020 18:14:38'!
+PASSED!
+
+!testRun: #TusLibrosTest #test06AClientInitialyHasNowPurchases stamp: 'IO 11/18/2020 18:14:38'!
+PASSED!
+
+!testRun: #TusLibrosTest #test07AClientCanCheckoutACart stamp: 'IO 11/18/2020 18:14:38'!
+PASSED!
+
+!testRun: #TusLibrosTest #test08AClientCanCheckoutManyTimes stamp: 'IO 11/18/2020 18:14:38'!
+PASSED!
+
+!testRun: #TusLibrosTest #test09ManyClientsCanCheckout stamp: 'IO 11/18/2020 18:14:38'!
+PASSED!
+
+!testRun: #TusLibrosTest #test10ClientIdExists stamp: 'IO 11/18/2020 18:14:38'!
+PASSED!
+!TusLibrosTest methodsFor: 'newCart validations' stamp: 'IO 11/18/2020 18:15:37'!
+test11ClientPasswordMatches
+
+	| tusLibros |
+
+	tusLibros := self newTusLibros.
+	
+	self should: [tusLibros newCartForClientId: 'admin' Password: 'password2'.]
+		raise: Error
+		withMessageText: TusLibros invalidPasswordErrorMessage.
+! !
+
+!testRun: #TusLibrosTest #test11ClientPasswordMatches stamp: 'IO 11/18/2020 18:15:39'!
+ERROR!
+!TusLibros class methodsFor: 'error messages' stamp: 'IO 11/18/2020 18:15:51'!
+invalidPasswordErrorMessage
+	self shouldBeImplemented.! !
+!TusLibros class methodsFor: 'error messages' stamp: 'IO 11/18/2020 18:16:09' prior: 50872152!
+invalidPasswordErrorMessage
+	^'Invalid password'.
+! !
+
+!testRun: #TusLibrosTest #test11ClientPasswordMatches stamp: 'IO 11/18/2020 18:16:14'!
+FAILURE!
+!TusLibros methodsFor: 'cart' stamp: 'IO 11/18/2020 18:17:28' prior: 50872099!
+newCartForClientId: clientId Password: password
+	((clients includesKey: clientId) not) ifTrue: [^self error: TusLibros inexistentClientErrorMessage].
+	((clients at: clientId) equals: password not) ifTrue: [^self error: TusLibros invalidPasswordErrorMessage].
+	
+	carts add: Bag new.
+	cartClients add: clientId.
+	^carts size.
+! !
+
+!testRun: #TusLibrosTest #test01NewCartIsEmpty stamp: 'IO 11/18/2020 18:17:31'!
+ERROR!
+
+!testRun: #TusLibrosTest #test02CanAddABookToCart stamp: 'IO 11/18/2020 18:17:31'!
+ERROR!
+
+!testRun: #TusLibrosTest #test03CanAddDifferentBooksToCart stamp: 'IO 11/18/2020 18:17:31'!
+ERROR!
+
+!testRun: #TusLibrosTest #test04CanAddMoreThanOneBookToCart stamp: 'IO 11/18/2020 18:17:31'!
+ERROR!
+
+!testRun: #TusLibrosTest #test05CanAddMoreThanOneCart stamp: 'IO 11/18/2020 18:17:31'!
+ERROR!
+
+!testRun: #TusLibrosTest #test06AClientInitialyHasNowPurchases stamp: 'IO 11/18/2020 18:17:31'!
+PASSED!
+
+!testRun: #TusLibrosTest #test07AClientCanCheckoutACart stamp: 'IO 11/18/2020 18:17:31'!
+ERROR!
+
+!testRun: #TusLibrosTest #test08AClientCanCheckoutManyTimes stamp: 'IO 11/18/2020 18:17:31'!
+ERROR!
+
+!testRun: #TusLibrosTest #test09ManyClientsCanCheckout stamp: 'IO 11/18/2020 18:17:31'!
+ERROR!
+
+!testRun: #TusLibrosTest #test10ClientIdExists stamp: 'IO 11/18/2020 18:17:31'!
+PASSED!
+
+!testRun: #TusLibrosTest #test11ClientPasswordMatches stamp: 'IO 11/18/2020 18:17:31'!
+FAILURE!
+!TusLibros methodsFor: 'cart' stamp: 'IO 11/18/2020 18:18:21' prior: 50872165!
+newCartForClientId: clientId Password: password
+	((clients includesKey: clientId) not) ifTrue: [^self error: TusLibros inexistentClientErrorMessage].
+	(((clients at: clientId) equals: password) not) ifTrue: [^self error: TusLibros invalidPasswordErrorMessage].
+	
+	carts add: Bag new.
+	cartClients add: clientId.
+	^carts size.
+! !
+
+!testRun: #TusLibrosTest #test01NewCartIsEmpty stamp: 'IO 11/18/2020 18:18:23'!
+ERROR!
+
+!testRun: #TusLibrosTest #test02CanAddABookToCart stamp: 'IO 11/18/2020 18:18:23'!
+ERROR!
+
+!testRun: #TusLibrosTest #test03CanAddDifferentBooksToCart stamp: 'IO 11/18/2020 18:18:23'!
+ERROR!
+
+!testRun: #TusLibrosTest #test04CanAddMoreThanOneBookToCart stamp: 'IO 11/18/2020 18:18:23'!
+ERROR!
+
+!testRun: #TusLibrosTest #test05CanAddMoreThanOneCart stamp: 'IO 11/18/2020 18:18:23'!
+ERROR!
+
+!testRun: #TusLibrosTest #test06AClientInitialyHasNowPurchases stamp: 'IO 11/18/2020 18:18:23'!
+PASSED!
+
+!testRun: #TusLibrosTest #test07AClientCanCheckoutACart stamp: 'IO 11/18/2020 18:18:23'!
+ERROR!
+
+!testRun: #TusLibrosTest #test08AClientCanCheckoutManyTimes stamp: 'IO 11/18/2020 18:18:23'!
+ERROR!
+
+!testRun: #TusLibrosTest #test09ManyClientsCanCheckout stamp: 'IO 11/18/2020 18:18:23'!
+ERROR!
+
+!testRun: #TusLibrosTest #test10ClientIdExists stamp: 'IO 11/18/2020 18:18:23'!
+PASSED!
+
+!testRun: #TusLibrosTest #test11ClientPasswordMatches stamp: 'IO 11/18/2020 18:18:23'!
+FAILURE!
+!TusLibros methodsFor: 'cart' stamp: 'IO 11/18/2020 18:18:37' prior: 50872211!
+newCartForClientId: clientId Password: password
+	((clients includesKey: clientId) not) ifTrue: [^self error: TusLibros inexistentClientErrorMessage].
+	(((clients at: clientId) = password) not) ifTrue: [^self error: TusLibros invalidPasswordErrorMessage].
+	
+	carts add: Bag new.
+	cartClients add: clientId.
+	^carts size.
+! !
+
+!testRun: #TusLibrosTest #test01NewCartIsEmpty stamp: 'IO 11/18/2020 18:18:38'!
+ERROR!
+
+!testRun: #TusLibrosTest #test02CanAddABookToCart stamp: 'IO 11/18/2020 18:18:38'!
+ERROR!
+
+!testRun: #TusLibrosTest #test03CanAddDifferentBooksToCart stamp: 'IO 11/18/2020 18:18:38'!
+ERROR!
+
+!testRun: #TusLibrosTest #test04CanAddMoreThanOneBookToCart stamp: 'IO 11/18/2020 18:18:38'!
+ERROR!
+
+!testRun: #TusLibrosTest #test05CanAddMoreThanOneCart stamp: 'IO 11/18/2020 18:18:38'!
+ERROR!
+
+!testRun: #TusLibrosTest #test06AClientInitialyHasNowPurchases stamp: 'IO 11/18/2020 18:18:38'!
+PASSED!
+
+!testRun: #TusLibrosTest #test07AClientCanCheckoutACart stamp: 'IO 11/18/2020 18:18:38'!
+ERROR!
+
+!testRun: #TusLibrosTest #test08AClientCanCheckoutManyTimes stamp: 'IO 11/18/2020 18:18:38'!
+ERROR!
+
+!testRun: #TusLibrosTest #test09ManyClientsCanCheckout stamp: 'IO 11/18/2020 18:18:38'!
+ERROR!
+
+!testRun: #TusLibrosTest #test10ClientIdExists stamp: 'IO 11/18/2020 18:18:38'!
+PASSED!
+
+!testRun: #TusLibrosTest #test11ClientPasswordMatches stamp: 'IO 11/18/2020 18:18:38'!
+PASSED!
+!TusLibros methodsFor: 'cart' stamp: 'IO 11/18/2020 18:18:44' prior: 50872257!
+newCartForClientId: clientId Password: password
+	((clients includesKey: clientId) not) ifTrue: [^self error: TusLibros inexistentClientErrorMessage].
+	(((clients at: clientId) = password) not) ifTrue: [^self error: TusLibros invalidPasswordErrorMessage].
+	
+	carts add: Bag new.
+	cartClients add: clientId.
+	^carts size.
+! !
+
+!testRun: #TusLibrosTest #test01NewCartIsEmpty stamp: 'IO 11/18/2020 18:18:45'!
+ERROR!
+
+!testRun: #TusLibrosTest #test02CanAddABookToCart stamp: 'IO 11/18/2020 18:18:45'!
+ERROR!
+
+!testRun: #TusLibrosTest #test03CanAddDifferentBooksToCart stamp: 'IO 11/18/2020 18:18:45'!
+ERROR!
+
+!testRun: #TusLibrosTest #test04CanAddMoreThanOneBookToCart stamp: 'IO 11/18/2020 18:18:45'!
+ERROR!
+
+!testRun: #TusLibrosTest #test05CanAddMoreThanOneCart stamp: 'IO 11/18/2020 18:18:45'!
+ERROR!
+
+!testRun: #TusLibrosTest #test06AClientInitialyHasNowPurchases stamp: 'IO 11/18/2020 18:18:45'!
+PASSED!
+
+!testRun: #TusLibrosTest #test07AClientCanCheckoutACart stamp: 'IO 11/18/2020 18:18:45'!
+ERROR!
+
+!testRun: #TusLibrosTest #test08AClientCanCheckoutManyTimes stamp: 'IO 11/18/2020 18:18:45'!
+ERROR!
+
+!testRun: #TusLibrosTest #test09ManyClientsCanCheckout stamp: 'IO 11/18/2020 18:18:45'!
+ERROR!
+
+!testRun: #TusLibrosTest #test10ClientIdExists stamp: 'IO 11/18/2020 18:18:45'!
+PASSED!
+
+!testRun: #TusLibrosTest #test11ClientPasswordMatches stamp: 'IO 11/18/2020 18:18:45'!
+PASSED!
+
+clients at: clientId!
+
+clients at: 1!
+
+clients at: 'admin'!
+
+!testRun: #TusLibrosTest #test01NewCartIsEmpty stamp: 'IO 11/18/2020 18:19:38'!
+ERROR!
+
+!testRun: #TusLibrosTest #test02CanAddABookToCart stamp: 'IO 11/18/2020 18:19:38'!
+ERROR!
+
+!testRun: #TusLibrosTest #test03CanAddDifferentBooksToCart stamp: 'IO 11/18/2020 18:19:38'!
+ERROR!
+
+!testRun: #TusLibrosTest #test04CanAddMoreThanOneBookToCart stamp: 'IO 11/18/2020 18:19:38'!
+ERROR!
+
+!testRun: #TusLibrosTest #test05CanAddMoreThanOneCart stamp: 'IO 11/18/2020 18:19:38'!
+ERROR!
+
+!testRun: #TusLibrosTest #test06AClientInitialyHasNowPurchases stamp: 'IO 11/18/2020 18:19:38'!
+PASSED!
+
+!testRun: #TusLibrosTest #test07AClientCanCheckoutACart stamp: 'IO 11/18/2020 18:19:38'!
+ERROR!
+
+!testRun: #TusLibrosTest #test08AClientCanCheckoutManyTimes stamp: 'IO 11/18/2020 18:19:38'!
+ERROR!
+
+!testRun: #TusLibrosTest #test09ManyClientsCanCheckout stamp: 'IO 11/18/2020 18:19:38'!
+ERROR!
+
+!testRun: #TusLibrosTest #test10ClientIdExists stamp: 'IO 11/18/2020 18:19:38'!
+PASSED!
+
+!testRun: #TusLibrosTest #test11ClientPasswordMatches stamp: 'IO 11/18/2020 18:19:38'!
+PASSED!
+
+users!
+
+users at: 'admin'!
+!TusLibrosTest methodsFor: 'valid instances' stamp: 'IO 11/18/2020 18:20:03' prior: 50871224!
+newTusLibros
+
+	| tusLibros users catalogue |
+	
+	catalogue := OrderedCollection with: '0-7645-2641-3' with: '0-7645-2641-4'.
+	users := Dictionary newFromPairs: #('admin' 'password' 'admin2' 'password').
+	tusLibros := TusLibros withCatalogue: catalogue withClients: users.
+
+	^tusLibros.
+! !
+
+users at: 'admin'!
+
+!testRun: #TusLibrosTest #test01NewCartIsEmpty stamp: 'IO 11/18/2020 18:20:17'!
+PASSED!
+
+!testRun: #TusLibrosTest #test01NewCartIsEmpty stamp: 'IO 11/18/2020 18:20:20'!
+PASSED!
+
+!testRun: #TusLibrosTest #test02CanAddABookToCart stamp: 'IO 11/18/2020 18:20:20'!
+PASSED!
+
+!testRun: #TusLibrosTest #test03CanAddDifferentBooksToCart stamp: 'IO 11/18/2020 18:20:20'!
+PASSED!
+
+!testRun: #TusLibrosTest #test04CanAddMoreThanOneBookToCart stamp: 'IO 11/18/2020 18:20:20'!
+PASSED!
+
+!testRun: #TusLibrosTest #test05CanAddMoreThanOneCart stamp: 'IO 11/18/2020 18:20:20'!
+PASSED!
+
+!testRun: #TusLibrosTest #test06AClientInitialyHasNowPurchases stamp: 'IO 11/18/2020 18:20:20'!
+PASSED!
+
+!testRun: #TusLibrosTest #test07AClientCanCheckoutACart stamp: 'IO 11/18/2020 18:20:20'!
+PASSED!
+
+!testRun: #TusLibrosTest #test08AClientCanCheckoutManyTimes stamp: 'IO 11/18/2020 18:20:20'!
+PASSED!
+
+!testRun: #TusLibrosTest #test09ManyClientsCanCheckout stamp: 'IO 11/18/2020 18:20:20'!
+PASSED!
+
+!testRun: #TusLibrosTest #test10ClientIdExists stamp: 'IO 11/18/2020 18:20:20'!
+PASSED!
+
+!testRun: #TusLibrosTest #test11ClientPasswordMatches stamp: 'IO 11/18/2020 18:20:20'!
+PASSED!
+!TusLibrosTest methodsFor: 'validations' stamp: 'IO 11/18/2020 18:21:14'!
+test11CreateCartClientPasswordMatches
+
+	| tusLibros |
+
+	tusLibros := self newTusLibros.
+	
+	self should: [tusLibros newCartForClientId: 'admin' Password: 'password2'.]
+		raise: Error
+		withMessageText: TusLibros invalidPasswordErrorMessage.
+! !
+
+!methodRemoval: TusLibrosTest #test11ClientPasswordMatches stamp: 'IO 11/18/2020 18:21:14'!
+test11ClientPasswordMatches
+
+	| tusLibros |
+
+	tusLibros := self newTusLibros.
+	
+	self should: [tusLibros newCartForClientId: 'admin' Password: 'password2'.]
+		raise: Error
+		withMessageText: TusLibros invalidPasswordErrorMessage.
+!
+!TusLibrosTest methodsFor: 'validations' stamp: 'IO 11/18/2020 18:21:20'!
+test10CreateCartClientIdExists
+
+	| tusLibros |
+
+	tusLibros := self newTusLibros.
+	
+	self should: [tusLibros newCartForClientId: 'admin3' Password: 'password'.]
+		raise: Error
+		withMessageText: TusLibros inexistentClientErrorMessage.
+! !
+
+!methodRemoval: TusLibrosTest #test10ClientIdExists stamp: 'IO 11/18/2020 18:21:20'!
+test10ClientIdExists
+
+	| tusLibros |
+
+	tusLibros := self newTusLibros.
+	
+	self should: [tusLibros newCartForClientId: 'admin3' Password: 'password'.]
+		raise: Error
+		withMessageText: TusLibros inexistentClientErrorMessage.
+!
+!TusLibros methodsFor: 'cart' stamp: 'IO 11/18/2020 18:21:50' prior: 50872303!
+newCartForClientId: clientId Password: password
+
+	(((clients at: clientId ifAbsent: [^self error: TusLibros inexistentClientErrorMessage]) = password) not) ifTrue: [^self error: TusLibros invalidPasswordErrorMessage].
+	
+	carts add: Bag new.
+	cartClients add: clientId.
+	^carts size.
+! !
+
+!testRun: #TusLibrosTest #test01NewCartIsEmpty stamp: 'IO 11/18/2020 18:21:51'!
+PASSED!
+
+!testRun: #TusLibrosTest #test02CanAddABookToCart stamp: 'IO 11/18/2020 18:21:51'!
+PASSED!
+
+!testRun: #TusLibrosTest #test03CanAddDifferentBooksToCart stamp: 'IO 11/18/2020 18:21:51'!
+PASSED!
+
+!testRun: #TusLibrosTest #test04CanAddMoreThanOneBookToCart stamp: 'IO 11/18/2020 18:21:51'!
+PASSED!
+
+!testRun: #TusLibrosTest #test05CanAddMoreThanOneCart stamp: 'IO 11/18/2020 18:21:51'!
+PASSED!
+
+!testRun: #TusLibrosTest #test06AClientInitialyHasNowPurchases stamp: 'IO 11/18/2020 18:21:51'!
+PASSED!
+
+!testRun: #TusLibrosTest #test07AClientCanCheckoutACart stamp: 'IO 11/18/2020 18:21:51'!
+PASSED!
+
+!testRun: #TusLibrosTest #test08AClientCanCheckoutManyTimes stamp: 'IO 11/18/2020 18:21:51'!
+PASSED!
+
+!testRun: #TusLibrosTest #test09ManyClientsCanCheckout stamp: 'IO 11/18/2020 18:21:51'!
+PASSED!
+
+!testRun: #TusLibrosTest #test10CreateCartClientIdExists stamp: 'IO 11/18/2020 18:21:51'!
+PASSED!
+
+!testRun: #TusLibrosTest #test11CreateCartClientPasswordMatches stamp: 'IO 11/18/2020 18:21:51'!
+PASSED!
+!TusLibros methodsFor: 'cart' stamp: 'IO 11/18/2020 18:22:41' prior: 50872476!
+newCartForClientId: clientId Password: password
+	(
+		(
+			(clients at: clientId
+				ifAbsent: [^self error: TusLibros inexistentClientErrorMessage]) = password
+			) not
+	) ifTrue: [^self error: TusLibros invalidPasswordErrorMessage].
+	
+	carts add: Bag new.
+	cartClients add: clientId.
+	^carts size.
+! !
+
+!testRun: #TusLibrosTest #test01NewCartIsEmpty stamp: 'IO 11/18/2020 18:22:42'!
+PASSED!
+
+!testRun: #TusLibrosTest #test02CanAddABookToCart stamp: 'IO 11/18/2020 18:22:42'!
+PASSED!
+
+!testRun: #TusLibrosTest #test03CanAddDifferentBooksToCart stamp: 'IO 11/18/2020 18:22:42'!
+PASSED!
+
+!testRun: #TusLibrosTest #test04CanAddMoreThanOneBookToCart stamp: 'IO 11/18/2020 18:22:42'!
+PASSED!
+
+!testRun: #TusLibrosTest #test05CanAddMoreThanOneCart stamp: 'IO 11/18/2020 18:22:42'!
+PASSED!
+
+!testRun: #TusLibrosTest #test06AClientInitialyHasNowPurchases stamp: 'IO 11/18/2020 18:22:42'!
+PASSED!
+
+!testRun: #TusLibrosTest #test07AClientCanCheckoutACart stamp: 'IO 11/18/2020 18:22:42'!
+PASSED!
+
+!testRun: #TusLibrosTest #test08AClientCanCheckoutManyTimes stamp: 'IO 11/18/2020 18:22:42'!
+PASSED!
+
+!testRun: #TusLibrosTest #test09ManyClientsCanCheckout stamp: 'IO 11/18/2020 18:22:42'!
+PASSED!
+
+!testRun: #TusLibrosTest #test10CreateCartClientIdExists stamp: 'IO 11/18/2020 18:22:42'!
+PASSED!
+
+!testRun: #TusLibrosTest #test11CreateCartClientPasswordMatches stamp: 'IO 11/18/2020 18:22:42'!
+PASSED!
+!TusLibros methodsFor: 'cart' stamp: 'IO 11/18/2020 18:22:51' prior: 50872522!
+newCartForClientId: clientId Password: password
+	(
+		(
+			(clients at: clientId
+				ifAbsent: [^self error: TusLibros inexistentClientErrorMessage]) = password) not
+	) ifTrue: [^self error: TusLibros invalidPasswordErrorMessage].
+	
+	carts add: Bag new.
+	cartClients add: clientId.
+	^carts size.
+! !
+!TusLibros methodsFor: 'cart' stamp: 'IO 11/18/2020 18:22:57' prior: 50872568!
+newCartForClientId: clientId Password: password
+	(
+		((clients at: clientId
+				ifAbsent: [^self error: TusLibros inexistentClientErrorMessage]) = password) not
+	) ifTrue: [^self error: TusLibros invalidPasswordErrorMessage].
+	
+	carts add: Bag new.
+	cartClients add: clientId.
+	^carts size.
+! !
+
+!testRun: #TusLibrosTest #test01NewCartIsEmpty stamp: 'IO 11/18/2020 18:22:58'!
+PASSED!
+
+!testRun: #TusLibrosTest #test02CanAddABookToCart stamp: 'IO 11/18/2020 18:22:58'!
+PASSED!
+
+!testRun: #TusLibrosTest #test03CanAddDifferentBooksToCart stamp: 'IO 11/18/2020 18:22:58'!
+PASSED!
+
+!testRun: #TusLibrosTest #test04CanAddMoreThanOneBookToCart stamp: 'IO 11/18/2020 18:22:58'!
+PASSED!
+
+!testRun: #TusLibrosTest #test05CanAddMoreThanOneCart stamp: 'IO 11/18/2020 18:22:58'!
+PASSED!
+
+!testRun: #TusLibrosTest #test06AClientInitialyHasNowPurchases stamp: 'IO 11/18/2020 18:22:58'!
+PASSED!
+
+!testRun: #TusLibrosTest #test07AClientCanCheckoutACart stamp: 'IO 11/18/2020 18:22:58'!
+PASSED!
+
+!testRun: #TusLibrosTest #test08AClientCanCheckoutManyTimes stamp: 'IO 11/18/2020 18:22:58'!
+PASSED!
+
+!testRun: #TusLibrosTest #test09ManyClientsCanCheckout stamp: 'IO 11/18/2020 18:22:58'!
+PASSED!
+
+!testRun: #TusLibrosTest #test10CreateCartClientIdExists stamp: 'IO 11/18/2020 18:22:58'!
+PASSED!
+
+!testRun: #TusLibrosTest #test11CreateCartClientPasswordMatches stamp: 'IO 11/18/2020 18:22:58'!
+PASSED!
+!TusLibros methodsFor: 'cart' stamp: 'IO 11/18/2020 18:23:07' prior: 50872580!
+newCartForClientId: clientId Password: password
+	(
+		(clients at: clientId
+				ifAbsent: [^self error: TusLibros inexistentClientErrorMessage]) = password not
+	) ifTrue: [^self error: TusLibros invalidPasswordErrorMessage].
+	
+	carts add: Bag new.
+	cartClients add: clientId.
+	^carts size.
+! !
+
+!testRun: #TusLibrosTest #test01NewCartIsEmpty stamp: 'IO 11/18/2020 18:23:08'!
+ERROR!
+
+!testRun: #TusLibrosTest #test02CanAddABookToCart stamp: 'IO 11/18/2020 18:23:08'!
+ERROR!
+
+!testRun: #TusLibrosTest #test03CanAddDifferentBooksToCart stamp: 'IO 11/18/2020 18:23:08'!
+ERROR!
+
+!testRun: #TusLibrosTest #test04CanAddMoreThanOneBookToCart stamp: 'IO 11/18/2020 18:23:08'!
+ERROR!
+
+!testRun: #TusLibrosTest #test05CanAddMoreThanOneCart stamp: 'IO 11/18/2020 18:23:08'!
+ERROR!
+
+!testRun: #TusLibrosTest #test06AClientInitialyHasNowPurchases stamp: 'IO 11/18/2020 18:23:08'!
+PASSED!
+
+!testRun: #TusLibrosTest #test07AClientCanCheckoutACart stamp: 'IO 11/18/2020 18:23:08'!
+ERROR!
+
+!testRun: #TusLibrosTest #test08AClientCanCheckoutManyTimes stamp: 'IO 11/18/2020 18:23:08'!
+ERROR!
+
+!testRun: #TusLibrosTest #test09ManyClientsCanCheckout stamp: 'IO 11/18/2020 18:23:08'!
+ERROR!
+
+!testRun: #TusLibrosTest #test10CreateCartClientIdExists stamp: 'IO 11/18/2020 18:23:08'!
+PASSED!
+
+!testRun: #TusLibrosTest #test11CreateCartClientPasswordMatches stamp: 'IO 11/18/2020 18:23:08'!
+FAILURE!
+!TusLibros methodsFor: 'cart' stamp: 'IO 11/18/2020 18:23:11' prior: 50872626!
+newCartForClientId: clientId Password: password
+	(
+		((clients at: clientId
+				ifAbsent: [^self error: TusLibros inexistentClientErrorMessage]) = password) not
+	) ifTrue: [^self error: TusLibros invalidPasswordErrorMessage].
+	
+	carts add: Bag new.
+	cartClients add: clientId.
+	^carts size.
+! !
+
+!testRun: #TusLibrosTest #test01NewCartIsEmpty stamp: 'IO 11/18/2020 18:23:12'!
+PASSED!
+
+!testRun: #TusLibrosTest #test02CanAddABookToCart stamp: 'IO 11/18/2020 18:23:12'!
+PASSED!
+
+!testRun: #TusLibrosTest #test03CanAddDifferentBooksToCart stamp: 'IO 11/18/2020 18:23:12'!
+PASSED!
+
+!testRun: #TusLibrosTest #test04CanAddMoreThanOneBookToCart stamp: 'IO 11/18/2020 18:23:12'!
+PASSED!
+
+!testRun: #TusLibrosTest #test05CanAddMoreThanOneCart stamp: 'IO 11/18/2020 18:23:12'!
+PASSED!
+
+!testRun: #TusLibrosTest #test06AClientInitialyHasNowPurchases stamp: 'IO 11/18/2020 18:23:12'!
+PASSED!
+
+!testRun: #TusLibrosTest #test07AClientCanCheckoutACart stamp: 'IO 11/18/2020 18:23:12'!
+PASSED!
+
+!testRun: #TusLibrosTest #test08AClientCanCheckoutManyTimes stamp: 'IO 11/18/2020 18:23:12'!
+PASSED!
+
+!testRun: #TusLibrosTest #test09ManyClientsCanCheckout stamp: 'IO 11/18/2020 18:23:12'!
+PASSED!
+
+!testRun: #TusLibrosTest #test10CreateCartClientIdExists stamp: 'IO 11/18/2020 18:23:12'!
+PASSED!
+
+!testRun: #TusLibrosTest #test11CreateCartClientPasswordMatches stamp: 'IO 11/18/2020 18:23:12'!
+PASSED!
+!TusLibrosTest methodsFor: 'cart' stamp: 'IO 11/18/2020 18:25:02'!
+test12AddToCartHasValidCartId
+
+	| tusLibros cartId cart |
+
+	tusLibros := self newTusLibros.
+
+	cartId := 1.
+	
+	tusLibros addToCart: cartId bookIsbn: '0-7645-2641-3' bookQuantity: 1.
+	
+	cart := Bag new.
+	cart add: '0-7645-2641-3'.
+
+	self assert: cart equals: (tusLibros listCart: cartId).
+
+! !
+
+!testRun: #TusLibrosTest #test12AddToCartHasValidCartId stamp: 'IO 11/18/2020 18:25:21'!
+ERROR!
+!TusLibrosTest methodsFor: 'validations' stamp: 'IO 11/18/2020 18:26:04' prior: 50872718!
+test12AddToCartHasValidCartId
+
+	| tusLibros |
+
+	tusLibros := self newTusLibros.
+	
+	self should: [tusLibros addToCart: 1 bookIsbn: '0-7645-2641-3' bookQuantity: 1.]
+		raise: Error
+		withMessageText: TusLibros invalidCartIdErrorMessage.
+
+
+! !
+
+!testRun: #TusLibrosTest #test12AddToCartHasValidCartId stamp: 'IO 11/18/2020 18:26:08'!
+ERROR!
+!TusLibros class methodsFor: 'as yet unclassified' stamp: 'IO 11/18/2020 18:26:16'!
+invalidCartIdErrorMessage
+	self shouldBeImplemented.! !
+!TusLibros class methodsFor: 'as yet unclassified' stamp: 'IO 11/18/2020 18:26:25' prior: 50872747!
+invalidCartIdErrorMessage
+	'Invalid cart id'.! !
+
+!testRun: #TusLibrosTest #test12AddToCartHasValidCartId stamp: 'IO 11/18/2020 18:26:27'!
+FAILURE!
+!TusLibros methodsFor: 'cart' stamp: 'IO 11/18/2020 18:27:10' prior: 50871761!
+addToCart: cartId bookIsbn: isbn bookQuantity: quantity
+
+	| cart |
+	(cartId > carts size) ifTrue: [^self error: TusLibros invalidCartIdErrorMessage ].
+	cart := carts at: cartId.
+	cart add: isbn withOccurrences: quantity.
+! !
+!TusLibros methodsFor: 'cart' stamp: 'IO 11/18/2020 18:27:12' prior: 50872760!
+addToCart: cartId bookIsbn: isbn bookQuantity: quantity
+
+	| cart |
+	(cartId > carts size) ifTrue: [^self error: TusLibros invalidCartIdErrorMessage].
+	cart := carts at: cartId.
+	cart add: isbn withOccurrences: quantity.
+! !
+
+!testRun: #TusLibrosTest #test01NewCartIsEmpty stamp: 'IO 11/18/2020 18:27:13'!
+PASSED!
+
+!testRun: #TusLibrosTest #test02CanAddABookToCart stamp: 'IO 11/18/2020 18:27:13'!
+PASSED!
+
+!testRun: #TusLibrosTest #test03CanAddDifferentBooksToCart stamp: 'IO 11/18/2020 18:27:13'!
+PASSED!
+
+!testRun: #TusLibrosTest #test04CanAddMoreThanOneBookToCart stamp: 'IO 11/18/2020 18:27:13'!
+PASSED!
+
+!testRun: #TusLibrosTest #test05CanAddMoreThanOneCart stamp: 'IO 11/18/2020 18:27:13'!
+PASSED!
+
+!testRun: #TusLibrosTest #test06AClientInitialyHasNowPurchases stamp: 'IO 11/18/2020 18:27:13'!
+PASSED!
+
+!testRun: #TusLibrosTest #test07AClientCanCheckoutACart stamp: 'IO 11/18/2020 18:27:13'!
+PASSED!
+
+!testRun: #TusLibrosTest #test08AClientCanCheckoutManyTimes stamp: 'IO 11/18/2020 18:27:13'!
+PASSED!
+
+!testRun: #TusLibrosTest #test09ManyClientsCanCheckout stamp: 'IO 11/18/2020 18:27:13'!
+PASSED!
+
+!testRun: #TusLibrosTest #test10CreateCartClientIdExists stamp: 'IO 11/18/2020 18:27:13'!
+PASSED!
+
+!testRun: #TusLibrosTest #test11CreateCartClientPasswordMatches stamp: 'IO 11/18/2020 18:27:13'!
+PASSED!
+
+!testRun: #TusLibrosTest #test12AddToCartHasValidCartId stamp: 'IO 11/18/2020 18:27:13'!
+PASSED!
+!TusLibrosTest methodsFor: 'validations' stamp: 'IO 11/18/2020 18:28:32'!
+test13AddToCartHasValidISBN
+
+	| tusLibros |
+
+	tusLibros := self newTusLibros.
+	
+	self should: [ | cartId |tusLibros addToCart: cartId bookIsbn: '0-7645-2641-3' bookQuantity: 1.]
+		raise: Error
+		withMessageText: TusLibros invalidCartIdErrorMessage.
+
+
+! !
+!TusLibrosTest methodsFor: 'validations' stamp: 'IO 11/18/2020 18:28:59' prior: 50872817!
+test13AddToCartHasValidISBN
+
+	| tusLibros cartId |
+
+	tusLibros := self newTusLibros.
+
+	cartId := tusLibros newCartForClientId: 'admin' Password: 'password'.
+	
+	self should: [ tusLibros addToCart: cartId bookIsbn: '0-7645-2641-3' bookQuantity: 1.]
+		raise: Error
+		withMessageText: TusLibros invalidCartIdErrorMessage.
+
+
+! !
+
+!testRun: #TusLibrosTest #test13AddToCartHasValidISBN stamp: 'IO 11/18/2020 18:29:00'!
+FAILURE!
+!TusLibrosTest methodsFor: 'validations' stamp: 'IO 11/18/2020 18:29:12' prior: 50872828!
+test13AddToCartHasValidISBN
+
+	| tusLibros cartId |
+
+	tusLibros := self newTusLibros.
+
+	cartId := tusLibros newCartForClientId: 'admin' Password: 'password'.
+	
+	self should: [ tusLibros addToCart: cartId bookIsbn: 'bad isbn' bookQuantity: 1.]
+		raise: Error
+		withMessageText: TusLibros invalidCartIdErrorMessage.
+
+
+! !
+
+!testRun: #TusLibrosTest #test13AddToCartHasValidISBN stamp: 'IO 11/18/2020 18:29:13'!
+FAILURE!
+!TusLibrosTest methodsFor: 'validations' stamp: 'IO 11/18/2020 18:29:17' prior: 50872844!
+test13AddToCartHasValidISBN
+
+	| tusLibros cartId |
+
+	tusLibros := self newTusLibros.
+
+	cartId := tusLibros newCartForClientId: 'admin' Password: 'password'.
+	
+	self should: [ tusLibros addToCart: cartId bookIsbn: 'bad isbn' bookQuantity: 1.]
+		raise: Error
+		withMessageText: TusLibros invalidCartIdErrorMessage.
+
+! !
+
+!classDefinition: #TusLibros category: 'Ejercicio-20-Tus-Libros' stamp: 'IO 11/18/2020 18:29:35'!
+Object subclass: #TusLibros
+	instanceVariableNames: 'carts cartClients clientsPurchases clients catalogue'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Ejercicio-20-Tus-Libros'!
+!TusLibros methodsFor: 'initialization' stamp: 'IO 11/18/2020 18:29:32' prior: 50871961!
+initializeWithCatalogue: aCatalogue withClients: aClientList 
+
+	catalogue := aCatalogue.
+	clients := aClientList.
+
+	carts := OrderedCollection new.
+	cartClients := OrderedCollection new.
+	clientsPurchases := Dictionary new.
+! !
+!TusLibros methodsFor: 'cart' stamp: 'IO 11/18/2020 18:30:22' prior: 50872770!
+addToCart: cartId bookIsbn: isbn bookQuantity: quantity
+
+	| cart |
+	(cartId > carts size) ifTrue: [^self error: TusLibros invalidCartIdErrorMessage].
+	(catalogue includes: isbn) ifFalse: [^self error: TusLibros invalidIsbn].
+	cart := carts at: cartId.
+	cart add: isbn withOccurrences: quantity.
+! !
+!TusLibros class methodsFor: 'as yet unclassified' stamp: 'IO 11/18/2020 18:30:40'!
+invalidIsbn
+	^'Isbn not in catalogue'.
+! !
+!TusLibros class methodsFor: 'as yet unclassified' stamp: 'IO 11/18/2020 18:30:44'!
+invalidIsbnErrorMessage
+	^'Isbn not in catalogue'.
+! !
+
+!methodRemoval: TusLibros class #invalidIsbn stamp: 'IO 11/18/2020 18:30:47'!
+invalidIsbn
+	^'Isbn not in catalogue'.
+!
+!TusLibros methodsFor: 'cart' stamp: 'IO 11/18/2020 18:30:58' prior: 50872892!
+addToCart: cartId bookIsbn: isbn bookQuantity: quantity
+
+	| cart |
+	(cartId > carts size) ifTrue: [^self error: TusLibros invalidCartIdErrorMessage].
+	(catalogue includes: isbn) ifFalse: [^self error: TusLibros invalidIsbnErrorMessage].
+	cart := carts at: cartId.
+	cart add: isbn withOccurrences: quantity.
+! !
+!TusLibrosTest methodsFor: 'validations' stamp: 'IO 11/18/2020 18:31:04' prior: 50872860!
+test13AddToCartHasValidISBN
+
+	| tusLibros cartId |
+
+	tusLibros := self newTusLibros.
+
+	cartId := tusLibros newCartForClientId: 'admin' Password: 'password'.
+	
+	self should: [ tusLibros addToCart: cartId bookIsbn: 'bad isbn' bookQuantity: 1.]
+		raise: Error
+		withMessageText: TusLibros invalidIsbnErrorMessage.
+
+! !
+
+!testRun: #TusLibrosTest #test13AddToCartHasValidISBN stamp: 'IO 11/18/2020 18:31:04'!
+PASSED!
+
+!testRun: #TusLibrosTest #test01NewCartIsEmpty stamp: 'IO 11/18/2020 18:31:04'!
+PASSED!
+
+!testRun: #TusLibrosTest #test02CanAddABookToCart stamp: 'IO 11/18/2020 18:31:04'!
+PASSED!
+
+!testRun: #TusLibrosTest #test03CanAddDifferentBooksToCart stamp: 'IO 11/18/2020 18:31:04'!
+PASSED!
+
+!testRun: #TusLibrosTest #test04CanAddMoreThanOneBookToCart stamp: 'IO 11/18/2020 18:31:04'!
+PASSED!
+
+!testRun: #TusLibrosTest #test05CanAddMoreThanOneCart stamp: 'IO 11/18/2020 18:31:04'!
+PASSED!
+
+!testRun: #TusLibrosTest #test06AClientInitialyHasNowPurchases stamp: 'IO 11/18/2020 18:31:04'!
+PASSED!
+
+!testRun: #TusLibrosTest #test07AClientCanCheckoutACart stamp: 'IO 11/18/2020 18:31:04'!
+PASSED!
+
+!testRun: #TusLibrosTest #test08AClientCanCheckoutManyTimes stamp: 'IO 11/18/2020 18:31:04'!
+PASSED!
+
+!testRun: #TusLibrosTest #test09ManyClientsCanCheckout stamp: 'IO 11/18/2020 18:31:04'!
+PASSED!
+
+!testRun: #TusLibrosTest #test10CreateCartClientIdExists stamp: 'IO 11/18/2020 18:31:04'!
+PASSED!
+
+!testRun: #TusLibrosTest #test11CreateCartClientPasswordMatches stamp: 'IO 11/18/2020 18:31:04'!
+PASSED!
+
+!testRun: #TusLibrosTest #test12AddToCartHasValidCartId stamp: 'IO 11/18/2020 18:31:05'!
+PASSED!
+
+!testRun: #TusLibrosTest #test13AddToCartHasValidISBN stamp: 'IO 11/18/2020 18:31:05'!
+PASSED!
+!TusLibrosTest methodsFor: 'validations' stamp: 'IO 11/18/2020 18:31:23'!
+test14AddToCartHasValidQuantity
+
+	| tusLibros cartId |
+
+	tusLibros := self newTusLibros.
+
+	cartId := tusLibros newCartForClientId: 'admin' Password: 'password'.
+	
+	self should: [ tusLibros addToCart: cartId bookIsbn: 'bad isbn' bookQuantity: 1.]
+		raise: Error
+		withMessageText: TusLibros invalidIsbnErrorMessage.
+
+! !
+!TusLibrosTest methodsFor: 'validations' stamp: 'IO 11/18/2020 18:31:51' prior: 50872985!
+test14AddToCartHasValidQuantity
+
+	| tusLibros cartId |
+
+	tusLibros := self newTusLibros.
+
+	cartId := tusLibros newCartForClientId: 'admin' Password: 'password'.
+	
+	self should: [ tusLibros addToCart: cartId bookIsbn: '0-7645-2641-3' bookQuantity: 0.]
+		raise: Error
+		withMessageText: TusLibros invalidQuantityErrorMessage.
+
+! !
+
+!testRun: #TusLibrosTest #test14AddToCartHasValidQuantity stamp: 'IO 11/18/2020 18:31:53'!
+ERROR!
+!TusLibros class methodsFor: 'error messages' stamp: 'IO 11/18/2020 18:32:01'!
+invalidQuantityErrorMessage
+	self shouldBeImplemented.! !
+!TusLibros class methodsFor: 'error messages' stamp: 'IO 11/18/2020 18:32:12' prior: 50873014!
+invalidQuantityErrorMessage
+	^'Quantity added must be more than 0'.! !
+
+!testRun: #TusLibrosTest #test14AddToCartHasValidQuantity stamp: 'IO 11/18/2020 18:32:15'!
+FAILURE!
+
+!testRun: #TusLibrosTest #test14AddToCartHasValidQuantity stamp: 'IO 11/18/2020 18:32:19'!
+FAILURE!
+!TusLibros methodsFor: 'cart' stamp: 'IO 11/18/2020 18:32:49' prior: 50872916!
+addToCart: cartId bookIsbn: isbn bookQuantity: quantity
+
+	| cart |
+	(cartId > carts size) ifTrue: [^self error: TusLibros invalidCartIdErrorMessage].
+	(catalogue includes: isbn) ifFalse: [^self error: TusLibros invalidIsbnErrorMessage].
+	(quantity < 1) ifTrue: [^self error: TusLibros invalidQuantityErrorMessage].
+	cart := carts at: cartId.
+	cart add: isbn withOccurrences: quantity.
+! !
+
+!testRun: #TusLibrosTest #test01NewCartIsEmpty stamp: 'IO 11/18/2020 18:32:50'!
+PASSED!
+
+!testRun: #TusLibrosTest #test02CanAddABookToCart stamp: 'IO 11/18/2020 18:32:50'!
+PASSED!
+
+!testRun: #TusLibrosTest #test03CanAddDifferentBooksToCart stamp: 'IO 11/18/2020 18:32:50'!
+PASSED!
+
+!testRun: #TusLibrosTest #test04CanAddMoreThanOneBookToCart stamp: 'IO 11/18/2020 18:32:50'!
+PASSED!
+
+!testRun: #TusLibrosTest #test05CanAddMoreThanOneCart stamp: 'IO 11/18/2020 18:32:50'!
+PASSED!
+
+!testRun: #TusLibrosTest #test06AClientInitialyHasNowPurchases stamp: 'IO 11/18/2020 18:32:50'!
+PASSED!
+
+!testRun: #TusLibrosTest #test07AClientCanCheckoutACart stamp: 'IO 11/18/2020 18:32:50'!
+PASSED!
+
+!testRun: #TusLibrosTest #test08AClientCanCheckoutManyTimes stamp: 'IO 11/18/2020 18:32:50'!
+PASSED!
+
+!testRun: #TusLibrosTest #test09ManyClientsCanCheckout stamp: 'IO 11/18/2020 18:32:50'!
+PASSED!
+
+!testRun: #TusLibrosTest #test10CreateCartClientIdExists stamp: 'IO 11/18/2020 18:32:50'!
+PASSED!
+
+!testRun: #TusLibrosTest #test11CreateCartClientPasswordMatches stamp: 'IO 11/18/2020 18:32:50'!
+PASSED!
+
+!testRun: #TusLibrosTest #test12AddToCartHasValidCartId stamp: 'IO 11/18/2020 18:32:50'!
+PASSED!
+
+!testRun: #TusLibrosTest #test13AddToCartHasValidISBN stamp: 'IO 11/18/2020 18:32:50'!
+PASSED!
+
+!testRun: #TusLibrosTest #test14AddToCartHasValidQuantity stamp: 'IO 11/18/2020 18:32:50'!
+PASSED!
+!TusLibros methodsFor: 'cart' stamp: 'IO 11/18/2020 18:33:10' prior: 50873030!
+addToCart: cartId bookIsbn: isbn bookQuantity: quantity
+
+	| cart |
+	(cartId > carts size) ifTrue: [^self error: TusLibros invalidCartIdErrorMessage].
+	(catalogue includes: isbn) ifFalse: [^self error: TusLibros invalidIsbnErrorMessage].
+	(quantity < 1) ifTrue: [^self error: TusLibros invalidQuantityErrorMessage].
+	cart := carts at: cartId.
+	cart add: isbn withOccurrences: quantity.
+! !
+
+!testRun: #TusLibrosTest #test01NewCartIsEmpty stamp: 'IO 11/18/2020 18:33:11'!
+PASSED!
+
+!testRun: #TusLibrosTest #test02CanAddABookToCart stamp: 'IO 11/18/2020 18:33:11'!
+PASSED!
+
+!testRun: #TusLibrosTest #test03CanAddDifferentBooksToCart stamp: 'IO 11/18/2020 18:33:11'!
+PASSED!
+
+!testRun: #TusLibrosTest #test04CanAddMoreThanOneBookToCart stamp: 'IO 11/18/2020 18:33:11'!
+PASSED!
+
+!testRun: #TusLibrosTest #test05CanAddMoreThanOneCart stamp: 'IO 11/18/2020 18:33:11'!
+PASSED!
+
+!testRun: #TusLibrosTest #test06AClientInitialyHasNowPurchases stamp: 'IO 11/18/2020 18:33:11'!
+PASSED!
+
+!testRun: #TusLibrosTest #test07AClientCanCheckoutACart stamp: 'IO 11/18/2020 18:33:11'!
+PASSED!
+
+!testRun: #TusLibrosTest #test08AClientCanCheckoutManyTimes stamp: 'IO 11/18/2020 18:33:11'!
+PASSED!
+
+!testRun: #TusLibrosTest #test09ManyClientsCanCheckout stamp: 'IO 11/18/2020 18:33:11'!
+PASSED!
+
+!testRun: #TusLibrosTest #test10CreateCartClientIdExists stamp: 'IO 11/18/2020 18:33:11'!
+PASSED!
+
+!testRun: #TusLibrosTest #test11CreateCartClientPasswordMatches stamp: 'IO 11/18/2020 18:33:11'!
+PASSED!
+
+!testRun: #TusLibrosTest #test12AddToCartHasValidCartId stamp: 'IO 11/18/2020 18:33:11'!
+PASSED!
+
+!testRun: #TusLibrosTest #test13AddToCartHasValidISBN stamp: 'IO 11/18/2020 18:33:11'!
+PASSED!
+
+!testRun: #TusLibrosTest #test14AddToCartHasValidQuantity stamp: 'IO 11/18/2020 18:33:11'!
+PASSED!
+!TusLibrosTest methodsFor: 'validations' stamp: 'IO 11/18/2020 18:33:54'!
+test15ListCartHasValidCartId
+
+	| tusLibros |
+
+	tusLibros := self newTusLibros.
+	
+	self should: [tusLibros listCart: 1]
+		raise: Error
+		withMessageText: TusLibros invalidCartIdErrorMessage.
+
+
+! !
+
+!testRun: #TusLibrosTest #test15ListCartHasValidCartId stamp: 'IO 11/18/2020 18:33:55'!
+FAILURE!
+!TusLibros methodsFor: 'cart' stamp: 'IO 11/18/2020 18:34:12' prior: 50870743!
+listCart: cartId 
+	(cartId > carts size) ifTrue: [^self error: TusLibros invalidCartIdErrorMessage].
+	^carts at: cartId copy.
+! !
+
+!testRun: #TusLibrosTest #test01NewCartIsEmpty stamp: 'IO 11/18/2020 18:34:12'!
+PASSED!
+
+!testRun: #TusLibrosTest #test02CanAddABookToCart stamp: 'IO 11/18/2020 18:34:12'!
+PASSED!
+
+!testRun: #TusLibrosTest #test03CanAddDifferentBooksToCart stamp: 'IO 11/18/2020 18:34:12'!
+PASSED!
+
+!testRun: #TusLibrosTest #test04CanAddMoreThanOneBookToCart stamp: 'IO 11/18/2020 18:34:12'!
+PASSED!
+
+!testRun: #TusLibrosTest #test05CanAddMoreThanOneCart stamp: 'IO 11/18/2020 18:34:12'!
+PASSED!
+
+!testRun: #TusLibrosTest #test06AClientInitialyHasNowPurchases stamp: 'IO 11/18/2020 18:34:12'!
+PASSED!
+
+!testRun: #TusLibrosTest #test07AClientCanCheckoutACart stamp: 'IO 11/18/2020 18:34:12'!
+PASSED!
+
+!testRun: #TusLibrosTest #test08AClientCanCheckoutManyTimes stamp: 'IO 11/18/2020 18:34:12'!
+PASSED!
+
+!testRun: #TusLibrosTest #test09ManyClientsCanCheckout stamp: 'IO 11/18/2020 18:34:12'!
+PASSED!
+
+!testRun: #TusLibrosTest #test10CreateCartClientIdExists stamp: 'IO 11/18/2020 18:34:12'!
+PASSED!
+
+!testRun: #TusLibrosTest #test11CreateCartClientPasswordMatches stamp: 'IO 11/18/2020 18:34:12'!
+PASSED!
+
+!testRun: #TusLibrosTest #test12AddToCartHasValidCartId stamp: 'IO 11/18/2020 18:34:12'!
+PASSED!
+
+!testRun: #TusLibrosTest #test13AddToCartHasValidISBN stamp: 'IO 11/18/2020 18:34:12'!
+PASSED!
+
+!testRun: #TusLibrosTest #test14AddToCartHasValidQuantity stamp: 'IO 11/18/2020 18:34:12'!
+PASSED!
+
+!testRun: #TusLibrosTest #test15ListCartHasValidCartId stamp: 'IO 11/18/2020 18:34:12'!
+PASSED!
+!TusLibros methodsFor: 'cart' stamp: 'IO 11/18/2020 18:34:38'!
+errorInvalidCartId
+	^self error: TusLibros invalidCartIdErrorMessage.! !
+!TusLibros methodsFor: 'cart' stamp: 'IO 11/18/2020 18:35:02' prior: 50873088!
+addToCart: cartId bookIsbn: isbn bookQuantity: quantity
+
+	| cart |
+	(cartId > carts size) ifTrue: [^self errorInvalidCartId].
+	(catalogue includes: isbn) ifFalse: [^self error: TusLibros invalidIsbnErrorMessage].
+	(quantity < 1) ifTrue: [^self error: TusLibros invalidQuantityErrorMessage].
+	cart := carts at: cartId.
+	cart add: isbn withOccurrences: quantity.
+! !
+!TusLibros methodsFor: 'cart' stamp: 'IO 11/18/2020 18:35:10' prior: 50873158!
+listCart: cartId 
+	(cartId > carts size) ifTrue: [^self errorInvalidCartId].
+	^carts at: cartId copy.
+! !
+
+!testRun: #TusLibrosTest #test01NewCartIsEmpty stamp: 'IO 11/18/2020 18:35:10'!
+PASSED!
+
+!testRun: #TusLibrosTest #test02CanAddABookToCart stamp: 'IO 11/18/2020 18:35:10'!
+PASSED!
+
+!testRun: #TusLibrosTest #test03CanAddDifferentBooksToCart stamp: 'IO 11/18/2020 18:35:10'!
+PASSED!
+
+!testRun: #TusLibrosTest #test04CanAddMoreThanOneBookToCart stamp: 'IO 11/18/2020 18:35:10'!
+PASSED!
+
+!testRun: #TusLibrosTest #test05CanAddMoreThanOneCart stamp: 'IO 11/18/2020 18:35:10'!
+PASSED!
+
+!testRun: #TusLibrosTest #test06AClientInitialyHasNowPurchases stamp: 'IO 11/18/2020 18:35:10'!
+PASSED!
+
+!testRun: #TusLibrosTest #test07AClientCanCheckoutACart stamp: 'IO 11/18/2020 18:35:10'!
+PASSED!
+
+!testRun: #TusLibrosTest #test08AClientCanCheckoutManyTimes stamp: 'IO 11/18/2020 18:35:10'!
+PASSED!
+
+!testRun: #TusLibrosTest #test09ManyClientsCanCheckout stamp: 'IO 11/18/2020 18:35:10'!
+PASSED!
+
+!testRun: #TusLibrosTest #test10CreateCartClientIdExists stamp: 'IO 11/18/2020 18:35:10'!
+PASSED!
+
+!testRun: #TusLibrosTest #test11CreateCartClientPasswordMatches stamp: 'IO 11/18/2020 18:35:10'!
+PASSED!
+
+!testRun: #TusLibrosTest #test12AddToCartHasValidCartId stamp: 'IO 11/18/2020 18:35:10'!
+PASSED!
+
+!testRun: #TusLibrosTest #test13AddToCartHasValidISBN stamp: 'IO 11/18/2020 18:35:10'!
+PASSED!
+
+!testRun: #TusLibrosTest #test14AddToCartHasValidQuantity stamp: 'IO 11/18/2020 18:35:10'!
+PASSED!
+
+!testRun: #TusLibrosTest #test15ListCartHasValidCartId stamp: 'IO 11/18/2020 18:35:10'!
+PASSED!
+!TusLibros methodsFor: 'validations' stamp: 'IO 11/18/2020 18:35:31'!
+validateCartId
+	^self error: TusLibros invalidCartIdErrorMessage.! !
+!TusLibros methodsFor: 'validations' stamp: 'IO 11/18/2020 18:35:51'!
+validateCartId: cartId
+	(cartId > carts size) ifTrue: [^self error: TusLibros invalidCartIdErrorMessage].! !
+!TusLibros methodsFor: 'cart' stamp: 'IO 11/18/2020 18:36:07' prior: 50873216!
+addToCart: cartId bookIsbn: isbn bookQuantity: quantity
+
+	| cart |
+	self validateCartId: cartId.
+	(catalogue includes: isbn) ifFalse: [^self error: TusLibros invalidIsbnErrorMessage].
+	(quantity < 1) ifTrue: [^self error: TusLibros invalidQuantityErrorMessage].
+	cart := carts at: cartId.
+	cart add: isbn withOccurrences: quantity.
+! !
+!TusLibros methodsFor: 'cart' stamp: 'IO 11/18/2020 18:36:13' prior: 50873230!
+listCart: cartId 
+	self validateCartId: cartId.
+	^carts at: cartId copy.
+! !
+
+!methodRemoval: TusLibros #errorInvalidCartId stamp: 'IO 11/18/2020 18:36:17'!
+errorInvalidCartId
+	^self error: TusLibros invalidCartIdErrorMessage.!
+
+!methodRemoval: TusLibros #validateCartId stamp: 'IO 11/18/2020 18:36:18'!
+validateCartId
+	^self error: TusLibros invalidCartIdErrorMessage.!
+
+!testRun: #TusLibrosTest #test01NewCartIsEmpty stamp: 'IO 11/18/2020 18:36:20'!
+PASSED!
+
+!testRun: #TusLibrosTest #test02CanAddABookToCart stamp: 'IO 11/18/2020 18:36:20'!
+PASSED!
+
+!testRun: #TusLibrosTest #test03CanAddDifferentBooksToCart stamp: 'IO 11/18/2020 18:36:20'!
+PASSED!
+
+!testRun: #TusLibrosTest #test04CanAddMoreThanOneBookToCart stamp: 'IO 11/18/2020 18:36:20'!
+PASSED!
+
+!testRun: #TusLibrosTest #test05CanAddMoreThanOneCart stamp: 'IO 11/18/2020 18:36:20'!
+PASSED!
+
+!testRun: #TusLibrosTest #test06AClientInitialyHasNowPurchases stamp: 'IO 11/18/2020 18:36:20'!
+PASSED!
+
+!testRun: #TusLibrosTest #test07AClientCanCheckoutACart stamp: 'IO 11/18/2020 18:36:20'!
+PASSED!
+
+!testRun: #TusLibrosTest #test08AClientCanCheckoutManyTimes stamp: 'IO 11/18/2020 18:36:20'!
+PASSED!
+
+!testRun: #TusLibrosTest #test09ManyClientsCanCheckout stamp: 'IO 11/18/2020 18:36:20'!
+PASSED!
+
+!testRun: #TusLibrosTest #test10CreateCartClientIdExists stamp: 'IO 11/18/2020 18:36:20'!
+PASSED!
+
+!testRun: #TusLibrosTest #test11CreateCartClientPasswordMatches stamp: 'IO 11/18/2020 18:36:20'!
+PASSED!
+
+!testRun: #TusLibrosTest #test12AddToCartHasValidCartId stamp: 'IO 11/18/2020 18:36:20'!
+PASSED!
+
+!testRun: #TusLibrosTest #test13AddToCartHasValidISBN stamp: 'IO 11/18/2020 18:36:20'!
+PASSED!
+
+!testRun: #TusLibrosTest #test14AddToCartHasValidQuantity stamp: 'IO 11/18/2020 18:36:20'!
+PASSED!
+
+!testRun: #TusLibrosTest #test15ListCartHasValidCartId stamp: 'IO 11/18/2020 18:36:20'!
+PASSED!
+!TusLibros methodsFor: 'cart' stamp: 'IO 11/18/2020 18:38:14' prior: 50872672!
+newCartForClientId: clientId Password: password
+	(
+		((clients at: clientId
+				ifAbsent: [^self error: TusLibros inexistentClientErrorMessage]) = password)
+	) ifFalse: [^self error: TusLibros invalidPasswordErrorMessage].
+	
+	carts add: Bag new.
+	cartClients add: clientId.
+	^carts size.
+! !
+
+!testRun: #TusLibrosTest #test01NewCartIsEmpty stamp: 'IO 11/18/2020 18:38:15'!
+PASSED!
+
+!testRun: #TusLibrosTest #test02CanAddABookToCart stamp: 'IO 11/18/2020 18:38:15'!
+PASSED!
+
+!testRun: #TusLibrosTest #test03CanAddDifferentBooksToCart stamp: 'IO 11/18/2020 18:38:15'!
+PASSED!
+
+!testRun: #TusLibrosTest #test04CanAddMoreThanOneBookToCart stamp: 'IO 11/18/2020 18:38:15'!
+PASSED!
+
+!testRun: #TusLibrosTest #test05CanAddMoreThanOneCart stamp: 'IO 11/18/2020 18:38:15'!
+PASSED!
+
+!testRun: #TusLibrosTest #test06AClientInitialyHasNowPurchases stamp: 'IO 11/18/2020 18:38:15'!
+PASSED!
+
+!testRun: #TusLibrosTest #test07AClientCanCheckoutACart stamp: 'IO 11/18/2020 18:38:15'!
+PASSED!
+
+!testRun: #TusLibrosTest #test08AClientCanCheckoutManyTimes stamp: 'IO 11/18/2020 18:38:15'!
+PASSED!
+
+!testRun: #TusLibrosTest #test09ManyClientsCanCheckout stamp: 'IO 11/18/2020 18:38:15'!
+PASSED!
+
+!testRun: #TusLibrosTest #test10CreateCartClientIdExists stamp: 'IO 11/18/2020 18:38:15'!
+PASSED!
+
+!testRun: #TusLibrosTest #test11CreateCartClientPasswordMatches stamp: 'IO 11/18/2020 18:38:15'!
+PASSED!
+
+!testRun: #TusLibrosTest #test12AddToCartHasValidCartId stamp: 'IO 11/18/2020 18:38:15'!
+PASSED!
+
+!testRun: #TusLibrosTest #test13AddToCartHasValidISBN stamp: 'IO 11/18/2020 18:38:15'!
+PASSED!
+
+!testRun: #TusLibrosTest #test14AddToCartHasValidQuantity stamp: 'IO 11/18/2020 18:38:15'!
+PASSED!
+
+!testRun: #TusLibrosTest #test15ListCartHasValidCartId stamp: 'IO 11/18/2020 18:38:15'!
+PASSED!
+!TusLibros methodsFor: 'cart' stamp: 'IO 11/18/2020 18:38:20' prior: 50873367!
+newCartForClientId: clientId Password: password
+	(
+		(clients at: clientId
+				ifAbsent: [^self error: TusLibros inexistentClientErrorMessage]) = password
+	) ifFalse: [^self error: TusLibros invalidPasswordErrorMessage].
+	
+	carts add: Bag new.
+	cartClients add: clientId.
+	^carts size.
+! !
+
+!testRun: #TusLibrosTest #test01NewCartIsEmpty stamp: 'IO 11/18/2020 18:38:21'!
+PASSED!
+
+!testRun: #TusLibrosTest #test02CanAddABookToCart stamp: 'IO 11/18/2020 18:38:21'!
+PASSED!
+
+!testRun: #TusLibrosTest #test03CanAddDifferentBooksToCart stamp: 'IO 11/18/2020 18:38:21'!
+PASSED!
+
+!testRun: #TusLibrosTest #test04CanAddMoreThanOneBookToCart stamp: 'IO 11/18/2020 18:38:21'!
+PASSED!
+
+!testRun: #TusLibrosTest #test05CanAddMoreThanOneCart stamp: 'IO 11/18/2020 18:38:21'!
+PASSED!
+
+!testRun: #TusLibrosTest #test06AClientInitialyHasNowPurchases stamp: 'IO 11/18/2020 18:38:21'!
+PASSED!
+
+!testRun: #TusLibrosTest #test07AClientCanCheckoutACart stamp: 'IO 11/18/2020 18:38:21'!
+PASSED!
+
+!testRun: #TusLibrosTest #test08AClientCanCheckoutManyTimes stamp: 'IO 11/18/2020 18:38:21'!
+PASSED!
+
+!testRun: #TusLibrosTest #test09ManyClientsCanCheckout stamp: 'IO 11/18/2020 18:38:21'!
+PASSED!
+
+!testRun: #TusLibrosTest #test10CreateCartClientIdExists stamp: 'IO 11/18/2020 18:38:21'!
+PASSED!
+
+!testRun: #TusLibrosTest #test11CreateCartClientPasswordMatches stamp: 'IO 11/18/2020 18:38:21'!
+PASSED!
+
+!testRun: #TusLibrosTest #test12AddToCartHasValidCartId stamp: 'IO 11/18/2020 18:38:21'!
+PASSED!
+
+!testRun: #TusLibrosTest #test13AddToCartHasValidISBN stamp: 'IO 11/18/2020 18:38:21'!
+PASSED!
+
+!testRun: #TusLibrosTest #test14AddToCartHasValidQuantity stamp: 'IO 11/18/2020 18:38:21'!
+PASSED!
+
+!testRun: #TusLibrosTest #test15ListCartHasValidCartId stamp: 'IO 11/18/2020 18:38:21'!
+PASSED!
+!TusLibros methodsFor: 'cart' stamp: 'IO 11/18/2020 18:38:26' prior: 50873425!
+newCartForClientId: clientId Password: password
+	(
+		(clients at: clientId
+				ifAbsent: [^self error: TusLibros inexistentClientErrorMessage]) = password
+	) ifFalse: [^self error: TusLibros invalidPasswordErrorMessage].
+	
+	carts add: Bag new.
+	cartClients add: clientId.
+	^carts size.
+! !
+!TusLibrosTest methodsFor: 'validations' stamp: 'IO 11/18/2020 18:41:52'!
+test17ChackoutHasValidCartId
+
+	| tusLibros |
+
+	tusLibros := self newTusLibros.
+	
+	self should: [tusLibros listCart: 1]
+		raise: Error
+		withMessageText: TusLibros invalidCartIdErrorMessage.
+
+
+! !
+!TusLibrosTest methodsFor: 'validations' stamp: 'IO 11/18/2020 18:41:55'!
+test16ChackoutHasValidCartId
+
+	| tusLibros |
+
+	tusLibros := self newTusLibros.
+	
+	self should: [tusLibros listCart: 1]
+		raise: Error
+		withMessageText: TusLibros invalidCartIdErrorMessage.
+
+
+! !
+
+!methodRemoval: TusLibrosTest #test17ChackoutHasValidCartId stamp: 'IO 11/18/2020 18:41:58'!
+test17ChackoutHasValidCartId
+
+	| tusLibros |
+
+	tusLibros := self newTusLibros.
+	
+	self should: [tusLibros listCart: 1]
+		raise: Error
+		withMessageText: TusLibros invalidCartIdErrorMessage.
+
+
+!
+!TusLibrosTest methodsFor: 'validations' stamp: 'IO 11/18/2020 18:42:02'!
+test16CheckoutHasValidCartId
+
+	| tusLibros |
+
+	tusLibros := self newTusLibros.
+	
+	self should: [tusLibros listCart: 1]
+		raise: Error
+		withMessageText: TusLibros invalidCartIdErrorMessage.
+
+
+! !
+
+!methodRemoval: TusLibrosTest #test16ChackoutHasValidCartId stamp: 'IO 11/18/2020 18:42:02'!
+test16ChackoutHasValidCartId
+
+	| tusLibros |
+
+	tusLibros := self newTusLibros.
+	
+	self should: [tusLibros listCart: 1]
+		raise: Error
+		withMessageText: TusLibros invalidCartIdErrorMessage.
+
+
+!
+!TusLibrosTest methodsFor: 'validations' stamp: 'IO 11/18/2020 18:43:21' prior: 50873522!
+test16CheckoutHasValidCartId
+
+	| tusLibros cartId |
+
+	tusLibros := self newTusLibros.
+
+	tusLibros := self newTusLibros.
+	
+	cartId := tusLibros newCartForClientId: 'admin' Password: 'password'.
+	tusLibros addToCart: cartId bookIsbn: '0-7645-2641-3' bookQuantity: 2.
+
+	self should: [tusLibros checkoutCart: 3 ccn: '5500 0000 0000 0004' cced: '20/2025' cco: 'Juan']
+		raise: Error
+		withMessageText: TusLibros invalidCartIdErrorMessage.
+
+
+! !
+
+!testRun: #TusLibrosTest #test16CheckoutHasValidCartId stamp: 'IO 11/18/2020 18:43:22'!
+FAILURE!
+!TusLibros methodsFor: 'purchases' stamp: 'IO 11/18/2020 18:44:02' prior: 50871509!
+checkoutCart: cartId ccn: ccn cced: cced cco: cco 
+	| cart clientId checkout |
+	self validateCartId: cartId.
+	cart := carts at: cartId.
+	clientId := cartClients at: cartId.
+	checkout := clientsPurchases at: clientId ifAbsent: [Bag new].
+	checkout addAll: cart.
+	clientsPurchases at: clientId put: checkout.
+! !
+
+!testRun: #TusLibrosTest #test16CheckoutHasValidCartId stamp: 'IO 11/18/2020 18:44:06'!
+PASSED!
+
+!testRun: #TusLibrosTest #test01NewCartIsEmpty stamp: 'IO 11/18/2020 18:44:06'!
+PASSED!
+
+!testRun: #TusLibrosTest #test02CanAddABookToCart stamp: 'IO 11/18/2020 18:44:06'!
+PASSED!
+
+!testRun: #TusLibrosTest #test03CanAddDifferentBooksToCart stamp: 'IO 11/18/2020 18:44:06'!
+PASSED!
+
+!testRun: #TusLibrosTest #test04CanAddMoreThanOneBookToCart stamp: 'IO 11/18/2020 18:44:06'!
+PASSED!
+
+!testRun: #TusLibrosTest #test05CanAddMoreThanOneCart stamp: 'IO 11/18/2020 18:44:06'!
+PASSED!
+
+!testRun: #TusLibrosTest #test06AClientInitialyHasNowPurchases stamp: 'IO 11/18/2020 18:44:06'!
+PASSED!
+
+!testRun: #TusLibrosTest #test07AClientCanCheckoutACart stamp: 'IO 11/18/2020 18:44:06'!
+PASSED!
+
+!testRun: #TusLibrosTest #test08AClientCanCheckoutManyTimes stamp: 'IO 11/18/2020 18:44:06'!
+PASSED!
+
+!testRun: #TusLibrosTest #test09ManyClientsCanCheckout stamp: 'IO 11/18/2020 18:44:06'!
+PASSED!
+
+!testRun: #TusLibrosTest #test10CreateCartClientIdExists stamp: 'IO 11/18/2020 18:44:06'!
+PASSED!
+
+!testRun: #TusLibrosTest #test11CreateCartClientPasswordMatches stamp: 'IO 11/18/2020 18:44:06'!
+PASSED!
+
+!testRun: #TusLibrosTest #test12AddToCartHasValidCartId stamp: 'IO 11/18/2020 18:44:06'!
+PASSED!
+
+!testRun: #TusLibrosTest #test13AddToCartHasValidISBN stamp: 'IO 11/18/2020 18:44:06'!
+PASSED!
+
+!testRun: #TusLibrosTest #test14AddToCartHasValidQuantity stamp: 'IO 11/18/2020 18:44:06'!
+PASSED!
+
+!testRun: #TusLibrosTest #test15ListCartHasValidCartId stamp: 'IO 11/18/2020 18:44:06'!
+PASSED!
+
+!testRun: #TusLibrosTest #test16CheckoutHasValidCartId stamp: 'IO 11/18/2020 18:44:06'!
+PASSED!
+!TusLibrosTest methodsFor: 'validations' stamp: 'IO 11/18/2020 18:48:22'!
+test17CheckoutHasCartWithBooks
+
+	| tusLibros cartId |
+
+	tusLibros := self newTusLibros.
+
+	tusLibros := self newTusLibros.
+	
+	cartId := tusLibros newCartForClientId: 'admin' Password: 'password'.
+
+	self should: [tusLibros checkoutCart: cartId ccn: '5500 0000 0000 0004' cced: '20/2025' cco: 'Juan']
+		raise: Error
+		withMessageText: TusLibros emptyCartErrorMessage.
+
+
+! !
+
+!testRun: #TusLibrosTest #test17CheckoutHasCartWithBooks stamp: 'IO 11/18/2020 18:48:25'!
+ERROR!
+!TusLibros class methodsFor: 'error messages' stamp: 'IO 11/18/2020 18:48:33'!
+emptyCartErrorMessage
+	self shouldBeImplemented.! !
+!TusLibros class methodsFor: 'error messages' stamp: 'IO 11/18/2020 18:48:48' prior: 50873643!
+emptyCartErrorMessage
+	'The cart cannot be empty'.! !
+
+!testRun: #TusLibrosTest #test17CheckoutHasCartWithBooks stamp: 'IO 11/18/2020 18:48:49'!
+FAILURE!
+!TusLibros methodsFor: 'purchases' stamp: 'IO 11/18/2020 18:49:29' prior: 50873560!
+checkoutCart: cartId ccn: ccn cced: cced cco: cco 
+	| cart clientId checkout |
+	self validateCartId: cartId.
+	cart := carts at: cartId.
+	(cart size = 0) ifTrue: [self error: TusLibros emptyCartErrorMessage].
+	clientId := cartClients at: cartId.
+	checkout := clientsPurchases at: clientId ifAbsent: [Bag new].
+	checkout addAll: cart.
+	clientsPurchases at: clientId put: checkout.
+! !
+
+!testRun: #TusLibrosTest #test01NewCartIsEmpty stamp: 'IO 11/18/2020 18:49:30'!
+PASSED!
+
+!testRun: #TusLibrosTest #test02CanAddABookToCart stamp: 'IO 11/18/2020 18:49:30'!
+PASSED!
+
+!testRun: #TusLibrosTest #test03CanAddDifferentBooksToCart stamp: 'IO 11/18/2020 18:49:30'!
+PASSED!
+
+!testRun: #TusLibrosTest #test04CanAddMoreThanOneBookToCart stamp: 'IO 11/18/2020 18:49:30'!
+PASSED!
+
+!testRun: #TusLibrosTest #test05CanAddMoreThanOneCart stamp: 'IO 11/18/2020 18:49:30'!
+PASSED!
+
+!testRun: #TusLibrosTest #test06AClientInitialyHasNowPurchases stamp: 'IO 11/18/2020 18:49:30'!
+PASSED!
+
+!testRun: #TusLibrosTest #test07AClientCanCheckoutACart stamp: 'IO 11/18/2020 18:49:30'!
+PASSED!
+
+!testRun: #TusLibrosTest #test08AClientCanCheckoutManyTimes stamp: 'IO 11/18/2020 18:49:30'!
+PASSED!
+
+!testRun: #TusLibrosTest #test09ManyClientsCanCheckout stamp: 'IO 11/18/2020 18:49:30'!
+PASSED!
+
+!testRun: #TusLibrosTest #test10CreateCartClientIdExists stamp: 'IO 11/18/2020 18:49:30'!
+PASSED!
+
+!testRun: #TusLibrosTest #test11CreateCartClientPasswordMatches stamp: 'IO 11/18/2020 18:49:30'!
+PASSED!
+
+!testRun: #TusLibrosTest #test12AddToCartHasValidCartId stamp: 'IO 11/18/2020 18:49:30'!
+PASSED!
+
+!testRun: #TusLibrosTest #test13AddToCartHasValidISBN stamp: 'IO 11/18/2020 18:49:30'!
+PASSED!
+
+!testRun: #TusLibrosTest #test14AddToCartHasValidQuantity stamp: 'IO 11/18/2020 18:49:30'!
+PASSED!
+
+!testRun: #TusLibrosTest #test15ListCartHasValidCartId stamp: 'IO 11/18/2020 18:49:30'!
+PASSED!
+
+!testRun: #TusLibrosTest #test16CheckoutHasValidCartId stamp: 'IO 11/18/2020 18:49:30'!
+PASSED!
+
+!testRun: #TusLibrosTest #test17CheckoutHasCartWithBooks stamp: 'IO 11/18/2020 18:49:30'!
+PASSED!
+
+!testRun: #TusLibrosTest #test17CheckoutHasCartWithBooks stamp: 'IO 11/18/2020 18:51:18'!
+PASSED!
+!TusLibros methodsFor: 'cart' stamp: 'IO 11/18/2020 18:53:15' prior: 50873293!
+addToCart: cartId bookIsbn: isbn bookQuantity: quantity
+
+	| cart |
+
+	self validateCartId: cartId.
+	(catalogue includes: isbn) ifFalse: [^self error: TusLibros invalidIsbnErrorMessage].
+	(quantity < 1) ifTrue: [^self error: TusLibros invalidQuantityErrorMessage].
+
+	cart := carts at: cartId.
+	cart add: isbn withOccurrences: quantity.
+! !
+!TusLibros methodsFor: 'cart' stamp: 'IO 11/18/2020 18:53:22' prior: 50873306!
+listCart: cartId
+
+	self validateCartId: cartId.
+
+	^carts at: cartId copy.
+! !
+!TusLibros methodsFor: 'cart' stamp: 'IO 11/18/2020 18:53:27' prior: 50873483!
+newCartForClientId: clientId Password: password
+	(
+		(clients at: clientId
+				ifAbsent: [^self error: TusLibros inexistentClientErrorMessage]) = password
+	) ifFalse: [^self error: TusLibros invalidPasswordErrorMessage].
+
+	carts add: Bag new.
+	cartClients add: clientId.
+	^carts size.
+! !
+!TusLibros methodsFor: 'purchases' stamp: 'IO 11/18/2020 18:53:34' prior: 50873656!
+checkoutCart: cartId ccn: ccn cced: cced cco: cco 
+	| cart clientId checkout |
+
+	self validateCartId: cartId.
+	cart := carts at: cartId.
+	(cart size = 0) ifTrue: [self error: TusLibros emptyCartErrorMessage].
+
+	clientId := cartClients at: cartId.
+	checkout := clientsPurchases at: clientId ifAbsent: [Bag new].
+	checkout addAll: cart.
+	clientsPurchases at: clientId put: checkout.
+! !
+!TusLibros methodsFor: 'purchases' stamp: 'IO 11/18/2020 18:53:38' prior: 50871416!
+listPurchasesFor: clientId password: password
+	
+	^clientsPurchases at: clientId ifAbsent: [^Bag new] copy.
+! !
+!TusLibros methodsFor: 'purchases' stamp: 'IO 11/18/2020 18:53:38' prior: 50873772!
+listPurchasesFor: clientId password: password
+
+	^clientsPurchases at: clientId ifAbsent: [^Bag new] copy.
+! !
+!TusLibros methodsFor: 'purchases' stamp: 'IO 11/18/2020 18:53:55' prior: 50873757!
+checkoutCart: cartId ccn: ccn cced: cced cco: cco 
+	| cart clientId checkout |
+
+	self validateCartId: cartId.
+	cart := carts at: cartId.
+	(cart size = 0) ifTrue: [self error: TusLibros emptyCartErrorMessage].
+	self validateCcn: ccn.
+
+	clientId := cartClients at: cartId.
+	checkout := clientsPurchases at: clientId ifAbsent: [Bag new].
+	checkout addAll: cart.
+	clientsPurchases at: clientId put: checkout.
+! !
+!TusLibros methodsFor: 'validations' stamp: 'IO 11/18/2020 18:54:07'!
+validateCcn: ccn
+	! !
+!TusLibrosTest methodsFor: 'validations' stamp: 'IO 11/18/2020 18:54:43'!
+test18CheckoutHasValidCcn
+
+	| tusLibros cartId |
+
+	tusLibros := self newTusLibros.
+
+	tusLibros := self newTusLibros.
+	
+	cartId := tusLibros newCartForClientId: 'admin' Password: 'password'.
+	tusLibros addToCart: cartId bookIsbn: '0-7645-2641-3' bookQuantity: 2.
+
+	self should: [tusLibros checkoutCart: cartId ccn: '5500 0000 000 0004' cced: '20/2025' cco: 'Juan']
+		raise: Error
+		withMessageText: TusLibros emptyCartErrorMessage.
+
+
+! !
+
+!testRun: #TusLibrosTest #test18CheckoutHasValidCcn stamp: 'IO 11/18/2020 18:54:46'!
+FAILURE!
+!TusLibrosTest methodsFor: 'validations' stamp: 'IO 11/18/2020 18:54:58' prior: 50873804!
+test18CheckoutHasValidCcn
+
+	| tusLibros cartId |
+
+	tusLibros := self newTusLibros.
+
+	tusLibros := self newTusLibros.
+	
+	cartId := tusLibros newCartForClientId: 'admin' Password: 'password'.
+	tusLibros addToCart: cartId bookIsbn: '0-7645-2641-3' bookQuantity: 2.
+
+	self should: [tusLibros checkoutCart: cartId ccn: '5500 0000 000 0004' cced: '20/2025' cco: 'Juan']
+		raise: Error
+		withMessageText: TusLibros invalidCcnErrorMessage.
+
+
+! !
+
+!testRun: #TusLibrosTest #test18CheckoutHasValidCcn stamp: 'IO 11/18/2020 18:55:00'!
+ERROR!
+!TusLibros class methodsFor: 'error messages' stamp: 'IO 11/18/2020 18:55:09'!
+invalidCcnErrorMessage
+	self shouldBeImplemented.! !
+!TusLibros class methodsFor: 'error messages' stamp: 'IO 11/18/2020 18:55:17' prior: 50873844!
+invalidCcnErrorMessage
+	^'Invalid credit card number'.! !
+
+!testRun: #TusLibrosTest #test18CheckoutHasValidCcn stamp: 'IO 11/18/2020 18:55:20'!
+FAILURE!
+!TusLibros methodsFor: 'validations' stamp: 'IO 11/18/2020 18:55:54' prior: 50873801!
+validateCcn: ccn
+	| number |
+	number := ccn ! !
+!TusLibrosTest methodsFor: 'purchases' stamp: 'IO 11/18/2020 18:56:19' prior: 50870851!
+test07AClientCanCheckoutACart
+
+	| tusLibros cartId purchases expectedPurchases |
+
+	tusLibros := self newTusLibros.
+	
+	cartId := tusLibros newCartForClientId: 'admin' Password: 'password'.
+	tusLibros addToCart: cartId bookIsbn: '0-7645-2641-3' bookQuantity: 2.
+
+	tusLibros checkoutCart: cartId ccn: 5500000000000004 cced: '20/2025' cco: 'Juan'.
+
+	purchases := tusLibros listPurchasesFor: 'admin' password: 'password'.
+
+	expectedPurchases := Bag new.
+	expectedPurchases add: '0-7645-2641-3' withOccurrences: 2.
+
+	self assert: expectedPurchases equals: purchases.
+	self assert: 2 equals: purchases size.
+
+! !
+!TusLibrosTest methodsFor: 'purchases' stamp: 'IO 11/18/2020 18:56:28' prior: 50870874!
+test08AClientCanCheckoutManyTimes
+
+	| tusLibros cartId purchases expectedPurchases |
+
+	tusLibros := self newTusLibros.
+	
+	cartId := tusLibros newCartForClientId: 'admin' Password: 'password'.
+	tusLibros addToCart: cartId bookIsbn: '0-7645-2641-3' bookQuantity: 2.
+	tusLibros checkoutCart: cartId ccn: 5500000000000004 cced: '20/2025' cco: 'Juan'.
+	
+	cartId := tusLibros newCartForClientId: 'admin' Password: 'password'.
+	tusLibros addToCart: cartId bookIsbn: '0-7645-2641-3' bookQuantity: 5.
+	tusLibros addToCart: cartId bookIsbn: '0-7645-2641-4' bookQuantity: 3.
+
+	tusLibros checkoutCart: cartId ccn: '5500 0000 0000 0004' cced: '20/2025' cco: 'Juan'.
+
+	purchases := tusLibros listPurchasesFor: 'admin' password: 'password'.
+
+	expectedPurchases := Bag new.
+	expectedPurchases add: '0-7645-2641-3' withOccurrences: 7.
+	expectedPurchases add: '0-7645-2641-4' withOccurrences: 3.
+
+	self assert: expectedPurchases equals: purchases.
+	self assert: 10 equals: purchases size.
+
+! !
+!TusLibrosTest methodsFor: 'purchases' stamp: 'IO 11/18/2020 18:56:33' prior: 50870817!
+test09ManyClientsCanCheckout
+
+	| tusLibros cartId purchases expectedPurchases |
+
+	tusLibros := self newTusLibros.
+	
+	cartId := tusLibros newCartForClientId: 'admin' Password: 'password'.
+	tusLibros addToCart: cartId bookIsbn: '0-7645-2641-3' bookQuantity: 2.
+	tusLibros checkoutCart: cartId ccn: 5500000000000004 cced: '20/2025' cco: 'Juan'.
+	
+	cartId := tusLibros newCartForClientId: 'admin2' Password: 'password'.
+	tusLibros addToCart: cartId bookIsbn: '0-7645-2641-3' bookQuantity: 5.
+	tusLibros addToCart: cartId bookIsbn: '0-7645-2641-4' bookQuantity: 3.
+
+	tusLibros checkoutCart: cartId ccn: '5500 0000 0000 0004' cced: '20/2025' cco: 'Juan'.
+
+	purchases := tusLibros listPurchasesFor: 'admin2' password: 'password'.
+
+	expectedPurchases := Bag new.
+	expectedPurchases add: '0-7645-2641-3' withOccurrences: 5.
+	expectedPurchases add: '0-7645-2641-4' withOccurrences: 3.
+
+	self assert: expectedPurchases equals: purchases.
+	self assert: 8 equals: purchases size.
+
+! !
+!TusLibrosTest methodsFor: 'validations' stamp: 'IO 11/18/2020 18:56:49' prior: 50873824!
+test18CheckoutHasValidCcn
+
+	| tusLibros cartId |
+
+	tusLibros := self newTusLibros.
+
+	tusLibros := self newTusLibros.
+	
+	cartId := tusLibros newCartForClientId: 'admin' Password: 'password'.
+	tusLibros addToCart: cartId bookIsbn: '0-7645-2641-3' bookQuantity: 2.
+
+	self should: [tusLibros checkoutCart: cartId ccn: 5500000000000003 cced: '20/2025' cco: 'Juan']
+		raise: Error
+		withMessageText: TusLibros invalidCcnErrorMessage.
+
+
+! !
+!TusLibros methodsFor: 'validations' stamp: 'IO 11/18/2020 18:57:10' prior: 50873857!
+validateCcn: ccn
+	| number |
+
+	"ref: https://www.freeformatter.com/credit-card-number-generator-validator.html"
+	number := ccn ! !
+
+!methodRemoval: TusLibrosTest #test18CheckoutHasValidCcn stamp: 'IO 11/18/2020 19:04:18'!
+test18CheckoutHasValidCcn
+
+	| tusLibros cartId |
+
+	tusLibros := self newTusLibros.
+
+	tusLibros := self newTusLibros.
+	
+	cartId := tusLibros newCartForClientId: 'admin' Password: 'password'.
+	tusLibros addToCart: cartId bookIsbn: '0-7645-2641-3' bookQuantity: 2.
+
+	self should: [tusLibros checkoutCart: cartId ccn: 5500000000000003 cced: '20/2025' cco: 'Juan']
+		raise: Error
+		withMessageText: TusLibros invalidCcnErrorMessage.
+
+
+!
+
+!methodRemoval: TusLibros #validateCcn: stamp: 'IO 11/18/2020 19:04:44'!
+validateCcn: ccn
+	| number |
+
+	"ref: https://www.freeformatter.com/credit-card-number-generator-validator.html"
+	number := ccn !
+!TusLibros methodsFor: 'purchases' stamp: 'IO 11/18/2020 19:04:51' prior: 50873786!
+checkoutCart: cartId ccn: ccn cced: cced cco: cco 
+	| cart clientId checkout |
+
+	self validateCartId: cartId.
+	cart := carts at: cartId.
+	(cart size = 0) ifTrue: [self error: TusLibros emptyCartErrorMessage].
+
+	clientId := cartClients at: cartId.
+	checkout := clientsPurchases at: clientId ifAbsent: [Bag new].
+	checkout addAll: cart.
+	clientsPurchases at: clientId put: checkout.
+! !
+
+!testRun: #TusLibrosTest #test01NewCartIsEmpty stamp: 'IO 11/18/2020 19:04:52'!
+PASSED!
+
+!testRun: #TusLibrosTest #test02CanAddABookToCart stamp: 'IO 11/18/2020 19:04:52'!
+PASSED!
+
+!testRun: #TusLibrosTest #test03CanAddDifferentBooksToCart stamp: 'IO 11/18/2020 19:04:52'!
+PASSED!
+
+!testRun: #TusLibrosTest #test04CanAddMoreThanOneBookToCart stamp: 'IO 11/18/2020 19:04:52'!
+PASSED!
+
+!testRun: #TusLibrosTest #test05CanAddMoreThanOneCart stamp: 'IO 11/18/2020 19:04:52'!
+PASSED!
+
+!testRun: #TusLibrosTest #test06AClientInitialyHasNowPurchases stamp: 'IO 11/18/2020 19:04:52'!
+PASSED!
+
+!testRun: #TusLibrosTest #test07AClientCanCheckoutACart stamp: 'IO 11/18/2020 19:04:52'!
+PASSED!
+
+!testRun: #TusLibrosTest #test08AClientCanCheckoutManyTimes stamp: 'IO 11/18/2020 19:04:52'!
+PASSED!
+
+!testRun: #TusLibrosTest #test09ManyClientsCanCheckout stamp: 'IO 11/18/2020 19:04:52'!
+PASSED!
+
+!testRun: #TusLibrosTest #test10CreateCartClientIdExists stamp: 'IO 11/18/2020 19:04:52'!
+PASSED!
+
+!testRun: #TusLibrosTest #test11CreateCartClientPasswordMatches stamp: 'IO 11/18/2020 19:04:52'!
+PASSED!
+
+!testRun: #TusLibrosTest #test12AddToCartHasValidCartId stamp: 'IO 11/18/2020 19:04:52'!
+PASSED!
+
+!testRun: #TusLibrosTest #test13AddToCartHasValidISBN stamp: 'IO 11/18/2020 19:04:52'!
+PASSED!
+
+!testRun: #TusLibrosTest #test14AddToCartHasValidQuantity stamp: 'IO 11/18/2020 19:04:52'!
+PASSED!
+
+!testRun: #TusLibrosTest #test15ListCartHasValidCartId stamp: 'IO 11/18/2020 19:04:52'!
+PASSED!
+
+!testRun: #TusLibrosTest #test16CheckoutHasValidCartId stamp: 'IO 11/18/2020 19:04:52'!
+PASSED!
+
+!testRun: #TusLibrosTest #test17CheckoutHasCartWithBooks stamp: 'IO 11/18/2020 19:04:52'!
+PASSED!
+!TusLibrosTest methodsFor: 'validations' stamp: 'IO 11/18/2020 19:06:30'!
+test18ListPurchasesHasValidUser
+
+	| tusLibros cartId |
+
+	tusLibros := self newTusLibros.
+	
+	
+
+	tusLibros := self newTusLibros.
+	
+	cartId := tusLibros newCartForClientId: 'admin' Password: 'password'.
+
+	self should: [tusLibros listPurchasesFor: 'admin3' password: 'password']
+		raise: Error
+		withMessageText: TusLibros 
+
+
+! !
+!TusLibrosTest methodsFor: 'validations' stamp: 'IO 11/18/2020 19:06:33' prior: 50874066!
+test18ListPurchasesHasValidUser
+
+	| tusLibros cartId |
+
+	tusLibros := self newTusLibros.
+	
+	
+
+	tusLibros := self newTusLibros.
+	
+	cartId := tusLibros newCartForClientId: 'admin' Password: 'password'.
+
+	self should: [tusLibros listPurchasesFor: 'admin3' password: 'password']
+		raise: Error
+		withMessageText: TusLibros .
+
+
+! !
+!TusLibrosTest methodsFor: 'validations' stamp: 'IO 11/18/2020 19:06:39' prior: 50874079!
+test18ListPurchasesHasValidUser
+
+	| tusLibros cartId |
+
+	tusLibros := self newTusLibros.
+	
+	cartId := tusLibros newCartForClientId: 'admin' Password: 'password'.
+
+	self should: [tusLibros listPurchasesFor: 'admin3' password: 'password']
+		raise: Error
+		withMessageText: TusLibros .
+
+
+! !
+!TusLibrosTest methodsFor: 'validations' stamp: 'IO 11/18/2020 19:06:46' prior: 50873625!
+test17CheckoutHasCartWithBooks
+
+	| tusLibros cartId |
+
+	tusLibros := self newTusLibros.
+	
+	cartId := tusLibros newCartForClientId: 'admin' Password: 'password'.
+
+	self should: [tusLibros checkoutCart: cartId ccn: '5500 0000 0000 0004' cced: '20/2025' cco: 'Juan']
+		raise: Error
+		withMessageText: TusLibros emptyCartErrorMessage.
+
+
+! !
+!TusLibrosTest methodsFor: 'validations' stamp: 'IO 11/18/2020 19:06:50' prior: 50873540!
+test16CheckoutHasValidCartId
+
+	| tusLibros cartId |
+
+	tusLibros := self newTusLibros.
+	
+	cartId := tusLibros newCartForClientId: 'admin' Password: 'password'.
+	tusLibros addToCart: cartId bookIsbn: '0-7645-2641-3' bookQuantity: 2.
+
+	self should: [tusLibros checkoutCart: 3 ccn: '5500 0000 0000 0004' cced: '20/2025' cco: 'Juan']
+		raise: Error
+		withMessageText: TusLibros invalidCartIdErrorMessage.
+
+
+! !
+!TusLibrosTest methodsFor: 'validations' stamp: 'IO 11/18/2020 19:07:12' prior: 50874093!
+test18ListPurchasesHasValidUser
+
+	| tusLibros cartId |
+
+	tusLibros := self newTusLibros.
+	
+	cartId := tusLibros newCartForClientId: 'admin' Password: 'password'.
+
+	self should: [tusLibros listPurchasesFor: 'admin3' password: 'password']
+		raise: Error
+		withMessageText: TusLibros inexistentClientErrorMessage.
+
+
+! !
+!TusLibrosTest methodsFor: 'validations' stamp: 'IO 11/18/2020 19:07:20' prior: 50874135!
+test18ListPurchasesHasValidUser
+
+	| tusLibros |
+
+	tusLibros := self newTusLibros.
+
+	self should: [tusLibros listPurchasesFor: 'admin3' password: 'password']
+		raise: Error
+		withMessageText: TusLibros inexistentClientErrorMessage.
+
+
+! !
+
+!testRun: #TusLibrosTest #test18ListPurchasesHasValidUser stamp: 'IO 11/18/2020 19:07:23'!
+FAILURE!
+!TusLibrosTest methodsFor: 'validations' stamp: 'IO 11/18/2020 19:07:55'!
+test19ListPurchasesHasMatchingPassword
+
+	| tusLibros |
+
+	tusLibros := self newTusLibros.
+
+	self should: [tusLibros listPurchasesFor: 'admin' password: 'wrong password']
+		raise: Error
+		withMessageText: TusLibros invalidPasswordErrorMessage.
+
+
+! !
+
+!testRun: #TusLibrosTest #test19ListPurchasesHasMatchingPassword stamp: 'IO 11/18/2020 19:07:57'!
+FAILURE!
+
+!testRun: #TusLibrosTest #test19ListPurchasesHasMatchingPassword stamp: 'IO 11/18/2020 19:07:57'!
+FAILURE!
+
+!testRun: #TusLibrosTest #test19ListPurchasesHasMatchingPassword stamp: 'IO 11/18/2020 19:08:01'!
+FAILURE!
+!TusLibros methodsFor: 'cart' stamp: 'IO 11/18/2020 19:08:36'!
+validateClientId: clientId withPassword: password
+	(
+		(clients at: clientId
+				ifAbsent: [^self error: TusLibros inexistentClientErrorMessage]) = password
+	) ifFalse: [^self error: TusLibros invalidPasswordErrorMessage].
+! !
+!TusLibros methodsFor: 'cart' stamp: 'IO 11/18/2020 19:08:46'!
+newCartForClientId: clientId password: password
+	(
+		(clients at: clientId
+				ifAbsent: [^self error: TusLibros inexistentClientErrorMessage]) = password
+	) ifFalse: [^self error: TusLibros invalidPasswordErrorMessage].
+
+	carts add: Bag new.
+	cartClients add: clientId.
+	^carts size.
+! !
+!TusLibrosTest methodsFor: 'as yet unclassified' stamp: 'IO 11/18/2020 19:08:46' prior: 50870967!
+test03CanAddDifferentBooksToCart
+
+	| tusLibros cartId cart |
+
+	tusLibros := self newTusLibros.
+
+	cartId := tusLibros newCartForClientId: 'admin' password: 'password'.
+	
+	tusLibros addToCart: cartId bookIsbn: '0-7645-2641-3' bookQuantity: 1.
+	tusLibros addToCart: cartId bookIsbn: '0-7645-2641-4' bookQuantity: 1.
+
+	cart := Bag new.
+	cart add: '0-7645-2641-3'.
+	cart add: '0-7645-2641-4'.
+
+	self assert: cart equals: (tusLibros listCart: cartId).
+
+! !
+!TusLibrosTest methodsFor: 'as yet unclassified' stamp: 'IO 11/18/2020 19:08:46' prior: 50872929!
+test13AddToCartHasValidISBN
+
+	| tusLibros cartId |
+
+	tusLibros := self newTusLibros.
+
+	cartId := tusLibros newCartForClientId: 'admin' password: 'password'.
+	
+	self should: [ tusLibros addToCart: cartId bookIsbn: 'bad isbn' bookQuantity: 1.]
+		raise: Error
+		withMessageText: TusLibros invalidIsbnErrorMessage.
+
+! !
+!TusLibrosTest methodsFor: 'as yet unclassified' stamp: 'IO 11/18/2020 19:08:46' prior: 50873862!
+test07AClientCanCheckoutACart
+
+	| tusLibros cartId purchases expectedPurchases |
+
+	tusLibros := self newTusLibros.
+	
+	cartId := tusLibros newCartForClientId: 'admin' password: 'password'.
+	tusLibros addToCart: cartId bookIsbn: '0-7645-2641-3' bookQuantity: 2.
+
+	tusLibros checkoutCart: cartId ccn: 5500000000000004 cced: '20/2025' cco: 'Juan'.
+
+	purchases := tusLibros listPurchasesFor: 'admin' password: 'password'.
+
+	expectedPurchases := Bag new.
+	expectedPurchases add: '0-7645-2641-3' withOccurrences: 2.
+
+	self assert: expectedPurchases equals: purchases.
+	self assert: 2 equals: purchases size.
+
+! !
+!TusLibrosTest methodsFor: 'as yet unclassified' stamp: 'IO 11/18/2020 19:08:46' prior: 50874119!
+test16CheckoutHasValidCartId
+
+	| tusLibros cartId |
+
+	tusLibros := self newTusLibros.
+	
+	cartId := tusLibros newCartForClientId: 'admin' password: 'password'.
+	tusLibros addToCart: cartId bookIsbn: '0-7645-2641-3' bookQuantity: 2.
+
+	self should: [tusLibros checkoutCart: 3 ccn: '5500 0000 0000 0004' cced: '20/2025' cco: 'Juan']
+		raise: Error
+		withMessageText: TusLibros invalidCartIdErrorMessage.
+
+
+! !
+!TusLibrosTest methodsFor: 'as yet unclassified' stamp: 'IO 11/18/2020 19:08:46' prior: 50873884!
+test08AClientCanCheckoutManyTimes
+
+	| tusLibros cartId purchases expectedPurchases |
+
+	tusLibros := self newTusLibros.
+	
+	cartId := tusLibros newCartForClientId: 'admin' password: 'password'.
+	tusLibros addToCart: cartId bookIsbn: '0-7645-2641-3' bookQuantity: 2.
+	tusLibros checkoutCart: cartId ccn: 5500000000000004 cced: '20/2025' cco: 'Juan'.
+	
+	cartId := tusLibros newCartForClientId: 'admin' password: 'password'.
+	tusLibros addToCart: cartId bookIsbn: '0-7645-2641-3' bookQuantity: 5.
+	tusLibros addToCart: cartId bookIsbn: '0-7645-2641-4' bookQuantity: 3.
+
+	tusLibros checkoutCart: cartId ccn: '5500 0000 0000 0004' cced: '20/2025' cco: 'Juan'.
+
+	purchases := tusLibros listPurchasesFor: 'admin' password: 'password'.
+
+	expectedPurchases := Bag new.
+	expectedPurchases add: '0-7645-2641-3' withOccurrences: 7.
+	expectedPurchases add: '0-7645-2641-4' withOccurrences: 3.
+
+	self assert: expectedPurchases equals: purchases.
+	self assert: 10 equals: purchases size.
+
+! !
+!TusLibrosTest methodsFor: 'as yet unclassified' stamp: 'IO 11/18/2020 19:08:46' prior: 50870908!
+test04CanAddMoreThanOneBookToCart
+
+	| tusLibros cartId cart |
+
+	tusLibros := self newTusLibros.
+
+	cartId := tusLibros newCartForClientId: 'admin' password: 'password'.
+	
+	tusLibros addToCart: cartId bookIsbn: '0-7645-2641-3' bookQuantity: 3.
+	tusLibros addToCart: cartId bookIsbn: '0-7645-2641-4' bookQuantity: 2.
+
+	cart := Bag new.
+	cart add: '0-7645-2641-3' withOccurrences: 3.
+	cart add: '0-7645-2641-4' withOccurrences: 2.
+
+	self assert: cart equals: (tusLibros listCart: cartId).
+
+! !
+!TusLibrosTest methodsFor: 'as yet unclassified' stamp: 'IO 11/18/2020 19:08:46' prior: 50873918!
+test09ManyClientsCanCheckout
+
+	| tusLibros cartId purchases expectedPurchases |
+
+	tusLibros := self newTusLibros.
+	
+	cartId := tusLibros newCartForClientId: 'admin' password: 'password'.
+	tusLibros addToCart: cartId bookIsbn: '0-7645-2641-3' bookQuantity: 2.
+	tusLibros checkoutCart: cartId ccn: 5500000000000004 cced: '20/2025' cco: 'Juan'.
+	
+	cartId := tusLibros newCartForClientId: 'admin2' password: 'password'.
+	tusLibros addToCart: cartId bookIsbn: '0-7645-2641-3' bookQuantity: 5.
+	tusLibros addToCart: cartId bookIsbn: '0-7645-2641-4' bookQuantity: 3.
+
+	tusLibros checkoutCart: cartId ccn: '5500 0000 0000 0004' cced: '20/2025' cco: 'Juan'.
+
+	purchases := tusLibros listPurchasesFor: 'admin2' password: 'password'.
+
+	expectedPurchases := Bag new.
+	expectedPurchases add: '0-7645-2641-3' withOccurrences: 5.
+	expectedPurchases add: '0-7645-2641-4' withOccurrences: 3.
+
+	self assert: expectedPurchases equals: purchases.
+	self assert: 8 equals: purchases size.
+
+! !
+!TusLibrosTest methodsFor: 'as yet unclassified' stamp: 'IO 11/18/2020 19:08:46' prior: 50870953!
+test02CanAddABookToCart
+
+	| tusLibros cartId cart |
+
+	tusLibros := self newTusLibros.
+
+	cartId := tusLibros newCartForClientId: 'admin' password: 'password'.
+	
+	tusLibros addToCart: cartId bookIsbn: '0-7645-2641-3' bookQuantity: 1.
+	
+	cart := Bag new.
+	cart add: '0-7645-2641-3'.
+
+	self assert: cart equals: (tusLibros listCart: cartId).
+
+! !
+!TusLibrosTest methodsFor: 'as yet unclassified' stamp: 'IO 11/18/2020 19:08:46' prior: 50872456!
+test10CreateCartClientIdExists
+
+	| tusLibros |
+
+	tusLibros := self newTusLibros.
+	
+	self should: [tusLibros newCartForClientId: 'admin3' password: 'password'.]
+		raise: Error
+		withMessageText: TusLibros inexistentClientErrorMessage.
+! !
+!TusLibrosTest methodsFor: 'as yet unclassified' stamp: 'IO 11/18/2020 19:08:46' prior: 50872435!
+test11CreateCartClientPasswordMatches
+
+	| tusLibros |
+
+	tusLibros := self newTusLibros.
+	
+	self should: [tusLibros newCartForClientId: 'admin' password: 'password2'.]
+		raise: Error
+		withMessageText: TusLibros invalidPasswordErrorMessage.
+! !
+!TusLibrosTest methodsFor: 'as yet unclassified' stamp: 'IO 11/18/2020 19:08:46' prior: 50872998!
+test14AddToCartHasValidQuantity
+
+	| tusLibros cartId |
+
+	tusLibros := self newTusLibros.
+
+	cartId := tusLibros newCartForClientId: 'admin' password: 'password'.
+	
+	self should: [ tusLibros addToCart: cartId bookIsbn: '0-7645-2641-3' bookQuantity: 0.]
+		raise: Error
+		withMessageText: TusLibros invalidQuantityErrorMessage.
+
+! !
+!TusLibrosTest methodsFor: 'as yet unclassified' stamp: 'IO 11/18/2020 19:08:46' prior: 50870985!
+test01NewCartIsEmpty
+
+	| tusLibros cartId |
+
+	tusLibros := self newTusLibros.
+
+	cartId := tusLibros newCartForClientId: 'admin' password: 'password'.
+	
+	self assert: 0 equals: (tusLibros listCart: cartId) size.
+! !
+!TusLibrosTest methodsFor: 'as yet unclassified' stamp: 'IO 11/18/2020 19:08:46' prior: 50870927!
+test05CanAddMoreThanOneCart
+
+	| tusLibros cartId cartId2 cart |
+
+	tusLibros := self newTusLibros.
+
+	cartId := tusLibros newCartForClientId: 'admin' password: 'password'.
+	cartId2 := tusLibros newCartForClientId: 'admin2' password: 'password'.
+
+	tusLibros addToCart: cartId bookIsbn: '0-7645-2641-3' bookQuantity: 3.
+	tusLibros addToCart: cartId bookIsbn: '0-7645-2641-4' bookQuantity: 2.
+	
+	tusLibros addToCart: cartId2 bookIsbn: '0-7645-2641-3' bookQuantity: 5.
+	tusLibros addToCart: cartId2 bookIsbn: '0-7645-2641-4' bookQuantity: 3.
+
+	cart := Bag new.
+	cart add: '0-7645-2641-3' withOccurrences: 5.
+	cart add: '0-7645-2641-4' withOccurrences: 3.
+
+	self assert: cart equals: (tusLibros listCart: cartId2).
+
+! !
+!TusLibrosTest methodsFor: 'as yet unclassified' stamp: 'IO 11/18/2020 19:08:46' prior: 50874105!
+test17CheckoutHasCartWithBooks
+
+	| tusLibros cartId |
+
+	tusLibros := self newTusLibros.
+	
+	cartId := tusLibros newCartForClientId: 'admin' password: 'password'.
+
+	self should: [tusLibros checkoutCart: cartId ccn: '5500 0000 0000 0004' cced: '20/2025' cco: 'Juan']
+		raise: Error
+		withMessageText: TusLibros emptyCartErrorMessage.
+
+
+! !
+
+!methodRemoval: TusLibros #newCartForClientId:Password: stamp: 'IO 11/18/2020 19:08:46'!
+newCartForClientId: clientId Password: password
+	(
+		(clients at: clientId
+				ifAbsent: [^self error: TusLibros inexistentClientErrorMessage]) = password
+	) ifFalse: [^self error: TusLibros invalidPasswordErrorMessage].
+
+	carts add: Bag new.
+	cartClients add: clientId.
+	^carts size.
+!
+!TusLibros methodsFor: 'cart' stamp: 'IO 11/18/2020 19:09:01' prior: 50874191!
+newCartForClientId: clientId password: password
+	self validateClientId: clientId withPassword: password.
+
+	carts add: Bag new.
+	cartClients add: clientId.
+	^carts size.
+! !
+
+!testRun: #TusLibrosTest #test01NewCartIsEmpty stamp: 'IO 11/18/2020 19:09:02'!
+PASSED!
+
+!testRun: #TusLibrosTest #test02CanAddABookToCart stamp: 'IO 11/18/2020 19:09:02'!
+PASSED!
+
+!testRun: #TusLibrosTest #test03CanAddDifferentBooksToCart stamp: 'IO 11/18/2020 19:09:02'!
+PASSED!
+
+!testRun: #TusLibrosTest #test04CanAddMoreThanOneBookToCart stamp: 'IO 11/18/2020 19:09:02'!
+PASSED!
+
+!testRun: #TusLibrosTest #test05CanAddMoreThanOneCart stamp: 'IO 11/18/2020 19:09:02'!
+PASSED!
+
+!testRun: #TusLibrosTest #test06AClientInitialyHasNowPurchases stamp: 'IO 11/18/2020 19:09:02'!
+PASSED!
+
+!testRun: #TusLibrosTest #test07AClientCanCheckoutACart stamp: 'IO 11/18/2020 19:09:02'!
+PASSED!
+
+!testRun: #TusLibrosTest #test08AClientCanCheckoutManyTimes stamp: 'IO 11/18/2020 19:09:02'!
+PASSED!
+
+!testRun: #TusLibrosTest #test09ManyClientsCanCheckout stamp: 'IO 11/18/2020 19:09:02'!
+PASSED!
+
+!testRun: #TusLibrosTest #test10CreateCartClientIdExists stamp: 'IO 11/18/2020 19:09:02'!
+PASSED!
+
+!testRun: #TusLibrosTest #test11CreateCartClientPasswordMatches stamp: 'IO 11/18/2020 19:09:02'!
+PASSED!
+
+!testRun: #TusLibrosTest #test12AddToCartHasValidCartId stamp: 'IO 11/18/2020 19:09:02'!
+PASSED!
+
+!testRun: #TusLibrosTest #test13AddToCartHasValidISBN stamp: 'IO 11/18/2020 19:09:02'!
+PASSED!
+
+!testRun: #TusLibrosTest #test14AddToCartHasValidQuantity stamp: 'IO 11/18/2020 19:09:02'!
+PASSED!
+
+!testRun: #TusLibrosTest #test15ListCartHasValidCartId stamp: 'IO 11/18/2020 19:09:02'!
+PASSED!
+
+!testRun: #TusLibrosTest #test16CheckoutHasValidCartId stamp: 'IO 11/18/2020 19:09:02'!
+PASSED!
+
+!testRun: #TusLibrosTest #test17CheckoutHasCartWithBooks stamp: 'IO 11/18/2020 19:09:02'!
+PASSED!
+
+!testRun: #TusLibrosTest #test18ListPurchasesHasValidUser stamp: 'IO 11/18/2020 19:09:02'!
+FAILURE!
+
+!testRun: #TusLibrosTest #test19ListPurchasesHasMatchingPassword stamp: 'IO 11/18/2020 19:09:02'!
+FAILURE!
+!TusLibros methodsFor: 'purchases' stamp: 'IO 11/18/2020 19:09:13' prior: 50873779!
+listPurchasesFor: clientId password: password
+	self validateClientId: clientId withPassword: password.
+
+	^clientsPurchases at: clientId ifAbsent: [^Bag new] copy.
+! !
+
+!testRun: #TusLibrosTest #test01NewCartIsEmpty stamp: 'IO 11/18/2020 19:09:14'!
+PASSED!
+
+!testRun: #TusLibrosTest #test02CanAddABookToCart stamp: 'IO 11/18/2020 19:09:14'!
+PASSED!
+
+!testRun: #TusLibrosTest #test03CanAddDifferentBooksToCart stamp: 'IO 11/18/2020 19:09:14'!
+PASSED!
+
+!testRun: #TusLibrosTest #test04CanAddMoreThanOneBookToCart stamp: 'IO 11/18/2020 19:09:14'!
+PASSED!
+
+!testRun: #TusLibrosTest #test05CanAddMoreThanOneCart stamp: 'IO 11/18/2020 19:09:14'!
+PASSED!
+
+!testRun: #TusLibrosTest #test06AClientInitialyHasNowPurchases stamp: 'IO 11/18/2020 19:09:14'!
+PASSED!
+
+!testRun: #TusLibrosTest #test07AClientCanCheckoutACart stamp: 'IO 11/18/2020 19:09:14'!
+PASSED!
+
+!testRun: #TusLibrosTest #test08AClientCanCheckoutManyTimes stamp: 'IO 11/18/2020 19:09:14'!
+PASSED!
+
+!testRun: #TusLibrosTest #test09ManyClientsCanCheckout stamp: 'IO 11/18/2020 19:09:14'!
+PASSED!
+
+!testRun: #TusLibrosTest #test10CreateCartClientIdExists stamp: 'IO 11/18/2020 19:09:14'!
+PASSED!
+
+!testRun: #TusLibrosTest #test11CreateCartClientPasswordMatches stamp: 'IO 11/18/2020 19:09:14'!
+PASSED!
+
+!testRun: #TusLibrosTest #test12AddToCartHasValidCartId stamp: 'IO 11/18/2020 19:09:14'!
+PASSED!
+
+!testRun: #TusLibrosTest #test13AddToCartHasValidISBN stamp: 'IO 11/18/2020 19:09:14'!
+PASSED!
+
+!testRun: #TusLibrosTest #test14AddToCartHasValidQuantity stamp: 'IO 11/18/2020 19:09:14'!
+PASSED!
+
+!testRun: #TusLibrosTest #test15ListCartHasValidCartId stamp: 'IO 11/18/2020 19:09:14'!
+PASSED!
+
+!testRun: #TusLibrosTest #test16CheckoutHasValidCartId stamp: 'IO 11/18/2020 19:09:14'!
+PASSED!
+
+!testRun: #TusLibrosTest #test17CheckoutHasCartWithBooks stamp: 'IO 11/18/2020 19:09:14'!
+PASSED!
+
+!testRun: #TusLibrosTest #test18ListPurchasesHasValidUser stamp: 'IO 11/18/2020 19:09:14'!
+PASSED!
+
+!testRun: #TusLibrosTest #test19ListPurchasesHasMatchingPassword stamp: 'IO 11/18/2020 19:09:14'!
+PASSED!
+
+----SNAPSHOT----(18 November 2020 19:13:42) CuisUniversity-4384.image priorSource: 17239174!
