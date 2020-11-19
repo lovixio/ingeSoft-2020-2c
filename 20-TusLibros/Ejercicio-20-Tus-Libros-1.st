@@ -487,25 +487,28 @@ Object subclass: #TusLibrosCart
 	poolDictionaries: ''
 	category: 'Ejercicio-20-Tus-Libros'!
 
-!TusLibrosCart methodsFor: 'as yet unclassified' stamp: 'IO 11/18/2020 20:13:51'!
+!TusLibrosCart methodsFor: 'initialization' stamp: 'IO 11/18/2020 20:12:38'!
+initializeFor: aClientId
+	clientId := aClientId.
+	books := Bag new.! !
+
+
+!TusLibrosCart methodsFor: 'adding' stamp: 'IO 11/18/2020 20:13:51'!
 add: aBook withQuantity: aQuantity
 	books add: aBook withOccurrences: aQuantity.
 ! !
 
-!TusLibrosCart methodsFor: 'as yet unclassified' stamp: 'IO 11/18/2020 20:14:51'!
+
+!TusLibrosCart methodsFor: 'accesing' stamp: 'IO 11/18/2020 20:14:51'!
 books
 	^books copy.! !
 
-!TusLibrosCart methodsFor: 'as yet unclassified' stamp: 'IO 11/18/2020 20:22:43'!
+
+!TusLibrosCart methodsFor: 'checkout' stamp: 'IO 11/18/2020 20:22:43'!
 checkoutOn: aTusLibros
 	(books size = 0) ifTrue: [self error: TusLibros emptyCartErrorMessage].
 	aTusLibros checkout: self books for: clientId.
 ! !
-
-!TusLibrosCart methodsFor: 'as yet unclassified' stamp: 'IO 11/18/2020 20:12:38'!
-initializeFor: aClientId
-	clientId := aClientId.
-	books := Bag new.! !
 
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
@@ -525,26 +528,29 @@ Object subclass: #TusLibrosClient
 	poolDictionaries: ''
 	category: 'Ejercicio-20-Tus-Libros'!
 
-!TusLibrosClient methodsFor: 'as yet unclassified' stamp: 'IO 11/18/2020 19:49:55'!
-checkout: aCart
-	purchases addAll: aCart.
-! !
-
-!TusLibrosClient methodsFor: 'as yet unclassified' stamp: 'IO 11/18/2020 19:51:17'!
-purchases
-	^purchases copy.! !
-
-!TusLibrosClient methodsFor: 'as yet unclassified' stamp: 'IO 11/18/2020 19:51:01'!
+!TusLibrosClient methodsFor: 'validations' stamp: 'IO 11/18/2020 19:51:01'!
 validatePassword: aPassword
 	(password = aPassword) ifFalse: [^self error: TusLibros invalidPasswordErrorMessage].
 ! !
 
-!TusLibrosClient methodsFor: 'as yet unclassified' stamp: 'IO 11/18/2020 19:49:32'!
+
+!TusLibrosClient methodsFor: 'initialization' stamp: 'IO 11/18/2020 19:49:32'!
 with: aPassword
 
 	password := aPassword.
 	purchases := Bag new.
 
+! !
+
+
+!TusLibrosClient methodsFor: 'accesing' stamp: 'IO 11/18/2020 19:51:17'!
+purchases
+	^purchases copy.! !
+
+
+!TusLibrosClient methodsFor: 'adding' stamp: 'IO 11/18/2020 19:49:55'!
+checkout: aCart
+	purchases addAll: aCart.
 ! !
 
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!

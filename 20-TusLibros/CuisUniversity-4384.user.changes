@@ -36465,3 +36465,81 @@ PASSED!
 PASSED!
 
 ----SNAPSHOT----(18 November 2020 20:26:25) CuisUniversity-4384.image priorSource: 17374621!
+
+----STARTUP---- (19 November 2020 12:05:05) as C:\Users\Usuario\Desktop\labo\inge1\Cuis\windows64\CuisUniversity-4384.image!
+
+
+!classRemoval: #TusLibros stamp: 'LH 11/19/2020 12:05:10'!
+Object subclass: #TusLibros
+	instanceVariableNames: 'carts cartClients clientsPurchases clients catalogue'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Ejercicio-20-Tus-Libros'!
+
+!classRemoval: #TusLibrosTest stamp: 'LH 11/19/2020 12:05:11'!
+TestCase subclass: #TusLibrosTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Ejercicio-20-Tus-Libros'!
+
+----End fileIn of C:\Users\Usuario\Desktop\labo\inge1\Cuis\windows64\Ejercicio-20-Tus-Libros.st----!
+
+!testRun: #TusLibrosTest #test01NewCartIsEmpty stamp: 'LH 11/19/2020 12:15:33'!
+PASSED!
+
+!testRun: #TusLibrosTest #test02CanAddABookToCart stamp: 'LH 11/19/2020 12:15:33'!
+PASSED!
+
+!testRun: #TusLibrosTest #test03CanAddDifferentBooksToCart stamp: 'LH 11/19/2020 12:15:33'!
+PASSED!
+
+!testRun: #TusLibrosTest #test04CanAddMoreThanOneBookToCart stamp: 'LH 11/19/2020 12:15:33'!
+PASSED!
+
+!testRun: #TusLibrosTest #test05CanAddMoreThanOneCart stamp: 'LH 11/19/2020 12:15:33'!
+PASSED!
+
+!testRun: #TusLibrosTest #test06AClientInitialyHasNowPurchases stamp: 'LH 11/19/2020 12:15:33'!
+PASSED!
+
+!testRun: #TusLibrosTest #test07AClientCanCheckoutACart stamp: 'LH 11/19/2020 12:15:33'!
+PASSED!
+
+!testRun: #TusLibrosTest #test08AClientCanCheckoutManyTimes stamp: 'LH 11/19/2020 12:15:33'!
+PASSED!
+
+!testRun: #TusLibrosTest #test09ManyClientsCanCheckout stamp: 'LH 11/19/2020 12:15:34'!
+PASSED!
+
+!testRun: #TusLibrosTest #test10CreateCartClientIdExists stamp: 'LH 11/19/2020 12:15:34'!
+PASSED!
+
+!testRun: #TusLibrosTest #test11CreateCartClientPasswordMatches stamp: 'LH 11/19/2020 12:15:34'!
+PASSED!
+
+!testRun: #TusLibrosTest #test12AddToCartHasValidCartId stamp: 'LH 11/19/2020 12:15:34'!
+PASSED!
+
+!testRun: #TusLibrosTest #test13AddToCartHasValidISBN stamp: 'LH 11/19/2020 12:15:34'!
+PASSED!
+
+!testRun: #TusLibrosTest #test14AddToCartHasValidQuantity stamp: 'LH 11/19/2020 12:15:34'!
+PASSED!
+
+!testRun: #TusLibrosTest #test15ListCartHasValidCartId stamp: 'LH 11/19/2020 12:15:34'!
+PASSED!
+
+!testRun: #TusLibrosTest #test16CheckoutHasValidCartId stamp: 'LH 11/19/2020 12:15:34'!
+PASSED!
+
+!testRun: #TusLibrosTest #test17CheckoutHasCartWithBooks stamp: 'LH 11/19/2020 12:15:34'!
+PASSED!
+
+!testRun: #TusLibrosTest #test18ListPurchasesHasValidUser stamp: 'LH 11/19/2020 12:15:34'!
+PASSED!
+
+!testRun: #TusLibrosTest #test19ListPurchasesHasMatchingPassword stamp: 'LH 11/19/2020 12:15:34'!
+PASSED!
+
+----QUIT----(19 November 2020 12:16:51) CuisUniversity-4384.image priorSource: 17205931!
