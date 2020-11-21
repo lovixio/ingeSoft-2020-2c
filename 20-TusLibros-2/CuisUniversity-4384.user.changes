@@ -37970,3 +37970,1300 @@ invalidDate
 PASSED!
 
 ----QUIT----(19 November 2020 21:17:03) CuisUniversity-4384.image priorSource: 17253487!
+
+----STARTUP---- (21 November 2020 17:18:55) as C:\Users\Usuario\Desktop\labo\inge1\Cuis\windows64 tus libros\CuisUniversity-4384.image!
+
+
+TestCase subclass: #CreditCardTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Ejercicio-20-Tus-Libros'!
+
+!classDefinition: #CreditCardTest category: 'Ejercicio-20-Tus-Libros' stamp: 'LH 11/21/2020 17:20:27'!
+TestCase subclass: #CreditCardTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Ejercicio-20-Tus-Libros'!
+
+!classDefinition: #CreditCard category: 'Ejercicio-20-Tus-Libros' stamp: 'LH 11/21/2020 17:26:03'!
+Object subclass: #CreditCard
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Ejercicio-20-Tus-Libros'!
+!CreditCardTest methodsFor: 'test' stamp: 'LH 11/21/2020 17:25:59'!
+test01ACreditCardCanBeNotExpired
+	|aCreditCard|
+	
+	aCreditCard := CreditCard withNumber: '0000000000000000' expirationDate: (Date today + Date today daysInMonth months) month belongingTo: 'Juan Pablo'.
+	
+	self deny: aCreditCard isExpired.
+
+	! !
+
+!testRun: #CreditCardTest #test01ACreditCardCanBeNotExpired stamp: 'LH 11/21/2020 17:26:09'!
+ERROR!
+!CreditCardTest methodsFor: 'test' stamp: 'LH 11/21/2020 17:26:23' prior: 50874685!
+test01ACreditCardCanBeNotExpired
+	|aCreditCard|
+	
+	aCreditCard := CreditCard withNumber: '0000000000000000' expirationDate: (Date today + Date today daysInMonth days) month belongingTo: 'Juan Pablo'.
+	
+	self deny: aCreditCard isExpired.
+
+	! !
+
+!testRun: #CreditCardTest #test01ACreditCardCanBeNotExpired stamp: 'LH 11/21/2020 17:26:24'!
+ERROR!
+!CreditCard class methodsFor: 'instance creation' stamp: 'LH 11/21/2020 17:26:31'!
+withNumber: aString expirationDate: aMonth belongingTo: aString3 
+	"DO NOT FORGET TO RENAME COLLABORATORS AND REMOVE THIS COMMENT!!!!"
+	self shouldBeImplemented.
+	^self new initializeWithNumber: aString expirationDate: aMonth belongingTo: aString3 ! !
+!CreditCard class methodsFor: 'instance creation' stamp: 'LH 11/21/2020 17:27:22' prior: 50874713!
+withNumber: aCCNumber expirationDate: anExpirationDate belongingTo: aName 
+
+	^self new initializeWithNumber: aCCNumber expirationDate: anExpirationDate belongingTo: aName ! !
+
+!testRun: #CreditCardTest #test01ACreditCardCanBeNotExpired stamp: 'LH 11/21/2020 17:27:23'!
+ERROR!
+
+!classDefinition: #CreditCard category: 'Ejercicio-20-Tus-Libros' stamp: 'LH 11/21/2020 17:27:49'!
+Object subclass: #CreditCard
+	instanceVariableNames: 'cCNumber'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Ejercicio-20-Tus-Libros'!
+
+!classDefinition: #CreditCard category: 'Ejercicio-20-Tus-Libros' stamp: 'LH 11/21/2020 17:27:49'!
+Object subclass: #CreditCard
+	instanceVariableNames: 'cCNumber expirationDate'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Ejercicio-20-Tus-Libros'!
+
+!classDefinition: #CreditCard category: 'Ejercicio-20-Tus-Libros' stamp: 'LH 11/21/2020 17:27:49'!
+Object subclass: #CreditCard
+	instanceVariableNames: 'cCNumber expirationDate name'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Ejercicio-20-Tus-Libros'!
+!CreditCard methodsFor: 'initialization' stamp: 'LH 11/21/2020 17:27:49'!
+initializeWithNumber: aCCNumber expirationDate: anExpirationDate belongingTo: aName 
+	self shouldBeImplemented.
+	cCNumber := aCCNumber.
+	expirationDate := anExpirationDate.
+	name := aName.! !
+!CreditCard methodsFor: 'initialization' stamp: 'LH 11/21/2020 17:28:03' prior: 50874760!
+initializeWithNumber: aCCNumber expirationDate: anExpirationDate belongingTo: aName 
+	
+	cCNumber := aCCNumber.
+	expirationDate := anExpirationDate.
+	name := aName.! !
+
+!classDefinition: #CreditCard category: 'Ejercicio-20-Tus-Libros' stamp: 'LH 11/21/2020 17:28:10'!
+Object subclass: #CreditCard
+	instanceVariableNames: 'creditCardNumber expirationDate name'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Ejercicio-20-Tus-Libros'!
+!CreditCard methodsFor: 'as yet unclassified' stamp: 'LH 11/21/2020 17:28:10' prior: 50874769!
+initializeWithNumber: aCCNumber expirationDate: anExpirationDate belongingTo: aName 
+	
+	creditCardNumber := aCCNumber.
+	expirationDate := anExpirationDate.
+	name := aName.! !
+
+!classDefinition: #CreditCard category: 'Ejercicio-20-Tus-Libros' stamp: 'LH 11/21/2020 17:28:28'!
+Object subclass: #CreditCard
+	instanceVariableNames: 'creditCardNumber expirationDate nameOfOwner'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Ejercicio-20-Tus-Libros'!
+!CreditCard methodsFor: 'as yet unclassified' stamp: 'LH 11/21/2020 17:28:28' prior: 50874786!
+initializeWithNumber: aCCNumber expirationDate: anExpirationDate belongingTo: aName 
+	
+	creditCardNumber := aCCNumber.
+	expirationDate := anExpirationDate.
+	nameOfOwner := aName.! !
+
+!testRun: #CreditCardTest #test01ACreditCardCanBeNotExpired stamp: 'LH 11/21/2020 17:28:34'!
+ERROR!
+!CreditCard methodsFor: 'testing' stamp: 'LH 11/21/2020 17:28:45'!
+isExpired
+	self shouldBeImplemented.! !
+!CreditCard methodsFor: 'testing' stamp: 'LH 11/21/2020 17:29:02' prior: 50874815!
+isExpired
+	^false.! !
+
+!testRun: #CreditCardTest #test01ACreditCardCanBeNotExpired stamp: 'LH 11/21/2020 17:29:05'!
+PASSED!
+
+!testRun: #CreditCardTest #test01ACreditCardCanBeNotExpired stamp: 'LH 11/21/2020 17:29:05'!
+PASSED!
+!CreditCardTest methodsFor: 'test' stamp: 'LH 11/21/2020 17:30:37'!
+test02ACreditCardWithExpirationDatingThisMonthIsExpired
+	|aCreditCard|
+	
+	aCreditCard := CreditCard withNumber: '0000000000000000' expirationDate: Date today month belongingTo: 'Juan Pablo'.
+	
+	self assert: aCreditCard isExpired.
+
+	! !
+
+!testRun: #CreditCardTest #test02ACreditCardWithExpirationDatingThisMonthIsExpired stamp: 'LH 11/21/2020 17:30:38'!
+FAILURE!
+
+aCreditCard isExpired!
+!CreditCard methodsFor: 'testing' stamp: 'LH 11/21/2020 17:32:10' prior: 50874819!
+isExpired
+
+	^expirationDate = Date today month.! !
+
+!testRun: #CreditCardTest #test02ACreditCardWithExpirationDatingThisMonthIsExpired stamp: 'LH 11/21/2020 17:32:14'!
+PASSED!
+
+!testRun: #CreditCardTest #test01ACreditCardCanBeNotExpired stamp: 'LH 11/21/2020 17:32:14'!
+PASSED!
+
+!testRun: #CreditCardTest #test02ACreditCardWithExpirationDatingThisMonthIsExpired stamp: 'LH 11/21/2020 17:32:14'!
+PASSED!
+!CreditCardTest methodsFor: 'test' stamp: 'LH 11/21/2020 17:32:23'!
+test02ACreditCardWithExpirationDatingThisMonthAndYearIsExpired
+	|aCreditCard|
+	
+	aCreditCard := CreditCard withNumber: '0000000000000000' expirationDate: Date today month belongingTo: 'Juan Pablo'.
+	
+	self assert: aCreditCard isExpired.
+
+	! !
+
+!methodRemoval: CreditCardTest #test02ACreditCardWithExpirationDatingThisMonthIsExpired stamp: 'LH 11/21/2020 17:32:23'!
+test02ACreditCardWithExpirationDatingThisMonthIsExpired
+	|aCreditCard|
+	
+	aCreditCard := CreditCard withNumber: '0000000000000000' expirationDate: Date today month belongingTo: 'Juan Pablo'.
+	
+	self assert: aCreditCard isExpired.
+
+	!
+!CreditCardTest methodsFor: 'test' stamp: 'LH 11/21/2020 17:32:55'!
+test03ACreditCardWithExpirationDatingaPastMonthThisYearIsExpired
+	|aCreditCard|
+	
+	aCreditCard := CreditCard withNumber: '0000000000000000' expirationDate: Date today month belongingTo: 'Juan Pablo'.
+	
+	self assert: aCreditCard isExpired.
+
+	! !
+!CreditCardTest methodsFor: 'test' stamp: 'LH 11/21/2020 17:34:01' prior: 50874880!
+test03ACreditCardWithExpirationDatingaPastMonthThisYearIsExpired
+	|aCreditCard|
+	
+	aCreditCard := CreditCard withNumber: '0000000000000000' expirationDate: (Date today - Date today daysInMonth days) month belongingTo: 'Juan Pablo'.
+	
+	self assert: aCreditCard isExpired.
+
+	! !
+
+!testRun: #CreditCardTest #test03ACreditCardWithExpirationDatingaPastMonthThisYearIsExpired stamp: 'LH 11/21/2020 17:34:02'!
+FAILURE!
+!CreditCard methodsFor: 'testing' stamp: 'LH 11/21/2020 17:34:38' prior: 50874844!
+isExpired
+
+	^expirationDate monthIndex <= Date today monthIndex.! !
+
+!testRun: #CreditCardTest #test03ACreditCardWithExpirationDatingaPastMonthThisYearIsExpired stamp: 'LH 11/21/2020 17:34:39'!
+PASSED!
+
+!testRun: #CreditCardTest #test01ACreditCardCanBeNotExpired stamp: 'LH 11/21/2020 17:34:39'!
+PASSED!
+
+!testRun: #CreditCardTest #test02ACreditCardWithExpirationDatingThisMonthAndYearIsExpired stamp: 'LH 11/21/2020 17:34:39'!
+PASSED!
+
+!testRun: #CreditCardTest #test03ACreditCardWithExpirationDatingaPastMonthThisYearIsExpired stamp: 'LH 11/21/2020 17:34:39'!
+PASSED!
+!CreditCardTest methodsFor: 'test' stamp: 'LH 11/21/2020 17:35:41'!
+test03ACreditCardWithExpirationDatingAPastMonthThisYearIsExpired
+	|aCreditCard|
+	
+	aCreditCard := CreditCard withNumber: '0000000000000000' expirationDate: (Date today - Date today daysInMonth days) month belongingTo: 'Juan Pablo'.
+	
+	self assert: aCreditCard isExpired.
+
+	! !
+
+!methodRemoval: CreditCardTest #test03ACreditCardWithExpirationDatingaPastMonthThisYearIsExpired stamp: 'LH 11/21/2020 17:35:42'!
+test03ACreditCardWithExpirationDatingaPastMonthThisYearIsExpired
+	|aCreditCard|
+	
+	aCreditCard := CreditCard withNumber: '0000000000000000' expirationDate: (Date today - Date today daysInMonth days) month belongingTo: 'Juan Pablo'.
+	
+	self assert: aCreditCard isExpired.
+
+	!
+!CreditCardTest methodsFor: 'test' stamp: 'LH 11/21/2020 17:36:45'!
+test04ACreditCardWithExpirationDatingAPastYearIsExpired
+	|aCreditCard|
+	
+	aCreditCard := CreditCard withNumber: '0000000000000000' expirationDate: (Date today - 365 days) month belongingTo: 'Juan Pablo'.
+	
+	self assert: aCreditCard isExpired.
+
+	! !
+
+!testRun: #CreditCardTest #test04ACreditCardWithExpirationDatingAPastYearIsExpired stamp: 'LH 11/21/2020 17:36:51'!
+PASSED!
+
+!testRun: #CreditCardTest #test01ACreditCardCanBeNotExpired stamp: 'LH 11/21/2020 17:36:51'!
+PASSED!
+
+!testRun: #CreditCardTest #test02ACreditCardWithExpirationDatingThisMonthAndYearIsExpired stamp: 'LH 11/21/2020 17:36:51'!
+PASSED!
+
+!testRun: #CreditCardTest #test03ACreditCardWithExpirationDatingAPastMonthThisYearIsExpired stamp: 'LH 11/21/2020 17:36:51'!
+PASSED!
+
+!testRun: #CreditCardTest #test04ACreditCardWithExpirationDatingAPastYearIsExpired stamp: 'LH 11/21/2020 17:36:51'!
+PASSED!
+!CreditCardTest methodsFor: 'test' stamp: 'LH 11/21/2020 17:37:32' prior: 50874951!
+test04ACreditCardWithExpirationDatingAPastYearIsExpired
+	|aCreditCard|
+	
+	aCreditCard := CreditCard withNumber: '0000000000000000' expirationDate: (Date today - 365 days + Date today daysInMonth days) month belongingTo: 'Juan Pablo'.
+	
+	self assert: aCreditCard isExpired.
+
+	! !
+
+!testRun: #CreditCardTest #test04ACreditCardWithExpirationDatingAPastYearIsExpired stamp: 'LH 11/21/2020 17:37:33'!
+FAILURE!
+
+expirationDate!
+
+Date today!
+!CreditCard methodsFor: 'testing' stamp: 'LH 11/21/2020 17:38:59' prior: 50874907!
+isExpired
+
+	^(expirationDate monthIndex <= Date today monthIndex) or: expirationDate year < Date today year.! !
+
+!testRun: #CreditCardTest #test04ACreditCardWithExpirationDatingAPastYearIsExpired stamp: 'LH 11/21/2020 17:40:10'!
+ERROR!
+!CreditCard methodsFor: 'testing' stamp: 'LH 11/21/2020 17:40:34' prior: 50874998!
+isExpired
+
+	^(expirationDate monthIndex <= Date today monthIndex) or: expirationDate yearNumber < Date today yearNumber.! !
+
+!testRun: #CreditCardTest #test04ACreditCardWithExpirationDatingAPastYearIsExpired stamp: 'LH 11/21/2020 17:40:35'!
+PASSED!
+
+!testRun: #CreditCardTest #test01ACreditCardCanBeNotExpired stamp: 'LH 11/21/2020 17:40:35'!
+PASSED!
+
+!testRun: #CreditCardTest #test02ACreditCardWithExpirationDatingThisMonthAndYearIsExpired stamp: 'LH 11/21/2020 17:40:35'!
+PASSED!
+
+!testRun: #CreditCardTest #test03ACreditCardWithExpirationDatingAPastMonthThisYearIsExpired stamp: 'LH 11/21/2020 17:40:35'!
+PASSED!
+
+!testRun: #CreditCardTest #test04ACreditCardWithExpirationDatingAPastYearIsExpired stamp: 'LH 11/21/2020 17:40:35'!
+PASSED!
+!CreditCardTest methodsFor: 'test' stamp: 'LH 11/21/2020 17:42:54'!
+test04ACreditCardWithExpirationDatingAFutureYearIsNotExpired
+	|aCreditCard|
+	
+	aCreditCard := CreditCard withNumber: '0000000000000000' expirationDate: (Date today + 365 days) month belongingTo: 'Juan Pablo'.
+	
+	self deny: aCreditCard isExpired.
+
+	! !
+
+!testRun: #CreditCardTest #test04ACreditCardWithExpirationDatingAFutureYearIsNotExpired stamp: 'LH 11/21/2020 17:42:56'!
+FAILURE!
+
+!testRun: #CreditCardTest #test04ACreditCardWithExpirationDatingAFutureYearIsNotExpired stamp: 'LH 11/21/2020 17:43:18'!
+FAILURE!
+
+!testRun: #CreditCardTest #test04ACreditCardWithExpirationDatingAFutureYearIsNotExpired stamp: 'LH 11/21/2020 17:43:18'!
+FAILURE!
+!CreditCard methodsFor: 'testing' stamp: 'LH 11/21/2020 17:44:50' prior: 50875008!
+isExpired
+
+	^((expirationDate monthIndex <= Date today monthIndex) and: expirationDate yearNumber = Date today yearNumber) or: expirationDate yearNumber < Date today yearNumber.! !
+
+!testRun: #CreditCardTest #test04ACreditCardWithExpirationDatingAFutureYearIsNotExpired stamp: 'LH 11/21/2020 17:44:52'!
+PASSED!
+!CreditCardTest methodsFor: 'test' stamp: 'LH 11/21/2020 17:44:58'!
+test05ACreditCardWithExpirationDatingAPastYearIsExpired
+	|aCreditCard|
+	
+	aCreditCard := CreditCard withNumber: '0000000000000000' expirationDate: (Date today - 365 days + Date today daysInMonth days) month belongingTo: 'Juan Pablo'.
+	
+	self assert: aCreditCard isExpired.
+
+	! !
+
+!methodRemoval: CreditCardTest #test04ACreditCardWithExpirationDatingAPastYearIsExpired stamp: 'LH 11/21/2020 17:44:58'!
+test04ACreditCardWithExpirationDatingAPastYearIsExpired
+	|aCreditCard|
+	
+	aCreditCard := CreditCard withNumber: '0000000000000000' expirationDate: (Date today - 365 days + Date today daysInMonth days) month belongingTo: 'Juan Pablo'.
+	
+	self assert: aCreditCard isExpired.
+
+	!
+
+!testRun: #CreditCardTest #test05ACreditCardWithExpirationDatingAPastYearIsExpired stamp: 'LH 11/21/2020 17:45:02'!
+PASSED!
+
+!testRun: #CreditCardTest #test05ACreditCardWithExpirationDatingAPastYearIsExpired stamp: 'LH 11/21/2020 17:45:04'!
+PASSED!
+
+!testRun: #CreditCardTest #test01ACreditCardCanBeNotExpired stamp: 'LH 11/21/2020 17:45:04'!
+PASSED!
+
+!testRun: #CreditCardTest #test02ACreditCardWithExpirationDatingThisMonthAndYearIsExpired stamp: 'LH 11/21/2020 17:45:04'!
+PASSED!
+
+!testRun: #CreditCardTest #test03ACreditCardWithExpirationDatingAPastMonthThisYearIsExpired stamp: 'LH 11/21/2020 17:45:04'!
+PASSED!
+
+!testRun: #CreditCardTest #test04ACreditCardWithExpirationDatingAFutureYearIsNotExpired stamp: 'LH 11/21/2020 17:45:04'!
+PASSED!
+
+!testRun: #CreditCardTest #test05ACreditCardWithExpirationDatingAPastYearIsExpired stamp: 'LH 11/21/2020 17:45:04'!
+PASSED!
+!CreditCard methodsFor: 'testing' stamp: 'LH 11/21/2020 17:51:47' prior: 50875057!
+isExpired
+	|expirationDateYear currentMonth currentYear|
+	
+	expirationDateYear := expirationDate yearNumber.
+	currentMonth := Date today monthIndex.
+	currentYear := Date today yearNumber.
+	
+	
+	^	(expirationDate monthIndex <= currentMonth 
+			and: expirationDateYear = currentYear)
+			
+		or: expirationDateYear < currentYear.! !
+
+!testRun: #CreditCardTest #test01ACreditCardCanBeNotExpired stamp: 'LH 11/21/2020 17:51:48'!
+PASSED!
+
+!testRun: #CreditCardTest #test02ACreditCardWithExpirationDatingThisMonthAndYearIsExpired stamp: 'LH 11/21/2020 17:51:48'!
+PASSED!
+
+!testRun: #CreditCardTest #test03ACreditCardWithExpirationDatingAPastMonthThisYearIsExpired stamp: 'LH 11/21/2020 17:51:48'!
+PASSED!
+
+!testRun: #CreditCardTest #test04ACreditCardWithExpirationDatingAFutureYearIsNotExpired stamp: 'LH 11/21/2020 17:51:48'!
+PASSED!
+
+!testRun: #CreditCardTest #test05ACreditCardWithExpirationDatingAPastYearIsExpired stamp: 'LH 11/21/2020 17:51:48'!
+PASSED!
+
+!testRun: #CreditCardTest #test01ACreditCardCanBeNotExpired stamp: 'LH 11/21/2020 17:51:51'!
+PASSED!
+
+!testRun: #CreditCardTest #test02ACreditCardWithExpirationDatingThisMonthAndYearIsExpired stamp: 'LH 11/21/2020 17:51:51'!
+PASSED!
+
+!testRun: #CreditCardTest #test03ACreditCardWithExpirationDatingAPastMonthThisYearIsExpired stamp: 'LH 11/21/2020 17:51:51'!
+PASSED!
+
+!testRun: #CreditCardTest #test04ACreditCardWithExpirationDatingAFutureYearIsNotExpired stamp: 'LH 11/21/2020 17:51:51'!
+PASSED!
+
+!testRun: #CreditCardTest #test05ACreditCardWithExpirationDatingAPastYearIsExpired stamp: 'LH 11/21/2020 17:51:51'!
+PASSED!
+!CreditCardTest methodsFor: 'test' stamp: 'LH 11/21/2020 17:53:12'!
+daysThisMonth
+
+	^Date today daysInMonth days.
+	! !
+!CreditCardTest methodsFor: 'test' stamp: 'LH 11/21/2020 17:53:47' prior: 50874699!
+test01ACreditCardCanBeNotExpired
+	|aCreditCard|
+	
+	aCreditCard := CreditCard withNumber: '0000000000000000' expirationDate: (Date today + self daysThisMonth) month belongingTo: 'Juan Pablo'.
+	
+	self deny: aCreditCard isExpired.
+
+	! !
+!CreditCardTest methodsFor: 'test' stamp: 'LH 11/21/2020 17:54:20' prior: 50874927!
+test03ACreditCardWithExpirationDatingAPastMonthThisYearIsExpired
+	|aCreditCard|
+	
+	aCreditCard := CreditCard withNumber: '0000000000000000' expirationDate: (Date today - self daysThisMonth) month belongingTo: 'Juan Pablo'.
+	
+	self assert: aCreditCard isExpired.
+
+	! !
+
+!testRun: #CreditCardTest #test03ACreditCardWithExpirationDatingAPastMonthThisYearIsExpired stamp: 'LH 11/21/2020 17:54:22'!
+PASSED!
+
+!testRun: #CreditCardTest #test01ACreditCardCanBeNotExpired stamp: 'LH 11/21/2020 17:54:22'!
+PASSED!
+
+!testRun: #CreditCardTest #test02ACreditCardWithExpirationDatingThisMonthAndYearIsExpired stamp: 'LH 11/21/2020 17:54:22'!
+PASSED!
+
+!testRun: #CreditCardTest #test03ACreditCardWithExpirationDatingAPastMonthThisYearIsExpired stamp: 'LH 11/21/2020 17:54:22'!
+PASSED!
+
+!testRun: #CreditCardTest #test04ACreditCardWithExpirationDatingAFutureYearIsNotExpired stamp: 'LH 11/21/2020 17:54:22'!
+PASSED!
+
+!testRun: #CreditCardTest #test05ACreditCardWithExpirationDatingAPastYearIsExpired stamp: 'LH 11/21/2020 17:54:22'!
+PASSED!
+!CreditCardTest methodsFor: 'test' stamp: 'LH 11/21/2020 17:54:46' prior: 50875069!
+test05ACreditCardWithExpirationDatingAPastYearIsExpired
+	|aCreditCard|
+	
+	aCreditCard := CreditCard withNumber: '0000000000000000' expirationDate: (Date today - 365 days + self daysThisMonth) month belongingTo: 'Juan Pablo'.
+	
+	self assert: aCreditCard isExpired.
+
+	! !
+!CreditCardTest methodsFor: 'test' stamp: 'LH 11/21/2020 17:55:28'!
+daysInYear
+	
+	^365 days 
+
+	! !
+
+----SNAPSHOT----(21 November 2020 17:55:31) CuisUniversity-4384.image priorSource: 17376241!
+
+!testRun: #CreditCardTest #test01ACreditCardCanBeNotExpired stamp: 'LH 11/21/2020 17:55:33'!
+PASSED!
+
+!testRun: #CreditCardTest #test02ACreditCardWithExpirationDatingThisMonthAndYearIsExpired stamp: 'LH 11/21/2020 17:55:33'!
+PASSED!
+
+!testRun: #CreditCardTest #test03ACreditCardWithExpirationDatingAPastMonthThisYearIsExpired stamp: 'LH 11/21/2020 17:55:33'!
+PASSED!
+
+!testRun: #CreditCardTest #test04ACreditCardWithExpirationDatingAFutureYearIsNotExpired stamp: 'LH 11/21/2020 17:55:33'!
+PASSED!
+
+!testRun: #CreditCardTest #test05ACreditCardWithExpirationDatingAPastYearIsExpired stamp: 'LH 11/21/2020 17:55:33'!
+PASSED!
+!CreditCardTest methodsFor: 'test' stamp: 'LH 11/21/2020 17:55:43' prior: 50875034!
+test04ACreditCardWithExpirationDatingAFutureYearIsNotExpired
+	|aCreditCard|
+	
+	aCreditCard := CreditCard withNumber: '0000000000000000' expirationDate: (Date today + self daysInYear) month belongingTo: 'Juan Pablo'.
+	
+	self deny: aCreditCard isExpired.
+
+	! !
+!CreditCardTest methodsFor: 'test' stamp: 'LH 11/21/2020 17:55:53' prior: 50875223!
+test05ACreditCardWithExpirationDatingAPastYearIsExpired
+	|aCreditCard|
+	
+	aCreditCard := CreditCard withNumber: '0000000000000000' expirationDate: (Date today - self daysInYear + self daysThisMonth) month belongingTo: 'Juan Pablo'.
+	
+	self assert: aCreditCard isExpired.
+
+	! !
+!CreditCardTest methodsFor: 'test' stamp: 'LH 11/21/2020 18:02:06'!
+test06CreditCarNumberCantHaveAnythingBut16Digits
+	
+	self should: [CreditCard     withNumber: '0000000000000000' 
+							expirationDate: (Date today - self daysInYear + self daysThisMonth) month 
+							belongingTo: 'Juan Pablo'.]
+		raise: Error
+		withMessageText: CreditCard invalidCreditCardNumber.
+	
+	! !
+!CreditCardTest methodsFor: 'test' stamp: 'LH 11/21/2020 18:02:24' prior: 50874859!
+test02ACreditCardWithExpirationDatingThisMonthAndYearIsExpired
+	|aCreditCard|
+	
+	aCreditCard := CreditCard     withNumber: '0000000000000000' 
+							expirationDate: Date today month 
+							belongingTo: 'Juan Pablo'.
+	
+	self assert: aCreditCard isExpired.
+
+	! !
+!CreditCardTest methodsFor: 'test' stamp: 'LH 11/21/2020 18:02:45' prior: 50875188!
+test03ACreditCardWithExpirationDatingAPastMonthThisYearIsExpired
+	|aCreditCard|
+	
+	aCreditCard := CreditCard     withNumber: '0000000000000000' 
+							expirationDate: (Date today - self daysThisMonth) month 
+							belongingTo: 'Juan Pablo'.
+	
+	self assert: aCreditCard isExpired.
+
+	! !
+!CreditCardTest methodsFor: 'test' stamp: 'LH 11/21/2020 18:02:58' prior: 50875260!
+test04ACreditCardWithExpirationDatingAFutureYearIsNotExpired
+	|aCreditCard|
+	
+	aCreditCard := CreditCard     withNumber: '0000000000000000' 
+							expirationDate: (Date today + self daysInYear) month 
+							belongingTo: 'Juan Pablo'.
+	
+	self deny: aCreditCard isExpired.
+
+	! !
+!CreditCardTest methodsFor: 'test' stamp: 'LH 11/21/2020 18:03:10' prior: 50875271!
+test05ACreditCardWithExpirationDatingAPastYearIsExpired
+	|aCreditCard|
+	
+	aCreditCard := CreditCard     withNumber: '0000000000000000' 
+							expirationDate: (Date today - self daysInYear + self daysThisMonth) month 
+							belongingTo: 'Juan Pablo'.
+	
+	self assert: aCreditCard isExpired.
+
+	! !
+!CreditCardTest methodsFor: 'test' stamp: 'LH 11/21/2020 18:03:16' prior: 50875282!
+test06CreditCarNumberCantHaveAnythingBut16Digits
+	
+	self should: [CreditCard         withNumber: '0000000000000000' 
+							expirationDate: (Date today - self daysInYear + self daysThisMonth) month 
+							belongingTo: 'Juan Pablo'.]
+		raise: Error
+		withMessageText: CreditCard invalidCreditCardNumber.
+	
+	! !
+
+!testRun: #CreditCardTest #test06CreditCarNumberCantHaveAnythingBut16Digits stamp: 'LH 11/21/2020 18:03:17'!
+ERROR!
+!CreditCard class methodsFor: 'error description' stamp: 'LH 11/21/2020 18:03:32'!
+invalidCreditCardNumber
+	self shouldBeImplemented.! !
+!CreditCard class methodsFor: 'error description' stamp: 'LH 11/21/2020 18:05:13' prior: 50875358!
+invalidCreditCardNumber
+	^'CreditCard number can only have exactly 16 numbers and nothing else'! !
+
+!testRun: #CreditCardTest #test06CreditCarNumberCantHaveAnythingBut16Digits stamp: 'LH 11/21/2020 18:05:18'!
+FAILURE!
+
+!testRun: #CreditCardTest #test06CreditCarNumberCantHaveAnythingBut16Digits stamp: 'LH 11/21/2020 18:07:08'!
+FAILURE!
+!CreditCard class methodsFor: 'instance creation' stamp: 'LH 11/21/2020 18:09:39' prior: 50874724!
+withNumber: aCCNumber expirationDate: anExpirationDate belongingTo: aName 
+	
+	aCCNumber size = 16 ifFalse: [^self error: CreditCard invalidCreditCardNumber].
+
+	^self new initializeWithNumber: aCCNumber expirationDate: anExpirationDate belongingTo: aName ! !
+
+!testRun: #CreditCardTest #test06CreditCarNumberCantHaveAnythingBut16Digits stamp: 'LH 11/21/2020 18:09:40'!
+FAILURE!
+!CreditCardTest methodsFor: 'test' stamp: 'LH 11/21/2020 18:10:02' prior: 50875342!
+test06CreditCarNumberCantHaveAnythingBut16Digits
+	
+	self should: [CreditCard         withNumber: '00000000000000000' 
+							expirationDate: (Date today - self daysInYear + self daysThisMonth) month 
+							belongingTo: 'Juan Pablo'.]
+		raise: Error
+		withMessageText: CreditCard invalidCreditCardNumber.
+		
+	self should: [CreditCard         withNumber: '000000000000000' 
+							expirationDate: (Date today - self daysInYear + self daysThisMonth) month 
+							belongingTo: 'Juan Pablo'.]
+		raise: Error
+		withMessageText: CreditCard invalidCreditCardNumber.
+	
+	! !
+
+!testRun: #CreditCardTest #test06CreditCarNumberCantHaveAnythingBut16Digits stamp: 'LH 11/21/2020 18:10:03'!
+PASSED!
+
+!testRun: #CreditCardTest #test01ACreditCardCanBeNotExpired stamp: 'LH 11/21/2020 18:10:03'!
+PASSED!
+
+!testRun: #CreditCardTest #test02ACreditCardWithExpirationDatingThisMonthAndYearIsExpired stamp: 'LH 11/21/2020 18:10:03'!
+PASSED!
+
+!testRun: #CreditCardTest #test03ACreditCardWithExpirationDatingAPastMonthThisYearIsExpired stamp: 'LH 11/21/2020 18:10:03'!
+PASSED!
+
+!testRun: #CreditCardTest #test04ACreditCardWithExpirationDatingAFutureYearIsNotExpired stamp: 'LH 11/21/2020 18:10:04'!
+PASSED!
+
+!testRun: #CreditCardTest #test05ACreditCardWithExpirationDatingAPastYearIsExpired stamp: 'LH 11/21/2020 18:10:04'!
+PASSED!
+
+!testRun: #CreditCardTest #test06CreditCarNumberCantHaveAnythingBut16Digits stamp: 'LH 11/21/2020 18:10:04'!
+PASSED!
+!CreditCardTest methodsFor: 'test' stamp: 'LH 11/21/2020 18:10:34'!
+test06CreditCarNumberCantHaveAnythingBut16Symbols
+	
+	self should: [CreditCard         withNumber: '00000000000000000' 
+							expirationDate: (Date today - self daysInYear + self daysThisMonth) month 
+							belongingTo: 'Juan Pablo'.]
+		raise: Error
+		withMessageText: CreditCard invalidCreditCardNumber.
+		
+	self should: [CreditCard         withNumber: '000000000000000' 
+							expirationDate: (Date today - self daysInYear + self daysThisMonth) month 
+							belongingTo: 'Juan Pablo'.]
+		raise: Error
+		withMessageText: CreditCard invalidCreditCardNumber.
+	
+	! !
+
+!methodRemoval: CreditCardTest #test06CreditCarNumberCantHaveAnythingBut16Digits stamp: 'LH 11/21/2020 18:10:34'!
+test06CreditCarNumberCantHaveAnythingBut16Digits
+	
+	self should: [CreditCard         withNumber: '00000000000000000' 
+							expirationDate: (Date today - self daysInYear + self daysThisMonth) month 
+							belongingTo: 'Juan Pablo'.]
+		raise: Error
+		withMessageText: CreditCard invalidCreditCardNumber.
+		
+	self should: [CreditCard         withNumber: '000000000000000' 
+							expirationDate: (Date today - self daysInYear + self daysThisMonth) month 
+							belongingTo: 'Juan Pablo'.]
+		raise: Error
+		withMessageText: CreditCard invalidCreditCardNumber.
+	
+	!
+!CreditCardTest methodsFor: 'test' stamp: 'LH 11/21/2020 18:11:55'!
+test07CreditCarNumberCantHaveAnythingButNumbers
+	
+	self should: [CreditCard         withNumber: '000000000000000O' 
+							expirationDate: (Date today - self daysInYear + self daysThisMonth) month 
+							belongingTo: 'Juan Pablo'.]
+		raise: Error
+		withMessageText: CreditCard invalidCreditCardNumber.
+	
+	! !
+
+!testRun: #CreditCardTest #test07CreditCarNumberCantHaveAnythingButNumbers stamp: 'LH 11/21/2020 18:11:57'!
+FAILURE!
+!CreditCard class methodsFor: 'instance creation' stamp: 'LH 11/21/2020 18:17:29' prior: 50875377!
+withNumber: aCCNumber expirationDate: anExpirationDate belongingTo: aName 
+	
+	aCCNumber size = 16 ifFalse: [^self error: CreditCard invalidCreditCardNumber].
+	(aCCNumber allSatisfy: [:aDigit | aDigit isDigit]) ifFalse:[^self error: CreditCard invalidCreditCardNumber].
+
+	^self new initializeWithNumber: aCCNumber expirationDate: anExpirationDate belongingTo: aName ! !
+
+!testRun: #CreditCardTest #test07CreditCarNumberCantHaveAnythingButNumbers stamp: 'LH 11/21/2020 18:17:31'!
+PASSED!
+
+!testRun: #CreditCardTest #test01ACreditCardCanBeNotExpired stamp: 'LH 11/21/2020 18:17:31'!
+PASSED!
+
+!testRun: #CreditCardTest #test02ACreditCardWithExpirationDatingThisMonthAndYearIsExpired stamp: 'LH 11/21/2020 18:17:31'!
+PASSED!
+
+!testRun: #CreditCardTest #test03ACreditCardWithExpirationDatingAPastMonthThisYearIsExpired stamp: 'LH 11/21/2020 18:17:31'!
+PASSED!
+
+!testRun: #CreditCardTest #test04ACreditCardWithExpirationDatingAFutureYearIsNotExpired stamp: 'LH 11/21/2020 18:17:31'!
+PASSED!
+
+!testRun: #CreditCardTest #test05ACreditCardWithExpirationDatingAPastYearIsExpired stamp: 'LH 11/21/2020 18:17:31'!
+PASSED!
+
+!testRun: #CreditCardTest #test06CreditCarNumberCantHaveAnythingBut16Symbols stamp: 'LH 11/21/2020 18:17:31'!
+PASSED!
+
+!testRun: #CreditCardTest #test07CreditCarNumberCantHaveAnythingButNumbers stamp: 'LH 11/21/2020 18:17:31'!
+PASSED!
+!CreditCardTest methodsFor: 'test' stamp: 'LH 11/21/2020 18:20:19'!
+test08TheNameOfACreditCardOwnerCanNotBeBlank
+	
+	self should: [CreditCard         withNumber: '000000000000000O' 
+							expirationDate: (Date today - self daysInYear + self daysThisMonth) month 
+							belongingTo: ''.]
+		raise: Error
+		withMessageText: CreditCard invalidCreditCardOwnerName.
+	
+	! !
+
+!testRun: #CreditCardTest #test08TheNameOfACreditCardOwnerCanNotBeBlank stamp: 'LH 11/21/2020 18:20:22'!
+ERROR!
+!CreditCard class methodsFor: 'error description' stamp: 'LH 11/21/2020 18:20:33'!
+invalidCreditCardOwnerName
+	self shouldBeImplemented.! !
+!CreditCard class methodsFor: 'error description' stamp: 'LH 11/21/2020 18:20:48' prior: 50875559!
+invalidCreditCardOwnerName
+	^'Invalid Owner Name'! !
+
+!testRun: #CreditCardTest #test08TheNameOfACreditCardOwnerCanNotBeBlank stamp: 'LH 11/21/2020 18:20:50'!
+FAILURE!
+!CreditCardTest methodsFor: 'test' stamp: 'LH 11/21/2020 18:21:18' prior: 50875543!
+test08TheNameOfACreditCardOwnerCanNotBeBlank
+	
+	self should: [CreditCard         withNumber: '0000000000000000' 
+							expirationDate: (Date today - self daysInYear + self daysThisMonth) month 
+							belongingTo: ''.]
+		raise: Error
+		withMessageText: CreditCard invalidCreditCardOwnerName.
+	
+	! !
+
+!testRun: #CreditCardTest #test08TheNameOfACreditCardOwnerCanNotBeBlank stamp: 'LH 11/21/2020 18:21:18'!
+FAILURE!
+!CreditCard class methodsFor: 'instance creation' stamp: 'LH 11/21/2020 18:22:21' prior: 50875498!
+withNumber: aCCNumber expirationDate: anExpirationDate belongingTo: aName 
+	
+	(aCCNumber allSatisfy: [:aDigit | aDigit isDigit]) ifFalse:[^self error: CreditCard invalidCreditCardNumber].
+	aCCNumber size = 16 ifFalse: [^self error: CreditCard invalidCreditCardNumber].
+	aName isEmpty ifTrue:[^self error: CreditCard invalidCreditCardOwnerName ].
+
+	^self new initializeWithNumber: aCCNumber expirationDate: anExpirationDate belongingTo: aName ! !
+!CreditCard class methodsFor: 'instance creation' stamp: 'LH 11/21/2020 18:22:59' prior: 50875589!
+withNumber: aCCNumber expirationDate: anExpirationDate belongingTo: aName 
+	
+	(aCCNumber allSatisfy: [:aDigit | aDigit isDigit]) ifFalse:[^self error: CreditCard invalidCreditCardNumber].
+	aCCNumber size = 16 ifFalse: [^self error: CreditCard invalidCreditCardNumber].
+	aName isEmpty ifTrue:[^self error: CreditCard invalidCreditCardOwnerName].
+
+	^self new initializeWithNumber: aCCNumber expirationDate: anExpirationDate belongingTo: aName ! !
+
+!testRun: #CreditCardTest #test08TheNameOfACreditCardOwnerCanNotBeBlank stamp: 'LH 11/21/2020 18:23:17'!
+PASSED!
+
+!testRun: #CreditCardTest #test01ACreditCardCanBeNotExpired stamp: 'LH 11/21/2020 18:23:17'!
+PASSED!
+
+!testRun: #CreditCardTest #test02ACreditCardWithExpirationDatingThisMonthAndYearIsExpired stamp: 'LH 11/21/2020 18:23:17'!
+PASSED!
+
+!testRun: #CreditCardTest #test03ACreditCardWithExpirationDatingAPastMonthThisYearIsExpired stamp: 'LH 11/21/2020 18:23:17'!
+PASSED!
+
+!testRun: #CreditCardTest #test04ACreditCardWithExpirationDatingAFutureYearIsNotExpired stamp: 'LH 11/21/2020 18:23:17'!
+PASSED!
+
+!testRun: #CreditCardTest #test05ACreditCardWithExpirationDatingAPastYearIsExpired stamp: 'LH 11/21/2020 18:23:18'!
+PASSED!
+
+!testRun: #CreditCardTest #test06CreditCarNumberCantHaveAnythingBut16Symbols stamp: 'LH 11/21/2020 18:23:18'!
+PASSED!
+
+!testRun: #CreditCardTest #test07CreditCarNumberCantHaveAnythingButNumbers stamp: 'LH 11/21/2020 18:23:18'!
+PASSED!
+
+!testRun: #CreditCardTest #test08TheNameOfACreditCardOwnerCanNotBeBlank stamp: 'LH 11/21/2020 18:23:18'!
+PASSED!
+!CreditCard methodsFor: 'testing' stamp: 'LH 11/21/2020 18:24:29' prior: 50875121!
+isExpired
+	"returns if this credit card is expired"
+	|expirationDateYear currentMonth currentYear|
+	
+	expirationDateYear := expirationDate yearNumber.
+	currentMonth := Date today monthIndex.
+	currentYear := Date today yearNumber.
+	
+	
+	^	(expirationDate monthIndex <= currentMonth 
+			and: expirationDateYear = currentYear)
+			
+		or: expirationDateYear < currentYear.! !
+!CreditCard class methodsFor: 'error description' stamp: 'LH 11/21/2020 18:25:03' prior: 50875564!
+invalidCreditCardOwnerName
+	^'The Name of the Owner can not be blank'! !
+!CreditCard class methodsFor: 'instance creation' stamp: 'LH 11/21/2020 18:28:55'!
+invalidCreditCardError
+	
+	^self error: CreditCard invalidCreditCardNumber
+
+! !
+!CreditCard class methodsFor: 'instance creation' stamp: 'LH 11/21/2020 18:29:19' prior: 50875607!
+withNumber: aCCNumber expirationDate: anExpirationDate belongingTo: aName 
+	
+	(aCCNumber allSatisfy: [:aDigit | aDigit isDigit]) ifFalse:[^self error: CreditCard invalidCreditCardNumber].
+	aCCNumber size = 16 ifFalse: [^self error: CreditCard invalidCreditCardNumber].
+	aName isEmpty ifTrue:[^self error: CreditCard invalidCreditCardOwnerName].
+
+	^self new initializeWithNumber: aCCNumber expirationDate: anExpirationDate belongingTo: aName ! !
+
+!methodRemoval: CreditCard class #invalidCreditCardError stamp: 'LH 11/21/2020 18:29:21'!
+invalidCreditCardError
+	
+	^self error: CreditCard invalidCreditCardNumber
+
+!
+!CreditCard class methodsFor: 'instance creation' stamp: 'LH 11/21/2020 18:31:06'!
+throwCardNumberErrorIfTheNextBlockIsFalse: aBlock
+	
+	aBlock value ifFalse:[^self error: CreditCard invalidCreditCardNumber].
+	! !
+!CreditCard class methodsFor: 'instance creation' stamp: 'LH 11/21/2020 18:32:00' prior: 50875684!
+withNumber: aCCNumber expirationDate: anExpirationDate belongingTo: aName 
+	
+	self throwCardNumberErrorIfTheNextBlockIsFalse: [aCCNumber allSatisfy: [:aDigit | aDigit isDigit]].
+	self throwCardNumberErrorIfTheNextBlockIsFalse: [aCCNumber size = 16].
+	(aCCNumber allSatisfy: [:aDigit | aDigit isDigit]) ifFalse:[^self error: CreditCard invalidCreditCardNumber].
+	aCCNumber size = 16 ifFalse: [^self error: CreditCard invalidCreditCardNumber].
+	aName isEmpty ifTrue:[^self error: CreditCard invalidCreditCardOwnerName].
+
+	^self new initializeWithNumber: aCCNumber expirationDate: anExpirationDate belongingTo: aName ! !
+
+!testRun: #CreditCardTest #test01ACreditCardCanBeNotExpired stamp: 'LH 11/21/2020 18:32:02'!
+PASSED!
+
+!testRun: #CreditCardTest #test02ACreditCardWithExpirationDatingThisMonthAndYearIsExpired stamp: 'LH 11/21/2020 18:32:02'!
+PASSED!
+
+!testRun: #CreditCardTest #test03ACreditCardWithExpirationDatingAPastMonthThisYearIsExpired stamp: 'LH 11/21/2020 18:32:02'!
+PASSED!
+
+!testRun: #CreditCardTest #test04ACreditCardWithExpirationDatingAFutureYearIsNotExpired stamp: 'LH 11/21/2020 18:32:02'!
+PASSED!
+
+!testRun: #CreditCardTest #test05ACreditCardWithExpirationDatingAPastYearIsExpired stamp: 'LH 11/21/2020 18:32:02'!
+PASSED!
+
+!testRun: #CreditCardTest #test06CreditCarNumberCantHaveAnythingBut16Symbols stamp: 'LH 11/21/2020 18:32:02'!
+PASSED!
+
+!testRun: #CreditCardTest #test07CreditCarNumberCantHaveAnythingButNumbers stamp: 'LH 11/21/2020 18:32:02'!
+PASSED!
+
+!testRun: #CreditCardTest #test08TheNameOfACreditCardOwnerCanNotBeBlank stamp: 'LH 11/21/2020 18:32:02'!
+PASSED!
+!CreditCard class methodsFor: 'instance creation' stamp: 'LH 11/21/2020 18:32:06' prior: 50875714!
+withNumber: aCCNumber expirationDate: anExpirationDate belongingTo: aName 
+	
+	self throwCardNumberErrorIfTheNextBlockIsFalse: [aCCNumber allSatisfy: [:aDigit | aDigit isDigit]].
+	self throwCardNumberErrorIfTheNextBlockIsFalse: [aCCNumber size = 16].
+	
+	aName isEmpty ifTrue:[^self error: CreditCard invalidCreditCardOwnerName].
+
+	^self new initializeWithNumber: aCCNumber expirationDate: anExpirationDate belongingTo: aName ! !
+
+!testRun: #CreditCardTest #test01ACreditCardCanBeNotExpired stamp: 'LH 11/21/2020 18:32:08'!
+PASSED!
+
+!testRun: #CreditCardTest #test02ACreditCardWithExpirationDatingThisMonthAndYearIsExpired stamp: 'LH 11/21/2020 18:32:08'!
+PASSED!
+
+!testRun: #CreditCardTest #test03ACreditCardWithExpirationDatingAPastMonthThisYearIsExpired stamp: 'LH 11/21/2020 18:32:08'!
+PASSED!
+
+!testRun: #CreditCardTest #test04ACreditCardWithExpirationDatingAFutureYearIsNotExpired stamp: 'LH 11/21/2020 18:32:08'!
+PASSED!
+
+!testRun: #CreditCardTest #test05ACreditCardWithExpirationDatingAPastYearIsExpired stamp: 'LH 11/21/2020 18:32:08'!
+PASSED!
+
+!testRun: #CreditCardTest #test06CreditCarNumberCantHaveAnythingBut16Symbols stamp: 'LH 11/21/2020 18:32:08'!
+PASSED!
+
+!testRun: #CreditCardTest #test07CreditCarNumberCantHaveAnythingButNumbers stamp: 'LH 11/21/2020 18:32:08'!
+PASSED!
+
+!testRun: #CreditCardTest #test08TheNameOfACreditCardOwnerCanNotBeBlank stamp: 'LH 11/21/2020 18:32:08'!
+PASSED!
+!CreditCardTest methodsFor: 'test' stamp: 'LH 11/21/2020 18:32:38' prior: 50875178!
+test01ACreditCardCanBeNotExpired
+	|aCreditCard|
+	
+	aCreditCard := CreditCard     withNumber: '0000000000000000' 
+							expirationDate: (Date today + self daysThisMonth) month 
+							belongingTo: 'Juan Pablo'.
+	
+	self deny: aCreditCard isExpired.
+
+	! !
+!CreditCardTest methodsFor: 'test' stamp: 'LH 11/21/2020 18:34:04'!
+standardCreditCardWithTheExpirationDate: anExpirationDate
+	
+	 ^CreditCard  withNumber: '0000000000000000' 
+				expirationDate: anExpirationDate 
+				belongingTo: 'Juan Pablo'.
+	
+
+
+	! !
+!CreditCardTest methodsFor: 'test' stamp: 'LH 11/21/2020 18:34:39' prior: 50875814!
+test01ACreditCardCanBeNotExpired
+	|aCreditCard|
+	
+	aCreditCard := self standardCreditCardWithTheExpirationDate: (Date today + self daysThisMonth) month.
+	
+	self deny: aCreditCard isExpired.
+
+	! !
+
+!testRun: #CreditCardTest #test01ACreditCardCanBeNotExpired stamp: 'LH 11/21/2020 18:34:40'!
+PASSED!
+
+!testRun: #CreditCardTest #test01ACreditCardCanBeNotExpired stamp: 'LH 11/21/2020 18:34:40'!
+PASSED!
+
+!testRun: #CreditCardTest #test02ACreditCardWithExpirationDatingThisMonthAndYearIsExpired stamp: 'LH 11/21/2020 18:34:40'!
+PASSED!
+
+!testRun: #CreditCardTest #test03ACreditCardWithExpirationDatingAPastMonthThisYearIsExpired stamp: 'LH 11/21/2020 18:34:41'!
+PASSED!
+
+!testRun: #CreditCardTest #test04ACreditCardWithExpirationDatingAFutureYearIsNotExpired stamp: 'LH 11/21/2020 18:34:41'!
+PASSED!
+
+!testRun: #CreditCardTest #test05ACreditCardWithExpirationDatingAPastYearIsExpired stamp: 'LH 11/21/2020 18:34:41'!
+PASSED!
+
+!testRun: #CreditCardTest #test06CreditCarNumberCantHaveAnythingBut16Symbols stamp: 'LH 11/21/2020 18:34:41'!
+PASSED!
+
+!testRun: #CreditCardTest #test07CreditCarNumberCantHaveAnythingButNumbers stamp: 'LH 11/21/2020 18:34:41'!
+PASSED!
+
+!testRun: #CreditCardTest #test08TheNameOfACreditCardOwnerCanNotBeBlank stamp: 'LH 11/21/2020 18:34:41'!
+PASSED!
+!CreditCardTest methodsFor: 'test' stamp: 'LH 11/21/2020 18:34:58' prior: 50875295!
+test02ACreditCardWithExpirationDatingThisMonthAndYearIsExpired
+	|aCreditCard|
+	
+	aCreditCard := self standardCreditCardWithTheExpirationDate: Date today month.
+	
+	self assert: aCreditCard isExpired.
+
+	! !
+
+!testRun: #CreditCardTest #test02ACreditCardWithExpirationDatingThisMonthAndYearIsExpired stamp: 'LH 11/21/2020 18:35:00'!
+PASSED!
+
+!testRun: #CreditCardTest #test01ACreditCardCanBeNotExpired stamp: 'LH 11/21/2020 18:35:00'!
+PASSED!
+
+!testRun: #CreditCardTest #test02ACreditCardWithExpirationDatingThisMonthAndYearIsExpired stamp: 'LH 11/21/2020 18:35:00'!
+PASSED!
+
+!testRun: #CreditCardTest #test03ACreditCardWithExpirationDatingAPastMonthThisYearIsExpired stamp: 'LH 11/21/2020 18:35:00'!
+PASSED!
+
+!testRun: #CreditCardTest #test04ACreditCardWithExpirationDatingAFutureYearIsNotExpired stamp: 'LH 11/21/2020 18:35:00'!
+PASSED!
+
+!testRun: #CreditCardTest #test05ACreditCardWithExpirationDatingAPastYearIsExpired stamp: 'LH 11/21/2020 18:35:00'!
+PASSED!
+
+!testRun: #CreditCardTest #test06CreditCarNumberCantHaveAnythingBut16Symbols stamp: 'LH 11/21/2020 18:35:00'!
+PASSED!
+
+!testRun: #CreditCardTest #test07CreditCarNumberCantHaveAnythingButNumbers stamp: 'LH 11/21/2020 18:35:00'!
+PASSED!
+
+!testRun: #CreditCardTest #test08TheNameOfACreditCardOwnerCanNotBeBlank stamp: 'LH 11/21/2020 18:35:00'!
+PASSED!
+!CreditCardTest methodsFor: 'test' stamp: 'LH 11/21/2020 18:35:16' prior: 50875306!
+test03ACreditCardWithExpirationDatingAPastMonthThisYearIsExpired
+	|aCreditCard|
+	
+	aCreditCard := self standardCreditCardWithTheExpirationDate: (Date today - self daysThisMonth) month.
+	
+	self assert: aCreditCard isExpired.
+
+	! !
+
+!testRun: #CreditCardTest #test03ACreditCardWithExpirationDatingAPastMonthThisYearIsExpired stamp: 'LH 11/21/2020 18:35:20'!
+PASSED!
+
+!testRun: #CreditCardTest #test01ACreditCardCanBeNotExpired stamp: 'LH 11/21/2020 18:35:20'!
+PASSED!
+
+!testRun: #CreditCardTest #test02ACreditCardWithExpirationDatingThisMonthAndYearIsExpired stamp: 'LH 11/21/2020 18:35:20'!
+PASSED!
+
+!testRun: #CreditCardTest #test03ACreditCardWithExpirationDatingAPastMonthThisYearIsExpired stamp: 'LH 11/21/2020 18:35:20'!
+PASSED!
+
+!testRun: #CreditCardTest #test04ACreditCardWithExpirationDatingAFutureYearIsNotExpired stamp: 'LH 11/21/2020 18:35:20'!
+PASSED!
+
+!testRun: #CreditCardTest #test05ACreditCardWithExpirationDatingAPastYearIsExpired stamp: 'LH 11/21/2020 18:35:20'!
+PASSED!
+
+!testRun: #CreditCardTest #test06CreditCarNumberCantHaveAnythingBut16Symbols stamp: 'LH 11/21/2020 18:35:20'!
+PASSED!
+
+!testRun: #CreditCardTest #test07CreditCarNumberCantHaveAnythingButNumbers stamp: 'LH 11/21/2020 18:35:20'!
+PASSED!
+
+!testRun: #CreditCardTest #test08TheNameOfACreditCardOwnerCanNotBeBlank stamp: 'LH 11/21/2020 18:35:20'!
+PASSED!
+!CreditCardTest methodsFor: 'test' stamp: 'LH 11/21/2020 18:35:35' prior: 50875318!
+test04ACreditCardWithExpirationDatingAFutureYearIsNotExpired
+	|aCreditCard|
+	
+	aCreditCard := self standardCreditCardWithTheExpirationDate: (Date today + self daysInYear) month .
+	
+	self deny: aCreditCard isExpired.
+
+	! !
+
+!testRun: #CreditCardTest #test04ACreditCardWithExpirationDatingAFutureYearIsNotExpired stamp: 'LH 11/21/2020 18:35:38'!
+PASSED!
+
+!testRun: #CreditCardTest #test01ACreditCardCanBeNotExpired stamp: 'LH 11/21/2020 18:35:38'!
+PASSED!
+
+!testRun: #CreditCardTest #test02ACreditCardWithExpirationDatingThisMonthAndYearIsExpired stamp: 'LH 11/21/2020 18:35:38'!
+PASSED!
+
+!testRun: #CreditCardTest #test03ACreditCardWithExpirationDatingAPastMonthThisYearIsExpired stamp: 'LH 11/21/2020 18:35:38'!
+PASSED!
+
+!testRun: #CreditCardTest #test04ACreditCardWithExpirationDatingAFutureYearIsNotExpired stamp: 'LH 11/21/2020 18:35:38'!
+PASSED!
+
+!testRun: #CreditCardTest #test05ACreditCardWithExpirationDatingAPastYearIsExpired stamp: 'LH 11/21/2020 18:35:38'!
+PASSED!
+
+!testRun: #CreditCardTest #test06CreditCarNumberCantHaveAnythingBut16Symbols stamp: 'LH 11/21/2020 18:35:38'!
+PASSED!
+
+!testRun: #CreditCardTest #test07CreditCarNumberCantHaveAnythingButNumbers stamp: 'LH 11/21/2020 18:35:38'!
+PASSED!
+
+!testRun: #CreditCardTest #test08TheNameOfACreditCardOwnerCanNotBeBlank stamp: 'LH 11/21/2020 18:35:38'!
+PASSED!
+!CreditCardTest methodsFor: 'test' stamp: 'LH 11/21/2020 18:35:55' prior: 50875330!
+test05ACreditCardWithExpirationDatingAPastYearIsExpired
+	|aCreditCard|
+	
+	aCreditCard := self standardCreditCardWithTheExpirationDate: (Date today - self daysInYear + self daysThisMonth) month.
+	
+	self assert: aCreditCard isExpired.
+
+	! !
+!CreditCardTest methodsFor: 'test' stamp: 'LH 11/21/2020 18:39:36'!
+assertInvalidCardNumberErrorWithNumber: aCCNumber 
+	
+	self should: [CreditCard         withNumber: aCCNumber
+							expirationDate: Date today month 
+							belongingTo: 'Juan Pablo'.]
+		raise: Error
+		withMessageText: CreditCard invalidCreditCardNumber.
+	
+	! !
+!CreditCardTest methodsFor: 'test' stamp: 'LH 11/21/2020 18:40:19' prior: 50875439!
+test06CreditCarNumberCantHaveAnythingBut16Symbols
+	
+	self assertInvalidCardNumberErrorWithNumber: '00000000000000000'.
+	self assertInvalidCardNumberErrorWithNumber: '000000000000000'.
+	! !
+
+!testRun: #CreditCardTest #test06CreditCarNumberCantHaveAnythingBut16Symbols stamp: 'LH 11/21/2020 18:40:20'!
+PASSED!
+
+!testRun: #CreditCardTest #test01ACreditCardCanBeNotExpired stamp: 'LH 11/21/2020 18:40:20'!
+PASSED!
+
+!testRun: #CreditCardTest #test02ACreditCardWithExpirationDatingThisMonthAndYearIsExpired stamp: 'LH 11/21/2020 18:40:20'!
+PASSED!
+
+!testRun: #CreditCardTest #test03ACreditCardWithExpirationDatingAPastMonthThisYearIsExpired stamp: 'LH 11/21/2020 18:40:20'!
+PASSED!
+
+!testRun: #CreditCardTest #test04ACreditCardWithExpirationDatingAFutureYearIsNotExpired stamp: 'LH 11/21/2020 18:40:20'!
+PASSED!
+
+!testRun: #CreditCardTest #test05ACreditCardWithExpirationDatingAPastYearIsExpired stamp: 'LH 11/21/2020 18:40:20'!
+PASSED!
+
+!testRun: #CreditCardTest #test06CreditCarNumberCantHaveAnythingBut16Symbols stamp: 'LH 11/21/2020 18:40:20'!
+PASSED!
+
+!testRun: #CreditCardTest #test07CreditCarNumberCantHaveAnythingButNumbers stamp: 'LH 11/21/2020 18:40:20'!
+PASSED!
+
+!testRun: #CreditCardTest #test08TheNameOfACreditCardOwnerCanNotBeBlank stamp: 'LH 11/21/2020 18:40:20'!
+PASSED!
+!CreditCardTest methodsFor: 'test' stamp: 'LH 11/21/2020 18:40:48' prior: 50875481!
+test07CreditCarNumberCantHaveAnythingButNumbers
+	
+	self assertInvalidCardNumberErrorWithNumber: '000000000000000O'.
+	
+	! !
+
+!testRun: #CreditCardTest #test07CreditCarNumberCantHaveAnythingButNumbers stamp: 'LH 11/21/2020 18:40:51'!
+PASSED!
+
+!testRun: #CreditCardTest #test01ACreditCardCanBeNotExpired stamp: 'LH 11/21/2020 18:40:51'!
+PASSED!
+
+!testRun: #CreditCardTest #test02ACreditCardWithExpirationDatingThisMonthAndYearIsExpired stamp: 'LH 11/21/2020 18:40:51'!
+PASSED!
+
+!testRun: #CreditCardTest #test03ACreditCardWithExpirationDatingAPastMonthThisYearIsExpired stamp: 'LH 11/21/2020 18:40:51'!
+PASSED!
+
+!testRun: #CreditCardTest #test04ACreditCardWithExpirationDatingAFutureYearIsNotExpired stamp: 'LH 11/21/2020 18:40:51'!
+PASSED!
+
+!testRun: #CreditCardTest #test05ACreditCardWithExpirationDatingAPastYearIsExpired stamp: 'LH 11/21/2020 18:40:51'!
+PASSED!
+
+!testRun: #CreditCardTest #test06CreditCarNumberCantHaveAnythingBut16Symbols stamp: 'LH 11/21/2020 18:40:51'!
+PASSED!
+
+!testRun: #CreditCardTest #test07CreditCarNumberCantHaveAnythingButNumbers stamp: 'LH 11/21/2020 18:40:51'!
+PASSED!
+
+!testRun: #CreditCardTest #test08TheNameOfACreditCardOwnerCanNotBeBlank stamp: 'LH 11/21/2020 18:40:51'!
+PASSED!
+
+!testRun: #CreditCardTest #test01ACreditCardCanBeNotExpired stamp: 'LH 11/21/2020 18:41:47'!
+PASSED!
+
+!testRun: #CreditCardTest #test02ACreditCardWithExpirationDatingThisMonthAndYearIsExpired stamp: 'LH 11/21/2020 18:41:47'!
+PASSED!
+
+!testRun: #CreditCardTest #test03ACreditCardWithExpirationDatingAPastMonthThisYearIsExpired stamp: 'LH 11/21/2020 18:41:47'!
+PASSED!
+
+!testRun: #CreditCardTest #test04ACreditCardWithExpirationDatingAFutureYearIsNotExpired stamp: 'LH 11/21/2020 18:41:47'!
+PASSED!
+
+!testRun: #CreditCardTest #test05ACreditCardWithExpirationDatingAPastYearIsExpired stamp: 'LH 11/21/2020 18:41:47'!
+PASSED!
+
+!testRun: #CreditCardTest #test06CreditCarNumberCantHaveAnythingBut16Symbols stamp: 'LH 11/21/2020 18:41:47'!
+PASSED!
+
+!testRun: #CreditCardTest #test07CreditCarNumberCantHaveAnythingButNumbers stamp: 'LH 11/21/2020 18:41:47'!
+PASSED!
+
+!testRun: #CreditCardTest #test08TheNameOfACreditCardOwnerCanNotBeBlank stamp: 'LH 11/21/2020 18:41:47'!
+PASSED!
+!ShoppingCashier methodsFor: 'checkOut' stamp: 'LH 11/21/2020 18:42:58'!
+checkOut: aShoppingCart withCreditCard: aCreditCard
+
+	aShoppingCart listCart size = 0 ifTrue:[^self error: ShoppingCashier invalidCartErrorMessage].
+	
+	aCreditCard isExpired ifTrue:[ ^self error: ShoppingCashier invalidCreditCard].
+	
+	^ aShoppingCart listCart inject: 0 into: [:theSum :anISBN | theSum + priceCatalogue at: anISBN].! !
+!ShoppingCashierTest methodsFor: 'as yet unclassified' stamp: 'LH 11/21/2020 18:45:09' prior: 50874369!
+test01AnEmptyCartCannotBeCheckedOut
+	|aCashier aCart aCreditCard|
+	
+	aCart := ShoppingCart withCatalogue: OrderedCollection new.
+	aCreditCard := CreditCard withNumber: '0000000000000000' expirationDate: self validDate belongingTo: 'Juan Pablo'. 
+	
+	aCashier := ShoppingCashier withPriceCatalogue: (Dictionary new).
+	
+	self should: [aCashier checkOut: aCart withCreditCard: aCreditCard]
+		raise: Error
+		withMessageText: ShoppingCashier invalidCartErrorMessage.! !
+
+!testRun: #ShoppingCashierTest #test01AnEmptyCartCannotBeCheckedOut stamp: 'LH 11/21/2020 18:45:11'!
+PASSED!
+
+!testRun: #ShoppingCashierTest #test01AnEmptyCartCannotBeCheckedOut stamp: 'LH 11/21/2020 18:45:11'!
+PASSED!
+
+!testRun: #ShoppingCashierTest #test02ACartWith1BookWillCheckOutCorrectly stamp: 'LH 11/21/2020 18:45:11'!
+PASSED!
+
+!testRun: #ShoppingCashierTest #test03ACartWithManyBooksWillCheckOutCorrectly stamp: 'LH 11/21/2020 18:45:11'!
+PASSED!
+
+!testRun: #ShoppingCashierTest #test04TheCardShouldNotBeExpired stamp: 'LH 11/21/2020 18:45:11'!
+PASSED!
+!ShoppingCashierTest methodsFor: 'as yet unclassified' stamp: 'LH 11/21/2020 18:45:51' prior: 50874385!
+test02ACartWith1BookWillCheckOutCorrectly
+	|aCashier aCart aCreditCard|
+	
+	aCart := ShoppingCart withCatalogue: (OrderedCollection with: '0-7645-2641-3').
+	aCart add: '0-7645-2641-3'.
+	aCreditCard := CreditCard withNumber: '0000000000000000' expirationDate: self validDate belongingTo: 'Juan Pablo'.
+	
+	aCashier := ShoppingCashier withPriceCatalogue: (Dictionary newFromPairs: #('0-7645-2641-3' 100)) .
+	
+	self assert: 100 equals: (aCashier checkOut: aCart withCreditCard: aCreditCard).! !
+
+!testRun: #ShoppingCashierTest #test02ACartWith1BookWillCheckOutCorrectly stamp: 'LH 11/21/2020 18:45:52'!
+PASSED!
+
+!testRun: #ShoppingCashierTest #test01AnEmptyCartCannotBeCheckedOut stamp: 'LH 11/21/2020 18:45:52'!
+PASSED!
+
+!testRun: #ShoppingCashierTest #test02ACartWith1BookWillCheckOutCorrectly stamp: 'LH 11/21/2020 18:45:52'!
+PASSED!
+
+!testRun: #ShoppingCashierTest #test03ACartWithManyBooksWillCheckOutCorrectly stamp: 'LH 11/21/2020 18:45:52'!
+PASSED!
+
+!testRun: #ShoppingCashierTest #test04TheCardShouldNotBeExpired stamp: 'LH 11/21/2020 18:45:52'!
+PASSED!
+!ShoppingCashierTest methodsFor: 'as yet unclassified' stamp: 'LH 11/21/2020 18:46:28' prior: 50874402!
+test03ACartWithManyBooksWillCheckOutCorrectly
+	|aCashier aCart aCreditCard|
+	
+	aCart := ShoppingCart withCatalogue: (OrderedCollection with: '0-7645-2641-3' with: '0-7645-2641-4').
+	aCart add: '0-7645-2641-3' withQuantity: 2.
+	aCart add: '0-7645-2641-4'.
+	aCreditCard := CreditCard withNumber: '0000000000000000' expirationDate: self validDate belongingTo: 'Juan Pablo'.
+	
+	aCashier := ShoppingCashier withPriceCatalogue: (Dictionary newFromPairs: #('0-7645-2641-3' 100 '0-7645-2641-4' 100)) .
+	
+	self assert: 300 equals: (aCashier checkOut: aCart withCreditCard: aCreditCard).! !
+
+!testRun: #ShoppingCashierTest #test03ACartWithManyBooksWillCheckOutCorrectly stamp: 'LH 11/21/2020 18:46:29'!
+PASSED!
+
+!testRun: #ShoppingCashierTest #test01AnEmptyCartCannotBeCheckedOut stamp: 'LH 11/21/2020 18:46:29'!
+PASSED!
+
+!testRun: #ShoppingCashierTest #test02ACartWith1BookWillCheckOutCorrectly stamp: 'LH 11/21/2020 18:46:29'!
+PASSED!
+
+!testRun: #ShoppingCashierTest #test03ACartWithManyBooksWillCheckOutCorrectly stamp: 'LH 11/21/2020 18:46:29'!
+PASSED!
+
+!testRun: #ShoppingCashierTest #test04TheCardShouldNotBeExpired stamp: 'LH 11/21/2020 18:46:29'!
+PASSED!
+!ShoppingCashierTest methodsFor: 'as yet unclassified' stamp: 'LH 11/21/2020 18:47:02' prior: 50874498!
+test04TheCardShouldNotBeExpired
+	|aCashier aCart aCreditCard|
+	
+	aCart := ShoppingCart withCatalogue: (OrderedCollection with: '0-7645-2641-3').
+	aCart add: '0-7645-2641-3'.
+	aCreditCard := CreditCard withNumber: '0000000000000000' expirationDate: self invalidDate belongingTo: 'Juan Pablo'.
+	
+	aCashier := ShoppingCashier withPriceCatalogue: (Dictionary newFromPairs: #('0-7645-2641-3' 100)) .
+	
+	self should:[ (aCashier checkOut: aCart withCardNumber: '0000000000000000' ExpirationDate: self invalidDate andCardOwner: 'Juan Pablo')]
+		raise: Error
+		withMessageText: ShoppingCashier invalidCreditCard.
+		! !
+!ShoppingCashierTest methodsFor: 'as yet unclassified' stamp: 'LH 11/21/2020 18:47:36' prior: 50876273!
+test04TheCardShouldNotBeExpired
+	|aCashier aCart aCreditCard|
+	
+	aCart := ShoppingCart withCatalogue: (OrderedCollection with: '0-7645-2641-3').
+	aCart add: '0-7645-2641-3'.
+	aCreditCard := CreditCard withNumber: '0000000000000000' expirationDate: self invalidDate belongingTo: 'Juan Pablo'.
+	
+	aCashier := ShoppingCashier withPriceCatalogue: (Dictionary newFromPairs: #('0-7645-2641-3' 100)) .
+	
+	self should:[ aCashier checkOut: aCart withCreditCard: aCreditCard]
+		raise: Error
+		withMessageText: ShoppingCashier invalidCreditCard.
+		! !
+
+!testRun: #ShoppingCashierTest #test04TheCardShouldNotBeExpired stamp: 'LH 11/21/2020 18:47:37'!
+PASSED!
+
+!testRun: #ShoppingCashierTest #test01AnEmptyCartCannotBeCheckedOut stamp: 'LH 11/21/2020 18:47:38'!
+PASSED!
+
+!testRun: #ShoppingCashierTest #test02ACartWith1BookWillCheckOutCorrectly stamp: 'LH 11/21/2020 18:47:38'!
+PASSED!
+
+!testRun: #ShoppingCashierTest #test03ACartWithManyBooksWillCheckOutCorrectly stamp: 'LH 11/21/2020 18:47:38'!
+PASSED!
+
+!testRun: #ShoppingCashierTest #test04TheCardShouldNotBeExpired stamp: 'LH 11/21/2020 18:47:38'!
+PASSED!
+
+----SNAPSHOT----(21 November 2020 18:49:11) CuisUniversity-4384.image priorSource: 17394782!
