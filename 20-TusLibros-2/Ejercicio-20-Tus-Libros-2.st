@@ -5,7 +5,84 @@ TestCase subclass: #CreditCardTest
 	poolDictionaries: ''
 	category: 'Ejercicio-20-Tus-Libros'!
 
-!CreditCardTest methodsFor: 'test' stamp: 'LH 11/21/2020 18:39:36'!
+!CreditCardTest methodsFor: 'tests' stamp: 'IO 11/22/2020 16:43:53'!
+test01ACreditCardCanBeNotExpired
+
+	|aCreditCard|
+	
+	aCreditCard := self validCreditCardWithTheExpirationDate: (Date today + self daysThisMonth) month.
+	
+	self deny: aCreditCard isExpired.
+
+	! !
+
+!CreditCardTest methodsFor: 'tests' stamp: 'IO 11/22/2020 16:41:27'!
+test02ACreditCardWithExpirationDatingThisMonthAndYearIsExpired
+	|aCreditCard|
+	
+	aCreditCard := self validCreditCardWithTheExpirationDate: Date today month.
+	
+	self assert: aCreditCard isExpired.
+
+	! !
+
+!CreditCardTest methodsFor: 'tests' stamp: 'IO 11/22/2020 16:41:27'!
+test03ACreditCardWithExpirationDatingAPastMonthThisYearIsExpired
+	|aCreditCard|
+	
+	aCreditCard := self validCreditCardWithTheExpirationDate: (Date today - self daysThisMonth) month.
+	
+	self assert: aCreditCard isExpired.
+
+	! !
+
+!CreditCardTest methodsFor: 'tests' stamp: 'IO 11/22/2020 16:41:27'!
+test04ACreditCardWithExpirationDatingAFutureYearIsNotExpired
+	|aCreditCard|
+	
+	aCreditCard := self validCreditCardWithTheExpirationDate: (Date today + self daysInYear) month .
+	
+	self deny: aCreditCard isExpired.
+
+	! !
+
+!CreditCardTest methodsFor: 'tests' stamp: 'IO 11/22/2020 16:41:27'!
+test05ACreditCardWithExpirationDatingAPastYearIsExpired
+	|aCreditCard|
+	
+	aCreditCard := self validCreditCardWithTheExpirationDate: (Date today - self daysInYear + self daysThisMonth) month.
+	
+	self assert: aCreditCard isExpired.
+
+	! !
+
+!CreditCardTest methodsFor: 'tests' stamp: 'LH 11/21/2020 18:40:19'!
+test06CreditCarNumberCantHaveAnythingBut16Symbols
+	
+	self assertInvalidCardNumberErrorWithNumber: '00000000000000000'.
+	self assertInvalidCardNumberErrorWithNumber: '000000000000000'.
+	! !
+
+!CreditCardTest methodsFor: 'tests' stamp: 'LH 11/21/2020 18:40:48'!
+test07CreditCarNumberCantHaveAnythingButNumbers
+	
+	self assertInvalidCardNumberErrorWithNumber: '000000000000000O'.
+	
+	! !
+
+!CreditCardTest methodsFor: 'tests' stamp: 'IO 11/22/2020 17:17:47'!
+test08TheNameOfACreditCardOwnerCanNotBeBlank
+	
+	self should: [CreditCard withNumber: '0000000000000000'
+		expirationDate: (Date today - self daysInYear + self daysThisMonth) month
+		belongingTo: ''.]
+		raise: Error
+		withMessageText: CreditCard invalidCreditCardOwnerName.
+	
+	! !
+
+
+!CreditCardTest methodsFor: 'util' stamp: 'LH 11/21/2020 18:39:36'!
 assertInvalidCardNumberErrorWithNumber: aCCNumber 
 	
 	self should: [CreditCard         withNumber: aCCNumber
@@ -16,21 +93,21 @@ assertInvalidCardNumberErrorWithNumber: aCCNumber
 	
 	! !
 
-!CreditCardTest methodsFor: 'test' stamp: 'LH 11/21/2020 17:55:28'!
+!CreditCardTest methodsFor: 'util' stamp: 'LH 11/21/2020 17:55:28'!
 daysInYear
 	
 	^365 days 
 
 	! !
 
-!CreditCardTest methodsFor: 'test' stamp: 'LH 11/21/2020 17:53:12'!
+!CreditCardTest methodsFor: 'util' stamp: 'LH 11/21/2020 17:53:12'!
 daysThisMonth
 
 	^Date today daysInMonth days.
 	! !
 
-!CreditCardTest methodsFor: 'test' stamp: 'LH 11/21/2020 18:34:04'!
-standardCreditCardWithTheExpirationDate: anExpirationDate
+!CreditCardTest methodsFor: 'util' stamp: 'IO 11/22/2020 16:41:27'!
+validCreditCardWithTheExpirationDate: anExpirationDate
 	
 	 ^CreditCard  withNumber: '0000000000000000' 
 				expirationDate: anExpirationDate 
@@ -38,81 +115,6 @@ standardCreditCardWithTheExpirationDate: anExpirationDate
 	
 
 
-	! !
-
-!CreditCardTest methodsFor: 'test' stamp: 'LH 11/21/2020 18:34:39'!
-test01ACreditCardCanBeNotExpired
-	|aCreditCard|
-	
-	aCreditCard := self standardCreditCardWithTheExpirationDate: (Date today + self daysThisMonth) month.
-	
-	self deny: aCreditCard isExpired.
-
-	! !
-
-!CreditCardTest methodsFor: 'test' stamp: 'LH 11/21/2020 18:34:58'!
-test02ACreditCardWithExpirationDatingThisMonthAndYearIsExpired
-	|aCreditCard|
-	
-	aCreditCard := self standardCreditCardWithTheExpirationDate: Date today month.
-	
-	self assert: aCreditCard isExpired.
-
-	! !
-
-!CreditCardTest methodsFor: 'test' stamp: 'LH 11/21/2020 18:35:16'!
-test03ACreditCardWithExpirationDatingAPastMonthThisYearIsExpired
-	|aCreditCard|
-	
-	aCreditCard := self standardCreditCardWithTheExpirationDate: (Date today - self daysThisMonth) month.
-	
-	self assert: aCreditCard isExpired.
-
-	! !
-
-!CreditCardTest methodsFor: 'test' stamp: 'LH 11/21/2020 18:35:35'!
-test04ACreditCardWithExpirationDatingAFutureYearIsNotExpired
-	|aCreditCard|
-	
-	aCreditCard := self standardCreditCardWithTheExpirationDate: (Date today + self daysInYear) month .
-	
-	self deny: aCreditCard isExpired.
-
-	! !
-
-!CreditCardTest methodsFor: 'test' stamp: 'LH 11/21/2020 18:35:55'!
-test05ACreditCardWithExpirationDatingAPastYearIsExpired
-	|aCreditCard|
-	
-	aCreditCard := self standardCreditCardWithTheExpirationDate: (Date today - self daysInYear + self daysThisMonth) month.
-	
-	self assert: aCreditCard isExpired.
-
-	! !
-
-!CreditCardTest methodsFor: 'test' stamp: 'LH 11/21/2020 18:40:19'!
-test06CreditCarNumberCantHaveAnythingBut16Symbols
-	
-	self assertInvalidCardNumberErrorWithNumber: '00000000000000000'.
-	self assertInvalidCardNumberErrorWithNumber: '000000000000000'.
-	! !
-
-!CreditCardTest methodsFor: 'test' stamp: 'LH 11/21/2020 18:40:48'!
-test07CreditCarNumberCantHaveAnythingButNumbers
-	
-	self assertInvalidCardNumberErrorWithNumber: '000000000000000O'.
-	
-	! !
-
-!CreditCardTest methodsFor: 'test' stamp: 'LH 11/21/2020 18:21:18'!
-test08TheNameOfACreditCardOwnerCanNotBeBlank
-	
-	self should: [CreditCard         withNumber: '0000000000000000' 
-							expirationDate: (Date today - self daysInYear + self daysThisMonth) month 
-							belongingTo: ''.]
-		raise: Error
-		withMessageText: CreditCard invalidCreditCardOwnerName.
-	
 	! !
 
 
@@ -123,19 +125,19 @@ TestCase subclass: #ShoppingCartTest
 	poolDictionaries: ''
 	category: 'Ejercicio-20-Tus-Libros'!
 
-!ShoppingCartTest methodsFor: 'tests' stamp: 'LH 11/19/2020 18:06:58'!
+!ShoppingCartTest methodsFor: 'tests' stamp: 'IO 11/22/2020 16:47:09'!
 test01NewCartIsEmpty
 	|aCart|
 	
-	aCart := ShoppingCart withCatalogue: (OrderedCollection with: '0-7645-2641-3').
+	aCart := self newShoppingCartWithAProduct.
 	
 	self assert: 0 equals: aCart listCart size.! !
 
-!ShoppingCartTest methodsFor: 'tests' stamp: 'LH 11/19/2020 18:07:02'!
+!ShoppingCartTest methodsFor: 'tests' stamp: 'IO 11/22/2020 16:47:16'!
 test02CanAddABookToACart
 	|aCart|
 	
-	aCart := ShoppingCart withCatalogue: (OrderedCollection with: '0-7645-2641-3').
+	aCart := self newShoppingCartWithAProduct.
 	aCart add: '0-7645-2641-3'.
 	
 	self assert: 1 equals: aCart listCart size.
@@ -153,11 +155,11 @@ test03CanAddManyBooksToACart
 	self assert: (aCart listCart includes: '0-7645-2641-3').
 	self assert: (aCart listCart includes: '0-7645-2641-4').! !
 
-!ShoppingCartTest methodsFor: 'tests' stamp: 'LH 11/19/2020 18:07:10'!
+!ShoppingCartTest methodsFor: 'tests' stamp: 'IO 11/22/2020 16:47:43'!
 test04CanMoreThanOneFromTheSameBookToACart
 	|aCart|
 	
-	aCart := ShoppingCart withCatalogue: (OrderedCollection with: '0-7645-2641-3').
+	aCart := self newShoppingCartWithAProduct.
 	aCart add: '0-7645-2641-3' withQuantity: 2.
 	
 	self assert: 2 equals: aCart listCart size.
@@ -178,11 +180,11 @@ test05CanNotAddABookWithInvalidISBN
 	
 ! !
 
-!ShoppingCartTest methodsFor: 'tests' stamp: 'LH 11/19/2020 18:11:25'!
+!ShoppingCartTest methodsFor: 'tests' stamp: 'IO 11/22/2020 16:47:51'!
 test06CanNotAdd0Books
 	|aCart|
 	
-	aCart := ShoppingCart withCatalogue: (OrderedCollection with: '0-7645-2641-3').
+	aCart := self newShoppingCartWithAProduct.
 	
 	self should: [aCart add: '0-7645-2641-3' withQuantity: 0]
 		raise: Error
@@ -190,11 +192,11 @@ test06CanNotAdd0Books
 	
 ! !
 
-!ShoppingCartTest methodsFor: 'tests' stamp: 'LH 11/19/2020 18:13:34'!
+!ShoppingCartTest methodsFor: 'tests' stamp: 'IO 11/22/2020 16:47:58'!
 test07CanNotAddMinusBooks
 	|aCart|
 	
-	aCart := ShoppingCart withCatalogue: (OrderedCollection with: '0-7645-2641-3').
+	aCart := self newShoppingCartWithAProduct.
 	
 	self should: [aCart add: '0-7645-2641-3' withQuantity: -1]
 		raise: Error
@@ -202,16 +204,40 @@ test07CanNotAddMinusBooks
 	
 ! !
 
-!ShoppingCartTest methodsFor: 'tests' stamp: 'LH 11/19/2020 18:14:40'!
+!ShoppingCartTest methodsFor: 'tests' stamp: 'IO 11/22/2020 16:48:02'!
 test08CanNotAddNotWholeBooks
 	|aCart|
 	
-	aCart := ShoppingCart withCatalogue: (OrderedCollection with: '0-7645-2641-3').
+	aCart := self newShoppingCartWithAProduct.
 	
 	self should: [aCart add: '0-7645-2641-3' withQuantity: 1.5]
 		raise: Error
 		withMessageText: ShoppingCart invalidQuantityErrorMessage.
 	
+! !
+
+!ShoppingCartTest methodsFor: 'tests' stamp: 'IO 11/22/2020 18:11:44'!
+test09CannotEditCartList
+	| aCart list |
+	
+	
+	aCart := ShoppingCart withCatalogue: (OrderedCollection with: '0-7645-2641-3' with: '0-7645-2641-4').
+	aCart add: '0-7645-2641-3'.
+
+	
+	list := aCart listCart.
+	list add: '0-7645-2641-4'.
+
+	self assert: 1 equals: aCart listCart size.
+
+	self assert: (aCart listCart includes: '0-7645-2641-3').
+	self deny: (aCart listCart includes: '0-7645-2641-4').! !
+
+
+!ShoppingCartTest methodsFor: 'util' stamp: 'IO 11/22/2020 16:47:01'!
+newShoppingCartWithAProduct
+	
+	^ShoppingCart withCatalogue: (OrderedCollection with: '0-7645-2641-3').
 ! !
 
 
@@ -222,13 +248,7 @@ TestCase subclass: #ShoppingCashierTest
 	poolDictionaries: ''
 	category: 'Ejercicio-20-Tus-Libros'!
 
-!ShoppingCashierTest methodsFor: 'as yet unclassified' stamp: 'LH 11/19/2020 21:15:37'!
-invalidDate
-
-	^(Date today - (Date today daysInMonth days)) month
-		! !
-
-!ShoppingCashierTest methodsFor: 'as yet unclassified' stamp: 'LH 11/21/2020 18:45:09'!
+!ShoppingCashierTest methodsFor: 'tests' stamp: 'LH 11/21/2020 18:45:09'!
 test01AnEmptyCartCannotBeCheckedOut
 	|aCashier aCart aCreditCard|
 	
@@ -241,7 +261,7 @@ test01AnEmptyCartCannotBeCheckedOut
 		raise: Error
 		withMessageText: ShoppingCashier invalidCartErrorMessage.! !
 
-!ShoppingCashierTest methodsFor: 'as yet unclassified' stamp: 'LH 11/21/2020 18:45:51'!
+!ShoppingCashierTest methodsFor: 'tests' stamp: 'LH 11/21/2020 18:45:51'!
 test02ACartWith1BookWillCheckOutCorrectly
 	|aCashier aCart aCreditCard|
 	
@@ -253,7 +273,7 @@ test02ACartWith1BookWillCheckOutCorrectly
 	
 	self assert: 100 equals: (aCashier checkOut: aCart withCreditCard: aCreditCard).! !
 
-!ShoppingCashierTest methodsFor: 'as yet unclassified' stamp: 'LH 11/21/2020 18:46:28'!
+!ShoppingCashierTest methodsFor: 'tests' stamp: 'LH 11/21/2020 18:46:28'!
 test03ACartWithManyBooksWillCheckOutCorrectly
 	|aCashier aCart aCreditCard|
 	
@@ -266,7 +286,7 @@ test03ACartWithManyBooksWillCheckOutCorrectly
 	
 	self assert: 300 equals: (aCashier checkOut: aCart withCreditCard: aCreditCard).! !
 
-!ShoppingCashierTest methodsFor: 'as yet unclassified' stamp: 'LH 11/21/2020 18:47:36'!
+!ShoppingCashierTest methodsFor: 'tests' stamp: 'LH 11/21/2020 18:47:36'!
 test04TheCardShouldNotBeExpired
 	|aCashier aCart aCreditCard|
 	
@@ -281,7 +301,38 @@ test04TheCardShouldNotBeExpired
 		withMessageText: ShoppingCashier invalidCreditCard.
 		! !
 
-!ShoppingCashierTest methodsFor: 'as yet unclassified' stamp: 'LH 11/19/2020 21:15:08'!
+!ShoppingCashierTest methodsFor: 'tests' stamp: 'IO 11/22/2020 17:56:41'!
+test05ACartShouldNotCheckoutIfMerchantProcessorFails
+
+	|aCashier aCart aCreditCard aMerchantProcessor|
+	
+	aCart := ShoppingCart withCatalogue: (OrderedCollection with: '0-7645-2641-3' with: '0-7645-2641-4').
+	aCart add: '0-7645-2641-3' withQuantity: 2.
+	aCart add: '0-7645-2641-4'.
+	aCreditCard := CreditCard withNumber: '0000000000000000' expirationDate: self validDate belongingTo: 'Juan Pablo'.
+	
+	aMerchantProcessor := ErroredMerchantProcessor new.
+
+	aCashier := ShoppingCashier
+		withPriceCatalogue: (Dictionary newFromPairs: #('0-7645-2641-3' 100 '0-7645-2641-4' 100))
+		andMerchantProcessor: aMerchantProcessor.
+	
+	
+	self should: [aCashier checkOut: aCart withCreditCard: aCreditCard]
+		raise: Error
+		withMessageText: ErroredMerchantProcessor dummyErrorMessage.
+		
+	
+! !
+
+
+!ShoppingCashierTest methodsFor: 'util' stamp: 'LH 11/19/2020 21:15:37'!
+invalidDate
+
+	^(Date today - (Date today daysInMonth days)) month
+		! !
+
+!ShoppingCashierTest methodsFor: 'util' stamp: 'LH 11/19/2020 21:15:08'!
 validDate
 
 	^(Date today + (Date today daysInMonth days)) month
@@ -295,15 +346,16 @@ Object subclass: #CreditCard
 	poolDictionaries: ''
 	category: 'Ejercicio-20-Tus-Libros'!
 
-!CreditCard methodsFor: 'initialization' stamp: 'LH 11/21/2020 17:28:28'!
+!CreditCard methodsFor: 'initialization' stamp: 'IO 11/22/2020 16:26:39'!
 initializeWithNumber: aCCNumber expirationDate: anExpirationDate belongingTo: aName 
 	
 	creditCardNumber := aCCNumber.
 	expirationDate := anExpirationDate.
-	nameOfOwner := aName.! !
+	nameOfOwner := aName.
+! !
 
 
-!CreditCard methodsFor: 'testing' stamp: 'LH 11/21/2020 18:24:29'!
+!CreditCard methodsFor: 'testing' stamp: 'IO 11/22/2020 17:51:37'!
 isExpired
 	"returns if this credit card is expired"
 	|expirationDateYear currentMonth currentYear|
@@ -313,10 +365,9 @@ isExpired
 	currentYear := Date today yearNumber.
 	
 	
-	^	(expirationDate monthIndex <= currentMonth 
-			and: expirationDateYear = currentYear)
-			
-		or: expirationDateYear < currentYear.! !
+	^(
+		expirationDate monthIndex <= currentMonth  and: expirationDateYear = currentYear
+	) or: expirationDateYear < currentYear.! !
 
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
@@ -324,21 +375,18 @@ isExpired
 CreditCard class
 	instanceVariableNames: ''!
 
-!CreditCard class methodsFor: 'instance creation' stamp: 'LH 11/21/2020 18:31:06'!
-throwCardNumberErrorIfTheNextBlockIsFalse: aBlock
-	
-	aBlock value ifFalse:[^self error: CreditCard invalidCreditCardNumber].
-	! !
-
-!CreditCard class methodsFor: 'instance creation' stamp: 'LH 11/21/2020 18:32:06'!
+!CreditCard class methodsFor: 'instance creation' stamp: 'IO 11/22/2020 18:12:01'!
 withNumber: aCCNumber expirationDate: anExpirationDate belongingTo: aName 
 	
-	self throwCardNumberErrorIfTheNextBlockIsFalse: [aCCNumber allSatisfy: [:aDigit | aDigit isDigit]].
-	self throwCardNumberErrorIfTheNextBlockIsFalse: [aCCNumber size = 16].
-	
-	aName isEmpty ifTrue:[^self error: CreditCard invalidCreditCardOwnerName].
+	(
+		(aCCNumber allSatisfy: [ :aDigit | aDigit isDigit ]) and:
+		aCCNumber size = 16
+	) ifFalse: [^self error: CreditCard invalidCreditCardNumber].
 
-	^self new initializeWithNumber: aCCNumber expirationDate: anExpirationDate belongingTo: aName ! !
+	(aName notEmpty) ifFalse: [^self error: CreditCard invalidCreditCardOwnerName].
+
+	^self new initializeWithNumber: aCCNumber expirationDate: anExpirationDate belongingTo: aName.
+! !
 
 
 !CreditCard class methodsFor: 'error description' stamp: 'LH 11/21/2020 18:05:13'!
@@ -348,6 +396,56 @@ invalidCreditCardNumber
 !CreditCard class methodsFor: 'error description' stamp: 'LH 11/21/2020 18:25:03'!
 invalidCreditCardOwnerName
 	^'The Name of the Owner can not be blank'! !
+
+
+!classDefinition: #MerchantProcessor category: 'Ejercicio-20-Tus-Libros'!
+Object subclass: #MerchantProcessor
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Ejercicio-20-Tus-Libros'!
+
+!MerchantProcessor methodsFor: 'as yet unclassified' stamp: 'IO 11/22/2020 17:36:29'!
+debitWith: aCreditCard for: anAmount
+	^self subclassResponsibility.
+! !
+
+
+!classDefinition: #ErroredMerchantProcessor category: 'Ejercicio-20-Tus-Libros'!
+MerchantProcessor subclass: #ErroredMerchantProcessor
+	instanceVariableNames: 'failure'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Ejercicio-20-Tus-Libros'!
+
+!ErroredMerchantProcessor methodsFor: 'as yet unclassified' stamp: 'IO 11/22/2020 17:38:46'!
+debitWith: aCreditCard for: anAmount
+	^self error: ErroredMerchantProcessor dummyErrorMessage.
+! !
+
+"-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
+
+!classDefinition: 'ErroredMerchantProcessor class' category: 'Ejercicio-20-Tus-Libros'!
+ErroredMerchantProcessor class
+	instanceVariableNames: ''!
+
+!ErroredMerchantProcessor class methodsFor: 'as yet unclassified' stamp: 'IO 11/22/2020 17:33:01'!
+dummyErrorMessage
+	^'Merchant Processor error message'.
+! !
+
+
+!classDefinition: #NullMerchantProcessor category: 'Ejercicio-20-Tus-Libros'!
+MerchantProcessor subclass: #NullMerchantProcessor
+	instanceVariableNames: 'failure'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Ejercicio-20-Tus-Libros'!
+
+!NullMerchantProcessor methodsFor: 'as yet unclassified' stamp: 'IO 11/22/2020 17:36:29'!
+debitWith: aCreditCard for: anAmount
+
+! !
 
 
 !classDefinition: #ShoppingCart category: 'Ejercicio-20-Tus-Libros'!
@@ -364,7 +462,7 @@ initializeWithCatalogue: aCatalgue
 	books := Bag new.! !
 
 
-!ShoppingCart methodsFor: 'accessing' stamp: 'LH 11/19/2020 17:53:12'!
+!ShoppingCart methodsFor: 'accessing' stamp: 'IO 11/22/2020 16:51:08'!
 listCart
 	^books copy.! !
 
@@ -406,37 +504,34 @@ invalidQuantityErrorMessage
 
 !classDefinition: #ShoppingCashier category: 'Ejercicio-20-Tus-Libros'!
 Object subclass: #ShoppingCashier
-	instanceVariableNames: 'priceCatalogue'
+	instanceVariableNames: 'priceCatalogue merchantProcessor'
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'Ejercicio-20-Tus-Libros'!
 
-!ShoppingCashier methodsFor: 'checkOut' stamp: 'LH 11/19/2020 21:14:20'!
-checkOut: aShoppingCart withCardNumber: aCreditCardNumber ExpirationDate: anExpirationDate andCardOwner: aName 
-
-	aShoppingCart listCart size = 0 ifTrue:[^self error: ShoppingCashier invalidCartErrorMessage].
-	
-	(anExpirationDate yearNumber < Date today yearNumber)
-			ifTrue:[ ^self error: ShoppingCashier invalidCreditCard].  
-	(anExpirationDate yearNumber = Date today yearNumber and: anExpirationDate monthIndex <= Date today monthIndex) 
-			ifTrue: [^self error: ShoppingCashier invalidCreditCard ].
-	
-	^ aShoppingCart listCart inject: 0 into: [:theSum :anISBN | theSum + priceCatalogue at: anISBN].! !
-
-!ShoppingCashier methodsFor: 'checkOut' stamp: 'LH 11/21/2020 18:42:58'!
+!ShoppingCashier methodsFor: 'checkOut' stamp: 'IO 11/22/2020 17:37:31'!
 checkOut: aShoppingCart withCreditCard: aCreditCard
 
-	aShoppingCart listCart size = 0 ifTrue:[^self error: ShoppingCashier invalidCartErrorMessage].
+	| total |
+	aShoppingCart listCart size = 0 ifTrue: [^self error: ShoppingCashier invalidCartErrorMessage].
+	aCreditCard isExpired ifTrue: [^self error: ShoppingCashier invalidCreditCard].
 	
-	aCreditCard isExpired ifTrue:[ ^self error: ShoppingCashier invalidCreditCard].
-	
-	^ aShoppingCart listCart inject: 0 into: [:theSum :anISBN | theSum + priceCatalogue at: anISBN].! !
+	total := aShoppingCart listCart inject: 0 into: [:theSum :anISBN | theSum + priceCatalogue at: anISBN].
+	merchantProcessor debitWith: aCreditCard for: total.
+	^total.! !
 
 
-!ShoppingCashier methodsFor: 'initialization' stamp: 'LH 11/19/2020 19:09:18'!
+!ShoppingCashier methodsFor: 'initialization' stamp: 'IO 11/22/2020 17:41:36'!
 initializeWithPriceCatalogue: aPriceCatalogue 
 
-	priceCatalogue := aPriceCatalogue.! !
+	self initializeWithPriceCatalogue: aPriceCatalogue andMerchantProcessor: NullMerchantProcessor new.
+! !
+
+!ShoppingCashier methodsFor: 'initialization' stamp: 'IO 11/22/2020 17:30:08'!
+initializeWithPriceCatalogue: aPriceCatalogue andMerchantProcessor: aMerchantProcessor 
+
+	priceCatalogue := aPriceCatalogue.
+	merchantProcessor := aMerchantProcessor.! !
 
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
@@ -453,7 +548,12 @@ invalidCreditCard
 	^'invalid credit card information'! !
 
 
-!ShoppingCashier class methodsFor: 'instance creation' stamp: 'LH 11/19/2020 19:08:45'!
+!ShoppingCashier class methodsFor: 'instance creation' stamp: 'IO 11/22/2020 17:23:56'!
 withPriceCatalogue: aPriceCatalogue 
 
 	^self new initializeWithPriceCatalogue: aPriceCatalogue ! !
+
+!ShoppingCashier class methodsFor: 'instance creation' stamp: 'IO 11/22/2020 17:26:48'!
+withPriceCatalogue: aDictionary andMerchantProcessor: aClass 
+
+	^self new initializeWithPriceCatalogue: aDictionary andMerchantProcessor: aClass ! !

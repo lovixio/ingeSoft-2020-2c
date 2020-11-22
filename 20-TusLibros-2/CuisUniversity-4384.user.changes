@@ -39267,3 +39267,3308 @@ PASSED!
 PASSED!
 
 ----SNAPSHOT----(21 November 2020 18:49:11) CuisUniversity-4384.image priorSource: 17394782!
+
+----STARTUP---- (22 November 2020 16:22:59) as /Users/ilanolkies/uba/ingsoft1/macos64/CuisUniversity-4384.image!
+
+
+----End fileIn of /Users/ilanolkies/uba/ingsoft1/ingeSoft-2020-2c/20-TusLibros-2/Ejercicio-20-Tus-Libros-2.st----!
+!CreditCard methodsFor: 'testing' stamp: 'IO 11/22/2020 16:26:31' prior: 50877288!
+isExpired
+	"returns if this credit card is expired"
+	|expirationDateYear currentMonth currentYear|
+	
+	expirationDateYear := expirationDate yearNumber.
+	currentMonth := Date today monthIndex.
+	currentYear := Date today yearNumber.
+	
+	
+	^(
+		expirationDate monthIndex <= currentMonth  and: expirationDateYear = currentYear)	
+		or: expirationDateYear < currentYear.! !
+!CreditCard methodsFor: 'initialization' stamp: 'IO 11/22/2020 16:26:39' prior: 50877280!
+initializeWithNumber: aCCNumber expirationDate: anExpirationDate belongingTo: aName 
+	
+	creditCardNumber := aCCNumber.
+	expirationDate := anExpirationDate.
+	nameOfOwner := aName.
+! !
+!CreditCard class methodsFor: 'instance creation' stamp: 'IO 11/22/2020 16:28:19' prior: 50877318!
+withNumber: aCCNumber expirationDate: anExpirationDate belongingTo: aName 
+	
+	((aCCNumber allSatisfy: [:aDigit | aDigit isDigit]) or: aCCNumber size = 16)
+		self error: CreditCard invalidCreditCardNumber.
+	self throwCardNumberErrorIfTheNextBlockIsFalse: [aCCNumber allSatisfy: [:aDigit | aDigit isDigit]].
+	self throwCardNumberErrorIfTheNextBlockIsFalse: [aCCNumber size = 16].
+	
+	aName isEmpty ifTrue:[^self error: CreditCard invalidCreditCardOwnerName].
+
+	^self new initializeWithNumber: aCCNumber expirationDate: anExpirationDate belongingTo: aName ! !
+
+!testRun: #CreditCardTest #test01ACreditCardCanBeNotExpired stamp: 'IO 11/22/2020 16:28:21'!
+ERROR!
+
+!testRun: #CreditCardTest #test02ACreditCardWithExpirationDatingThisMonthAndYearIsExpired stamp: 'IO 11/22/2020 16:28:21'!
+ERROR!
+
+!testRun: #CreditCardTest #test03ACreditCardWithExpirationDatingAPastMonthThisYearIsExpired stamp: 'IO 11/22/2020 16:28:21'!
+ERROR!
+
+!testRun: #CreditCardTest #test04ACreditCardWithExpirationDatingAFutureYearIsNotExpired stamp: 'IO 11/22/2020 16:28:21'!
+ERROR!
+
+!testRun: #CreditCardTest #test05ACreditCardWithExpirationDatingAPastYearIsExpired stamp: 'IO 11/22/2020 16:28:21'!
+ERROR!
+
+!testRun: #CreditCardTest #test06CreditCarNumberCantHaveAnythingBut16Symbols stamp: 'IO 11/22/2020 16:28:21'!
+FAILURE!
+
+!testRun: #CreditCardTest #test07CreditCarNumberCantHaveAnythingButNumbers stamp: 'IO 11/22/2020 16:28:21'!
+FAILURE!
+
+!testRun: #CreditCardTest #test08TheNameOfACreditCardOwnerCanNotBeBlank stamp: 'IO 11/22/2020 16:28:21'!
+FAILURE!
+
+!testRun: #ShoppingCartTest #test01NewCartIsEmpty stamp: 'IO 11/22/2020 16:28:21'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test02CanAddABookToACart stamp: 'IO 11/22/2020 16:28:21'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test03CanAddManyBooksToACart stamp: 'IO 11/22/2020 16:28:21'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test04CanMoreThanOneFromTheSameBookToACart stamp: 'IO 11/22/2020 16:28:21'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test05CanNotAddABookWithInvalidISBN stamp: 'IO 11/22/2020 16:28:21'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test06CanNotAdd0Books stamp: 'IO 11/22/2020 16:28:21'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test07CanNotAddMinusBooks stamp: 'IO 11/22/2020 16:28:21'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test08CanNotAddNotWholeBooks stamp: 'IO 11/22/2020 16:28:21'!
+PASSED!
+
+!testRun: #ShoppingCashierTest #test01AnEmptyCartCannotBeCheckedOut stamp: 'IO 11/22/2020 16:28:21'!
+ERROR!
+
+!testRun: #ShoppingCashierTest #test02ACartWith1BookWillCheckOutCorrectly stamp: 'IO 11/22/2020 16:28:21'!
+ERROR!
+
+!testRun: #ShoppingCashierTest #test03ACartWithManyBooksWillCheckOutCorrectly stamp: 'IO 11/22/2020 16:28:21'!
+ERROR!
+
+!testRun: #ShoppingCashierTest #test04TheCardShouldNotBeExpired stamp: 'IO 11/22/2020 16:28:21'!
+ERROR!
+!CreditCard class methodsFor: 'instance creation' stamp: 'IO 11/22/2020 16:28:26' prior: 50877514!
+withNumber: aCCNumber expirationDate: anExpirationDate belongingTo: aName 
+	
+	self throwCardNumberErrorIfTheNextBlockIsFalse: [aCCNumber allSatisfy: [:aDigit | aDigit isDigit]].
+	self throwCardNumberErrorIfTheNextBlockIsFalse: [aCCNumber size = 16].
+	
+	aName isEmpty ifTrue:[^self error: CreditCard invalidCreditCardOwnerName].
+
+	^self new initializeWithNumber: aCCNumber expirationDate: anExpirationDate belongingTo: aName ! !
+
+!testRun: #CreditCardTest #test01ACreditCardCanBeNotExpired stamp: 'IO 11/22/2020 16:28:27'!
+PASSED!
+
+!testRun: #CreditCardTest #test02ACreditCardWithExpirationDatingThisMonthAndYearIsExpired stamp: 'IO 11/22/2020 16:28:27'!
+PASSED!
+
+!testRun: #CreditCardTest #test03ACreditCardWithExpirationDatingAPastMonthThisYearIsExpired stamp: 'IO 11/22/2020 16:28:27'!
+PASSED!
+
+!testRun: #CreditCardTest #test04ACreditCardWithExpirationDatingAFutureYearIsNotExpired stamp: 'IO 11/22/2020 16:28:27'!
+PASSED!
+
+!testRun: #CreditCardTest #test05ACreditCardWithExpirationDatingAPastYearIsExpired stamp: 'IO 11/22/2020 16:28:27'!
+PASSED!
+
+!testRun: #CreditCardTest #test06CreditCarNumberCantHaveAnythingBut16Symbols stamp: 'IO 11/22/2020 16:28:27'!
+PASSED!
+
+!testRun: #CreditCardTest #test07CreditCarNumberCantHaveAnythingButNumbers stamp: 'IO 11/22/2020 16:28:27'!
+PASSED!
+
+!testRun: #CreditCardTest #test08TheNameOfACreditCardOwnerCanNotBeBlank stamp: 'IO 11/22/2020 16:28:27'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test01NewCartIsEmpty stamp: 'IO 11/22/2020 16:28:27'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test02CanAddABookToACart stamp: 'IO 11/22/2020 16:28:27'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test03CanAddManyBooksToACart stamp: 'IO 11/22/2020 16:28:27'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test04CanMoreThanOneFromTheSameBookToACart stamp: 'IO 11/22/2020 16:28:27'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test05CanNotAddABookWithInvalidISBN stamp: 'IO 11/22/2020 16:28:27'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test06CanNotAdd0Books stamp: 'IO 11/22/2020 16:28:27'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test07CanNotAddMinusBooks stamp: 'IO 11/22/2020 16:28:27'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test08CanNotAddNotWholeBooks stamp: 'IO 11/22/2020 16:28:27'!
+PASSED!
+
+!testRun: #ShoppingCashierTest #test01AnEmptyCartCannotBeCheckedOut stamp: 'IO 11/22/2020 16:28:27'!
+PASSED!
+
+!testRun: #ShoppingCashierTest #test02ACartWith1BookWillCheckOutCorrectly stamp: 'IO 11/22/2020 16:28:27'!
+PASSED!
+
+!testRun: #ShoppingCashierTest #test03ACartWithManyBooksWillCheckOutCorrectly stamp: 'IO 11/22/2020 16:28:27'!
+PASSED!
+
+!testRun: #ShoppingCashierTest #test04TheCardShouldNotBeExpired stamp: 'IO 11/22/2020 16:28:27'!
+PASSED!
+!CreditCard class methodsFor: 'instance creation' stamp: 'IO 11/22/2020 16:28:44' prior: 50877604!
+withNumber: aCCNumber expirationDate: anExpirationDate belongingTo: aName 
+	
+	((aCCNumber allSatisfy: [ :aDigit | aDigit isDigit]) or: aCCNumber size = 16)
+		self error: CreditCard invalidCreditCardNumber.
+	self throwCardNumberErrorIfTheNextBlockIsFalse: [aCCNumber allSatisfy: [:aDigit | aDigit isDigit]].
+	self throwCardNumberErrorIfTheNextBlockIsFalse: [aCCNumber size = 16].
+	
+	aName isEmpty ifTrue:[^self error: CreditCard invalidCreditCardOwnerName].
+
+	^self new initializeWithNumber: aCCNumber expirationDate: anExpirationDate belongingTo: aName ! !
+!CreditCard class methodsFor: 'instance creation' stamp: 'IO 11/22/2020 16:29:08' prior: 50877690!
+withNumber: aCCNumber expirationDate: anExpirationDate belongingTo: aName 
+	
+	((aCCNumber allSatisfy: [ :aDigit | aDigit isDigit]) and: aCCNumber size = 16)
+		ifFalse:	 (self error: CreditCard invalidCreditCardNumber).
+	self throwCardNumberErrorIfTheNextBlockIsFalse: [aCCNumber allSatisfy: [:aDigit | aDigit isDigit]].
+	self throwCardNumberErrorIfTheNextBlockIsFalse: [aCCNumber size = 16].
+	
+	aName isEmpty ifTrue:[^self error: CreditCard invalidCreditCardOwnerName].
+
+	^self new initializeWithNumber: aCCNumber expirationDate: anExpirationDate belongingTo: aName ! !
+
+!testRun: #CreditCardTest #test01ACreditCardCanBeNotExpired stamp: 'IO 11/22/2020 16:29:09'!
+ERROR!
+
+!testRun: #CreditCardTest #test02ACreditCardWithExpirationDatingThisMonthAndYearIsExpired stamp: 'IO 11/22/2020 16:29:09'!
+ERROR!
+
+!testRun: #CreditCardTest #test03ACreditCardWithExpirationDatingAPastMonthThisYearIsExpired stamp: 'IO 11/22/2020 16:29:09'!
+ERROR!
+
+!testRun: #CreditCardTest #test04ACreditCardWithExpirationDatingAFutureYearIsNotExpired stamp: 'IO 11/22/2020 16:29:09'!
+ERROR!
+
+!testRun: #CreditCardTest #test05ACreditCardWithExpirationDatingAPastYearIsExpired stamp: 'IO 11/22/2020 16:29:09'!
+ERROR!
+
+!testRun: #CreditCardTest #test06CreditCarNumberCantHaveAnythingBut16Symbols stamp: 'IO 11/22/2020 16:29:09'!
+PASSED!
+
+!testRun: #CreditCardTest #test07CreditCarNumberCantHaveAnythingButNumbers stamp: 'IO 11/22/2020 16:29:09'!
+PASSED!
+
+!testRun: #CreditCardTest #test08TheNameOfACreditCardOwnerCanNotBeBlank stamp: 'IO 11/22/2020 16:29:09'!
+FAILURE!
+!CreditCard class methodsFor: 'instance creation' stamp: 'IO 11/22/2020 16:29:13' prior: 50877711!
+withNumber: aCCNumber expirationDate: anExpirationDate belongingTo: aName 
+	
+	((aCCNumber allSatisfy: [ :aDigit | aDigit isDigit]) or: aCCNumber size = 16)
+		ifFalse:	 (self error: CreditCard invalidCreditCardNumber).
+	self throwCardNumberErrorIfTheNextBlockIsFalse: [aCCNumber allSatisfy: [:aDigit | aDigit isDigit]].
+	self throwCardNumberErrorIfTheNextBlockIsFalse: [aCCNumber size = 16].
+	
+	aName isEmpty ifTrue:[^self error: CreditCard invalidCreditCardOwnerName].
+
+	^self new initializeWithNumber: aCCNumber expirationDate: anExpirationDate belongingTo: aName ! !
+
+!testRun: #CreditCardTest #test01ACreditCardCanBeNotExpired stamp: 'IO 11/22/2020 16:29:13'!
+ERROR!
+
+!testRun: #CreditCardTest #test02ACreditCardWithExpirationDatingThisMonthAndYearIsExpired stamp: 'IO 11/22/2020 16:29:13'!
+ERROR!
+
+!testRun: #CreditCardTest #test03ACreditCardWithExpirationDatingAPastMonthThisYearIsExpired stamp: 'IO 11/22/2020 16:29:13'!
+ERROR!
+
+!testRun: #CreditCardTest #test04ACreditCardWithExpirationDatingAFutureYearIsNotExpired stamp: 'IO 11/22/2020 16:29:13'!
+ERROR!
+
+!testRun: #CreditCardTest #test05ACreditCardWithExpirationDatingAPastYearIsExpired stamp: 'IO 11/22/2020 16:29:13'!
+ERROR!
+
+!testRun: #CreditCardTest #test06CreditCarNumberCantHaveAnythingBut16Symbols stamp: 'IO 11/22/2020 16:29:13'!
+PASSED!
+
+!testRun: #CreditCardTest #test07CreditCarNumberCantHaveAnythingButNumbers stamp: 'IO 11/22/2020 16:29:13'!
+PASSED!
+
+!testRun: #CreditCardTest #test08TheNameOfACreditCardOwnerCanNotBeBlank stamp: 'IO 11/22/2020 16:29:13'!
+FAILURE!
+!CreditCard class methodsFor: 'instance creation' stamp: 'IO 11/22/2020 16:29:19' prior: 50877763!
+withNumber: aCCNumber expirationDate: anExpirationDate belongingTo: aName 
+	
+	((aCCNumber allSatisfy: [ :aDigit | aDigit isDigit]) or: aCCNumber size = 16)
+		ifTrue:	 (self error: CreditCard invalidCreditCardNumber).
+	self throwCardNumberErrorIfTheNextBlockIsFalse: [aCCNumber allSatisfy: [:aDigit | aDigit isDigit]].
+	self throwCardNumberErrorIfTheNextBlockIsFalse: [aCCNumber size = 16].
+	
+	aName isEmpty ifTrue:[^self error: CreditCard invalidCreditCardOwnerName].
+
+	^self new initializeWithNumber: aCCNumber expirationDate: anExpirationDate belongingTo: aName ! !
+
+!testRun: #CreditCardTest #test01ACreditCardCanBeNotExpired stamp: 'IO 11/22/2020 16:29:20'!
+ERROR!
+
+!testRun: #CreditCardTest #test02ACreditCardWithExpirationDatingThisMonthAndYearIsExpired stamp: 'IO 11/22/2020 16:29:20'!
+ERROR!
+
+!testRun: #CreditCardTest #test03ACreditCardWithExpirationDatingAPastMonthThisYearIsExpired stamp: 'IO 11/22/2020 16:29:20'!
+ERROR!
+
+!testRun: #CreditCardTest #test04ACreditCardWithExpirationDatingAFutureYearIsNotExpired stamp: 'IO 11/22/2020 16:29:20'!
+ERROR!
+
+!testRun: #CreditCardTest #test05ACreditCardWithExpirationDatingAPastYearIsExpired stamp: 'IO 11/22/2020 16:29:20'!
+ERROR!
+
+!testRun: #CreditCardTest #test06CreditCarNumberCantHaveAnythingBut16Symbols stamp: 'IO 11/22/2020 16:29:20'!
+PASSED!
+
+!testRun: #CreditCardTest #test07CreditCarNumberCantHaveAnythingButNumbers stamp: 'IO 11/22/2020 16:29:20'!
+PASSED!
+
+!testRun: #CreditCardTest #test08TheNameOfACreditCardOwnerCanNotBeBlank stamp: 'IO 11/22/2020 16:29:20'!
+FAILURE!
+!CreditCard class methodsFor: 'instance creation' stamp: 'IO 11/22/2020 16:29:40' prior: 50877815!
+withNumber: aCCNumber expirationDate: anExpirationDate belongingTo: aName 
+	
+	(aCCNumber allSatisfy: [ :aDigit | aDigit isDigit])
+		ifFalse:	 (self error: CreditCard invalidCreditCardNumber).
+	self throwCardNumberErrorIfTheNextBlockIsFalse: [aCCNumber allSatisfy: [:aDigit | aDigit isDigit]].
+	self throwCardNumberErrorIfTheNextBlockIsFalse: [aCCNumber size = 16].
+	
+	aName isEmpty ifTrue:[^self error: CreditCard invalidCreditCardOwnerName].
+
+	^self new initializeWithNumber: aCCNumber expirationDate: anExpirationDate belongingTo: aName ! !
+
+!testRun: #CreditCardTest #test01ACreditCardCanBeNotExpired stamp: 'IO 11/22/2020 16:29:41'!
+ERROR!
+
+!testRun: #CreditCardTest #test02ACreditCardWithExpirationDatingThisMonthAndYearIsExpired stamp: 'IO 11/22/2020 16:29:41'!
+ERROR!
+
+!testRun: #CreditCardTest #test03ACreditCardWithExpirationDatingAPastMonthThisYearIsExpired stamp: 'IO 11/22/2020 16:29:41'!
+ERROR!
+
+!testRun: #CreditCardTest #test04ACreditCardWithExpirationDatingAFutureYearIsNotExpired stamp: 'IO 11/22/2020 16:29:41'!
+ERROR!
+
+!testRun: #CreditCardTest #test05ACreditCardWithExpirationDatingAPastYearIsExpired stamp: 'IO 11/22/2020 16:29:41'!
+ERROR!
+
+!testRun: #CreditCardTest #test06CreditCarNumberCantHaveAnythingBut16Symbols stamp: 'IO 11/22/2020 16:29:41'!
+PASSED!
+
+!testRun: #CreditCardTest #test07CreditCarNumberCantHaveAnythingButNumbers stamp: 'IO 11/22/2020 16:29:41'!
+PASSED!
+
+!testRun: #CreditCardTest #test08TheNameOfACreditCardOwnerCanNotBeBlank stamp: 'IO 11/22/2020 16:29:41'!
+FAILURE!
+!CreditCard class methodsFor: 'instance creation' stamp: 'IO 11/22/2020 16:29:46' prior: 50877867!
+withNumber: aCCNumber expirationDate: anExpirationDate belongingTo: aName 
+	
+
+
+	self throwCardNumberErrorIfTheNextBlockIsFalse: [aCCNumber allSatisfy: [:aDigit | aDigit isDigit]].
+	self throwCardNumberErrorIfTheNextBlockIsFalse: [aCCNumber size = 16].
+	
+	aName isEmpty ifTrue:[^self error: CreditCard invalidCreditCardOwnerName].
+
+	^self new initializeWithNumber: aCCNumber expirationDate: anExpirationDate belongingTo: aName ! !
+
+!testRun: #CreditCardTest #test01ACreditCardCanBeNotExpired stamp: 'IO 11/22/2020 16:29:46'!
+PASSED!
+
+!testRun: #CreditCardTest #test02ACreditCardWithExpirationDatingThisMonthAndYearIsExpired stamp: 'IO 11/22/2020 16:29:46'!
+PASSED!
+
+!testRun: #CreditCardTest #test03ACreditCardWithExpirationDatingAPastMonthThisYearIsExpired stamp: 'IO 11/22/2020 16:29:46'!
+PASSED!
+
+!testRun: #CreditCardTest #test04ACreditCardWithExpirationDatingAFutureYearIsNotExpired stamp: 'IO 11/22/2020 16:29:46'!
+PASSED!
+
+!testRun: #CreditCardTest #test05ACreditCardWithExpirationDatingAPastYearIsExpired stamp: 'IO 11/22/2020 16:29:46'!
+PASSED!
+
+!testRun: #CreditCardTest #test06CreditCarNumberCantHaveAnythingBut16Symbols stamp: 'IO 11/22/2020 16:29:46'!
+PASSED!
+
+!testRun: #CreditCardTest #test07CreditCarNumberCantHaveAnythingButNumbers stamp: 'IO 11/22/2020 16:29:46'!
+PASSED!
+
+!testRun: #CreditCardTest #test08TheNameOfACreditCardOwnerCanNotBeBlank stamp: 'IO 11/22/2020 16:29:46'!
+PASSED!
+
+!testRun: #CreditCardTest #test01ACreditCardCanBeNotExpired stamp: 'IO 11/22/2020 16:29:48'!
+PASSED!
+
+!testRun: #CreditCardTest #test02ACreditCardWithExpirationDatingThisMonthAndYearIsExpired stamp: 'IO 11/22/2020 16:29:48'!
+PASSED!
+
+!testRun: #CreditCardTest #test03ACreditCardWithExpirationDatingAPastMonthThisYearIsExpired stamp: 'IO 11/22/2020 16:29:48'!
+PASSED!
+
+!testRun: #CreditCardTest #test04ACreditCardWithExpirationDatingAFutureYearIsNotExpired stamp: 'IO 11/22/2020 16:29:48'!
+PASSED!
+
+!testRun: #CreditCardTest #test05ACreditCardWithExpirationDatingAPastYearIsExpired stamp: 'IO 11/22/2020 16:29:48'!
+PASSED!
+
+!testRun: #CreditCardTest #test06CreditCarNumberCantHaveAnythingBut16Symbols stamp: 'IO 11/22/2020 16:29:48'!
+PASSED!
+
+!testRun: #CreditCardTest #test07CreditCarNumberCantHaveAnythingButNumbers stamp: 'IO 11/22/2020 16:29:48'!
+PASSED!
+
+!testRun: #CreditCardTest #test08TheNameOfACreditCardOwnerCanNotBeBlank stamp: 'IO 11/22/2020 16:29:48'!
+PASSED!
+!CreditCard class methodsFor: 'instance creation' stamp: 'IO 11/22/2020 16:30:33' prior: 50877918!
+withNumber: aCCNumber expirationDate: anExpirationDate belongingTo: aName 
+	
+	(aCCNumber allSatisfy: [:aDigit | aDigit isDigit]) ifFalse: [^self error: CreditCard invalidCreditCardNumber].
+
+	self throwCardNumberErrorIfTheNextBlockIsFalse: [].
+	self throwCardNumberErrorIfTheNextBlockIsFalse: [aCCNumber size = 16].
+	
+	aName isEmpty ifTrue:[^self error: CreditCard invalidCreditCardOwnerName].
+
+	^self new initializeWithNumber: aCCNumber expirationDate: anExpirationDate belongingTo: aName ! !
+
+!testRun: #CreditCardTest #test01ACreditCardCanBeNotExpired stamp: 'IO 11/22/2020 16:30:34'!
+ERROR!
+
+!testRun: #CreditCardTest #test02ACreditCardWithExpirationDatingThisMonthAndYearIsExpired stamp: 'IO 11/22/2020 16:30:34'!
+ERROR!
+
+!testRun: #CreditCardTest #test03ACreditCardWithExpirationDatingAPastMonthThisYearIsExpired stamp: 'IO 11/22/2020 16:30:34'!
+ERROR!
+
+!testRun: #CreditCardTest #test04ACreditCardWithExpirationDatingAFutureYearIsNotExpired stamp: 'IO 11/22/2020 16:30:34'!
+ERROR!
+
+!testRun: #CreditCardTest #test05ACreditCardWithExpirationDatingAPastYearIsExpired stamp: 'IO 11/22/2020 16:30:34'!
+ERROR!
+
+!testRun: #CreditCardTest #test06CreditCarNumberCantHaveAnythingBut16Symbols stamp: 'IO 11/22/2020 16:30:34'!
+FAILURE!
+
+!testRun: #CreditCardTest #test07CreditCarNumberCantHaveAnythingButNumbers stamp: 'IO 11/22/2020 16:30:34'!
+PASSED!
+
+!testRun: #CreditCardTest #test08TheNameOfACreditCardOwnerCanNotBeBlank stamp: 'IO 11/22/2020 16:30:34'!
+FAILURE!
+
+!testRun: #CreditCardTest #test01ACreditCardCanBeNotExpired stamp: 'IO 11/22/2020 16:30:43'!
+ERROR!
+
+!testRun: #CreditCardTest #test02ACreditCardWithExpirationDatingThisMonthAndYearIsExpired stamp: 'IO 11/22/2020 16:30:43'!
+ERROR!
+
+!testRun: #CreditCardTest #test03ACreditCardWithExpirationDatingAPastMonthThisYearIsExpired stamp: 'IO 11/22/2020 16:30:43'!
+ERROR!
+
+!testRun: #CreditCardTest #test04ACreditCardWithExpirationDatingAFutureYearIsNotExpired stamp: 'IO 11/22/2020 16:30:43'!
+ERROR!
+
+!testRun: #CreditCardTest #test05ACreditCardWithExpirationDatingAPastYearIsExpired stamp: 'IO 11/22/2020 16:30:43'!
+ERROR!
+
+!testRun: #CreditCardTest #test06CreditCarNumberCantHaveAnythingBut16Symbols stamp: 'IO 11/22/2020 16:30:43'!
+FAILURE!
+
+!testRun: #CreditCardTest #test07CreditCarNumberCantHaveAnythingButNumbers stamp: 'IO 11/22/2020 16:30:43'!
+PASSED!
+
+!testRun: #CreditCardTest #test08TheNameOfACreditCardOwnerCanNotBeBlank stamp: 'IO 11/22/2020 16:30:43'!
+FAILURE!
+!CreditCard class methodsFor: 'instance creation' stamp: 'IO 11/22/2020 16:30:51' prior: 50877996!
+withNumber: aCCNumber expirationDate: anExpirationDate belongingTo: aName 
+	
+	(aCCNumber allSatisfy: [:aDigit | aDigit isDigit]) ifFalse: [^self error: CreditCard invalidCreditCardNumber].
+
+	self throwCardNumberErrorIfTheNextBlockIsFalse: [].
+	self throwCardNumberErrorIfTheNextBlockIsFalse: [aCCNumber size = 16].
+	
+	aName isEmpty ifTrue:[^self error: CreditCard invalidCreditCardOwnerName].
+
+	^self new initializeWithNumber: aCCNumber expirationDate: anExpirationDate belongingTo: aName ! !
+!CreditCard class methodsFor: 'instance creation' stamp: 'IO 11/22/2020 16:31:07' prior: 50878076!
+withNumber: aCCNumber expirationDate: anExpirationDate belongingTo: aName 
+	
+	(aCCNumber allSatisfy: [ :aDigit | aDigit isDigit]) ifFalse: [^self error: CreditCard invalidCreditCardNumber].
+
+	self throwCardNumberErrorIfTheNextBlockIsFalse: [].
+	self throwCardNumberErrorIfTheNextBlockIsFalse: [aCCNumber size = 16].
+	
+	aName isEmpty ifTrue:[^self error: CreditCard invalidCreditCardOwnerName].
+
+	^self new initializeWithNumber: aCCNumber expirationDate: anExpirationDate belongingTo: aName ! !
+!CreditCard class methodsFor: 'instance creation' stamp: 'IO 11/22/2020 16:31:08' prior: 50878095!
+withNumber: aCCNumber expirationDate: anExpirationDate belongingTo: aName 
+	
+	(aCCNumber allSatisfy: [ :aDigit | aDigit isDigit ]) ifFalse: [^self error: CreditCard invalidCreditCardNumber].
+
+	self throwCardNumberErrorIfTheNextBlockIsFalse: [].
+	self throwCardNumberErrorIfTheNextBlockIsFalse: [aCCNumber size = 16].
+	
+	aName isEmpty ifTrue:[^self error: CreditCard invalidCreditCardOwnerName].
+
+	^self new initializeWithNumber: aCCNumber expirationDate: anExpirationDate belongingTo: aName ! !
+
+!testRun: #CreditCardTest #test01ACreditCardCanBeNotExpired stamp: 'IO 11/22/2020 16:31:09'!
+ERROR!
+
+!testRun: #CreditCardTest #test02ACreditCardWithExpirationDatingThisMonthAndYearIsExpired stamp: 'IO 11/22/2020 16:31:09'!
+ERROR!
+
+!testRun: #CreditCardTest #test03ACreditCardWithExpirationDatingAPastMonthThisYearIsExpired stamp: 'IO 11/22/2020 16:31:09'!
+ERROR!
+
+!testRun: #CreditCardTest #test04ACreditCardWithExpirationDatingAFutureYearIsNotExpired stamp: 'IO 11/22/2020 16:31:09'!
+ERROR!
+
+!testRun: #CreditCardTest #test05ACreditCardWithExpirationDatingAPastYearIsExpired stamp: 'IO 11/22/2020 16:31:09'!
+ERROR!
+
+!testRun: #CreditCardTest #test06CreditCarNumberCantHaveAnythingBut16Symbols stamp: 'IO 11/22/2020 16:31:09'!
+FAILURE!
+
+!testRun: #CreditCardTest #test07CreditCarNumberCantHaveAnythingButNumbers stamp: 'IO 11/22/2020 16:31:09'!
+PASSED!
+
+!testRun: #CreditCardTest #test08TheNameOfACreditCardOwnerCanNotBeBlank stamp: 'IO 11/22/2020 16:31:09'!
+FAILURE!
+!CreditCard class methodsFor: 'instance creation' stamp: 'IO 11/22/2020 16:31:20' prior: 50878114!
+withNumber: aCCNumber expirationDate: anExpirationDate belongingTo: aName 
+	
+	(aCCNumber allSatisfy: [ :aDigit | aDigit isDigit ]) ifFalse: [^self error: CreditCard invalidCreditCardNumber].
+
+
+	self throwCardNumberErrorIfTheNextBlockIsFalse: [aCCNumber size = 16].
+	
+	aName isEmpty ifTrue:[^self error: CreditCard invalidCreditCardOwnerName].
+
+	^self new initializeWithNumber: aCCNumber expirationDate: anExpirationDate belongingTo: aName ! !
+
+!testRun: #CreditCardTest #test01ACreditCardCanBeNotExpired stamp: 'IO 11/22/2020 16:31:20'!
+PASSED!
+
+!testRun: #CreditCardTest #test02ACreditCardWithExpirationDatingThisMonthAndYearIsExpired stamp: 'IO 11/22/2020 16:31:20'!
+PASSED!
+
+!testRun: #CreditCardTest #test03ACreditCardWithExpirationDatingAPastMonthThisYearIsExpired stamp: 'IO 11/22/2020 16:31:20'!
+PASSED!
+
+!testRun: #CreditCardTest #test04ACreditCardWithExpirationDatingAFutureYearIsNotExpired stamp: 'IO 11/22/2020 16:31:20'!
+PASSED!
+
+!testRun: #CreditCardTest #test05ACreditCardWithExpirationDatingAPastYearIsExpired stamp: 'IO 11/22/2020 16:31:20'!
+PASSED!
+
+!testRun: #CreditCardTest #test06CreditCarNumberCantHaveAnythingBut16Symbols stamp: 'IO 11/22/2020 16:31:20'!
+PASSED!
+
+!testRun: #CreditCardTest #test07CreditCarNumberCantHaveAnythingButNumbers stamp: 'IO 11/22/2020 16:31:20'!
+PASSED!
+
+!testRun: #CreditCardTest #test08TheNameOfACreditCardOwnerCanNotBeBlank stamp: 'IO 11/22/2020 16:31:20'!
+PASSED!
+!CreditCard class methodsFor: 'instance creation' stamp: 'IO 11/22/2020 16:31:45' prior: 50878163!
+withNumber: aCCNumber expirationDate: anExpirationDate belongingTo: aName 
+	
+	((aCCNumber allSatisfy: [ :aDigit | aDigit isDigit ]) and: (aCCNumber size = 16)) ifFalse: [^self error: CreditCard invalidCreditCardNumber].
+
+
+	self throwCardNumberErrorIfTheNextBlockIsFalse: [].
+	
+	aName isEmpty ifTrue:[^self error: CreditCard invalidCreditCardOwnerName].
+
+	^self new initializeWithNumber: aCCNumber expirationDate: anExpirationDate belongingTo: aName ! !
+
+!testRun: #CreditCardTest #test01ACreditCardCanBeNotExpired stamp: 'IO 11/22/2020 16:31:46'!
+ERROR!
+
+!testRun: #CreditCardTest #test02ACreditCardWithExpirationDatingThisMonthAndYearIsExpired stamp: 'IO 11/22/2020 16:31:46'!
+ERROR!
+
+!testRun: #CreditCardTest #test03ACreditCardWithExpirationDatingAPastMonthThisYearIsExpired stamp: 'IO 11/22/2020 16:31:46'!
+ERROR!
+
+!testRun: #CreditCardTest #test04ACreditCardWithExpirationDatingAFutureYearIsNotExpired stamp: 'IO 11/22/2020 16:31:46'!
+ERROR!
+
+!testRun: #CreditCardTest #test05ACreditCardWithExpirationDatingAPastYearIsExpired stamp: 'IO 11/22/2020 16:31:46'!
+ERROR!
+
+!testRun: #CreditCardTest #test06CreditCarNumberCantHaveAnythingBut16Symbols stamp: 'IO 11/22/2020 16:31:46'!
+PASSED!
+
+!testRun: #CreditCardTest #test07CreditCarNumberCantHaveAnythingButNumbers stamp: 'IO 11/22/2020 16:31:46'!
+PASSED!
+
+!testRun: #CreditCardTest #test08TheNameOfACreditCardOwnerCanNotBeBlank stamp: 'IO 11/22/2020 16:31:46'!
+FAILURE!
+!CreditCard class methodsFor: 'instance creation' stamp: 'IO 11/22/2020 16:31:50' prior: 50878211!
+withNumber: aCCNumber expirationDate: anExpirationDate belongingTo: aName 
+	
+	((aCCNumber allSatisfy: [ :aDigit | aDigit isDigit ]) or: (aCCNumber size = 16)) ifFalse: [^self error: CreditCard invalidCreditCardNumber].
+
+
+	self throwCardNumberErrorIfTheNextBlockIsFalse: [].
+	
+	aName isEmpty ifTrue:[^self error: CreditCard invalidCreditCardOwnerName].
+
+	^self new initializeWithNumber: aCCNumber expirationDate: anExpirationDate belongingTo: aName ! !
+
+!testRun: #CreditCardTest #test01ACreditCardCanBeNotExpired stamp: 'IO 11/22/2020 16:31:50'!
+ERROR!
+
+!testRun: #CreditCardTest #test02ACreditCardWithExpirationDatingThisMonthAndYearIsExpired stamp: 'IO 11/22/2020 16:31:50'!
+ERROR!
+
+!testRun: #CreditCardTest #test03ACreditCardWithExpirationDatingAPastMonthThisYearIsExpired stamp: 'IO 11/22/2020 16:31:50'!
+ERROR!
+
+!testRun: #CreditCardTest #test04ACreditCardWithExpirationDatingAFutureYearIsNotExpired stamp: 'IO 11/22/2020 16:31:50'!
+ERROR!
+
+!testRun: #CreditCardTest #test05ACreditCardWithExpirationDatingAPastYearIsExpired stamp: 'IO 11/22/2020 16:31:50'!
+ERROR!
+
+!testRun: #CreditCardTest #test06CreditCarNumberCantHaveAnythingBut16Symbols stamp: 'IO 11/22/2020 16:31:50'!
+FAILURE!
+
+!testRun: #CreditCardTest #test07CreditCarNumberCantHaveAnythingButNumbers stamp: 'IO 11/22/2020 16:31:50'!
+FAILURE!
+
+!testRun: #CreditCardTest #test08TheNameOfACreditCardOwnerCanNotBeBlank stamp: 'IO 11/22/2020 16:31:50'!
+FAILURE!
+!CreditCard class methodsFor: 'instance creation' stamp: 'IO 11/22/2020 16:32:11' prior: 50878259!
+withNumber: aCCNumber expirationDate: anExpirationDate belongingTo: aName 
+	
+	(aCCNumber allSatisfy: [ :aDigit | aDigit isDigit ]) ifFalse: [^self error: CreditCard invalidCreditCardNumber].
+
+	(aCCNumber size = 16) ifFalse: [^self error: CreditCard invalidCreditCardNumber].
+	
+	aName isEmpty ifTrue:[^self error: CreditCard invalidCreditCardOwnerName].
+
+	^self new initializeWithNumber: aCCNumber expirationDate: anExpirationDate belongingTo: aName ! !
+
+!testRun: #CreditCardTest #test01ACreditCardCanBeNotExpired stamp: 'IO 11/22/2020 16:32:12'!
+PASSED!
+
+!testRun: #CreditCardTest #test02ACreditCardWithExpirationDatingThisMonthAndYearIsExpired stamp: 'IO 11/22/2020 16:32:12'!
+PASSED!
+
+!testRun: #CreditCardTest #test03ACreditCardWithExpirationDatingAPastMonthThisYearIsExpired stamp: 'IO 11/22/2020 16:32:12'!
+PASSED!
+
+!testRun: #CreditCardTest #test04ACreditCardWithExpirationDatingAFutureYearIsNotExpired stamp: 'IO 11/22/2020 16:32:12'!
+PASSED!
+
+!testRun: #CreditCardTest #test05ACreditCardWithExpirationDatingAPastYearIsExpired stamp: 'IO 11/22/2020 16:32:12'!
+PASSED!
+
+!testRun: #CreditCardTest #test06CreditCarNumberCantHaveAnythingBut16Symbols stamp: 'IO 11/22/2020 16:32:12'!
+PASSED!
+
+!testRun: #CreditCardTest #test07CreditCarNumberCantHaveAnythingButNumbers stamp: 'IO 11/22/2020 16:32:12'!
+PASSED!
+
+!testRun: #CreditCardTest #test08TheNameOfACreditCardOwnerCanNotBeBlank stamp: 'IO 11/22/2020 16:32:12'!
+PASSED!
+!CreditCard class methodsFor: 'instance creation' stamp: 'IO 11/22/2020 16:32:47' prior: 50878307!
+withNumber: aCCNumber expirationDate: anExpirationDate belongingTo: aName 
+	
+	(aCCNumber allSatisfy: [ :aDigit | aDigit isDigit ] not) ifTrue: [^self error: CreditCard invalidCreditCardNumber].
+
+	(aCCNumber size = 16) ifFalse: [^self error: CreditCard invalidCreditCardNumber].
+	
+	aName isEmpty ifTrue:[^self error: CreditCard invalidCreditCardOwnerName].
+
+	^self new initializeWithNumber: aCCNumber expirationDate: anExpirationDate belongingTo: aName ! !
+
+!testRun: #CreditCardTest #test01ACreditCardCanBeNotExpired stamp: 'IO 11/22/2020 16:32:48'!
+ERROR!
+
+!testRun: #CreditCardTest #test02ACreditCardWithExpirationDatingThisMonthAndYearIsExpired stamp: 'IO 11/22/2020 16:32:48'!
+ERROR!
+
+!testRun: #CreditCardTest #test03ACreditCardWithExpirationDatingAPastMonthThisYearIsExpired stamp: 'IO 11/22/2020 16:32:48'!
+ERROR!
+
+!testRun: #CreditCardTest #test04ACreditCardWithExpirationDatingAFutureYearIsNotExpired stamp: 'IO 11/22/2020 16:32:48'!
+ERROR!
+
+!testRun: #CreditCardTest #test05ACreditCardWithExpirationDatingAPastYearIsExpired stamp: 'IO 11/22/2020 16:32:48'!
+ERROR!
+
+!testRun: #CreditCardTest #test06CreditCarNumberCantHaveAnythingBut16Symbols stamp: 'IO 11/22/2020 16:32:48'!
+FAILURE!
+
+!testRun: #CreditCardTest #test07CreditCarNumberCantHaveAnythingButNumbers stamp: 'IO 11/22/2020 16:32:48'!
+FAILURE!
+
+!testRun: #CreditCardTest #test08TheNameOfACreditCardOwnerCanNotBeBlank stamp: 'IO 11/22/2020 16:32:48'!
+FAILURE!
+
+!testRun: #CreditCardTest #test01ACreditCardCanBeNotExpired stamp: 'IO 11/22/2020 16:32:55'!
+ERROR!
+
+!testRun: #CreditCardTest #test02ACreditCardWithExpirationDatingThisMonthAndYearIsExpired stamp: 'IO 11/22/2020 16:32:55'!
+ERROR!
+
+!testRun: #CreditCardTest #test03ACreditCardWithExpirationDatingAPastMonthThisYearIsExpired stamp: 'IO 11/22/2020 16:32:55'!
+ERROR!
+
+!testRun: #CreditCardTest #test04ACreditCardWithExpirationDatingAFutureYearIsNotExpired stamp: 'IO 11/22/2020 16:32:55'!
+ERROR!
+
+!testRun: #CreditCardTest #test05ACreditCardWithExpirationDatingAPastYearIsExpired stamp: 'IO 11/22/2020 16:32:55'!
+ERROR!
+
+!testRun: #CreditCardTest #test06CreditCarNumberCantHaveAnythingBut16Symbols stamp: 'IO 11/22/2020 16:32:55'!
+FAILURE!
+
+!testRun: #CreditCardTest #test07CreditCarNumberCantHaveAnythingButNumbers stamp: 'IO 11/22/2020 16:32:55'!
+FAILURE!
+
+!testRun: #CreditCardTest #test08TheNameOfACreditCardOwnerCanNotBeBlank stamp: 'IO 11/22/2020 16:32:55'!
+FAILURE!
+!CreditCard class methodsFor: 'instance creation' stamp: 'IO 11/22/2020 16:33:00' prior: 50878355!
+withNumber: aCCNumber expirationDate: anExpirationDate belongingTo: aName 
+	
+	(aCCNumber allSatisfy: [ :aDigit | aDigit isDigit ] negated ) ifFalse: [^self error: CreditCard invalidCreditCardNumber].
+
+	(aCCNumber size = 16) ifFalse: [^self error: CreditCard invalidCreditCardNumber].
+	
+	aName isEmpty ifTrue:[^self error: CreditCard invalidCreditCardOwnerName].
+
+	^self new initializeWithNumber: aCCNumber expirationDate: anExpirationDate belongingTo: aName ! !
+
+!testRun: #CreditCardTest #test01ACreditCardCanBeNotExpired stamp: 'IO 11/22/2020 16:33:01'!
+ERROR!
+
+!testRun: #CreditCardTest #test02ACreditCardWithExpirationDatingThisMonthAndYearIsExpired stamp: 'IO 11/22/2020 16:33:01'!
+ERROR!
+
+!testRun: #CreditCardTest #test03ACreditCardWithExpirationDatingAPastMonthThisYearIsExpired stamp: 'IO 11/22/2020 16:33:01'!
+ERROR!
+
+!testRun: #CreditCardTest #test04ACreditCardWithExpirationDatingAFutureYearIsNotExpired stamp: 'IO 11/22/2020 16:33:01'!
+ERROR!
+
+!testRun: #CreditCardTest #test05ACreditCardWithExpirationDatingAPastYearIsExpired stamp: 'IO 11/22/2020 16:33:01'!
+ERROR!
+
+!testRun: #CreditCardTest #test06CreditCarNumberCantHaveAnythingBut16Symbols stamp: 'IO 11/22/2020 16:33:01'!
+FAILURE!
+
+!testRun: #CreditCardTest #test07CreditCarNumberCantHaveAnythingButNumbers stamp: 'IO 11/22/2020 16:33:01'!
+FAILURE!
+
+!testRun: #CreditCardTest #test08TheNameOfACreditCardOwnerCanNotBeBlank stamp: 'IO 11/22/2020 16:33:01'!
+FAILURE!
+!CreditCard class methodsFor: 'instance creation' stamp: 'IO 11/22/2020 16:33:06' prior: 50878434!
+withNumber: aCCNumber expirationDate: anExpirationDate belongingTo: aName 
+	
+	(aCCNumber allSatisfy: [ :aDigit | aDigit isDigit ] negated ) ifTrue: [^self error: CreditCard invalidCreditCardNumber].
+
+	(aCCNumber size = 16) ifFalse: [^self error: CreditCard invalidCreditCardNumber].
+	
+	aName isEmpty ifTrue:[^self error: CreditCard invalidCreditCardOwnerName].
+
+	^self new initializeWithNumber: aCCNumber expirationDate: anExpirationDate belongingTo: aName ! !
+
+!testRun: #CreditCardTest #test01ACreditCardCanBeNotExpired stamp: 'IO 11/22/2020 16:33:07'!
+ERROR!
+
+!testRun: #CreditCardTest #test02ACreditCardWithExpirationDatingThisMonthAndYearIsExpired stamp: 'IO 11/22/2020 16:33:07'!
+ERROR!
+
+!testRun: #CreditCardTest #test03ACreditCardWithExpirationDatingAPastMonthThisYearIsExpired stamp: 'IO 11/22/2020 16:33:07'!
+ERROR!
+
+!testRun: #CreditCardTest #test04ACreditCardWithExpirationDatingAFutureYearIsNotExpired stamp: 'IO 11/22/2020 16:33:07'!
+ERROR!
+
+!testRun: #CreditCardTest #test05ACreditCardWithExpirationDatingAPastYearIsExpired stamp: 'IO 11/22/2020 16:33:07'!
+ERROR!
+
+!testRun: #CreditCardTest #test06CreditCarNumberCantHaveAnythingBut16Symbols stamp: 'IO 11/22/2020 16:33:07'!
+FAILURE!
+
+!testRun: #CreditCardTest #test07CreditCarNumberCantHaveAnythingButNumbers stamp: 'IO 11/22/2020 16:33:07'!
+FAILURE!
+
+!testRun: #CreditCardTest #test08TheNameOfACreditCardOwnerCanNotBeBlank stamp: 'IO 11/22/2020 16:33:07'!
+FAILURE!
+!CreditCard class methodsFor: 'instance creation' stamp: 'IO 11/22/2020 16:33:12' prior: 50878482!
+withNumber: aCCNumber expirationDate: anExpirationDate belongingTo: aName 
+	
+	(aCCNumber allSatisfy: [ :aDigit | aDigit isDigit ]) ifFalse: [^self error: CreditCard invalidCreditCardNumber].
+
+	(aCCNumber size = 16) ifFalse: [^self error: CreditCard invalidCreditCardNumber].
+	
+	aName isEmpty ifTrue:[^self error: CreditCard invalidCreditCardOwnerName].
+
+	^self new initializeWithNumber: aCCNumber expirationDate: anExpirationDate belongingTo: aName ! !
+
+!testRun: #CreditCardTest #test01ACreditCardCanBeNotExpired stamp: 'IO 11/22/2020 16:33:13'!
+PASSED!
+
+!testRun: #CreditCardTest #test02ACreditCardWithExpirationDatingThisMonthAndYearIsExpired stamp: 'IO 11/22/2020 16:33:13'!
+PASSED!
+
+!testRun: #CreditCardTest #test03ACreditCardWithExpirationDatingAPastMonthThisYearIsExpired stamp: 'IO 11/22/2020 16:33:13'!
+PASSED!
+
+!testRun: #CreditCardTest #test04ACreditCardWithExpirationDatingAFutureYearIsNotExpired stamp: 'IO 11/22/2020 16:33:13'!
+PASSED!
+
+!testRun: #CreditCardTest #test05ACreditCardWithExpirationDatingAPastYearIsExpired stamp: 'IO 11/22/2020 16:33:13'!
+PASSED!
+
+!testRun: #CreditCardTest #test06CreditCarNumberCantHaveAnythingBut16Symbols stamp: 'IO 11/22/2020 16:33:13'!
+PASSED!
+
+!testRun: #CreditCardTest #test07CreditCarNumberCantHaveAnythingButNumbers stamp: 'IO 11/22/2020 16:33:13'!
+PASSED!
+
+!testRun: #CreditCardTest #test08TheNameOfACreditCardOwnerCanNotBeBlank stamp: 'IO 11/22/2020 16:33:13'!
+PASSED!
+
+true negated !
+
+true not !
+!CreditCard class methodsFor: 'instance creation' stamp: 'IO 11/22/2020 16:33:40' prior: 50878530!
+withNumber: aCCNumber expirationDate: anExpirationDate belongingTo: aName 
+	
+	(aCCNumber allSatisfy: [ :aDigit | aDigit isDigit ] not) ifTrue: [^self error: CreditCard invalidCreditCardNumber].
+
+	(aCCNumber size = 16) ifFalse: [^self error: CreditCard invalidCreditCardNumber].
+	
+	aName isEmpty ifTrue:[^self error: CreditCard invalidCreditCardOwnerName].
+
+	^self new initializeWithNumber: aCCNumber expirationDate: anExpirationDate belongingTo: aName ! !
+
+!testRun: #CreditCardTest #test01ACreditCardCanBeNotExpired stamp: 'IO 11/22/2020 16:33:41'!
+ERROR!
+
+!testRun: #CreditCardTest #test02ACreditCardWithExpirationDatingThisMonthAndYearIsExpired stamp: 'IO 11/22/2020 16:33:41'!
+ERROR!
+
+!testRun: #CreditCardTest #test03ACreditCardWithExpirationDatingAPastMonthThisYearIsExpired stamp: 'IO 11/22/2020 16:33:41'!
+ERROR!
+
+!testRun: #CreditCardTest #test04ACreditCardWithExpirationDatingAFutureYearIsNotExpired stamp: 'IO 11/22/2020 16:33:41'!
+ERROR!
+
+!testRun: #CreditCardTest #test05ACreditCardWithExpirationDatingAPastYearIsExpired stamp: 'IO 11/22/2020 16:33:41'!
+ERROR!
+
+!testRun: #CreditCardTest #test06CreditCarNumberCantHaveAnythingBut16Symbols stamp: 'IO 11/22/2020 16:33:41'!
+FAILURE!
+
+!testRun: #CreditCardTest #test07CreditCarNumberCantHaveAnythingButNumbers stamp: 'IO 11/22/2020 16:33:41'!
+FAILURE!
+
+!testRun: #CreditCardTest #test08TheNameOfACreditCardOwnerCanNotBeBlank stamp: 'IO 11/22/2020 16:33:41'!
+FAILURE!
+!CreditCard class methodsFor: 'instance creation' stamp: 'IO 11/22/2020 16:33:49' prior: 50878579!
+withNumber: aCCNumber expirationDate: anExpirationDate belongingTo: aName 
+	
+	((aCCNumber allSatisfy: [ :aDigit | aDigit isDigit ]) not) ifTrue: [^self error: CreditCard invalidCreditCardNumber].
+
+	(aCCNumber size = 16) ifFalse: [^self error: CreditCard invalidCreditCardNumber].
+	
+	aName isEmpty ifTrue:[^self error: CreditCard invalidCreditCardOwnerName].
+
+	^self new initializeWithNumber: aCCNumber expirationDate: anExpirationDate belongingTo: aName ! !
+
+!testRun: #CreditCardTest #test01ACreditCardCanBeNotExpired stamp: 'IO 11/22/2020 16:33:50'!
+PASSED!
+
+!testRun: #CreditCardTest #test02ACreditCardWithExpirationDatingThisMonthAndYearIsExpired stamp: 'IO 11/22/2020 16:33:50'!
+PASSED!
+
+!testRun: #CreditCardTest #test03ACreditCardWithExpirationDatingAPastMonthThisYearIsExpired stamp: 'IO 11/22/2020 16:33:50'!
+PASSED!
+
+!testRun: #CreditCardTest #test04ACreditCardWithExpirationDatingAFutureYearIsNotExpired stamp: 'IO 11/22/2020 16:33:50'!
+PASSED!
+
+!testRun: #CreditCardTest #test05ACreditCardWithExpirationDatingAPastYearIsExpired stamp: 'IO 11/22/2020 16:33:50'!
+PASSED!
+
+!testRun: #CreditCardTest #test06CreditCarNumberCantHaveAnythingBut16Symbols stamp: 'IO 11/22/2020 16:33:50'!
+PASSED!
+
+!testRun: #CreditCardTest #test07CreditCarNumberCantHaveAnythingButNumbers stamp: 'IO 11/22/2020 16:33:50'!
+PASSED!
+
+!testRun: #CreditCardTest #test08TheNameOfACreditCardOwnerCanNotBeBlank stamp: 'IO 11/22/2020 16:33:50'!
+PASSED!
+!CreditCard class methodsFor: 'instance creation' stamp: 'IO 11/22/2020 16:34:16' prior: 50878627!
+withNumber: aCCNumber expirationDate: anExpirationDate belongingTo: aName 
+	
+	((aCCNumber allSatisfy: [ :aDigit | aDigit isDigit ]) not) ifTrue: [^self error: CreditCard invalidCreditCardNumber].
+
+	((aCCNumber size = 16) not) ifTrue: [^self error: CreditCard invalidCreditCardNumber].
+	
+	aName isEmpty ifTrue:[^self error: CreditCard invalidCreditCardOwnerName].
+
+	^self new initializeWithNumber: aCCNumber expirationDate: anExpirationDate belongingTo: aName ! !
+
+!testRun: #CreditCardTest #test01ACreditCardCanBeNotExpired stamp: 'IO 11/22/2020 16:34:16'!
+PASSED!
+
+!testRun: #CreditCardTest #test02ACreditCardWithExpirationDatingThisMonthAndYearIsExpired stamp: 'IO 11/22/2020 16:34:16'!
+PASSED!
+
+!testRun: #CreditCardTest #test03ACreditCardWithExpirationDatingAPastMonthThisYearIsExpired stamp: 'IO 11/22/2020 16:34:16'!
+PASSED!
+
+!testRun: #CreditCardTest #test04ACreditCardWithExpirationDatingAFutureYearIsNotExpired stamp: 'IO 11/22/2020 16:34:16'!
+PASSED!
+
+!testRun: #CreditCardTest #test05ACreditCardWithExpirationDatingAPastYearIsExpired stamp: 'IO 11/22/2020 16:34:16'!
+PASSED!
+
+!testRun: #CreditCardTest #test06CreditCarNumberCantHaveAnythingBut16Symbols stamp: 'IO 11/22/2020 16:34:16'!
+PASSED!
+
+!testRun: #CreditCardTest #test07CreditCarNumberCantHaveAnythingButNumbers stamp: 'IO 11/22/2020 16:34:16'!
+PASSED!
+
+!testRun: #CreditCardTest #test08TheNameOfACreditCardOwnerCanNotBeBlank stamp: 'IO 11/22/2020 16:34:16'!
+PASSED!
+!CreditCard class methodsFor: 'instance creation' stamp: 'IO 11/22/2020 16:34:52' prior: 50878675!
+withNumber: aCCNumber expirationDate: anExpirationDate belongingTo: aName 
+	
+	(
+		((aCCNumber allSatisfy: [ :aDigit | aDigit isDigit ]) not) or:
+		((aCCNumber size = 16) not)
+	) ifTrue: [^self error: CreditCard invalidCreditCardNumber].
+	
+	aName isEmpty ifTrue:[^self error: CreditCard invalidCreditCardOwnerName].
+
+	^self new initializeWithNumber: aCCNumber expirationDate: anExpirationDate belongingTo: aName ! !
+
+!testRun: #CreditCardTest #test01ACreditCardCanBeNotExpired stamp: 'IO 11/22/2020 16:34:53'!
+PASSED!
+
+!testRun: #CreditCardTest #test02ACreditCardWithExpirationDatingThisMonthAndYearIsExpired stamp: 'IO 11/22/2020 16:34:53'!
+PASSED!
+
+!testRun: #CreditCardTest #test03ACreditCardWithExpirationDatingAPastMonthThisYearIsExpired stamp: 'IO 11/22/2020 16:34:53'!
+PASSED!
+
+!testRun: #CreditCardTest #test04ACreditCardWithExpirationDatingAFutureYearIsNotExpired stamp: 'IO 11/22/2020 16:34:53'!
+PASSED!
+
+!testRun: #CreditCardTest #test05ACreditCardWithExpirationDatingAPastYearIsExpired stamp: 'IO 11/22/2020 16:34:53'!
+PASSED!
+
+!testRun: #CreditCardTest #test06CreditCarNumberCantHaveAnythingBut16Symbols stamp: 'IO 11/22/2020 16:34:53'!
+PASSED!
+
+!testRun: #CreditCardTest #test07CreditCarNumberCantHaveAnythingButNumbers stamp: 'IO 11/22/2020 16:34:53'!
+PASSED!
+
+!testRun: #CreditCardTest #test08TheNameOfACreditCardOwnerCanNotBeBlank stamp: 'IO 11/22/2020 16:34:53'!
+PASSED!
+!CreditCard class methodsFor: 'instance creation' stamp: 'IO 11/22/2020 16:35:03' prior: 50878723!
+withNumber: aCCNumber expirationDate: anExpirationDate belongingTo: aName 
+	
+	(
+		((aCCNumber allSatisfy: [ :aDigit | aDigit isDigit ])) and:
+		((aCCNumber size = 16)) not
+	) ifTrue: [^self error: CreditCard invalidCreditCardNumber].
+	
+	aName isEmpty ifTrue:[^self error: CreditCard invalidCreditCardOwnerName].
+
+	^self new initializeWithNumber: aCCNumber expirationDate: anExpirationDate belongingTo: aName ! !
+
+!testRun: #CreditCardTest #test01ACreditCardCanBeNotExpired stamp: 'IO 11/22/2020 16:35:04'!
+PASSED!
+
+!testRun: #CreditCardTest #test02ACreditCardWithExpirationDatingThisMonthAndYearIsExpired stamp: 'IO 11/22/2020 16:35:04'!
+PASSED!
+
+!testRun: #CreditCardTest #test03ACreditCardWithExpirationDatingAPastMonthThisYearIsExpired stamp: 'IO 11/22/2020 16:35:04'!
+PASSED!
+
+!testRun: #CreditCardTest #test04ACreditCardWithExpirationDatingAFutureYearIsNotExpired stamp: 'IO 11/22/2020 16:35:04'!
+PASSED!
+
+!testRun: #CreditCardTest #test05ACreditCardWithExpirationDatingAPastYearIsExpired stamp: 'IO 11/22/2020 16:35:04'!
+PASSED!
+
+!testRun: #CreditCardTest #test06CreditCarNumberCantHaveAnythingBut16Symbols stamp: 'IO 11/22/2020 16:35:04'!
+PASSED!
+
+!testRun: #CreditCardTest #test07CreditCarNumberCantHaveAnythingButNumbers stamp: 'IO 11/22/2020 16:35:04'!
+FAILURE!
+
+!testRun: #CreditCardTest #test08TheNameOfACreditCardOwnerCanNotBeBlank stamp: 'IO 11/22/2020 16:35:04'!
+PASSED!
+
+!testRun: #CreditCardTest #test07CreditCarNumberCantHaveAnythingButNumbers stamp: 'IO 11/22/2020 16:35:04'!
+FAILURE!
+!CreditCard class methodsFor: 'instance creation' stamp: 'IO 11/22/2020 16:35:12' prior: 50878770!
+withNumber: aCCNumber expirationDate: anExpirationDate belongingTo: aName 
+	
+	(
+		(((aCCNumber allSatisfy: [ :aDigit | aDigit isDigit ])) and:
+		((aCCNumber size = 16))) not
+	) ifTrue: [^self error: CreditCard invalidCreditCardNumber].
+	
+	aName isEmpty ifTrue:[^self error: CreditCard invalidCreditCardOwnerName].
+
+	^self new initializeWithNumber: aCCNumber expirationDate: anExpirationDate belongingTo: aName ! !
+
+!testRun: #CreditCardTest #test01ACreditCardCanBeNotExpired stamp: 'IO 11/22/2020 16:35:13'!
+PASSED!
+
+!testRun: #CreditCardTest #test02ACreditCardWithExpirationDatingThisMonthAndYearIsExpired stamp: 'IO 11/22/2020 16:35:13'!
+PASSED!
+
+!testRun: #CreditCardTest #test03ACreditCardWithExpirationDatingAPastMonthThisYearIsExpired stamp: 'IO 11/22/2020 16:35:13'!
+PASSED!
+
+!testRun: #CreditCardTest #test04ACreditCardWithExpirationDatingAFutureYearIsNotExpired stamp: 'IO 11/22/2020 16:35:13'!
+PASSED!
+
+!testRun: #CreditCardTest #test05ACreditCardWithExpirationDatingAPastYearIsExpired stamp: 'IO 11/22/2020 16:35:13'!
+PASSED!
+
+!testRun: #CreditCardTest #test06CreditCarNumberCantHaveAnythingBut16Symbols stamp: 'IO 11/22/2020 16:35:13'!
+PASSED!
+
+!testRun: #CreditCardTest #test07CreditCarNumberCantHaveAnythingButNumbers stamp: 'IO 11/22/2020 16:35:13'!
+PASSED!
+
+!testRun: #CreditCardTest #test08TheNameOfACreditCardOwnerCanNotBeBlank stamp: 'IO 11/22/2020 16:35:13'!
+PASSED!
+!CreditCard class methodsFor: 'instance creation' stamp: 'IO 11/22/2020 16:35:19' prior: 50878821!
+withNumber: aCCNumber expirationDate: anExpirationDate belongingTo: aName 
+	
+	(
+		(((aCCNumber allSatisfy: [ :aDigit | aDigit isDigit ])) and:
+		((aCCNumber size = 16)))
+	) ifFalse: [^self error: CreditCard invalidCreditCardNumber].
+	
+	aName isEmpty ifTrue:[^self error: CreditCard invalidCreditCardOwnerName].
+
+	^self new initializeWithNumber: aCCNumber expirationDate: anExpirationDate belongingTo: aName ! !
+
+!testRun: #CreditCardTest #test01ACreditCardCanBeNotExpired stamp: 'IO 11/22/2020 16:35:20'!
+PASSED!
+
+!testRun: #CreditCardTest #test02ACreditCardWithExpirationDatingThisMonthAndYearIsExpired stamp: 'IO 11/22/2020 16:35:20'!
+PASSED!
+
+!testRun: #CreditCardTest #test03ACreditCardWithExpirationDatingAPastMonthThisYearIsExpired stamp: 'IO 11/22/2020 16:35:20'!
+PASSED!
+
+!testRun: #CreditCardTest #test04ACreditCardWithExpirationDatingAFutureYearIsNotExpired stamp: 'IO 11/22/2020 16:35:20'!
+PASSED!
+
+!testRun: #CreditCardTest #test05ACreditCardWithExpirationDatingAPastYearIsExpired stamp: 'IO 11/22/2020 16:35:20'!
+PASSED!
+
+!testRun: #CreditCardTest #test06CreditCarNumberCantHaveAnythingBut16Symbols stamp: 'IO 11/22/2020 16:35:20'!
+PASSED!
+
+!testRun: #CreditCardTest #test07CreditCarNumberCantHaveAnythingButNumbers stamp: 'IO 11/22/2020 16:35:20'!
+PASSED!
+
+!testRun: #CreditCardTest #test08TheNameOfACreditCardOwnerCanNotBeBlank stamp: 'IO 11/22/2020 16:35:20'!
+PASSED!
+!CreditCard class methodsFor: 'instance creation' stamp: 'IO 11/22/2020 16:35:31' prior: 50878868!
+withNumber: aCCNumber expirationDate: anExpirationDate belongingTo: aName 
+	
+	(
+		((aCCNumber allSatisfy: [ :aDigit | aDigit isDigit ]) and:
+		((aCCNumber size = 16)))
+	) ifFalse: [^self error: CreditCard invalidCreditCardNumber].
+	
+	aName isEmpty ifTrue:[^self error: CreditCard invalidCreditCardOwnerName].
+
+	^self new initializeWithNumber: aCCNumber expirationDate: anExpirationDate belongingTo: aName ! !
+
+!testRun: #CreditCardTest #test01ACreditCardCanBeNotExpired stamp: 'IO 11/22/2020 16:35:31'!
+PASSED!
+
+!testRun: #CreditCardTest #test02ACreditCardWithExpirationDatingThisMonthAndYearIsExpired stamp: 'IO 11/22/2020 16:35:31'!
+PASSED!
+
+!testRun: #CreditCardTest #test03ACreditCardWithExpirationDatingAPastMonthThisYearIsExpired stamp: 'IO 11/22/2020 16:35:31'!
+PASSED!
+
+!testRun: #CreditCardTest #test04ACreditCardWithExpirationDatingAFutureYearIsNotExpired stamp: 'IO 11/22/2020 16:35:31'!
+PASSED!
+
+!testRun: #CreditCardTest #test05ACreditCardWithExpirationDatingAPastYearIsExpired stamp: 'IO 11/22/2020 16:35:31'!
+PASSED!
+
+!testRun: #CreditCardTest #test06CreditCarNumberCantHaveAnythingBut16Symbols stamp: 'IO 11/22/2020 16:35:31'!
+PASSED!
+
+!testRun: #CreditCardTest #test07CreditCarNumberCantHaveAnythingButNumbers stamp: 'IO 11/22/2020 16:35:31'!
+PASSED!
+
+!testRun: #CreditCardTest #test08TheNameOfACreditCardOwnerCanNotBeBlank stamp: 'IO 11/22/2020 16:35:31'!
+PASSED!
+!CreditCard class methodsFor: 'instance creation' stamp: 'IO 11/22/2020 16:35:42' prior: 50878915!
+withNumber: aCCNumber expirationDate: anExpirationDate belongingTo: aName 
+	
+	(
+		((aCCNumber allSatisfy: [ :aDigit | aDigit isDigit ]) and:
+		(aCCNumber size = 16))
+	) ifFalse: [^self error: CreditCard invalidCreditCardNumber].
+	
+	aName isEmpty ifTrue:[^self error: CreditCard invalidCreditCardOwnerName].
+
+	^self new initializeWithNumber: aCCNumber expirationDate: anExpirationDate belongingTo: aName ! !
+
+!testRun: #CreditCardTest #test01ACreditCardCanBeNotExpired stamp: 'IO 11/22/2020 16:35:43'!
+PASSED!
+
+!testRun: #CreditCardTest #test02ACreditCardWithExpirationDatingThisMonthAndYearIsExpired stamp: 'IO 11/22/2020 16:35:43'!
+PASSED!
+
+!testRun: #CreditCardTest #test03ACreditCardWithExpirationDatingAPastMonthThisYearIsExpired stamp: 'IO 11/22/2020 16:35:43'!
+PASSED!
+
+!testRun: #CreditCardTest #test04ACreditCardWithExpirationDatingAFutureYearIsNotExpired stamp: 'IO 11/22/2020 16:35:43'!
+PASSED!
+
+!testRun: #CreditCardTest #test05ACreditCardWithExpirationDatingAPastYearIsExpired stamp: 'IO 11/22/2020 16:35:43'!
+PASSED!
+
+!testRun: #CreditCardTest #test06CreditCarNumberCantHaveAnythingBut16Symbols stamp: 'IO 11/22/2020 16:35:43'!
+PASSED!
+
+!testRun: #CreditCardTest #test07CreditCarNumberCantHaveAnythingButNumbers stamp: 'IO 11/22/2020 16:35:43'!
+PASSED!
+
+!testRun: #CreditCardTest #test08TheNameOfACreditCardOwnerCanNotBeBlank stamp: 'IO 11/22/2020 16:35:43'!
+PASSED!
+!CreditCard class methodsFor: 'instance creation' stamp: 'IO 11/22/2020 16:36:06' prior: 50878962!
+withNumber: aCCNumber expirationDate: anExpirationDate belongingTo: aName 
+	
+	(
+		((aCCNumber allSatisfy: [ :aDigit | aDigit isDigit ]) and:
+		aCCNumber size = 16)
+	) ifFalse: [^self error: CreditCard invalidCreditCardNumber].
+	
+	aName isEmpty ifTrue:[^self error: CreditCard invalidCreditCardOwnerName].
+
+	^self new initializeWithNumber: aCCNumber expirationDate: anExpirationDate belongingTo: aName ! !
+
+!testRun: #CreditCardTest #test01ACreditCardCanBeNotExpired stamp: 'IO 11/22/2020 16:36:06'!
+PASSED!
+
+!testRun: #CreditCardTest #test02ACreditCardWithExpirationDatingThisMonthAndYearIsExpired stamp: 'IO 11/22/2020 16:36:06'!
+PASSED!
+
+!testRun: #CreditCardTest #test03ACreditCardWithExpirationDatingAPastMonthThisYearIsExpired stamp: 'IO 11/22/2020 16:36:06'!
+PASSED!
+
+!testRun: #CreditCardTest #test04ACreditCardWithExpirationDatingAFutureYearIsNotExpired stamp: 'IO 11/22/2020 16:36:06'!
+PASSED!
+
+!testRun: #CreditCardTest #test05ACreditCardWithExpirationDatingAPastYearIsExpired stamp: 'IO 11/22/2020 16:36:06'!
+PASSED!
+
+!testRun: #CreditCardTest #test06CreditCarNumberCantHaveAnythingBut16Symbols stamp: 'IO 11/22/2020 16:36:06'!
+PASSED!
+
+!testRun: #CreditCardTest #test07CreditCarNumberCantHaveAnythingButNumbers stamp: 'IO 11/22/2020 16:36:06'!
+PASSED!
+
+!testRun: #CreditCardTest #test08TheNameOfACreditCardOwnerCanNotBeBlank stamp: 'IO 11/22/2020 16:36:06'!
+PASSED!
+!CreditCard class methodsFor: 'instance creation' stamp: 'IO 11/22/2020 16:36:11' prior: 50879009!
+withNumber: aCCNumber expirationDate: anExpirationDate belongingTo: aName 
+	
+	(
+		(aCCNumber allSatisfy: [ :aDigit | aDigit isDigit ]) and:
+		aCCNumber size = 16
+	) ifFalse: [^self error: CreditCard invalidCreditCardNumber].
+	
+	aName isEmpty ifTrue:[^self error: CreditCard invalidCreditCardOwnerName].
+
+	^self new initializeWithNumber: aCCNumber expirationDate: anExpirationDate belongingTo: aName ! !
+
+!testRun: #CreditCardTest #test01ACreditCardCanBeNotExpired stamp: 'IO 11/22/2020 16:36:12'!
+PASSED!
+
+!testRun: #CreditCardTest #test02ACreditCardWithExpirationDatingThisMonthAndYearIsExpired stamp: 'IO 11/22/2020 16:36:12'!
+PASSED!
+
+!testRun: #CreditCardTest #test03ACreditCardWithExpirationDatingAPastMonthThisYearIsExpired stamp: 'IO 11/22/2020 16:36:12'!
+PASSED!
+
+!testRun: #CreditCardTest #test04ACreditCardWithExpirationDatingAFutureYearIsNotExpired stamp: 'IO 11/22/2020 16:36:12'!
+PASSED!
+
+!testRun: #CreditCardTest #test05ACreditCardWithExpirationDatingAPastYearIsExpired stamp: 'IO 11/22/2020 16:36:12'!
+PASSED!
+
+!testRun: #CreditCardTest #test06CreditCarNumberCantHaveAnythingBut16Symbols stamp: 'IO 11/22/2020 16:36:12'!
+PASSED!
+
+!testRun: #CreditCardTest #test07CreditCarNumberCantHaveAnythingButNumbers stamp: 'IO 11/22/2020 16:36:12'!
+PASSED!
+
+!testRun: #CreditCardTest #test08TheNameOfACreditCardOwnerCanNotBeBlank stamp: 'IO 11/22/2020 16:36:12'!
+PASSED!
+!CreditCard class methodsFor: 'instance creation' stamp: 'IO 11/22/2020 16:36:26' prior: 50879056!
+withNumber: aCCNumber expirationDate: anExpirationDate belongingTo: aName 
+	
+	(
+		(aCCNumber allSatisfy: [ :aDigit | aDigit isDigit ]) and:
+		aCCNumber size = 16
+	) ifFalse: [^self error: CreditCard invalidCreditCardNumber].
+
+	aName isEmpty ifTrue:[^self error: CreditCard invalidCreditCardOwnerName].
+
+	^self new initializeWithNumber: aCCNumber expirationDate: anExpirationDate belongingTo: aName ! !
+
+!testRun: #CreditCardTest #test01ACreditCardCanBeNotExpired stamp: 'IO 11/22/2020 16:36:26'!
+PASSED!
+
+!testRun: #CreditCardTest #test02ACreditCardWithExpirationDatingThisMonthAndYearIsExpired stamp: 'IO 11/22/2020 16:36:26'!
+PASSED!
+
+!testRun: #CreditCardTest #test03ACreditCardWithExpirationDatingAPastMonthThisYearIsExpired stamp: 'IO 11/22/2020 16:36:26'!
+PASSED!
+
+!testRun: #CreditCardTest #test04ACreditCardWithExpirationDatingAFutureYearIsNotExpired stamp: 'IO 11/22/2020 16:36:26'!
+PASSED!
+
+!testRun: #CreditCardTest #test05ACreditCardWithExpirationDatingAPastYearIsExpired stamp: 'IO 11/22/2020 16:36:27'!
+PASSED!
+
+!testRun: #CreditCardTest #test06CreditCarNumberCantHaveAnythingBut16Symbols stamp: 'IO 11/22/2020 16:36:27'!
+PASSED!
+
+!testRun: #CreditCardTest #test07CreditCarNumberCantHaveAnythingButNumbers stamp: 'IO 11/22/2020 16:36:27'!
+PASSED!
+
+!testRun: #CreditCardTest #test08TheNameOfACreditCardOwnerCanNotBeBlank stamp: 'IO 11/22/2020 16:36:27'!
+PASSED!
+
+!methodRemoval: CreditCard class #throwCardNumberErrorIfTheNextBlockIsFalse: stamp: 'IO 11/22/2020 16:36:32'!
+throwCardNumberErrorIfTheNextBlockIsFalse: aBlock
+	
+	aBlock value ifFalse:[^self error: CreditCard invalidCreditCardNumber].
+	!
+
+!testRun: #CreditCardTest #test01ACreditCardCanBeNotExpired stamp: 'IO 11/22/2020 16:36:34'!
+PASSED!
+
+!testRun: #CreditCardTest #test02ACreditCardWithExpirationDatingThisMonthAndYearIsExpired stamp: 'IO 11/22/2020 16:36:34'!
+PASSED!
+
+!testRun: #CreditCardTest #test03ACreditCardWithExpirationDatingAPastMonthThisYearIsExpired stamp: 'IO 11/22/2020 16:36:34'!
+PASSED!
+
+!testRun: #CreditCardTest #test04ACreditCardWithExpirationDatingAFutureYearIsNotExpired stamp: 'IO 11/22/2020 16:36:34'!
+PASSED!
+
+!testRun: #CreditCardTest #test05ACreditCardWithExpirationDatingAPastYearIsExpired stamp: 'IO 11/22/2020 16:36:34'!
+PASSED!
+
+!testRun: #CreditCardTest #test06CreditCarNumberCantHaveAnythingBut16Symbols stamp: 'IO 11/22/2020 16:36:34'!
+PASSED!
+
+!testRun: #CreditCardTest #test07CreditCarNumberCantHaveAnythingButNumbers stamp: 'IO 11/22/2020 16:36:34'!
+PASSED!
+
+!testRun: #CreditCardTest #test08TheNameOfACreditCardOwnerCanNotBeBlank stamp: 'IO 11/22/2020 16:36:34'!
+PASSED!
+!CreditCard class methodsFor: 'instance creation' stamp: 'IO 11/22/2020 16:36:53' prior: 50879103!
+withNumber: aCCNumber expirationDate: anExpirationDate belongingTo: aName 
+	
+	(
+		(aCCNumber allSatisfy: [ :aDigit | aDigit isDigit ]) and:
+		aCCNumber size = 16
+	) ifFalse: [^self error: CreditCard invalidCreditCardNumber].
+
+	aName isEmpty ifTrue: [^self error: CreditCard invalidCreditCardOwnerName].
+
+	^self new initializeWithNumber: aCCNumber expirationDate: anExpirationDate belongingTo: aName ! !
+
+!testRun: #CreditCardTest #test01ACreditCardCanBeNotExpired stamp: 'IO 11/22/2020 16:36:54'!
+PASSED!
+
+!testRun: #CreditCardTest #test02ACreditCardWithExpirationDatingThisMonthAndYearIsExpired stamp: 'IO 11/22/2020 16:36:54'!
+PASSED!
+
+!testRun: #CreditCardTest #test03ACreditCardWithExpirationDatingAPastMonthThisYearIsExpired stamp: 'IO 11/22/2020 16:36:54'!
+PASSED!
+
+!testRun: #CreditCardTest #test04ACreditCardWithExpirationDatingAFutureYearIsNotExpired stamp: 'IO 11/22/2020 16:36:54'!
+PASSED!
+
+!testRun: #CreditCardTest #test05ACreditCardWithExpirationDatingAPastYearIsExpired stamp: 'IO 11/22/2020 16:36:54'!
+PASSED!
+
+!testRun: #CreditCardTest #test06CreditCarNumberCantHaveAnythingBut16Symbols stamp: 'IO 11/22/2020 16:36:54'!
+PASSED!
+
+!testRun: #CreditCardTest #test07CreditCarNumberCantHaveAnythingButNumbers stamp: 'IO 11/22/2020 16:36:54'!
+PASSED!
+
+!testRun: #CreditCardTest #test08TheNameOfACreditCardOwnerCanNotBeBlank stamp: 'IO 11/22/2020 16:36:54'!
+PASSED!
+!CreditCard class methodsFor: 'instance creation' stamp: 'IO 11/22/2020 16:37:02' prior: 50879187!
+withNumber: aCCNumber expirationDate: anExpirationDate belongingTo: aName 
+	
+	(
+		(aCCNumber allSatisfy: [ :aDigit | aDigit isDigit ]) and:
+		aCCNumber size = 16
+	) ifFalse: [^self error: CreditCard invalidCreditCardNumber].
+
+	aName notEmpty ifFalse: [^self error: CreditCard invalidCreditCardOwnerName].
+
+	^self new initializeWithNumber: aCCNumber expirationDate: anExpirationDate belongingTo: aName ! !
+
+!testRun: #CreditCardTest #test01ACreditCardCanBeNotExpired stamp: 'IO 11/22/2020 16:37:03'!
+PASSED!
+
+!testRun: #CreditCardTest #test02ACreditCardWithExpirationDatingThisMonthAndYearIsExpired stamp: 'IO 11/22/2020 16:37:03'!
+PASSED!
+
+!testRun: #CreditCardTest #test03ACreditCardWithExpirationDatingAPastMonthThisYearIsExpired stamp: 'IO 11/22/2020 16:37:03'!
+PASSED!
+
+!testRun: #CreditCardTest #test04ACreditCardWithExpirationDatingAFutureYearIsNotExpired stamp: 'IO 11/22/2020 16:37:03'!
+PASSED!
+
+!testRun: #CreditCardTest #test05ACreditCardWithExpirationDatingAPastYearIsExpired stamp: 'IO 11/22/2020 16:37:03'!
+PASSED!
+
+!testRun: #CreditCardTest #test06CreditCarNumberCantHaveAnythingBut16Symbols stamp: 'IO 11/22/2020 16:37:03'!
+PASSED!
+
+!testRun: #CreditCardTest #test07CreditCarNumberCantHaveAnythingButNumbers stamp: 'IO 11/22/2020 16:37:03'!
+PASSED!
+
+!testRun: #CreditCardTest #test08TheNameOfACreditCardOwnerCanNotBeBlank stamp: 'IO 11/22/2020 16:37:03'!
+PASSED!
+!CreditCard class methodsFor: 'instance creation' stamp: 'IO 11/22/2020 16:37:07' prior: 50879234!
+withNumber: aCCNumber expirationDate: anExpirationDate belongingTo: aName 
+	
+	(
+		(aCCNumber allSatisfy: [ :aDigit | aDigit isDigit ]) and:
+		aCCNumber size = 16
+	) ifFalse: [^self error: CreditCard invalidCreditCardNumber].
+
+	aName notEmpty ifFalse: [^self error: CreditCard invalidCreditCardOwnerName].
+
+	^self new initializeWithNumber: aCCNumber expirationDate: anExpirationDate belongingTo: aName.
+! !
+
+!testRun: #CreditCardTest #test01ACreditCardCanBeNotExpired stamp: 'IO 11/22/2020 16:37:07'!
+PASSED!
+
+!testRun: #CreditCardTest #test02ACreditCardWithExpirationDatingThisMonthAndYearIsExpired stamp: 'IO 11/22/2020 16:37:07'!
+PASSED!
+
+!testRun: #CreditCardTest #test03ACreditCardWithExpirationDatingAPastMonthThisYearIsExpired stamp: 'IO 11/22/2020 16:37:07'!
+PASSED!
+
+!testRun: #CreditCardTest #test04ACreditCardWithExpirationDatingAFutureYearIsNotExpired stamp: 'IO 11/22/2020 16:37:07'!
+PASSED!
+
+!testRun: #CreditCardTest #test05ACreditCardWithExpirationDatingAPastYearIsExpired stamp: 'IO 11/22/2020 16:37:07'!
+PASSED!
+
+!testRun: #CreditCardTest #test06CreditCarNumberCantHaveAnythingBut16Symbols stamp: 'IO 11/22/2020 16:37:07'!
+PASSED!
+
+!testRun: #CreditCardTest #test07CreditCarNumberCantHaveAnythingButNumbers stamp: 'IO 11/22/2020 16:37:07'!
+PASSED!
+
+!testRun: #CreditCardTest #test08TheNameOfACreditCardOwnerCanNotBeBlank stamp: 'IO 11/22/2020 16:37:07'!
+PASSED!
+
+!testRun: #CreditCardTest #test01ACreditCardCanBeNotExpired stamp: 'IO 11/22/2020 16:37:10'!
+PASSED!
+
+!testRun: #CreditCardTest #test02ACreditCardWithExpirationDatingThisMonthAndYearIsExpired stamp: 'IO 11/22/2020 16:37:10'!
+PASSED!
+
+!testRun: #CreditCardTest #test03ACreditCardWithExpirationDatingAPastMonthThisYearIsExpired stamp: 'IO 11/22/2020 16:37:10'!
+PASSED!
+
+!testRun: #CreditCardTest #test04ACreditCardWithExpirationDatingAFutureYearIsNotExpired stamp: 'IO 11/22/2020 16:37:10'!
+PASSED!
+
+!testRun: #CreditCardTest #test05ACreditCardWithExpirationDatingAPastYearIsExpired stamp: 'IO 11/22/2020 16:37:10'!
+PASSED!
+
+!testRun: #CreditCardTest #test06CreditCarNumberCantHaveAnythingBut16Symbols stamp: 'IO 11/22/2020 16:37:10'!
+PASSED!
+
+!testRun: #CreditCardTest #test07CreditCarNumberCantHaveAnythingButNumbers stamp: 'IO 11/22/2020 16:37:10'!
+PASSED!
+
+!testRun: #CreditCardTest #test08TheNameOfACreditCardOwnerCanNotBeBlank stamp: 'IO 11/22/2020 16:37:10'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test01NewCartIsEmpty stamp: 'IO 11/22/2020 16:37:10'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test02CanAddABookToACart stamp: 'IO 11/22/2020 16:37:10'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test03CanAddManyBooksToACart stamp: 'IO 11/22/2020 16:37:10'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test04CanMoreThanOneFromTheSameBookToACart stamp: 'IO 11/22/2020 16:37:10'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test05CanNotAddABookWithInvalidISBN stamp: 'IO 11/22/2020 16:37:10'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test06CanNotAdd0Books stamp: 'IO 11/22/2020 16:37:10'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test07CanNotAddMinusBooks stamp: 'IO 11/22/2020 16:37:10'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test08CanNotAddNotWholeBooks stamp: 'IO 11/22/2020 16:37:10'!
+PASSED!
+
+!testRun: #ShoppingCashierTest #test01AnEmptyCartCannotBeCheckedOut stamp: 'IO 11/22/2020 16:37:10'!
+PASSED!
+
+!testRun: #ShoppingCashierTest #test02ACartWith1BookWillCheckOutCorrectly stamp: 'IO 11/22/2020 16:37:10'!
+PASSED!
+
+!testRun: #ShoppingCashierTest #test03ACartWithManyBooksWillCheckOutCorrectly stamp: 'IO 11/22/2020 16:37:10'!
+PASSED!
+
+!testRun: #ShoppingCashierTest #test04TheCardShouldNotBeExpired stamp: 'IO 11/22/2020 16:37:10'!
+PASSED!
+
+!testRun: #CreditCardTest #test01ACreditCardCanBeNotExpired stamp: 'IO 11/22/2020 16:38:41'!
+PASSED!
+
+!testRun: #CreditCardTest #test02ACreditCardWithExpirationDatingThisMonthAndYearIsExpired stamp: 'IO 11/22/2020 16:38:41'!
+PASSED!
+
+!testRun: #CreditCardTest #test03ACreditCardWithExpirationDatingAPastMonthThisYearIsExpired stamp: 'IO 11/22/2020 16:38:41'!
+PASSED!
+
+!testRun: #CreditCardTest #test04ACreditCardWithExpirationDatingAFutureYearIsNotExpired stamp: 'IO 11/22/2020 16:38:41'!
+PASSED!
+
+!testRun: #CreditCardTest #test05ACreditCardWithExpirationDatingAPastYearIsExpired stamp: 'IO 11/22/2020 16:38:41'!
+PASSED!
+
+!testRun: #CreditCardTest #test06CreditCarNumberCantHaveAnythingBut16Symbols stamp: 'IO 11/22/2020 16:38:41'!
+PASSED!
+
+!testRun: #CreditCardTest #test07CreditCarNumberCantHaveAnythingButNumbers stamp: 'IO 11/22/2020 16:38:41'!
+PASSED!
+
+!testRun: #CreditCardTest #test08TheNameOfACreditCardOwnerCanNotBeBlank stamp: 'IO 11/22/2020 16:38:41'!
+PASSED!
+!CreditCardTest methodsFor: 'test' stamp: 'IO 11/22/2020 16:41:27'!
+validCreditCardWithTheExpirationDate: anExpirationDate
+	
+	 ^CreditCard  withNumber: '0000000000000000' 
+				expirationDate: anExpirationDate 
+				belongingTo: 'Juan Pablo'.
+	
+
+
+	! !
+!CreditCardTest methodsFor: 'as yet unclassified' stamp: 'IO 11/22/2020 16:41:27' prior: 50877026!
+test05ACreditCardWithExpirationDatingAPastYearIsExpired
+	|aCreditCard|
+	
+	aCreditCard := self validCreditCardWithTheExpirationDate: (Date today - self daysInYear + self daysThisMonth) month.
+	
+	self assert: aCreditCard isExpired.
+
+	! !
+!CreditCardTest methodsFor: 'as yet unclassified' stamp: 'IO 11/22/2020 16:41:27' prior: 50877006!
+test03ACreditCardWithExpirationDatingAPastMonthThisYearIsExpired
+	|aCreditCard|
+	
+	aCreditCard := self validCreditCardWithTheExpirationDate: (Date today - self daysThisMonth) month.
+	
+	self assert: aCreditCard isExpired.
+
+	! !
+!CreditCardTest methodsFor: 'as yet unclassified' stamp: 'IO 11/22/2020 16:41:27' prior: 50877016!
+test04ACreditCardWithExpirationDatingAFutureYearIsNotExpired
+	|aCreditCard|
+	
+	aCreditCard := self validCreditCardWithTheExpirationDate: (Date today + self daysInYear) month .
+	
+	self deny: aCreditCard isExpired.
+
+	! !
+!CreditCardTest methodsFor: 'as yet unclassified' stamp: 'IO 11/22/2020 16:41:27' prior: 50876988!
+test01ACreditCardCanBeNotExpired
+	|aCreditCard|
+	
+	aCreditCard := self validCreditCardWithTheExpirationDate: (Date today + self daysThisMonth) month.
+	
+	self deny: aCreditCard isExpired.
+
+	! !
+!CreditCardTest methodsFor: 'as yet unclassified' stamp: 'IO 11/22/2020 16:41:27' prior: 50876997!
+test02ACreditCardWithExpirationDatingThisMonthAndYearIsExpired
+	|aCreditCard|
+	
+	aCreditCard := self validCreditCardWithTheExpirationDate: Date today month.
+	
+	self assert: aCreditCard isExpired.
+
+	! !
+
+!methodRemoval: CreditCardTest #standardCreditCardWithTheExpirationDate: stamp: 'IO 11/22/2020 16:41:27'!
+standardCreditCardWithTheExpirationDate: anExpirationDate
+	
+	 ^CreditCard  withNumber: '0000000000000000' 
+				expirationDate: anExpirationDate 
+				belongingTo: 'Juan Pablo'.
+	
+
+
+	!
+
+!testRun: #CreditCardTest #test01ACreditCardCanBeNotExpired stamp: 'IO 11/22/2020 16:41:30'!
+PASSED!
+
+!testRun: #CreditCardTest #test02ACreditCardWithExpirationDatingThisMonthAndYearIsExpired stamp: 'IO 11/22/2020 16:41:30'!
+PASSED!
+
+!testRun: #CreditCardTest #test03ACreditCardWithExpirationDatingAPastMonthThisYearIsExpired stamp: 'IO 11/22/2020 16:41:30'!
+PASSED!
+
+!testRun: #CreditCardTest #test04ACreditCardWithExpirationDatingAFutureYearIsNotExpired stamp: 'IO 11/22/2020 16:41:30'!
+PASSED!
+
+!testRun: #CreditCardTest #test05ACreditCardWithExpirationDatingAPastYearIsExpired stamp: 'IO 11/22/2020 16:41:30'!
+PASSED!
+
+!testRun: #CreditCardTest #test06CreditCarNumberCantHaveAnythingBut16Symbols stamp: 'IO 11/22/2020 16:41:30'!
+PASSED!
+
+!testRun: #CreditCardTest #test07CreditCarNumberCantHaveAnythingButNumbers stamp: 'IO 11/22/2020 16:41:30'!
+PASSED!
+
+!testRun: #CreditCardTest #test08TheNameOfACreditCardOwnerCanNotBeBlank stamp: 'IO 11/22/2020 16:41:30'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test01NewCartIsEmpty stamp: 'IO 11/22/2020 16:41:30'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test02CanAddABookToACart stamp: 'IO 11/22/2020 16:41:30'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test03CanAddManyBooksToACart stamp: 'IO 11/22/2020 16:41:30'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test04CanMoreThanOneFromTheSameBookToACart stamp: 'IO 11/22/2020 16:41:30'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test05CanNotAddABookWithInvalidISBN stamp: 'IO 11/22/2020 16:41:30'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test06CanNotAdd0Books stamp: 'IO 11/22/2020 16:41:30'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test07CanNotAddMinusBooks stamp: 'IO 11/22/2020 16:41:30'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test08CanNotAddNotWholeBooks stamp: 'IO 11/22/2020 16:41:30'!
+PASSED!
+
+!testRun: #ShoppingCashierTest #test01AnEmptyCartCannotBeCheckedOut stamp: 'IO 11/22/2020 16:41:30'!
+PASSED!
+
+!testRun: #ShoppingCashierTest #test02ACartWith1BookWillCheckOutCorrectly stamp: 'IO 11/22/2020 16:41:30'!
+PASSED!
+
+!testRun: #ShoppingCashierTest #test03ACartWithManyBooksWillCheckOutCorrectly stamp: 'IO 11/22/2020 16:41:30'!
+PASSED!
+
+!testRun: #ShoppingCashierTest #test04TheCardShouldNotBeExpired stamp: 'IO 11/22/2020 16:41:30'!
+PASSED!
+
+!testRun: #CreditCardTest #test01ACreditCardCanBeNotExpired stamp: 'IO 11/22/2020 16:43:04'!
+PASSED!
+
+!testRun: #CreditCardTest #test02ACreditCardWithExpirationDatingThisMonthAndYearIsExpired stamp: 'IO 11/22/2020 16:43:04'!
+PASSED!
+
+!testRun: #CreditCardTest #test03ACreditCardWithExpirationDatingAPastMonthThisYearIsExpired stamp: 'IO 11/22/2020 16:43:04'!
+PASSED!
+
+!testRun: #CreditCardTest #test04ACreditCardWithExpirationDatingAFutureYearIsNotExpired stamp: 'IO 11/22/2020 16:43:04'!
+PASSED!
+
+!testRun: #CreditCardTest #test05ACreditCardWithExpirationDatingAPastYearIsExpired stamp: 'IO 11/22/2020 16:43:04'!
+PASSED!
+
+!testRun: #CreditCardTest #test06CreditCarNumberCantHaveAnythingBut16Symbols stamp: 'IO 11/22/2020 16:43:04'!
+PASSED!
+
+!testRun: #CreditCardTest #test07CreditCarNumberCantHaveAnythingButNumbers stamp: 'IO 11/22/2020 16:43:04'!
+PASSED!
+
+!testRun: #CreditCardTest #test08TheNameOfACreditCardOwnerCanNotBeBlank stamp: 'IO 11/22/2020 16:43:04'!
+PASSED!
+
+!testRun: #CreditCardTest #test01ACreditCardCanBeNotExpired stamp: 'IO 11/22/2020 16:43:48'!
+PASSED!
+!CreditCardTest methodsFor: 'test' stamp: 'IO 11/22/2020 16:43:53' prior: 50879468!
+test01ACreditCardCanBeNotExpired
+
+	|aCreditCard|
+	
+	aCreditCard := self validCreditCardWithTheExpirationDate: (Date today + self daysThisMonth) month.
+	
+	self deny: aCreditCard isExpired.
+
+	! !
+
+!testRun: #CreditCardTest #test01ACreditCardCanBeNotExpired stamp: 'IO 11/22/2020 16:43:53'!
+PASSED!
+
+!testRun: #CreditCardTest #test01ACreditCardCanBeNotExpired stamp: 'IO 11/22/2020 16:43:53'!
+PASSED!
+
+!testRun: #CreditCardTest #test02ACreditCardWithExpirationDatingThisMonthAndYearIsExpired stamp: 'IO 11/22/2020 16:43:53'!
+PASSED!
+
+!testRun: #CreditCardTest #test03ACreditCardWithExpirationDatingAPastMonthThisYearIsExpired stamp: 'IO 11/22/2020 16:43:53'!
+PASSED!
+
+!testRun: #CreditCardTest #test04ACreditCardWithExpirationDatingAFutureYearIsNotExpired stamp: 'IO 11/22/2020 16:43:53'!
+PASSED!
+
+!testRun: #CreditCardTest #test05ACreditCardWithExpirationDatingAPastYearIsExpired stamp: 'IO 11/22/2020 16:43:53'!
+PASSED!
+
+!testRun: #CreditCardTest #test06CreditCarNumberCantHaveAnythingBut16Symbols stamp: 'IO 11/22/2020 16:43:53'!
+PASSED!
+
+!testRun: #CreditCardTest #test07CreditCarNumberCantHaveAnythingButNumbers stamp: 'IO 11/22/2020 16:43:53'!
+PASSED!
+
+!testRun: #CreditCardTest #test08TheNameOfACreditCardOwnerCanNotBeBlank stamp: 'IO 11/22/2020 16:43:53'!
+PASSED!
+!ShoppingCartTest methodsFor: 'tests' stamp: 'IO 11/22/2020 16:47:01'!
+newShoppingCartWithAProduct
+	
+	^ShoppingCart withCatalogue: (OrderedCollection with: '0-7645-2641-3').
+! !
+!ShoppingCartTest methodsFor: 'tests' stamp: 'IO 11/22/2020 16:47:09' prior: 50877076!
+test01NewCartIsEmpty
+	|aCart|
+	
+	aCart := self newShoppingCartWithAProduct.
+	
+	self assert: 0 equals: aCart listCart size.! !
+
+!testRun: #ShoppingCartTest #test01NewCartIsEmpty stamp: 'IO 11/22/2020 16:47:11'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test01NewCartIsEmpty stamp: 'IO 11/22/2020 16:47:11'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test02CanAddABookToACart stamp: 'IO 11/22/2020 16:47:11'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test03CanAddManyBooksToACart stamp: 'IO 11/22/2020 16:47:11'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test04CanMoreThanOneFromTheSameBookToACart stamp: 'IO 11/22/2020 16:47:11'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test05CanNotAddABookWithInvalidISBN stamp: 'IO 11/22/2020 16:47:11'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test06CanNotAdd0Books stamp: 'IO 11/22/2020 16:47:11'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test07CanNotAddMinusBooks stamp: 'IO 11/22/2020 16:47:11'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test08CanNotAddNotWholeBooks stamp: 'IO 11/22/2020 16:47:11'!
+PASSED!
+!ShoppingCartTest methodsFor: 'tests' stamp: 'IO 11/22/2020 16:47:16' prior: 50877084!
+test02CanAddABookToACart
+	|aCart|
+	
+	aCart := self newShoppingCartWithAProduct.
+	aCart add: '0-7645-2641-3'.
+	
+	self assert: 1 equals: aCart listCart size.
+	self assert: (aCart listCart includes: '0-7645-2641-3').! !
+
+!testRun: #ShoppingCartTest #test02CanAddABookToACart stamp: 'IO 11/22/2020 16:47:16'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test01NewCartIsEmpty stamp: 'IO 11/22/2020 16:47:16'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test02CanAddABookToACart stamp: 'IO 11/22/2020 16:47:16'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test03CanAddManyBooksToACart stamp: 'IO 11/22/2020 16:47:16'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test04CanMoreThanOneFromTheSameBookToACart stamp: 'IO 11/22/2020 16:47:16'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test05CanNotAddABookWithInvalidISBN stamp: 'IO 11/22/2020 16:47:16'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test06CanNotAdd0Books stamp: 'IO 11/22/2020 16:47:16'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test07CanNotAddMinusBooks stamp: 'IO 11/22/2020 16:47:16'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test08CanNotAddNotWholeBooks stamp: 'IO 11/22/2020 16:47:17'!
+PASSED!
+!ShoppingCartTest methodsFor: 'tests' stamp: 'IO 11/22/2020 16:47:43' prior: 50877109!
+test04CanMoreThanOneFromTheSameBookToACart
+	|aCart|
+	
+	aCart := self newShoppingCartWithAProduct.
+	aCart add: '0-7645-2641-3' withQuantity: 2.
+	
+	self assert: 2 equals: aCart listCart size.
+	
+	aCart add: '0-7645-2641-3'.
+	
+	self assert: 3 equals: aCart listCart size.! !
+
+!testRun: #ShoppingCartTest #test04CanMoreThanOneFromTheSameBookToACart stamp: 'IO 11/22/2020 16:47:44'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test01NewCartIsEmpty stamp: 'IO 11/22/2020 16:47:44'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test02CanAddABookToACart stamp: 'IO 11/22/2020 16:47:44'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test03CanAddManyBooksToACart stamp: 'IO 11/22/2020 16:47:44'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test04CanMoreThanOneFromTheSameBookToACart stamp: 'IO 11/22/2020 16:47:44'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test05CanNotAddABookWithInvalidISBN stamp: 'IO 11/22/2020 16:47:44'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test06CanNotAdd0Books stamp: 'IO 11/22/2020 16:47:44'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test07CanNotAddMinusBooks stamp: 'IO 11/22/2020 16:47:44'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test08CanNotAddNotWholeBooks stamp: 'IO 11/22/2020 16:47:44'!
+PASSED!
+!ShoppingCartTest methodsFor: 'tests' stamp: 'IO 11/22/2020 16:47:51' prior: 50877131!
+test06CanNotAdd0Books
+	|aCart|
+	
+	aCart := self newShoppingCartWithAProduct.
+	
+	self should: [aCart add: '0-7645-2641-3' withQuantity: 0]
+		raise: Error
+		withMessageText: ShoppingCart invalidQuantityErrorMessage.
+	
+! !
+
+!testRun: #ShoppingCartTest #test06CanNotAdd0Books stamp: 'IO 11/22/2020 16:47:52'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test01NewCartIsEmpty stamp: 'IO 11/22/2020 16:47:52'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test02CanAddABookToACart stamp: 'IO 11/22/2020 16:47:52'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test03CanAddManyBooksToACart stamp: 'IO 11/22/2020 16:47:52'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test04CanMoreThanOneFromTheSameBookToACart stamp: 'IO 11/22/2020 16:47:52'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test05CanNotAddABookWithInvalidISBN stamp: 'IO 11/22/2020 16:47:52'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test06CanNotAdd0Books stamp: 'IO 11/22/2020 16:47:52'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test07CanNotAddMinusBooks stamp: 'IO 11/22/2020 16:47:52'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test08CanNotAddNotWholeBooks stamp: 'IO 11/22/2020 16:47:52'!
+PASSED!
+!ShoppingCartTest methodsFor: 'tests' stamp: 'IO 11/22/2020 16:47:58' prior: 50877142!
+test07CanNotAddMinusBooks
+	|aCart|
+	
+	aCart := self newShoppingCartWithAProduct.
+	
+	self should: [aCart add: '0-7645-2641-3' withQuantity: -1]
+		raise: Error
+		withMessageText: ShoppingCart invalidQuantityErrorMessage.
+	
+! !
+
+!testRun: #ShoppingCartTest #test07CanNotAddMinusBooks stamp: 'IO 11/22/2020 16:47:58'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test01NewCartIsEmpty stamp: 'IO 11/22/2020 16:47:58'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test02CanAddABookToACart stamp: 'IO 11/22/2020 16:47:58'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test03CanAddManyBooksToACart stamp: 'IO 11/22/2020 16:47:58'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test04CanMoreThanOneFromTheSameBookToACart stamp: 'IO 11/22/2020 16:47:58'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test05CanNotAddABookWithInvalidISBN stamp: 'IO 11/22/2020 16:47:58'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test06CanNotAdd0Books stamp: 'IO 11/22/2020 16:47:58'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test07CanNotAddMinusBooks stamp: 'IO 11/22/2020 16:47:58'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test08CanNotAddNotWholeBooks stamp: 'IO 11/22/2020 16:47:58'!
+PASSED!
+!ShoppingCartTest methodsFor: 'tests' stamp: 'IO 11/22/2020 16:48:02' prior: 50877153!
+test08CanNotAddNotWholeBooks
+	|aCart|
+	
+	aCart := self newShoppingCartWithAProduct.
+	
+	self should: [aCart add: '0-7645-2641-3' withQuantity: 1.5]
+		raise: Error
+		withMessageText: ShoppingCart invalidQuantityErrorMessage.
+	
+! !
+
+!testRun: #ShoppingCartTest #test08CanNotAddNotWholeBooks stamp: 'IO 11/22/2020 16:48:03'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test01NewCartIsEmpty stamp: 'IO 11/22/2020 16:48:03'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test02CanAddABookToACart stamp: 'IO 11/22/2020 16:48:03'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test03CanAddManyBooksToACart stamp: 'IO 11/22/2020 16:48:03'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test04CanMoreThanOneFromTheSameBookToACart stamp: 'IO 11/22/2020 16:48:03'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test05CanNotAddABookWithInvalidISBN stamp: 'IO 11/22/2020 16:48:03'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test06CanNotAdd0Books stamp: 'IO 11/22/2020 16:48:03'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test07CanNotAddMinusBooks stamp: 'IO 11/22/2020 16:48:03'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test08CanNotAddNotWholeBooks stamp: 'IO 11/22/2020 16:48:03'!
+PASSED!
+!ShoppingCart methodsFor: 'accessing' stamp: 'IO 11/22/2020 16:48:37' prior: 50877363!
+listCart
+	^books.! !
+
+!testRun: #ShoppingCartTest #test01NewCartIsEmpty stamp: 'IO 11/22/2020 16:48:37'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test02CanAddABookToACart stamp: 'IO 11/22/2020 16:48:37'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test03CanAddManyBooksToACart stamp: 'IO 11/22/2020 16:48:37'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test04CanMoreThanOneFromTheSameBookToACart stamp: 'IO 11/22/2020 16:48:37'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test05CanNotAddABookWithInvalidISBN stamp: 'IO 11/22/2020 16:48:37'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test06CanNotAdd0Books stamp: 'IO 11/22/2020 16:48:37'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test07CanNotAddMinusBooks stamp: 'IO 11/22/2020 16:48:37'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test08CanNotAddNotWholeBooks stamp: 'IO 11/22/2020 16:48:37'!
+PASSED!
+!ShoppingCartTest methodsFor: 'tests' stamp: 'IO 11/22/2020 16:50:21'!
+test09CannotEditCartList
+	| aCart list |
+	
+	aCart := self newShoppingCartWithAProduct.
+	aCart add: '0-7645-2641-3'.
+	
+	list := aCart listCart.
+	
+	self assert: 1 equals: aCart listCart size.
+	
+	self assert: (aCart listCart includes: '0-7645-2641-3').
+	self deny: (aCart listCart includes: '0-7645-2641-3').! !
+!ShoppingCartTest methodsFor: 'tests' stamp: 'IO 11/22/2020 16:50:53' prior: 50879904!
+test09CannotEditCartList
+	| aCart list |
+	
+	
+	aCart := ShoppingCart withCatalogue: (OrderedCollection with: '0-7645-2641-3' with: '0-7645-2641-4').
+	aCart add: '0-7645-2641-3'.
+
+	
+	list := aCart listCart.
+	list add: '0-7645-2641-4'.
+
+	self assert: 1 equals: aCart listCart size.
+
+	self assert: (aCart listCart includes: '0-7645-2641-3').
+	self deny: (aCart listCart includes: '0-7645-2641-4').! !
+
+!testRun: #ShoppingCartTest #test09CannotEditCartList stamp: 'IO 11/22/2020 16:50:54'!
+FAILURE!
+!ShoppingCart methodsFor: 'accessing' stamp: 'IO 11/22/2020 16:51:08' prior: 50879876!
+listCart
+	^books copy.! !
+
+!testRun: #ShoppingCartTest #test01NewCartIsEmpty stamp: 'IO 11/22/2020 16:51:09'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test02CanAddABookToACart stamp: 'IO 11/22/2020 16:51:09'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test03CanAddManyBooksToACart stamp: 'IO 11/22/2020 16:51:09'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test04CanMoreThanOneFromTheSameBookToACart stamp: 'IO 11/22/2020 16:51:09'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test05CanNotAddABookWithInvalidISBN stamp: 'IO 11/22/2020 16:51:09'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test06CanNotAdd0Books stamp: 'IO 11/22/2020 16:51:09'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test07CanNotAddMinusBooks stamp: 'IO 11/22/2020 16:51:09'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test08CanNotAddNotWholeBooks stamp: 'IO 11/22/2020 16:51:09'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test09CannotEditCartList stamp: 'IO 11/22/2020 16:51:09'!
+PASSED!
+
+!methodRemoval: ShoppingCashier #checkOut:withCardNumber:ExpirationDate:andCardOwner: stamp: 'IO 11/22/2020 16:52:45'!
+checkOut: aShoppingCart withCardNumber: aCreditCardNumber ExpirationDate: anExpirationDate andCardOwner: aName 
+
+	aShoppingCart listCart size = 0 ifTrue:[^self error: ShoppingCashier invalidCartErrorMessage].
+	
+	(anExpirationDate yearNumber < Date today yearNumber)
+			ifTrue:[ ^self error: ShoppingCashier invalidCreditCard].  
+	(anExpirationDate yearNumber = Date today yearNumber and: anExpirationDate monthIndex <= Date today monthIndex) 
+			ifTrue: [^self error: ShoppingCashier invalidCreditCard ].
+	
+	^ aShoppingCart listCart inject: 0 into: [:theSum :anISBN | theSum + priceCatalogue at: anISBN].!
+
+!testRun: #CreditCardTest #test01ACreditCardCanBeNotExpired stamp: 'IO 11/22/2020 16:53:02'!
+PASSED!
+
+!testRun: #CreditCardTest #test02ACreditCardWithExpirationDatingThisMonthAndYearIsExpired stamp: 'IO 11/22/2020 16:53:02'!
+PASSED!
+
+!testRun: #CreditCardTest #test03ACreditCardWithExpirationDatingAPastMonthThisYearIsExpired stamp: 'IO 11/22/2020 16:53:02'!
+PASSED!
+
+!testRun: #CreditCardTest #test04ACreditCardWithExpirationDatingAFutureYearIsNotExpired stamp: 'IO 11/22/2020 16:53:02'!
+PASSED!
+
+!testRun: #CreditCardTest #test05ACreditCardWithExpirationDatingAPastYearIsExpired stamp: 'IO 11/22/2020 16:53:02'!
+PASSED!
+
+!testRun: #CreditCardTest #test06CreditCarNumberCantHaveAnythingBut16Symbols stamp: 'IO 11/22/2020 16:53:02'!
+PASSED!
+
+!testRun: #CreditCardTest #test07CreditCarNumberCantHaveAnythingButNumbers stamp: 'IO 11/22/2020 16:53:02'!
+PASSED!
+
+!testRun: #CreditCardTest #test08TheNameOfACreditCardOwnerCanNotBeBlank stamp: 'IO 11/22/2020 16:53:02'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test01NewCartIsEmpty stamp: 'IO 11/22/2020 16:53:02'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test02CanAddABookToACart stamp: 'IO 11/22/2020 16:53:02'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test03CanAddManyBooksToACart stamp: 'IO 11/22/2020 16:53:02'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test04CanMoreThanOneFromTheSameBookToACart stamp: 'IO 11/22/2020 16:53:02'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test05CanNotAddABookWithInvalidISBN stamp: 'IO 11/22/2020 16:53:02'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test06CanNotAdd0Books stamp: 'IO 11/22/2020 16:53:02'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test07CanNotAddMinusBooks stamp: 'IO 11/22/2020 16:53:02'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test08CanNotAddNotWholeBooks stamp: 'IO 11/22/2020 16:53:02'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test09CannotEditCartList stamp: 'IO 11/22/2020 16:53:02'!
+PASSED!
+
+!testRun: #ShoppingCashierTest #test01AnEmptyCartCannotBeCheckedOut stamp: 'IO 11/22/2020 16:53:02'!
+PASSED!
+
+!testRun: #ShoppingCashierTest #test02ACartWith1BookWillCheckOutCorrectly stamp: 'IO 11/22/2020 16:53:02'!
+PASSED!
+
+!testRun: #ShoppingCashierTest #test03ACartWithManyBooksWillCheckOutCorrectly stamp: 'IO 11/22/2020 16:53:02'!
+PASSED!
+
+!testRun: #ShoppingCashierTest #test04TheCardShouldNotBeExpired stamp: 'IO 11/22/2020 16:53:02'!
+PASSED!
+!ShoppingCashier methodsFor: 'checkOut' stamp: 'IO 11/22/2020 16:54:16' prior: 50877443!
+checkOut: aShoppingCart withCreditCard: aCreditCard
+
+	aShoppingCart listCart size = 0 ifTrue: [^self error: ShoppingCashier invalidCartErrorMessage].
+	
+	aCreditCard isExpired ifTrue:[ ^self error: ShoppingCashier invalidCreditCard].
+	
+	^ aShoppingCart listCart inject: 0 into: [:theSum :anISBN | theSum + priceCatalogue at: anISBN].! !
+!ShoppingCashier methodsFor: 'checkOut' stamp: 'IO 11/22/2020 16:54:22' prior: 50880063!
+checkOut: aShoppingCart withCreditCard: aCreditCard
+
+	aShoppingCart listCart size = 0 ifTrue: [^self error: ShoppingCashier invalidCartErrorMessage].
+	
+	aCreditCard isExpired ifTrue: [^self error: ShoppingCashier invalidCreditCard].
+	
+	^ aShoppingCart listCart inject: 0 into: [:theSum :anISBN | theSum + priceCatalogue at: anISBN].! !
+
+!testRun: #ShoppingCashierTest #test01AnEmptyCartCannotBeCheckedOut stamp: 'IO 11/22/2020 16:54:23'!
+PASSED!
+
+!testRun: #ShoppingCashierTest #test02ACartWith1BookWillCheckOutCorrectly stamp: 'IO 11/22/2020 16:54:23'!
+PASSED!
+
+!testRun: #ShoppingCashierTest #test03ACartWithManyBooksWillCheckOutCorrectly stamp: 'IO 11/22/2020 16:54:23'!
+PASSED!
+
+!testRun: #ShoppingCashierTest #test04TheCardShouldNotBeExpired stamp: 'IO 11/22/2020 16:54:23'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test01NewCartIsEmpty stamp: 'IO 11/22/2020 17:11:21'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test02CanAddABookToACart stamp: 'IO 11/22/2020 17:11:21'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test03CanAddManyBooksToACart stamp: 'IO 11/22/2020 17:11:21'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test04CanMoreThanOneFromTheSameBookToACart stamp: 'IO 11/22/2020 17:11:21'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test05CanNotAddABookWithInvalidISBN stamp: 'IO 11/22/2020 17:11:21'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test06CanNotAdd0Books stamp: 'IO 11/22/2020 17:11:21'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test07CanNotAddMinusBooks stamp: 'IO 11/22/2020 17:11:21'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test08CanNotAddNotWholeBooks stamp: 'IO 11/22/2020 17:11:21'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test09CannotEditCartList stamp: 'IO 11/22/2020 17:11:21'!
+PASSED!
+!CreditCardTest methodsFor: 'tests' stamp: 'IO 11/22/2020 17:17:47' prior: 50877051!
+test08TheNameOfACreditCardOwnerCanNotBeBlank
+	
+	self should: [CreditCard withNumber: '0000000000000000'
+		expirationDate: (Date today - self daysInYear + self daysThisMonth) month
+		belongingTo: ''.]
+		raise: Error
+		withMessageText: CreditCard invalidCreditCardOwnerName.
+	
+	! !
+
+!testRun: #CreditCardTest #test08TheNameOfACreditCardOwnerCanNotBeBlank stamp: 'IO 11/22/2020 17:17:57'!
+PASSED!
+
+!testRun: #CreditCardTest #test01ACreditCardCanBeNotExpired stamp: 'IO 11/22/2020 17:17:57'!
+PASSED!
+
+!testRun: #CreditCardTest #test02ACreditCardWithExpirationDatingThisMonthAndYearIsExpired stamp: 'IO 11/22/2020 17:17:57'!
+PASSED!
+
+!testRun: #CreditCardTest #test03ACreditCardWithExpirationDatingAPastMonthThisYearIsExpired stamp: 'IO 11/22/2020 17:17:57'!
+PASSED!
+
+!testRun: #CreditCardTest #test04ACreditCardWithExpirationDatingAFutureYearIsNotExpired stamp: 'IO 11/22/2020 17:17:57'!
+PASSED!
+
+!testRun: #CreditCardTest #test05ACreditCardWithExpirationDatingAPastYearIsExpired stamp: 'IO 11/22/2020 17:17:57'!
+PASSED!
+
+!testRun: #CreditCardTest #test06CreditCarNumberCantHaveAnythingBut16Symbols stamp: 'IO 11/22/2020 17:17:57'!
+PASSED!
+
+!testRun: #CreditCardTest #test07CreditCarNumberCantHaveAnythingButNumbers stamp: 'IO 11/22/2020 17:17:58'!
+PASSED!
+
+!testRun: #CreditCardTest #test08TheNameOfACreditCardOwnerCanNotBeBlank stamp: 'IO 11/22/2020 17:17:58'!
+PASSED!
+
+'' size!
+
+'Juan Pablo de la Cierra Gigante' size!
+!CreditCardTest methodsFor: 'tests' stamp: 'IO 11/22/2020 17:19:56'!
+test08TheNameOfACreditCardOwnerCanNotHaveMoreThan30Chars
+	
+	self should: [CreditCard withNumber: '0000000000000000'
+		expirationDate: (Date today - self daysInYear + self daysThisMonth) month
+		belongingTo: 'Juan Pablo de la Cierra Gigante'.] "31 chars"
+		raise: Error
+		withMessageText: CreditCard invalidCreditCardOwnerName.
+	
+	! !
+
+!testRun: #CreditCardTest #test08TheNameOfACreditCardOwnerCanNotHaveMoreThan30Chars stamp: 'IO 11/22/2020 17:19:57'!
+FAILURE!
+!CreditCardTest methodsFor: 'tests' stamp: 'IO 11/22/2020 17:20:02'!
+test09TheNameOfACreditCardOwnerCanNotHaveMoreThan30Chars
+	
+	self should: [CreditCard withNumber: '0000000000000000'
+		expirationDate: (Date today - self daysInYear + self daysThisMonth) month
+		belongingTo: 'Juan Pablo de la Cierra Gigante'.] "31 chars"
+		raise: Error
+		withMessageText: CreditCard invalidCreditCardOwnerName.
+	
+	! !
+
+!methodRemoval: CreditCardTest #test08TheNameOfACreditCardOwnerCanNotHaveMoreThan30Chars stamp: 'IO 11/22/2020 17:20:02'!
+test08TheNameOfACreditCardOwnerCanNotHaveMoreThan30Chars
+	
+	self should: [CreditCard withNumber: '0000000000000000'
+		expirationDate: (Date today - self daysInYear + self daysThisMonth) month
+		belongingTo: 'Juan Pablo de la Cierra Gigante'.] "31 chars"
+		raise: Error
+		withMessageText: CreditCard invalidCreditCardOwnerName.
+	
+	!
+
+!testRun: #CreditCardTest #test09TheNameOfACreditCardOwnerCanNotHaveMoreThan30Chars stamp: 'IO 11/22/2020 17:20:03'!
+FAILURE!
+!CreditCard class methodsFor: 'instance creation' stamp: 'IO 11/22/2020 17:20:53' prior: 50879281!
+withNumber: aCCNumber expirationDate: anExpirationDate belongingTo: aName 
+	
+	(
+		(aCCNumber allSatisfy: [ :aDigit | aDigit isDigit ]) and:
+		aCCNumber size = 16
+	) ifFalse: [^self error: CreditCard invalidCreditCardNumber].
+
+	(aName notEmpty or: (aName size > 30)) ifFalse: [^self error: CreditCard invalidCreditCardOwnerName].
+
+	^self new initializeWithNumber: aCCNumber expirationDate: anExpirationDate belongingTo: aName.
+! !
+
+!testRun: #CreditCardTest #test01ACreditCardCanBeNotExpired stamp: 'IO 11/22/2020 17:20:54'!
+PASSED!
+
+!testRun: #CreditCardTest #test02ACreditCardWithExpirationDatingThisMonthAndYearIsExpired stamp: 'IO 11/22/2020 17:20:54'!
+PASSED!
+
+!testRun: #CreditCardTest #test03ACreditCardWithExpirationDatingAPastMonthThisYearIsExpired stamp: 'IO 11/22/2020 17:20:54'!
+PASSED!
+
+!testRun: #CreditCardTest #test04ACreditCardWithExpirationDatingAFutureYearIsNotExpired stamp: 'IO 11/22/2020 17:20:54'!
+PASSED!
+
+!testRun: #CreditCardTest #test05ACreditCardWithExpirationDatingAPastYearIsExpired stamp: 'IO 11/22/2020 17:20:54'!
+PASSED!
+
+!testRun: #CreditCardTest #test06CreditCarNumberCantHaveAnythingBut16Symbols stamp: 'IO 11/22/2020 17:20:54'!
+PASSED!
+
+!testRun: #CreditCardTest #test07CreditCarNumberCantHaveAnythingButNumbers stamp: 'IO 11/22/2020 17:20:54'!
+PASSED!
+
+!testRun: #CreditCardTest #test08TheNameOfACreditCardOwnerCanNotBeBlank stamp: 'IO 11/22/2020 17:20:54'!
+PASSED!
+
+!testRun: #CreditCardTest #test09TheNameOfACreditCardOwnerCanNotHaveMoreThan30Chars stamp: 'IO 11/22/2020 17:20:54'!
+FAILURE!
+
+!testRun: #CreditCardTest #test09TheNameOfACreditCardOwnerCanNotHaveMoreThan30Chars stamp: 'IO 11/22/2020 17:20:54'!
+FAILURE!
+
+!testRun: #CreditCardTest #test01ACreditCardCanBeNotExpired stamp: 'IO 11/22/2020 17:21:00'!
+PASSED!
+
+!testRun: #CreditCardTest #test02ACreditCardWithExpirationDatingThisMonthAndYearIsExpired stamp: 'IO 11/22/2020 17:21:00'!
+PASSED!
+
+!testRun: #CreditCardTest #test03ACreditCardWithExpirationDatingAPastMonthThisYearIsExpired stamp: 'IO 11/22/2020 17:21:00'!
+PASSED!
+
+!testRun: #CreditCardTest #test04ACreditCardWithExpirationDatingAFutureYearIsNotExpired stamp: 'IO 11/22/2020 17:21:00'!
+PASSED!
+
+!testRun: #CreditCardTest #test05ACreditCardWithExpirationDatingAPastYearIsExpired stamp: 'IO 11/22/2020 17:21:00'!
+PASSED!
+
+!testRun: #CreditCardTest #test06CreditCarNumberCantHaveAnythingBut16Symbols stamp: 'IO 11/22/2020 17:21:00'!
+PASSED!
+
+!testRun: #CreditCardTest #test07CreditCarNumberCantHaveAnythingButNumbers stamp: 'IO 11/22/2020 17:21:01'!
+PASSED!
+
+!testRun: #CreditCardTest #test08TheNameOfACreditCardOwnerCanNotBeBlank stamp: 'IO 11/22/2020 17:21:01'!
+PASSED!
+
+!testRun: #CreditCardTest #test09TheNameOfACreditCardOwnerCanNotHaveMoreThan30Chars stamp: 'IO 11/22/2020 17:21:01'!
+FAILURE!
+
+!testRun: #CreditCardTest #test09TheNameOfACreditCardOwnerCanNotHaveMoreThan30Chars stamp: 'IO 11/22/2020 17:21:01'!
+FAILURE!
+!CreditCard class methodsFor: 'instance creation' stamp: 'IO 11/22/2020 17:21:50' prior: 50880229!
+withNumber: aCCNumber expirationDate: anExpirationDate belongingTo: aName 
+	
+	(
+		(aCCNumber allSatisfy: [ :aDigit | aDigit isDigit ]) and:
+		aCCNumber size = 16
+	) ifFalse: [^self error: CreditCard invalidCreditCardNumber].
+
+	(aName notEmpty or: (aName size <= 30)) ifFalse: [^self error: CreditCard invalidCreditCardOwnerName].
+
+	^self new initializeWithNumber: aCCNumber expirationDate: anExpirationDate belongingTo: aName.
+! !
+
+!testRun: #CreditCardTest #test01ACreditCardCanBeNotExpired stamp: 'IO 11/22/2020 17:21:51'!
+PASSED!
+
+!testRun: #CreditCardTest #test02ACreditCardWithExpirationDatingThisMonthAndYearIsExpired stamp: 'IO 11/22/2020 17:21:51'!
+PASSED!
+
+!testRun: #CreditCardTest #test03ACreditCardWithExpirationDatingAPastMonthThisYearIsExpired stamp: 'IO 11/22/2020 17:21:51'!
+PASSED!
+
+!testRun: #CreditCardTest #test04ACreditCardWithExpirationDatingAFutureYearIsNotExpired stamp: 'IO 11/22/2020 17:21:51'!
+PASSED!
+
+!testRun: #CreditCardTest #test05ACreditCardWithExpirationDatingAPastYearIsExpired stamp: 'IO 11/22/2020 17:21:51'!
+PASSED!
+
+!testRun: #CreditCardTest #test06CreditCarNumberCantHaveAnythingBut16Symbols stamp: 'IO 11/22/2020 17:21:51'!
+PASSED!
+
+!testRun: #CreditCardTest #test07CreditCarNumberCantHaveAnythingButNumbers stamp: 'IO 11/22/2020 17:21:51'!
+PASSED!
+
+!testRun: #CreditCardTest #test08TheNameOfACreditCardOwnerCanNotBeBlank stamp: 'IO 11/22/2020 17:21:51'!
+FAILURE!
+
+!testRun: #CreditCardTest #test09TheNameOfACreditCardOwnerCanNotHaveMoreThan30Chars stamp: 'IO 11/22/2020 17:21:51'!
+FAILURE!
+!CreditCard class methodsFor: 'instance creation' stamp: 'IO 11/22/2020 17:21:54' prior: 50880323!
+withNumber: aCCNumber expirationDate: anExpirationDate belongingTo: aName 
+	
+	(
+		(aCCNumber allSatisfy: [ :aDigit | aDigit isDigit ]) and:
+		aCCNumber size = 16
+	) ifFalse: [^self error: CreditCard invalidCreditCardNumber].
+
+	(aName notEmpty or: (aName size < 30)) ifFalse: [^self error: CreditCard invalidCreditCardOwnerName].
+
+	^self new initializeWithNumber: aCCNumber expirationDate: anExpirationDate belongingTo: aName.
+! !
+
+!testRun: #CreditCardTest #test09TheNameOfACreditCardOwnerCanNotHaveMoreThan30Chars stamp: 'IO 11/22/2020 17:21:56'!
+FAILURE!
+
+!testRun: #CreditCardTest #test09TheNameOfACreditCardOwnerCanNotHaveMoreThan30Chars stamp: 'IO 11/22/2020 17:21:59'!
+FAILURE!
+
+aName size < 30!
+!CreditCard class methodsFor: 'instance creation' stamp: 'IO 11/22/2020 17:22:36' prior: 50880374!
+withNumber: aCCNumber expirationDate: anExpirationDate belongingTo: aName 
+	
+	(
+		(aCCNumber allSatisfy: [ :aDigit | aDigit isDigit ]) and:
+		aCCNumber size = 16
+	) ifFalse: [^self error: CreditCard invalidCreditCardNumber].
+
+	(aName notEmpty and: (aName size < 30)) ifFalse: [^self error: CreditCard invalidCreditCardOwnerName].
+
+	^self new initializeWithNumber: aCCNumber expirationDate: anExpirationDate belongingTo: aName.
+! !
+
+!testRun: #CreditCardTest #test09TheNameOfACreditCardOwnerCanNotHaveMoreThan30Chars stamp: 'IO 11/22/2020 17:22:38'!
+PASSED!
+
+!testRun: #CreditCardTest #test01ACreditCardCanBeNotExpired stamp: 'IO 11/22/2020 17:22:38'!
+PASSED!
+
+!testRun: #CreditCardTest #test02ACreditCardWithExpirationDatingThisMonthAndYearIsExpired stamp: 'IO 11/22/2020 17:22:38'!
+PASSED!
+
+!testRun: #CreditCardTest #test03ACreditCardWithExpirationDatingAPastMonthThisYearIsExpired stamp: 'IO 11/22/2020 17:22:38'!
+PASSED!
+
+!testRun: #CreditCardTest #test04ACreditCardWithExpirationDatingAFutureYearIsNotExpired stamp: 'IO 11/22/2020 17:22:38'!
+PASSED!
+
+!testRun: #CreditCardTest #test05ACreditCardWithExpirationDatingAPastYearIsExpired stamp: 'IO 11/22/2020 17:22:38'!
+PASSED!
+
+!testRun: #CreditCardTest #test06CreditCarNumberCantHaveAnythingBut16Symbols stamp: 'IO 11/22/2020 17:22:38'!
+PASSED!
+
+!testRun: #CreditCardTest #test07CreditCarNumberCantHaveAnythingButNumbers stamp: 'IO 11/22/2020 17:22:38'!
+PASSED!
+
+!testRun: #CreditCardTest #test08TheNameOfACreditCardOwnerCanNotBeBlank stamp: 'IO 11/22/2020 17:22:38'!
+PASSED!
+
+!testRun: #CreditCardTest #test09TheNameOfACreditCardOwnerCanNotHaveMoreThan30Chars stamp: 'IO 11/22/2020 17:22:38'!
+PASSED!
+
+!testRun: #CreditCardTest #test01ACreditCardCanBeNotExpired stamp: 'IO 11/22/2020 17:22:41'!
+PASSED!
+
+!testRun: #CreditCardTest #test02ACreditCardWithExpirationDatingThisMonthAndYearIsExpired stamp: 'IO 11/22/2020 17:22:41'!
+PASSED!
+
+!testRun: #CreditCardTest #test03ACreditCardWithExpirationDatingAPastMonthThisYearIsExpired stamp: 'IO 11/22/2020 17:22:41'!
+PASSED!
+
+!testRun: #CreditCardTest #test04ACreditCardWithExpirationDatingAFutureYearIsNotExpired stamp: 'IO 11/22/2020 17:22:41'!
+PASSED!
+
+!testRun: #CreditCardTest #test05ACreditCardWithExpirationDatingAPastYearIsExpired stamp: 'IO 11/22/2020 17:22:41'!
+PASSED!
+
+!testRun: #CreditCardTest #test06CreditCarNumberCantHaveAnythingBut16Symbols stamp: 'IO 11/22/2020 17:22:41'!
+PASSED!
+
+!testRun: #CreditCardTest #test07CreditCarNumberCantHaveAnythingButNumbers stamp: 'IO 11/22/2020 17:22:41'!
+PASSED!
+
+!testRun: #CreditCardTest #test08TheNameOfACreditCardOwnerCanNotBeBlank stamp: 'IO 11/22/2020 17:22:41'!
+PASSED!
+
+!testRun: #CreditCardTest #test09TheNameOfACreditCardOwnerCanNotHaveMoreThan30Chars stamp: 'IO 11/22/2020 17:22:41'!
+PASSED!
+
+!testRun: #CreditCardTest #test01ACreditCardCanBeNotExpired stamp: 'IO 11/22/2020 17:22:42'!
+PASSED!
+
+!testRun: #CreditCardTest #test02ACreditCardWithExpirationDatingThisMonthAndYearIsExpired stamp: 'IO 11/22/2020 17:22:42'!
+PASSED!
+
+!testRun: #CreditCardTest #test03ACreditCardWithExpirationDatingAPastMonthThisYearIsExpired stamp: 'IO 11/22/2020 17:22:42'!
+PASSED!
+
+!testRun: #CreditCardTest #test04ACreditCardWithExpirationDatingAFutureYearIsNotExpired stamp: 'IO 11/22/2020 17:22:42'!
+PASSED!
+
+!testRun: #CreditCardTest #test05ACreditCardWithExpirationDatingAPastYearIsExpired stamp: 'IO 11/22/2020 17:22:42'!
+PASSED!
+
+!testRun: #CreditCardTest #test06CreditCarNumberCantHaveAnythingBut16Symbols stamp: 'IO 11/22/2020 17:22:42'!
+PASSED!
+
+!testRun: #CreditCardTest #test07CreditCarNumberCantHaveAnythingButNumbers stamp: 'IO 11/22/2020 17:22:42'!
+PASSED!
+
+!testRun: #CreditCardTest #test08TheNameOfACreditCardOwnerCanNotBeBlank stamp: 'IO 11/22/2020 17:22:42'!
+PASSED!
+
+!testRun: #CreditCardTest #test09TheNameOfACreditCardOwnerCanNotHaveMoreThan30Chars stamp: 'IO 11/22/2020 17:22:42'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test01NewCartIsEmpty stamp: 'IO 11/22/2020 17:22:42'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test02CanAddABookToACart stamp: 'IO 11/22/2020 17:22:42'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test03CanAddManyBooksToACart stamp: 'IO 11/22/2020 17:22:42'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test04CanMoreThanOneFromTheSameBookToACart stamp: 'IO 11/22/2020 17:22:42'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test05CanNotAddABookWithInvalidISBN stamp: 'IO 11/22/2020 17:22:42'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test06CanNotAdd0Books stamp: 'IO 11/22/2020 17:22:42'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test07CanNotAddMinusBooks stamp: 'IO 11/22/2020 17:22:42'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test08CanNotAddNotWholeBooks stamp: 'IO 11/22/2020 17:22:42'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test09CannotEditCartList stamp: 'IO 11/22/2020 17:22:42'!
+PASSED!
+
+!testRun: #ShoppingCashierTest #test01AnEmptyCartCannotBeCheckedOut stamp: 'IO 11/22/2020 17:22:42'!
+PASSED!
+
+!testRun: #ShoppingCashierTest #test02ACartWith1BookWillCheckOutCorrectly stamp: 'IO 11/22/2020 17:22:42'!
+PASSED!
+
+!testRun: #ShoppingCashierTest #test03ACartWithManyBooksWillCheckOutCorrectly stamp: 'IO 11/22/2020 17:22:43'!
+PASSED!
+
+!testRun: #ShoppingCashierTest #test04TheCardShouldNotBeExpired stamp: 'IO 11/22/2020 17:22:43'!
+PASSED!
+!ShoppingCashier class methodsFor: 'instance creation' stamp: 'IO 11/22/2020 17:23:48'!
+withPriceCatalogue: aPriceCatalogue andProcessor: aMerchantProcessor
+
+	^self new initializeWithPriceCatalogue: aPriceCatalogue andProcessor: aMerchantProcessor.! !
+!ShoppingCashier class methodsFor: 'instance creation' stamp: 'IO 11/22/2020 17:23:56' prior: 50877480!
+withPriceCatalogue: aPriceCatalogue 
+
+	^self new initializeWithPriceCatalogue: aPriceCatalogue ! !
+
+!methodRemoval: ShoppingCashier class #withPriceCatalogue:andProcessor: stamp: 'IO 11/22/2020 17:23:59'!
+withPriceCatalogue: aPriceCatalogue andProcessor: aMerchantProcessor
+
+	^self new initializeWithPriceCatalogue: aPriceCatalogue andProcessor: aMerchantProcessor.!
+
+!classDefinition: #DummyMerchantProcessor category: 'Ejercicio-20-Tus-Libros' stamp: 'IO 11/22/2020 17:25:40'!
+Object subclass: #DummyMerchantProcessor
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Ejercicio-20-Tus-Libros'!
+!ShoppingCashierTest methodsFor: 'tests' stamp: 'IO 11/22/2020 17:25:35'!
+test05ACartShouldFailIfMerchantProcessorFails
+
+	|aCashier aCart aCreditCard aMerchantProcessor|
+	
+	aCart := ShoppingCart withCatalogue: (OrderedCollection with: '0-7645-2641-3' with: '0-7645-2641-4').
+	aCart add: '0-7645-2641-3' withQuantity: 2.
+	aCart add: '0-7645-2641-4'.
+	aCreditCard := CreditCard withNumber: '0000000000000000' expirationDate: self validDate belongingTo: 'Juan Pablo'.
+	
+	aMerchantProcessor := DummyMerchantProcessor newWithFailure.
+
+	aCashier := ShoppingCashier
+		withPriceCatalogue: (Dictionary newFromPairs: #('0-7645-2641-3' 100 '0-7645-2641-4' 100))
+		andMerchantProcessor: aMerchantProcessor.
+	
+	self assert: 300 equals: (aCashier checkOut: aCart withCreditCard: aCreditCard).! !
+
+!testRun: #ShoppingCashierTest #test05ACartShouldFailIfMerchantProcessorFails stamp: 'IO 11/22/2020 17:25:45'!
+ERROR!
+!DummyMerchantProcessor class methodsFor: 'as yet unclassified' stamp: 'IO 11/22/2020 17:25:54'!
+newWithFailure
+	self shouldBeImplemented.! !
+!DummyMerchantProcessor class methodsFor: 'as yet unclassified' stamp: 'IO 11/22/2020 17:26:11' prior: 50880627!
+newWithFailure
+	self basicNew initializeWithFailure.
+! !
+
+!testRun: #ShoppingCashierTest #test05ACartShouldFailIfMerchantProcessorFails stamp: 'IO 11/22/2020 17:26:14'!
+ERROR!
+!DummyMerchantProcessor methodsFor: 'initialization' stamp: 'IO 11/22/2020 17:26:21'!
+initializeWithFailure
+	self shouldBeImplemented.! !
+
+!classDefinition: #DummyMerchantProcessor category: 'Ejercicio-20-Tus-Libros' stamp: 'IO 11/22/2020 17:26:28'!
+Object subclass: #DummyMerchantProcessor
+	instanceVariableNames: 'failure'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Ejercicio-20-Tus-Libros'!
+!DummyMerchantProcessor methodsFor: 'initialization' stamp: 'IO 11/22/2020 17:26:26' prior: 50880641!
+initializeWithFailure
+	failure := true.! !
+
+!testRun: #ShoppingCashierTest #test05ACartShouldFailIfMerchantProcessorFails stamp: 'IO 11/22/2020 17:26:31'!
+ERROR!
+!ShoppingCashier class methodsFor: 'instance creation' stamp: 'IO 11/22/2020 17:26:38'!
+withPriceCatalogue: aDictionary andMerchantProcessor: aClass 
+	"DO NOT FORGET TO RENAME COLLABORATORS AND REMOVE THIS COMMENT!!!!"
+	self shouldBeImplemented.
+	^self new initializeWithPriceCatalogue: aDictionary andMerchantProcessor: aClass ! !
+!ShoppingCashier class methodsFor: 'instance creation' stamp: 'IO 11/22/2020 17:26:48' prior: 50880663!
+withPriceCatalogue: aDictionary andMerchantProcessor: aClass 
+
+	^self new initializeWithPriceCatalogue: aDictionary andMerchantProcessor: aClass ! !
+
+!testRun: #ShoppingCashierTest #test05ACartShouldFailIfMerchantProcessorFails stamp: 'IO 11/22/2020 17:27:01'!
+ERROR!
+
+!classDefinition: #ShoppingCashier category: 'Ejercicio-20-Tus-Libros' stamp: 'IO 11/22/2020 17:28:20'!
+Object subclass: #ShoppingCashier
+	instanceVariableNames: 'priceCatalogue dictionary'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Ejercicio-20-Tus-Libros'!
+
+!classDefinition: #ShoppingCashier category: 'Ejercicio-20-Tus-Libros' stamp: 'IO 11/22/2020 17:28:20'!
+Object subclass: #ShoppingCashier
+	instanceVariableNames: 'priceCatalogue dictionary class'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Ejercicio-20-Tus-Libros'!
+!ShoppingCashier methodsFor: 'initialization' stamp: 'IO 11/22/2020 17:28:20'!
+initializeWithPriceCatalogue: aDictionary andMerchantProcessor: aClass 
+	self shouldBeImplemented.
+	dictionary := aDictionary.
+	class := aClass.! !
+
+!classDefinition: #ShoppingCashier category: 'Ejercicio-20-Tus-Libros' stamp: 'IO 11/22/2020 17:28:45'!
+Object subclass: #ShoppingCashier
+	instanceVariableNames: 'priceCatalogue dictionary class merchantProcessor'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Ejercicio-20-Tus-Libros'!
+!ShoppingCashier methodsFor: 'initialization' stamp: 'IO 11/22/2020 17:28:44' prior: 50880703!
+initializeWithPriceCatalogue: aDictionary andMerchantProcessor: aMerchantProcessor 
+
+	dictionary := aDictionary.
+	merchantProcessor := aMerchantProcessor.! !
+
+!testRun: #ShoppingCashierTest #test05ACartShouldFailIfMerchantProcessorFails stamp: 'IO 11/22/2020 17:28:48'!
+ERROR!
+
+!testRun: #ShoppingCashierTest #test05ACartShouldFailIfMerchantProcessorFails stamp: 'IO 11/22/2020 17:29:01'!
+ERROR!
+
+!testRun: #ShoppingCashierTest #test05ACartShouldFailIfMerchantProcessorFails stamp: 'IO 11/22/2020 17:29:24'!
+ERROR!
+!ShoppingCashier methodsFor: 'initialization' stamp: 'IO 11/22/2020 17:30:08' prior: 50880720!
+initializeWithPriceCatalogue: aPriceCatalogue andMerchantProcessor: aMerchantProcessor 
+
+	priceCatalogue := aPriceCatalogue.
+	merchantProcessor := aMerchantProcessor.! !
+
+!testRun: #ShoppingCashierTest #test01AnEmptyCartCannotBeCheckedOut stamp: 'IO 11/22/2020 17:30:08'!
+PASSED!
+
+!testRun: #ShoppingCashierTest #test02ACartWith1BookWillCheckOutCorrectly stamp: 'IO 11/22/2020 17:30:08'!
+PASSED!
+
+!testRun: #ShoppingCashierTest #test03ACartWithManyBooksWillCheckOutCorrectly stamp: 'IO 11/22/2020 17:30:08'!
+PASSED!
+
+!testRun: #ShoppingCashierTest #test04TheCardShouldNotBeExpired stamp: 'IO 11/22/2020 17:30:08'!
+PASSED!
+
+!testRun: #ShoppingCashierTest #test05ACartShouldFailIfMerchantProcessorFails stamp: 'IO 11/22/2020 17:30:08'!
+PASSED!
+
+Object subclass: #ShoppingCashier
+	instanceVariableNames: 'priceCatalogue merchantProcessor'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Ejercicio-20-Tus-Libros'!
+
+!classDefinition: #ShoppingCashier category: 'Ejercicio-20-Tus-Libros' stamp: 'IO 11/22/2020 17:30:26'!
+Object subclass: #ShoppingCashier
+	instanceVariableNames: 'priceCatalogue merchantProcessor'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Ejercicio-20-Tus-Libros'!
+
+!testRun: #CreditCardTest #test01ACreditCardCanBeNotExpired stamp: 'IO 11/22/2020 17:30:27'!
+PASSED!
+
+!testRun: #CreditCardTest #test02ACreditCardWithExpirationDatingThisMonthAndYearIsExpired stamp: 'IO 11/22/2020 17:30:27'!
+PASSED!
+
+!testRun: #CreditCardTest #test03ACreditCardWithExpirationDatingAPastMonthThisYearIsExpired stamp: 'IO 11/22/2020 17:30:27'!
+PASSED!
+
+!testRun: #CreditCardTest #test04ACreditCardWithExpirationDatingAFutureYearIsNotExpired stamp: 'IO 11/22/2020 17:30:27'!
+PASSED!
+
+!testRun: #CreditCardTest #test05ACreditCardWithExpirationDatingAPastYearIsExpired stamp: 'IO 11/22/2020 17:30:27'!
+PASSED!
+
+!testRun: #CreditCardTest #test06CreditCarNumberCantHaveAnythingBut16Symbols stamp: 'IO 11/22/2020 17:30:27'!
+PASSED!
+
+!testRun: #CreditCardTest #test07CreditCarNumberCantHaveAnythingButNumbers stamp: 'IO 11/22/2020 17:30:27'!
+PASSED!
+
+!testRun: #CreditCardTest #test08TheNameOfACreditCardOwnerCanNotBeBlank stamp: 'IO 11/22/2020 17:30:27'!
+PASSED!
+
+!testRun: #CreditCardTest #test09TheNameOfACreditCardOwnerCanNotHaveMoreThan30Chars stamp: 'IO 11/22/2020 17:30:27'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test01NewCartIsEmpty stamp: 'IO 11/22/2020 17:30:27'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test02CanAddABookToACart stamp: 'IO 11/22/2020 17:30:27'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test03CanAddManyBooksToACart stamp: 'IO 11/22/2020 17:30:27'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test04CanMoreThanOneFromTheSameBookToACart stamp: 'IO 11/22/2020 17:30:27'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test05CanNotAddABookWithInvalidISBN stamp: 'IO 11/22/2020 17:30:27'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test06CanNotAdd0Books stamp: 'IO 11/22/2020 17:30:27'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test07CanNotAddMinusBooks stamp: 'IO 11/22/2020 17:30:27'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test08CanNotAddNotWholeBooks stamp: 'IO 11/22/2020 17:30:27'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test09CannotEditCartList stamp: 'IO 11/22/2020 17:30:27'!
+PASSED!
+
+!testRun: #ShoppingCashierTest #test01AnEmptyCartCannotBeCheckedOut stamp: 'IO 11/22/2020 17:30:27'!
+PASSED!
+
+!testRun: #ShoppingCashierTest #test02ACartWith1BookWillCheckOutCorrectly stamp: 'IO 11/22/2020 17:30:27'!
+PASSED!
+
+!testRun: #ShoppingCashierTest #test03ACartWithManyBooksWillCheckOutCorrectly stamp: 'IO 11/22/2020 17:30:27'!
+PASSED!
+
+!testRun: #ShoppingCashierTest #test04TheCardShouldNotBeExpired stamp: 'IO 11/22/2020 17:30:27'!
+PASSED!
+
+!testRun: #ShoppingCashierTest #test05ACartShouldFailIfMerchantProcessorFails stamp: 'IO 11/22/2020 17:30:27'!
+PASSED!
+
+!testRun: #CreditCardTest #test01ACreditCardCanBeNotExpired stamp: 'IO 11/22/2020 17:31:03'!
+PASSED!
+
+!testRun: #CreditCardTest #test02ACreditCardWithExpirationDatingThisMonthAndYearIsExpired stamp: 'IO 11/22/2020 17:31:03'!
+PASSED!
+
+!testRun: #CreditCardTest #test03ACreditCardWithExpirationDatingAPastMonthThisYearIsExpired stamp: 'IO 11/22/2020 17:31:03'!
+PASSED!
+
+!testRun: #CreditCardTest #test04ACreditCardWithExpirationDatingAFutureYearIsNotExpired stamp: 'IO 11/22/2020 17:31:03'!
+PASSED!
+
+!testRun: #CreditCardTest #test05ACreditCardWithExpirationDatingAPastYearIsExpired stamp: 'IO 11/22/2020 17:31:03'!
+PASSED!
+
+!testRun: #CreditCardTest #test06CreditCarNumberCantHaveAnythingBut16Symbols stamp: 'IO 11/22/2020 17:31:03'!
+PASSED!
+
+!testRun: #CreditCardTest #test07CreditCarNumberCantHaveAnythingButNumbers stamp: 'IO 11/22/2020 17:31:03'!
+PASSED!
+
+!testRun: #CreditCardTest #test08TheNameOfACreditCardOwnerCanNotBeBlank stamp: 'IO 11/22/2020 17:31:03'!
+PASSED!
+
+!testRun: #CreditCardTest #test09TheNameOfACreditCardOwnerCanNotHaveMoreThan30Chars stamp: 'IO 11/22/2020 17:31:03'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test01NewCartIsEmpty stamp: 'IO 11/22/2020 17:31:04'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test02CanAddABookToACart stamp: 'IO 11/22/2020 17:31:04'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test03CanAddManyBooksToACart stamp: 'IO 11/22/2020 17:31:04'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test04CanMoreThanOneFromTheSameBookToACart stamp: 'IO 11/22/2020 17:31:04'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test05CanNotAddABookWithInvalidISBN stamp: 'IO 11/22/2020 17:31:04'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test06CanNotAdd0Books stamp: 'IO 11/22/2020 17:31:04'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test07CanNotAddMinusBooks stamp: 'IO 11/22/2020 17:31:04'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test08CanNotAddNotWholeBooks stamp: 'IO 11/22/2020 17:31:04'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test09CannotEditCartList stamp: 'IO 11/22/2020 17:31:04'!
+PASSED!
+
+!testRun: #ShoppingCashierTest #test01AnEmptyCartCannotBeCheckedOut stamp: 'IO 11/22/2020 17:31:04'!
+PASSED!
+
+!testRun: #ShoppingCashierTest #test02ACartWith1BookWillCheckOutCorrectly stamp: 'IO 11/22/2020 17:31:04'!
+PASSED!
+
+!testRun: #ShoppingCashierTest #test03ACartWithManyBooksWillCheckOutCorrectly stamp: 'IO 11/22/2020 17:31:04'!
+PASSED!
+
+!testRun: #ShoppingCashierTest #test04TheCardShouldNotBeExpired stamp: 'IO 11/22/2020 17:31:04'!
+PASSED!
+
+!testRun: #ShoppingCashierTest #test05ACartShouldFailIfMerchantProcessorFails stamp: 'IO 11/22/2020 17:31:04'!
+PASSED!
+!ShoppingCashierTest methodsFor: 'tests' stamp: 'IO 11/22/2020 17:31:50' prior: 50880598!
+test05ACartShouldFailIfMerchantProcessorFails
+
+	|aCashier aCart aCreditCard aMerchantProcessor|
+	
+	aCart := ShoppingCart withCatalogue: (OrderedCollection with: '0-7645-2641-3' with: '0-7645-2641-4').
+	aCart add: '0-7645-2641-3' withQuantity: 2.
+	aCart add: '0-7645-2641-4'.
+	aCreditCard := CreditCard withNumber: '0000000000000000' expirationDate: self validDate belongingTo: 'Juan Pablo'.
+	
+	aMerchantProcessor := DummyMerchantProcessor newWithFailure.
+
+	aCashier := ShoppingCashier
+		withPriceCatalogue: (Dictionary newFromPairs: #('0-7645-2641-3' 100 '0-7645-2641-4' 100))
+		andMerchantProcessor: aMerchantProcessor.
+	
+	
+	self should: [aCashier checkOut: aCart withCreditCard: aCreditCard]
+		raise: Error
+		withMessageText: DummyMerchantProcessor dummyError.
+! !
+
+!testRun: #ShoppingCashierTest #test05ACartShouldFailIfMerchantProcessorFails stamp: 'IO 11/22/2020 17:31:54'!
+ERROR!
+!DummyMerchantProcessor class methodsFor: 'as yet unclassified' stamp: 'IO 11/22/2020 17:32:15'!
+dummyError
+	self shouldBeImplemented.! !
+!DummyMerchantProcessor class methodsFor: 'as yet unclassified' stamp: 'IO 11/22/2020 17:33:01'!
+dummyErrorMessage
+	^'Merchant Processor error message'.
+! !
+
+!methodRemoval: DummyMerchantProcessor class #dummyError stamp: 'IO 11/22/2020 17:33:04'!
+dummyError
+	self shouldBeImplemented.!
+!ShoppingCashierTest methodsFor: 'tests' stamp: 'IO 11/22/2020 17:33:21' prior: 50880941!
+test05ACartShouldFailIfMerchantProcessorFails
+
+	|aCashier aCart aCreditCard aMerchantProcessor|
+	
+	aCart := ShoppingCart withCatalogue: (OrderedCollection with: '0-7645-2641-3' with: '0-7645-2641-4').
+	aCart add: '0-7645-2641-3' withQuantity: 2.
+	aCart add: '0-7645-2641-4'.
+	aCreditCard := CreditCard withNumber: '0000000000000000' expirationDate: self validDate belongingTo: 'Juan Pablo'.
+	
+	aMerchantProcessor := DummyMerchantProcessor newWithFailure.
+
+	aCashier := ShoppingCashier
+		withPriceCatalogue: (Dictionary newFromPairs: #('0-7645-2641-3' 100 '0-7645-2641-4' 100))
+		andMerchantProcessor: aMerchantProcessor.
+	
+	
+	self should: [aCashier checkOut: aCart withCreditCard: aCreditCard]
+		raise: Error
+		withMessageText: DummyMerchantProcessor dummyErrorMessage.
+! !
+
+!testRun: #ShoppingCashierTest #test05ACartShouldFailIfMerchantProcessorFails stamp: 'IO 11/22/2020 17:33:22'!
+FAILURE!
+
+Object subclass: #MerchantProcessor
+	instanceVariableNames: 'failure'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Ejercicio-20-Tus-Libros'!
+
+!classDefinition: #MerchantProcessor category: 'Ejercicio-20-Tus-Libros' stamp: 'IO 11/22/2020 17:34:04'!
+Object subclass: #MerchantProcessor
+	instanceVariableNames: 'failure'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Ejercicio-20-Tus-Libros'!
+
+MerchantProcessor subclass: #DummyMerchantProcessor
+	instanceVariableNames: 'failure'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Ejercicio-20-Tus-Libros'!
+
+Object subclass: #MerchantProcessor
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Ejercicio-20-Tus-Libros'!
+
+!classDefinition: #MerchantProcessor category: 'Ejercicio-20-Tus-Libros' stamp: 'IO 11/22/2020 17:34:25'!
+Object subclass: #MerchantProcessor
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Ejercicio-20-Tus-Libros'!
+
+MerchantProcessor subclass: #DummyMerchantProcessor
+	instanceVariableNames: 'failure'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Ejercicio-20-Tus-Libros'!
+
+!classDefinition: #DummyMerchantProcessor category: 'Ejercicio-20-Tus-Libros' stamp: 'IO 11/22/2020 17:34:30'!
+MerchantProcessor subclass: #DummyMerchantProcessor
+	instanceVariableNames: 'failure'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Ejercicio-20-Tus-Libros'!
+
+MerchantProcessor subclass: #NullMerchantProcessor
+	instanceVariableNames: 'failure'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Ejercicio-20-Tus-Libros'!
+
+!classDefinition: #NullMerchantProcessor category: 'Ejercicio-20-Tus-Libros' stamp: 'IO 11/22/2020 17:34:35'!
+MerchantProcessor subclass: #NullMerchantProcessor
+	instanceVariableNames: 'failure'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Ejercicio-20-Tus-Libros'!
+!MerchantProcessor methodsFor: 'no messages' stamp: 'IO 11/22/2020 17:35:10'!
+checkoutWith: aCreditCard for: anAmount
+	^self subclassResponsibility.
+! !
+!DummyMerchantProcessor methodsFor: 'nil' stamp: 'IO 11/22/2020 17:35:41' overrides: 50881076!
+checkoutWith: aCreditCard for: anAmount
+	^self error: DummyMerchantProcessor dummyErrorMessage.
+! !
+!NullMerchantProcessor methodsFor: 'no messages' stamp: 'IO 11/22/2020 17:35:54' overrides: 50881076!
+checkoutWith: aCreditCard for: anAmount
+
+! !
+!ShoppingCashier methodsFor: 'checkOut' stamp: 'IO 11/22/2020 17:36:08' prior: 50880077!
+checkOut: aShoppingCart withCreditCard: aCreditCard
+
+	aShoppingCart listCart size = 0 ifTrue: [^self error: ShoppingCashier invalidCartErrorMessage].
+	aCreditCard isExpired ifTrue: [^self error: ShoppingCashier invalidCreditCard].
+	
+	^ aShoppingCart listCart inject: 0 into: [:theSum :anISBN | theSum + priceCatalogue at: anISBN].! !
+!NullMerchantProcessor methodsFor: 'as yet unclassified' stamp: 'IO 11/22/2020 17:36:29'!
+debitWith: aCreditCard for: anAmount
+
+! !
+!MerchantProcessor methodsFor: 'as yet unclassified' stamp: 'IO 11/22/2020 17:36:29'!
+debitWith: aCreditCard for: anAmount
+	^self subclassResponsibility.
+! !
+!DummyMerchantProcessor methodsFor: 'as yet unclassified' stamp: 'IO 11/22/2020 17:36:29' overrides: 50881112!
+debitWith: aCreditCard for: anAmount
+	^self error: DummyMerchantProcessor dummyErrorMessage.
+! !
+
+!methodRemoval: NullMerchantProcessor #checkoutWith:for: stamp: 'IO 11/22/2020 17:36:29'!
+checkoutWith: aCreditCard for: anAmount
+
+!
+
+!methodRemoval: MerchantProcessor #checkoutWith:for: stamp: 'IO 11/22/2020 17:36:29'!
+checkoutWith: aCreditCard for: anAmount
+	^self subclassResponsibility.
+!
+
+!methodRemoval: DummyMerchantProcessor #checkoutWith:for: stamp: 'IO 11/22/2020 17:36:29'!
+checkoutWith: aCreditCard for: anAmount
+	^self error: DummyMerchantProcessor dummyErrorMessage.
+!
+!ShoppingCashier methodsFor: 'initialization' stamp: 'IO 11/22/2020 17:36:51' prior: 50877456!
+initializeWithPriceCatalogue: aPriceCatalogue 
+
+	priceCatalogue := aPriceCatalogue.
+	merchantProcessor := NullMerchantProcessor new.! !
+!ShoppingCashier methodsFor: 'checkOut' stamp: 'IO 11/22/2020 17:37:31' prior: 50881094!
+checkOut: aShoppingCart withCreditCard: aCreditCard
+
+	| total |
+	aShoppingCart listCart size = 0 ifTrue: [^self error: ShoppingCashier invalidCartErrorMessage].
+	aCreditCard isExpired ifTrue: [^self error: ShoppingCashier invalidCreditCard].
+	
+	total := aShoppingCart listCart inject: 0 into: [:theSum :anISBN | theSum + priceCatalogue at: anISBN].
+	merchantProcessor debitWith: aCreditCard for: total.
+	^total.! !
+
+!testRun: #ShoppingCashierTest #test01AnEmptyCartCannotBeCheckedOut stamp: 'IO 11/22/2020 17:37:31'!
+PASSED!
+
+!testRun: #ShoppingCashierTest #test02ACartWith1BookWillCheckOutCorrectly stamp: 'IO 11/22/2020 17:37:31'!
+PASSED!
+
+!testRun: #ShoppingCashierTest #test03ACartWithManyBooksWillCheckOutCorrectly stamp: 'IO 11/22/2020 17:37:31'!
+PASSED!
+
+!testRun: #ShoppingCashierTest #test04TheCardShouldNotBeExpired stamp: 'IO 11/22/2020 17:37:31'!
+PASSED!
+
+!testRun: #ShoppingCashierTest #test05ACartShouldFailIfMerchantProcessorFails stamp: 'IO 11/22/2020 17:37:31'!
+FAILURE!
+
+!testRun: #ShoppingCashierTest #test05ACartShouldFailIfMerchantProcessorFails stamp: 'IO 11/22/2020 17:37:31'!
+FAILURE!
+!DummyMerchantProcessor methodsFor: 'as yet unclassified' stamp: 'IO 11/22/2020 17:38:23' prior: 50881118 overrides: 50881112!
+debitWith: aCreditCard for: anAmount
+	^self error: DummyMerchantProcessor dummyErrorMessage.
+! !
+
+!classRenamed: #DummyMerchantProcessor as: #ErroredMerchantProcessor stamp: 'IO 11/22/2020 17:38:46'!
+Smalltalk renameClassNamed: #DummyMerchantProcessor as: #ErroredMerchantProcessor!
+!ErroredMerchantProcessor methodsFor: 'as yet unclassified' stamp: 'IO 11/22/2020 17:38:46' prior: 50881187 overrides: 50881112!
+debitWith: aCreditCard for: anAmount
+	^self error: ErroredMerchantProcessor dummyErrorMessage.
+! !
+!ShoppingCashierTest methodsFor: 'as yet unclassified' stamp: 'IO 11/22/2020 17:38:46' prior: 50880986!
+test05ACartShouldFailIfMerchantProcessorFails
+
+	|aCashier aCart aCreditCard aMerchantProcessor|
+	
+	aCart := ShoppingCart withCatalogue: (OrderedCollection with: '0-7645-2641-3' with: '0-7645-2641-4').
+	aCart add: '0-7645-2641-3' withQuantity: 2.
+	aCart add: '0-7645-2641-4'.
+	aCreditCard := CreditCard withNumber: '0000000000000000' expirationDate: self validDate belongingTo: 'Juan Pablo'.
+	
+	aMerchantProcessor := ErroredMerchantProcessor newWithFailure.
+
+	aCashier := ShoppingCashier
+		withPriceCatalogue: (Dictionary newFromPairs: #('0-7645-2641-3' 100 '0-7645-2641-4' 100))
+		andMerchantProcessor: aMerchantProcessor.
+	
+	
+	self should: [aCashier checkOut: aCart withCreditCard: aCreditCard]
+		raise: Error
+		withMessageText: ErroredMerchantProcessor dummyErrorMessage.
+! !
+
+!methodRemoval: ErroredMerchantProcessor #initializeWithFailure stamp: 'IO 11/22/2020 17:39:03'!
+initializeWithFailure
+	failure := true.!
+
+!methodRemoval: ErroredMerchantProcessor class #newWithFailure stamp: 'IO 11/22/2020 17:39:09'!
+newWithFailure
+	self basicNew initializeWithFailure.
+!
+!ShoppingCashierTest methodsFor: 'tests' stamp: 'IO 11/22/2020 17:39:18' prior: 50881207!
+test05ACartShouldFailIfMerchantProcessorFails
+
+	|aCashier aCart aCreditCard aMerchantProcessor|
+	
+	aCart := ShoppingCart withCatalogue: (OrderedCollection with: '0-7645-2641-3' with: '0-7645-2641-4').
+	aCart add: '0-7645-2641-3' withQuantity: 2.
+	aCart add: '0-7645-2641-4'.
+	aCreditCard := CreditCard withNumber: '0000000000000000' expirationDate: self validDate belongingTo: 'Juan Pablo'.
+	
+	aMerchantProcessor := ErroredMerchantProcessor new.
+
+	aCashier := ShoppingCashier
+		withPriceCatalogue: (Dictionary newFromPairs: #('0-7645-2641-3' 100 '0-7645-2641-4' 100))
+		andMerchantProcessor: aMerchantProcessor.
+	
+	
+	self should: [aCashier checkOut: aCart withCreditCard: aCreditCard]
+		raise: Error
+		withMessageText: ErroredMerchantProcessor dummyErrorMessage.
+! !
+
+!testRun: #ShoppingCashierTest #test05ACartShouldFailIfMerchantProcessorFails stamp: 'IO 11/22/2020 17:39:19'!
+PASSED!
+
+!testRun: #ShoppingCashierTest #test01AnEmptyCartCannotBeCheckedOut stamp: 'IO 11/22/2020 17:39:19'!
+PASSED!
+
+!testRun: #ShoppingCashierTest #test02ACartWith1BookWillCheckOutCorrectly stamp: 'IO 11/22/2020 17:39:19'!
+PASSED!
+
+!testRun: #ShoppingCashierTest #test03ACartWithManyBooksWillCheckOutCorrectly stamp: 'IO 11/22/2020 17:39:19'!
+PASSED!
+
+!testRun: #ShoppingCashierTest #test04TheCardShouldNotBeExpired stamp: 'IO 11/22/2020 17:39:19'!
+PASSED!
+
+!testRun: #ShoppingCashierTest #test05ACartShouldFailIfMerchantProcessorFails stamp: 'IO 11/22/2020 17:39:19'!
+PASSED!
+
+!testRun: #ShoppingCashierTest #test05ACartShouldFailIfMerchantProcessorFails stamp: 'IO 11/22/2020 17:39:21'!
+PASSED!
+
+!testRun: #ShoppingCashierTest #test01AnEmptyCartCannotBeCheckedOut stamp: 'IO 11/22/2020 17:39:21'!
+PASSED!
+
+!testRun: #ShoppingCashierTest #test02ACartWith1BookWillCheckOutCorrectly stamp: 'IO 11/22/2020 17:39:21'!
+PASSED!
+
+!testRun: #ShoppingCashierTest #test03ACartWithManyBooksWillCheckOutCorrectly stamp: 'IO 11/22/2020 17:39:21'!
+PASSED!
+
+!testRun: #ShoppingCashierTest #test04TheCardShouldNotBeExpired stamp: 'IO 11/22/2020 17:39:21'!
+PASSED!
+
+!testRun: #ShoppingCashierTest #test05ACartShouldFailIfMerchantProcessorFails stamp: 'IO 11/22/2020 17:39:21'!
+PASSED!
+!ShoppingCashier methodsFor: 'initialization' stamp: 'IO 11/22/2020 17:41:36' prior: 50881140!
+initializeWithPriceCatalogue: aPriceCatalogue 
+
+	self initializeWithPriceCatalogue: aPriceCatalogue andMerchantProcessor: NullMerchantProcessor new.
+! !
+
+!testRun: #ShoppingCashierTest #test01AnEmptyCartCannotBeCheckedOut stamp: 'IO 11/22/2020 17:41:37'!
+PASSED!
+
+!testRun: #ShoppingCashierTest #test02ACartWith1BookWillCheckOutCorrectly stamp: 'IO 11/22/2020 17:41:37'!
+PASSED!
+
+!testRun: #ShoppingCashierTest #test03ACartWithManyBooksWillCheckOutCorrectly stamp: 'IO 11/22/2020 17:41:37'!
+PASSED!
+
+!testRun: #ShoppingCashierTest #test04TheCardShouldNotBeExpired stamp: 'IO 11/22/2020 17:41:37'!
+PASSED!
+
+!testRun: #ShoppingCashierTest #test05ACartShouldFailIfMerchantProcessorFails stamp: 'IO 11/22/2020 17:41:37'!
+PASSED!
+
+!testRun: #CreditCardTest #test01ACreditCardCanBeNotExpired stamp: 'IO 11/22/2020 17:41:39'!
+PASSED!
+
+!testRun: #CreditCardTest #test02ACreditCardWithExpirationDatingThisMonthAndYearIsExpired stamp: 'IO 11/22/2020 17:41:39'!
+PASSED!
+
+!testRun: #CreditCardTest #test03ACreditCardWithExpirationDatingAPastMonthThisYearIsExpired stamp: 'IO 11/22/2020 17:41:39'!
+PASSED!
+
+!testRun: #CreditCardTest #test04ACreditCardWithExpirationDatingAFutureYearIsNotExpired stamp: 'IO 11/22/2020 17:41:39'!
+PASSED!
+
+!testRun: #CreditCardTest #test05ACreditCardWithExpirationDatingAPastYearIsExpired stamp: 'IO 11/22/2020 17:41:39'!
+PASSED!
+
+!testRun: #CreditCardTest #test06CreditCarNumberCantHaveAnythingBut16Symbols stamp: 'IO 11/22/2020 17:41:39'!
+PASSED!
+
+!testRun: #CreditCardTest #test07CreditCarNumberCantHaveAnythingButNumbers stamp: 'IO 11/22/2020 17:41:39'!
+PASSED!
+
+!testRun: #CreditCardTest #test08TheNameOfACreditCardOwnerCanNotBeBlank stamp: 'IO 11/22/2020 17:41:39'!
+PASSED!
+
+!testRun: #CreditCardTest #test09TheNameOfACreditCardOwnerCanNotHaveMoreThan30Chars stamp: 'IO 11/22/2020 17:41:39'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test01NewCartIsEmpty stamp: 'IO 11/22/2020 17:41:39'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test02CanAddABookToACart stamp: 'IO 11/22/2020 17:41:39'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test03CanAddManyBooksToACart stamp: 'IO 11/22/2020 17:41:39'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test04CanMoreThanOneFromTheSameBookToACart stamp: 'IO 11/22/2020 17:41:39'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test05CanNotAddABookWithInvalidISBN stamp: 'IO 11/22/2020 17:41:39'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test06CanNotAdd0Books stamp: 'IO 11/22/2020 17:41:39'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test07CanNotAddMinusBooks stamp: 'IO 11/22/2020 17:41:39'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test08CanNotAddNotWholeBooks stamp: 'IO 11/22/2020 17:41:39'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test09CannotEditCartList stamp: 'IO 11/22/2020 17:41:39'!
+PASSED!
+
+!testRun: #ShoppingCashierTest #test01AnEmptyCartCannotBeCheckedOut stamp: 'IO 11/22/2020 17:41:39'!
+PASSED!
+
+!testRun: #ShoppingCashierTest #test02ACartWith1BookWillCheckOutCorrectly stamp: 'IO 11/22/2020 17:41:39'!
+PASSED!
+
+!testRun: #ShoppingCashierTest #test03ACartWithManyBooksWillCheckOutCorrectly stamp: 'IO 11/22/2020 17:41:39'!
+PASSED!
+
+!testRun: #ShoppingCashierTest #test04TheCardShouldNotBeExpired stamp: 'IO 11/22/2020 17:41:39'!
+PASSED!
+
+!testRun: #ShoppingCashierTest #test05ACartShouldFailIfMerchantProcessorFails stamp: 'IO 11/22/2020 17:41:39'!
+PASSED!
+!CreditCard methodsFor: 'testing' stamp: 'IO 11/22/2020 17:51:37' prior: 50877490!
+isExpired
+	"returns if this credit card is expired"
+	|expirationDateYear currentMonth currentYear|
+	
+	expirationDateYear := expirationDate yearNumber.
+	currentMonth := Date today monthIndex.
+	currentYear := Date today yearNumber.
+	
+	
+	^(
+		expirationDate monthIndex <= currentMonth  and: expirationDateYear = currentYear
+	) or: expirationDateYear < currentYear.! !
+
+!testRun: #CreditCardTest #test01ACreditCardCanBeNotExpired stamp: 'IO 11/22/2020 17:51:38'!
+PASSED!
+
+!testRun: #CreditCardTest #test02ACreditCardWithExpirationDatingThisMonthAndYearIsExpired stamp: 'IO 11/22/2020 17:51:38'!
+PASSED!
+
+!testRun: #CreditCardTest #test03ACreditCardWithExpirationDatingAPastMonthThisYearIsExpired stamp: 'IO 11/22/2020 17:51:38'!
+PASSED!
+
+!testRun: #CreditCardTest #test04ACreditCardWithExpirationDatingAFutureYearIsNotExpired stamp: 'IO 11/22/2020 17:51:38'!
+PASSED!
+
+!testRun: #CreditCardTest #test05ACreditCardWithExpirationDatingAPastYearIsExpired stamp: 'IO 11/22/2020 17:51:38'!
+PASSED!
+
+!testRun: #CreditCardTest #test06CreditCarNumberCantHaveAnythingBut16Symbols stamp: 'IO 11/22/2020 17:51:38'!
+PASSED!
+
+!testRun: #CreditCardTest #test07CreditCarNumberCantHaveAnythingButNumbers stamp: 'IO 11/22/2020 17:51:38'!
+PASSED!
+
+!testRun: #CreditCardTest #test08TheNameOfACreditCardOwnerCanNotBeBlank stamp: 'IO 11/22/2020 17:51:38'!
+PASSED!
+
+!testRun: #CreditCardTest #test09TheNameOfACreditCardOwnerCanNotHaveMoreThan30Chars stamp: 'IO 11/22/2020 17:51:38'!
+PASSED!
+!ShoppingCashierTest methodsFor: 'tests' stamp: 'IO 11/22/2020 17:56:34'!
+test05ACartShouldNotCheckoutIfMerchantProcessorFails
+
+	|aCashier aCart aCreditCard aMerchantProcessor|
+	
+	aCart := ShoppingCart withCatalogue: (OrderedCollection with: '0-7645-2641-3' with: '0-7645-2641-4').
+	aCart add: '0-7645-2641-3' withQuantity: 2.
+	aCart add: '0-7645-2641-4'.
+	aCreditCard := CreditCard withNumber: '0000000000000000' expirationDate: self validDate belongingTo: 'Juan Pablo'.
+	
+	aMerchantProcessor := ErroredMerchantProcessor new.
+
+	aCashier := ShoppingCashier
+		withPriceCatalogue: (Dictionary newFromPairs: #('0-7645-2641-3' 100 '0-7645-2641-4' 100))
+		andMerchantProcessor: aMerchantProcessor.
+	
+	
+	self should: [aCashier checkOut: aCart withCreditCard: aCreditCard]
+		raise: Error
+		withMessageText: ErroredMerchantProcessor dummyErrorMessage.
+! !
+
+!methodRemoval: ShoppingCashierTest #test05ACartShouldFailIfMerchantProcessorFails stamp: 'IO 11/22/2020 17:56:34'!
+test05ACartShouldFailIfMerchantProcessorFails
+
+	|aCashier aCart aCreditCard aMerchantProcessor|
+	
+	aCart := ShoppingCart withCatalogue: (OrderedCollection with: '0-7645-2641-3' with: '0-7645-2641-4').
+	aCart add: '0-7645-2641-3' withQuantity: 2.
+	aCart add: '0-7645-2641-4'.
+	aCreditCard := CreditCard withNumber: '0000000000000000' expirationDate: self validDate belongingTo: 'Juan Pablo'.
+	
+	aMerchantProcessor := ErroredMerchantProcessor new.
+
+	aCashier := ShoppingCashier
+		withPriceCatalogue: (Dictionary newFromPairs: #('0-7645-2641-3' 100 '0-7645-2641-4' 100))
+		andMerchantProcessor: aMerchantProcessor.
+	
+	
+	self should: [aCashier checkOut: aCart withCreditCard: aCreditCard]
+		raise: Error
+		withMessageText: ErroredMerchantProcessor dummyErrorMessage.
+!
+!ShoppingCashierTest methodsFor: 'tests' stamp: 'IO 11/22/2020 17:56:41' prior: 50881470!
+test05ACartShouldNotCheckoutIfMerchantProcessorFails
+
+	|aCashier aCart aCreditCard aMerchantProcessor|
+	
+	aCart := ShoppingCart withCatalogue: (OrderedCollection with: '0-7645-2641-3' with: '0-7645-2641-4').
+	aCart add: '0-7645-2641-3' withQuantity: 2.
+	aCart add: '0-7645-2641-4'.
+	aCreditCard := CreditCard withNumber: '0000000000000000' expirationDate: self validDate belongingTo: 'Juan Pablo'.
+	
+	aMerchantProcessor := ErroredMerchantProcessor new.
+
+	aCashier := ShoppingCashier
+		withPriceCatalogue: (Dictionary newFromPairs: #('0-7645-2641-3' 100 '0-7645-2641-4' 100))
+		andMerchantProcessor: aMerchantProcessor.
+	
+	
+	self should: [aCashier checkOut: aCart withCreditCard: aCreditCard]
+		raise: Error
+		withMessageText: ErroredMerchantProcessor dummyErrorMessage.
+		
+	
+! !
+
+!methodRemoval: ShoppingCartTest #test09CannotEditCartList stamp: 'IO 11/22/2020 18:10:27'!
+test09CannotEditCartList
+	| aCart list |
+	
+	
+	aCart := ShoppingCart withCatalogue: (OrderedCollection with: '0-7645-2641-3' with: '0-7645-2641-4').
+	aCart add: '0-7645-2641-3'.
+
+	
+	list := aCart listCart.
+	list add: '0-7645-2641-4'.
+
+	self assert: 1 equals: aCart listCart size.
+
+	self assert: (aCart listCart includes: '0-7645-2641-3').
+	self deny: (aCart listCart includes: '0-7645-2641-4').!
+!ShoppingCartTest methodsFor: 'tests' stamp: 'IO 11/22/2020 18:11:44'!
+test09CannotEditCartList
+	| aCart list |
+	
+	
+	aCart := ShoppingCart withCatalogue: (OrderedCollection with: '0-7645-2641-3' with: '0-7645-2641-4').
+	aCart add: '0-7645-2641-3'.
+
+	
+	list := aCart listCart.
+	list add: '0-7645-2641-4'.
+
+	self assert: 1 equals: aCart listCart size.
+
+	self assert: (aCart listCart includes: '0-7645-2641-3').
+	self deny: (aCart listCart includes: '0-7645-2641-4').! !
+
+!testRun: #ShoppingCartTest #test09CannotEditCartList stamp: 'IO 11/22/2020 18:11:45'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test01NewCartIsEmpty stamp: 'IO 11/22/2020 18:11:45'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test02CanAddABookToACart stamp: 'IO 11/22/2020 18:11:45'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test03CanAddManyBooksToACart stamp: 'IO 11/22/2020 18:11:45'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test04CanMoreThanOneFromTheSameBookToACart stamp: 'IO 11/22/2020 18:11:45'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test05CanNotAddABookWithInvalidISBN stamp: 'IO 11/22/2020 18:11:45'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test06CanNotAdd0Books stamp: 'IO 11/22/2020 18:11:45'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test07CanNotAddMinusBooks stamp: 'IO 11/22/2020 18:11:45'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test08CanNotAddNotWholeBooks stamp: 'IO 11/22/2020 18:11:45'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test09CannotEditCartList stamp: 'IO 11/22/2020 18:11:45'!
+PASSED!
+
+!methodRemoval: CreditCardTest #test09TheNameOfACreditCardOwnerCanNotHaveMoreThan30Chars stamp: 'IO 11/22/2020 18:11:50'!
+test09TheNameOfACreditCardOwnerCanNotHaveMoreThan30Chars
+	
+	self should: [CreditCard withNumber: '0000000000000000'
+		expirationDate: (Date today - self daysInYear + self daysThisMonth) month
+		belongingTo: 'Juan Pablo de la Cierra Gigante'.] "31 chars"
+		raise: Error
+		withMessageText: CreditCard invalidCreditCardOwnerName.
+	
+	!
+!CreditCard class methodsFor: 'instance creation' stamp: 'IO 11/22/2020 18:12:01' prior: 50880400!
+withNumber: aCCNumber expirationDate: anExpirationDate belongingTo: aName 
+	
+	(
+		(aCCNumber allSatisfy: [ :aDigit | aDigit isDigit ]) and:
+		aCCNumber size = 16
+	) ifFalse: [^self error: CreditCard invalidCreditCardNumber].
+
+	(aName notEmpty) ifFalse: [^self error: CreditCard invalidCreditCardOwnerName].
+
+	^self new initializeWithNumber: aCCNumber expirationDate: anExpirationDate belongingTo: aName.
+! !
+
+!testRun: #CreditCardTest #test01ACreditCardCanBeNotExpired stamp: 'IO 11/22/2020 18:12:02'!
+PASSED!
+
+!testRun: #CreditCardTest #test02ACreditCardWithExpirationDatingThisMonthAndYearIsExpired stamp: 'IO 11/22/2020 18:12:02'!
+PASSED!
+
+!testRun: #CreditCardTest #test03ACreditCardWithExpirationDatingAPastMonthThisYearIsExpired stamp: 'IO 11/22/2020 18:12:02'!
+PASSED!
+
+!testRun: #CreditCardTest #test04ACreditCardWithExpirationDatingAFutureYearIsNotExpired stamp: 'IO 11/22/2020 18:12:02'!
+PASSED!
+
+!testRun: #CreditCardTest #test05ACreditCardWithExpirationDatingAPastYearIsExpired stamp: 'IO 11/22/2020 18:12:02'!
+PASSED!
+
+!testRun: #CreditCardTest #test06CreditCarNumberCantHaveAnythingBut16Symbols stamp: 'IO 11/22/2020 18:12:02'!
+PASSED!
+
+!testRun: #CreditCardTest #test07CreditCarNumberCantHaveAnythingButNumbers stamp: 'IO 11/22/2020 18:12:02'!
+PASSED!
+
+!testRun: #CreditCardTest #test08TheNameOfACreditCardOwnerCanNotBeBlank stamp: 'IO 11/22/2020 18:12:02'!
+PASSED!
+
+----SNAPSHOT----(22 November 2020 18:13:19) CuisUniversity-4384.image priorSource: 17449337!
