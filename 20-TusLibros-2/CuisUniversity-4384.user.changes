@@ -42572,3 +42572,1598 @@ PASSED!
 PASSED!
 
 ----SNAPSHOT----(22 November 2020 18:13:19) CuisUniversity-4384.image priorSource: 17449337!
+
+----STARTUP---- (23 November 2020 17:08:22) as C:\Users\Usuario\Desktop\labo\inge1\Cuis\windows64 tus libros\CuisUniversity-4384.image!
+
+
+!classRemoval: #ShoppingCashier stamp: 'LH 11/23/2020 17:36:54'!
+Object subclass: #ShoppingCashier
+	instanceVariableNames: 'priceCatalogue'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Ejercicio-20-Tus-Libros'!
+
+!classRemoval: #ShoppingCart stamp: 'LH 11/23/2020 17:36:54'!
+Object subclass: #ShoppingCart
+	instanceVariableNames: 'books catalgue'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Ejercicio-20-Tus-Libros'!
+
+!classRemoval: #CreditCard stamp: 'LH 11/23/2020 17:36:55'!
+Object subclass: #CreditCard
+	instanceVariableNames: 'creditCardNumber expirationDate nameOfOwner'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Ejercicio-20-Tus-Libros'!
+
+!classRemoval: #ShoppingCashierTest stamp: 'LH 11/23/2020 17:36:55'!
+TestCase subclass: #ShoppingCashierTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Ejercicio-20-Tus-Libros'!
+
+!classRemoval: #ShoppingCartTest stamp: 'LH 11/23/2020 17:36:55'!
+TestCase subclass: #ShoppingCartTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Ejercicio-20-Tus-Libros'!
+
+!classRemoval: #CreditCardTest stamp: 'LH 11/23/2020 17:36:56'!
+TestCase subclass: #CreditCardTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Ejercicio-20-Tus-Libros'!
+
+----End fileIn of C:\Users\Usuario\Desktop\labo\inge1\Cuis\windows64 tus libros\Ejercicio-20-Tus-Libros-2.st----!
+!ShoppingCart methodsFor: 'adding' stamp: 'LH 11/23/2020 17:39:53' prior: 50876920!
+add: anISBN withQuantity: aQuantity 
+	
+	(aQuantity isInteger and: aQuantity > 0) ifFalse:[^self error: ShoppingCart invalidQuantityErrorMessage ].	(catalgue includes: anISBN) ifFalse:[^self error: ShoppingCart invalidISBNErrorMessage].
+	
+	books add: anISBN withOccurrences: aQuantity.! !
+
+!testRun: #ShoppingCartTest #test01NewCartIsEmpty stamp: 'LH 11/23/2020 17:39:54'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test02CanAddABookToACart stamp: 'LH 11/23/2020 17:39:54'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test03CanAddManyBooksToACart stamp: 'LH 11/23/2020 17:39:54'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test04CanMoreThanOneFromTheSameBookToACart stamp: 'LH 11/23/2020 17:39:54'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test05CanNotAddABookWithInvalidISBN stamp: 'LH 11/23/2020 17:39:54'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test06CanNotAdd0Books stamp: 'LH 11/23/2020 17:39:54'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test07CanNotAddMinusBooks stamp: 'LH 11/23/2020 17:39:54'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test08CanNotAddNotWholeBooks stamp: 'LH 11/23/2020 17:39:54'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test09CannotEditCartList stamp: 'LH 11/23/2020 17:39:54'!
+PASSED!
+!NullMerchantProcessor methodsFor: 'as yet unclassified' stamp: 'LH 11/23/2020 17:40:54' prior: 50876888 overrides: 50876831!
+debitWith: aCreditCard for: anAmount
+
+	^anAmount
+! !
+!ShoppingCashier methodsFor: 'checkOut' stamp: 'LH 11/23/2020 17:41:59' prior: 50876969!
+checkOut: aShoppingCart withCreditCard: aCreditCard
+
+	| total |
+	aShoppingCart listCart size = 0 ifTrue: [^self error: ShoppingCashier invalidCartErrorMessage].
+	aCreditCard isExpired ifTrue: [^self error: ShoppingCashier invalidCreditCard].
+	
+	total := aShoppingCart listCart inject: 0 into: [:theSum :anISBN | theSum + priceCatalogue at: anISBN].
+	merchantProcessor debitWith: aCreditCard for: total.
+	^total.! !
+
+!testRun: #ShoppingCashierTest #test01AnEmptyCartCannotBeCheckedOut stamp: 'LH 11/23/2020 17:42:00'!
+PASSED!
+
+!testRun: #ShoppingCashierTest #test02ACartWith1BookWillCheckOutCorrectly stamp: 'LH 11/23/2020 17:42:00'!
+PASSED!
+
+!testRun: #ShoppingCashierTest #test03ACartWithManyBooksWillCheckOutCorrectly stamp: 'LH 11/23/2020 17:42:00'!
+PASSED!
+
+!testRun: #ShoppingCashierTest #test04TheCardShouldNotBeExpired stamp: 'LH 11/23/2020 17:42:00'!
+PASSED!
+
+!testRun: #ShoppingCashierTest #test05ACartShouldNotCheckoutIfMerchantProcessorFails stamp: 'LH 11/23/2020 17:42:00'!
+PASSED!
+!ShoppingCartTest methodsFor: 'util' stamp: 'LH 11/23/2020 17:46:18' prior: 50876611!
+newShoppingCartWithAProduct
+	
+	^ShoppingCart withCatalogue: (Dictionary newFromPairs: #('0-7645-2641-3' 100 '0-7645-2641-4' 100)).
+! !
+!ShoppingCartTest methodsFor: 'util' stamp: 'LH 11/23/2020 17:47:05' prior: 50877118!
+newShoppingCartWithAProduct
+	
+	^ShoppingCart withCatalogue: (Dictionary newFromPairs: #('0-7645-2641-3' 100)).
+! !
+!ShoppingCartTest methodsFor: 'tests' stamp: 'LH 11/23/2020 17:47:29' prior: 50876530!
+test03CanAddManyBooksToACart
+	|aCart|
+	
+	aCart := ShoppingCart withCatalogue: (Dictionary newFromPairs: #('0-7645-2641-3' 100 '0-7645-2641-4' 100)).
+	aCart add: '0-7645-2641-3'.
+	aCart add: '0-7645-2641-4'.
+	
+	self assert: 2 equals: aCart listCart size.
+	self assert: (aCart listCart includes: '0-7645-2641-3').
+	self assert: (aCart listCart includes: '0-7645-2641-4').! !
+!ShoppingCartTest methodsFor: 'tests' stamp: 'LH 11/23/2020 17:47:45' prior: 50876595!
+test09CannotEditCartList
+	| aCart list |
+	
+	
+	aCart := ShoppingCart withCatalogue: (Dictionary newFromPairs: #('0-7645-2641-3' 100 '0-7645-2641-4' 100)).
+	aCart add: '0-7645-2641-3'.
+
+	
+	list := aCart listCart.
+	list add: '0-7645-2641-4'.
+
+	self assert: 1 equals: aCart listCart size.
+
+	self assert: (aCart listCart includes: '0-7645-2641-3').
+	self deny: (aCart listCart includes: '0-7645-2641-4').! !
+!ShoppingCart methodsFor: 'adding' stamp: 'LH 11/23/2020 17:48:38' prior: 50876913!
+add: anISBN 
+	
+	(catalgue includesKey: anISBN) ifFalse:[^self error: ShoppingCart invalidISBNErrorMessage].
+	
+	books add: anISBN.! !
+!ShoppingCart methodsFor: 'adding' stamp: 'LH 11/23/2020 17:48:44' prior: 50877037!
+add: anISBN withQuantity: aQuantity 
+	
+	(aQuantity isInteger and: aQuantity > 0) ifFalse:[^self error: ShoppingCart invalidQuantityErrorMessage ].	(catalgue includesKey: anISBN) ifFalse:[^self error: ShoppingCart invalidISBNErrorMessage].
+	
+	books add: anISBN withOccurrences: aQuantity.! !
+
+!testRun: #ShoppingCartTest #test01NewCartIsEmpty stamp: 'LH 11/23/2020 17:48:47'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test02CanAddABookToACart stamp: 'LH 11/23/2020 17:48:47'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test03CanAddManyBooksToACart stamp: 'LH 11/23/2020 17:48:47'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test04CanMoreThanOneFromTheSameBookToACart stamp: 'LH 11/23/2020 17:48:47'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test05CanNotAddABookWithInvalidISBN stamp: 'LH 11/23/2020 17:48:47'!
+FAILURE!
+
+!testRun: #ShoppingCartTest #test06CanNotAdd0Books stamp: 'LH 11/23/2020 17:48:47'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test07CanNotAddMinusBooks stamp: 'LH 11/23/2020 17:48:47'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test08CanNotAddNotWholeBooks stamp: 'LH 11/23/2020 17:48:47'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test09CannotEditCartList stamp: 'LH 11/23/2020 17:48:47'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test05CanNotAddABookWithInvalidISBN stamp: 'LH 11/23/2020 17:48:47'!
+FAILURE!
+
+!testRun: #ShoppingCartTest #test01NewCartIsEmpty stamp: 'LH 11/23/2020 17:49:09'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test02CanAddABookToACart stamp: 'LH 11/23/2020 17:49:09'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test03CanAddManyBooksToACart stamp: 'LH 11/23/2020 17:49:09'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test04CanMoreThanOneFromTheSameBookToACart stamp: 'LH 11/23/2020 17:49:09'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test05CanNotAddABookWithInvalidISBN stamp: 'LH 11/23/2020 17:49:09'!
+FAILURE!
+
+!testRun: #ShoppingCartTest #test06CanNotAdd0Books stamp: 'LH 11/23/2020 17:49:09'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test07CanNotAddMinusBooks stamp: 'LH 11/23/2020 17:49:10'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test08CanNotAddNotWholeBooks stamp: 'LH 11/23/2020 17:49:10'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test09CannotEditCartList stamp: 'LH 11/23/2020 17:49:10'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test05CanNotAddABookWithInvalidISBN stamp: 'LH 11/23/2020 17:49:10'!
+FAILURE!
+!ShoppingCartTest methodsFor: 'tests' stamp: 'LH 11/23/2020 17:49:29' prior: 50876555!
+test05CanNotAddABookWithInvalidISBN
+	|aCart|
+	
+	aCart := ShoppingCart withCatalogue: (Dictionary new).
+	
+	self should: [aCart add: '0-7645-2641-3']
+		raise: Error
+		withMessageText: ShoppingCart invalidISBNErrorMessage.
+	
+! !
+
+!testRun: #ShoppingCartTest #test05CanNotAddABookWithInvalidISBN stamp: 'LH 11/23/2020 17:49:31'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test01NewCartIsEmpty stamp: 'LH 11/23/2020 17:49:31'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test02CanAddABookToACart stamp: 'LH 11/23/2020 17:49:31'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test03CanAddManyBooksToACart stamp: 'LH 11/23/2020 17:49:31'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test04CanMoreThanOneFromTheSameBookToACart stamp: 'LH 11/23/2020 17:49:31'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test05CanNotAddABookWithInvalidISBN stamp: 'LH 11/23/2020 17:49:31'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test06CanNotAdd0Books stamp: 'LH 11/23/2020 17:49:31'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test07CanNotAddMinusBooks stamp: 'LH 11/23/2020 17:49:31'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test08CanNotAddNotWholeBooks stamp: 'LH 11/23/2020 17:49:31'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test09CannotEditCartList stamp: 'LH 11/23/2020 17:49:31'!
+PASSED!
+!ShoppingCart methodsFor: 'adding' stamp: 'LH 11/23/2020 17:50:25'!
+validateISBNInCatalogue: anISBN
+
+	(catalgue includesKey: anISBN) ifFalse:[^self error: ShoppingCart invalidISBNErrorMessage].
+	! !
+!ShoppingCart methodsFor: 'adding' stamp: 'LH 11/23/2020 17:50:59' prior: 50877170!
+add: anISBN withQuantity: aQuantity 
+	
+	(aQuantity isInteger and: aQuantity > 0) ifFalse:[^self error: ShoppingCart invalidQuantityErrorMessage ].	self validateISBNInCatalogue: anISBN.
+	books add: anISBN withOccurrences: aQuantity.! !
+!ShoppingCart methodsFor: 'adding' stamp: 'LH 11/23/2020 17:51:01' prior: 50877293!
+add: anISBN withQuantity: aQuantity 
+	
+	(aQuantity isInteger and: aQuantity > 0) ifFalse:[^self error: ShoppingCart invalidQuantityErrorMessage ].	self validateISBNInCatalogue: anISBN.
+	
+	books add: anISBN withOccurrences: aQuantity.! !
+!ShoppingCart methodsFor: 'adding' stamp: 'LH 11/23/2020 17:51:34' prior: 50877163!
+add: anISBN 
+
+	^self add: anISBN withQuantity:1.! !
+
+!testRun: #ShoppingCartTest #test01NewCartIsEmpty stamp: 'LH 11/23/2020 17:51:36'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test02CanAddABookToACart stamp: 'LH 11/23/2020 17:51:36'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test03CanAddManyBooksToACart stamp: 'LH 11/23/2020 17:51:36'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test04CanMoreThanOneFromTheSameBookToACart stamp: 'LH 11/23/2020 17:51:36'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test05CanNotAddABookWithInvalidISBN stamp: 'LH 11/23/2020 17:51:36'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test06CanNotAdd0Books stamp: 'LH 11/23/2020 17:51:36'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test07CanNotAddMinusBooks stamp: 'LH 11/23/2020 17:51:36'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test08CanNotAddNotWholeBooks stamp: 'LH 11/23/2020 17:51:36'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test09CannotEditCartList stamp: 'LH 11/23/2020 17:51:36'!
+PASSED!
+!ShoppingCashierTest methodsFor: 'tests' stamp: 'LH 11/23/2020 17:52:25' prior: 50876630!
+test01AnEmptyCartCannotBeCheckedOut
+	|aCashier aCart aCreditCard|
+	
+	aCart := ShoppingCart withCatalogue: Dictionary new.
+	aCreditCard := CreditCard withNumber: '0000000000000000' expirationDate: self validDate belongingTo: 'Juan Pablo'. 
+	
+	aCashier := ShoppingCashier withPriceCatalogue: (Dictionary new).
+	
+	self should: [aCashier checkOut: aCart withCreditCard: aCreditCard]
+		raise: Error
+		withMessageText: ShoppingCashier invalidCartErrorMessage.! !
+!ShoppingCashierTest methodsFor: 'tests' stamp: 'LH 11/23/2020 17:52:39' prior: 50876648!
+test02ACartWith1BookWillCheckOutCorrectly
+	|aCashier aCart aCreditCard|
+	
+	aCart := ShoppingCart withCatalogue: (Dictionary newFromPairs: #('0-7645-2641-3' 100)).
+	aCart add: '0-7645-2641-3'.
+	aCreditCard := CreditCard withNumber: '0000000000000000' expirationDate: self validDate belongingTo: 'Juan Pablo'.
+	
+	aCashier := ShoppingCashier withPriceCatalogue: (Dictionary newFromPairs: #('0-7645-2641-3' 100)) .
+	
+	self assert: 100 equals: (aCashier checkOut: aCart withCreditCard: aCreditCard).! !
+!ShoppingCashierTest methodsFor: 'tests' stamp: 'LH 11/23/2020 17:52:49' prior: 50876666!
+test03ACartWithManyBooksWillCheckOutCorrectly
+	|aCashier aCart aCreditCard|
+	
+	aCart := ShoppingCart withCatalogue: (Dictionary newFromPairs: #('0-7645-2641-3' 100 '0-7645-2641-4' 100)).
+	aCart add: '0-7645-2641-3' withQuantity: 2.
+	aCart add: '0-7645-2641-4'.
+	aCreditCard := CreditCard withNumber: '0000000000000000' expirationDate: self validDate belongingTo: 'Juan Pablo'.
+	
+	aCashier := ShoppingCashier withPriceCatalogue: (Dictionary newFromPairs: #('0-7645-2641-3' 100 '0-7645-2641-4' 100)) .
+	
+	self assert: 300 equals: (aCashier checkOut: aCart withCreditCard: aCreditCard).! !
+!ShoppingCashierTest methodsFor: 'tests' stamp: 'LH 11/23/2020 17:52:54' prior: 50876687!
+test04TheCardShouldNotBeExpired
+	|aCashier aCart aCreditCard|
+	
+	aCart := ShoppingCart withCatalogue: (Dictionary newFromPairs: #('0-7645-2641-3' 100)).
+	aCart add: '0-7645-2641-3'.
+	aCreditCard := CreditCard withNumber: '0000000000000000' expirationDate: self invalidDate belongingTo: 'Juan Pablo'.
+	
+	aCashier := ShoppingCashier withPriceCatalogue: (Dictionary newFromPairs: #('0-7645-2641-3' 100)) .
+	
+	self should:[ aCashier checkOut: aCart withCreditCard: aCreditCard]
+		raise: Error
+		withMessageText: ShoppingCashier invalidCreditCard.
+		! !
+!ShoppingCashierTest methodsFor: 'tests' stamp: 'LH 11/23/2020 17:53:12' prior: 50876707!
+test05ACartShouldNotCheckoutIfMerchantProcessorFails
+
+	|aCashier aCart aCreditCard aMerchantProcessor|
+	
+	aCart := ShoppingCart withCatalogue: (Dictionary newFromPairs: #('0-7645-2641-3' 100 '0-7645-2641-4' 100)).
+	aCart add: '0-7645-2641-3' withQuantity: 2.
+	aCart add: '0-7645-2641-4'.
+	aCreditCard := CreditCard withNumber: '0000000000000000' expirationDate: self validDate belongingTo: 'Juan Pablo'.
+	
+	aMerchantProcessor := ErroredMerchantProcessor new.
+
+	aCashier := ShoppingCashier
+		withPriceCatalogue: (Dictionary newFromPairs: #('0-7645-2641-3' 100 '0-7645-2641-4' 100))
+		andMerchantProcessor: aMerchantProcessor.
+	
+	
+	self should: [aCashier checkOut: aCart withCreditCard: aCreditCard]
+		raise: Error
+		withMessageText: ErroredMerchantProcessor dummyErrorMessage.
+		
+	
+! !
+
+!testRun: #ShoppingCashierTest #test05ACartShouldNotCheckoutIfMerchantProcessorFails stamp: 'LH 11/23/2020 17:53:17'!
+PASSED!
+
+!testRun: #ShoppingCashierTest #test01AnEmptyCartCannotBeCheckedOut stamp: 'LH 11/23/2020 17:53:17'!
+PASSED!
+
+!testRun: #ShoppingCashierTest #test02ACartWith1BookWillCheckOutCorrectly stamp: 'LH 11/23/2020 17:53:17'!
+PASSED!
+
+!testRun: #ShoppingCashierTest #test03ACartWithManyBooksWillCheckOutCorrectly stamp: 'LH 11/23/2020 17:53:18'!
+PASSED!
+
+!testRun: #ShoppingCashierTest #test04TheCardShouldNotBeExpired stamp: 'LH 11/23/2020 17:53:18'!
+PASSED!
+
+!testRun: #ShoppingCashierTest #test05ACartShouldNotCheckoutIfMerchantProcessorFails stamp: 'LH 11/23/2020 17:53:18'!
+PASSED!
+!CreditCardTest methodsFor: 'util' stamp: 'LH 11/23/2020 18:06:30' prior: 50876488!
+daysThisMonth
+
+	^GregorianMonthOfYear numberOfDays days.
+	! !
+!CreditCardTest methodsFor: 'util' stamp: 'LH 11/23/2020 18:07:36' prior: 50876473!
+assertInvalidCardNumberErrorWithNumber: aCCNumber 
+	
+	self should: [CreditCard         withNumber: aCCNumber
+							expirationDate: (GregorianMonth current next: self daysThisMonth) 
+							belongingTo: 'Juan Pablo'.]
+		raise: Error
+		withMessageText: CreditCard invalidCreditCardNumber.
+	
+	! !
+!CreditCardTest methodsFor: 'tests' stamp: 'LH 11/23/2020 18:08:10' prior: 50876397!
+test01ACreditCardCanBeNotExpired
+
+	|aCreditCard|
+	
+	aCreditCard := self validCreditCardWithTheExpirationDate: (GregorianDayOfMonth current next: self daysThisMonth).
+	
+	self deny: aCreditCard isExpired.
+
+	! !
+!CreditCardTest methodsFor: 'tests' stamp: 'LH 11/23/2020 18:08:45' prior: 50876406!
+test02ACreditCardWithExpirationDatingThisMonthAndYearIsExpired
+	|aCreditCard|
+	
+	aCreditCard := self validCreditCardWithTheExpirationDate: GregorianDayOfMonth current.
+	
+	self assert: aCreditCard isExpired.
+
+	! !
+!CreditCardTest methodsFor: 'tests' stamp: 'LH 11/23/2020 18:10:27' prior: 50876415!
+test03ACreditCardWithExpirationDatingAPastMonthThisYearIsExpired
+	|aCreditCard|
+	
+	aCreditCard := self validCreditCardWithTheExpirationDate: (GregorianDayOfMonth current next:  self daysThisMonth negated) month.
+	
+	self assert: aCreditCard isExpired.
+
+	! !
+!CreditCardTest methodsFor: 'tests' stamp: 'LH 11/23/2020 18:10:51' prior: 50876425!
+test04ACreditCardWithExpirationDatingAFutureYearIsNotExpired
+	|aCreditCard|
+	
+	aCreditCard := self validCreditCardWithTheExpirationDate: (GregorianDayOfMonth current next: self daysInYear) .
+	
+	self deny: aCreditCard isExpired.
+
+	! !
+!CreditCardTest methodsFor: 'tests' stamp: 'LH 11/23/2020 18:12:37' prior: 50876435!
+test05ACreditCardWithExpirationDatingAPastYearIsExpired
+	|aCreditCard|
+	
+	aCreditCard := self validCreditCardWithTheExpirationDate: (GregorianDayOfMonth current next: self daysThisMonth - self daysInYear) .
+	
+	self assert: aCreditCard isExpired.
+
+	! !
+!CreditCardTest methodsFor: 'tests' stamp: 'LH 11/23/2020 18:13:00' prior: 50876461!
+test08TheNameOfACreditCardOwnerCanNotBeBlank
+	
+	self should: [CreditCard withNumber: '0000000000000000'
+		expirationDate: (GregorianDayOfMonth current next: self daysThisMonth)
+		belongingTo: ''.]
+		raise: Error
+		withMessageText: CreditCard invalidCreditCardOwnerName.
+	
+	! !
+!CreditCard methodsFor: 'testing' stamp: 'LH 11/23/2020 18:14:30' prior: 50876768!
+isExpired
+	"returns if this credit card is expired"
+	"|expirationDateYear currentMonth currentYear|"
+		
+	^expirationDate < GregorianMonthOfYear current or: expirationDate = GregorianMonthOfYear current.
+	
+	"expirationDateYear := expirationDate yearNumber.
+	currentMonth := Date today monthIndex.
+	currentYear := Date today yearNumber.
+	
+	
+	^(
+		expirationDate monthIndex <= currentMonth  and: expirationDateYear = currentYear
+	) or: expirationDateYear < currentYear."! !
+
+!testRun: #CreditCardTest #test01ACreditCardCanBeNotExpired stamp: 'LH 11/23/2020 18:14:33'!
+ERROR!
+
+!testRun: #CreditCardTest #test02ACreditCardWithExpirationDatingThisMonthAndYearIsExpired stamp: 'LH 11/23/2020 18:14:33'!
+ERROR!
+
+!testRun: #CreditCardTest #test03ACreditCardWithExpirationDatingAPastMonthThisYearIsExpired stamp: 'LH 11/23/2020 18:14:33'!
+ERROR!
+
+!testRun: #CreditCardTest #test04ACreditCardWithExpirationDatingAFutureYearIsNotExpired stamp: 'LH 11/23/2020 18:14:33'!
+ERROR!
+
+!testRun: #CreditCardTest #test05ACreditCardWithExpirationDatingAPastYearIsExpired stamp: 'LH 11/23/2020 18:14:33'!
+ERROR!
+
+!testRun: #CreditCardTest #test06CreditCarNumberCantHaveAnythingBut16Symbols stamp: 'LH 11/23/2020 18:14:33'!
+FAILURE!
+
+!testRun: #CreditCardTest #test07CreditCarNumberCantHaveAnythingButNumbers stamp: 'LH 11/23/2020 18:14:33'!
+FAILURE!
+
+!testRun: #CreditCardTest #test08TheNameOfACreditCardOwnerCanNotBeBlank stamp: 'LH 11/23/2020 18:14:33'!
+FAILURE!
+
+!testRun: #CreditCardTest #test01ACreditCardCanBeNotExpired stamp: 'LH 11/23/2020 18:14:41'!
+ERROR!
+!CreditCardTest methodsFor: 'tests' stamp: 'LH 11/23/2020 18:15:03' prior: 50877496!
+test01ACreditCardCanBeNotExpired
+
+	|aCreditCard|
+	
+	aCreditCard := self validCreditCardWithTheExpirationDate: (GregorianMonthOfYear current next: self daysThisMonth).
+	
+	self deny: aCreditCard isExpired.
+
+	! !
+
+!testRun: #CreditCardTest #test01ACreditCardCanBeNotExpired stamp: 'LH 11/23/2020 18:15:04'!
+ERROR!
+!CreditCardTest methodsFor: 'util' stamp: 'LH 11/23/2020 18:15:21' prior: 50877478!
+daysThisMonth
+
+	^GregorianMonthOfYear current numberOfDays days.
+	! !
+
+!testRun: #CreditCardTest #test01ACreditCardCanBeNotExpired stamp: 'LH 11/23/2020 18:15:22'!
+ERROR!
+!CreditCardTest methodsFor: 'util' stamp: 'LH 11/23/2020 18:15:29' prior: 50877626!
+daysThisMonth
+
+	^GregorianMonthOfYear current numberOfDays.
+	! !
+
+!testRun: #CreditCardTest #test01ACreditCardCanBeNotExpired stamp: 'LH 11/23/2020 18:15:32'!
+ERROR!
+!CreditCardTest methodsFor: 'util' stamp: 'LH 11/23/2020 18:19:40' prior: 50877635!
+daysThisMonth
+
+	^1 month.
+	! !
+
+!testRun: #CreditCardTest #test01ACreditCardCanBeNotExpired stamp: 'LH 11/23/2020 18:19:41'!
+ERROR!
+
+!testRun: #CreditCardTest #test02ACreditCardWithExpirationDatingThisMonthAndYearIsExpired stamp: 'LH 11/23/2020 18:19:41'!
+ERROR!
+
+!testRun: #CreditCardTest #test03ACreditCardWithExpirationDatingAPastMonthThisYearIsExpired stamp: 'LH 11/23/2020 18:19:41'!
+ERROR!
+
+!testRun: #CreditCardTest #test04ACreditCardWithExpirationDatingAFutureYearIsNotExpired stamp: 'LH 11/23/2020 18:19:41'!
+ERROR!
+
+!testRun: #CreditCardTest #test05ACreditCardWithExpirationDatingAPastYearIsExpired stamp: 'LH 11/23/2020 18:19:41'!
+ERROR!
+
+!testRun: #CreditCardTest #test06CreditCarNumberCantHaveAnythingBut16Symbols stamp: 'LH 11/23/2020 18:19:41'!
+FAILURE!
+
+!testRun: #CreditCardTest #test07CreditCarNumberCantHaveAnythingButNumbers stamp: 'LH 11/23/2020 18:19:41'!
+FAILURE!
+
+!testRun: #CreditCardTest #test08TheNameOfACreditCardOwnerCanNotBeBlank stamp: 'LH 11/23/2020 18:19:41'!
+FAILURE!
+
+!testRun: #CreditCardTest #test01ACreditCardCanBeNotExpired stamp: 'LH 11/23/2020 18:19:44'!
+ERROR!
+!CreditCardTest methodsFor: 'tests' stamp: 'LH 11/23/2020 18:21:08' prior: 50877613!
+test01ACreditCardCanBeNotExpired
+
+	|aCreditCard|
+	
+	aCreditCard := self validCreditCardWithTheExpirationDate: (GregorianMonthOfYear current next).
+	
+	self deny: aCreditCard isExpired.
+
+	! !
+
+!testRun: #CreditCardTest #test01ACreditCardCanBeNotExpired stamp: 'LH 11/23/2020 18:21:10'!
+PASSED!
+
+!testRun: #CreditCardTest #test01ACreditCardCanBeNotExpired stamp: 'LH 11/23/2020 18:21:10'!
+PASSED!
+
+!testRun: #CreditCardTest #test02ACreditCardWithExpirationDatingThisMonthAndYearIsExpired stamp: 'LH 11/23/2020 18:21:10'!
+ERROR!
+
+!testRun: #CreditCardTest #test03ACreditCardWithExpirationDatingAPastMonthThisYearIsExpired stamp: 'LH 11/23/2020 18:21:10'!
+ERROR!
+
+!testRun: #CreditCardTest #test04ACreditCardWithExpirationDatingAFutureYearIsNotExpired stamp: 'LH 11/23/2020 18:21:10'!
+ERROR!
+
+!testRun: #CreditCardTest #test05ACreditCardWithExpirationDatingAPastYearIsExpired stamp: 'LH 11/23/2020 18:21:10'!
+ERROR!
+
+!testRun: #CreditCardTest #test06CreditCarNumberCantHaveAnythingBut16Symbols stamp: 'LH 11/23/2020 18:21:10'!
+FAILURE!
+
+!testRun: #CreditCardTest #test07CreditCarNumberCantHaveAnythingButNumbers stamp: 'LH 11/23/2020 18:21:10'!
+FAILURE!
+
+!testRun: #CreditCardTest #test08TheNameOfACreditCardOwnerCanNotBeBlank stamp: 'LH 11/23/2020 18:21:10'!
+FAILURE!
+!CreditCardTest methodsFor: 'tests' stamp: 'LH 11/23/2020 18:21:32' prior: 50877516!
+test03ACreditCardWithExpirationDatingAPastMonthThisYearIsExpired
+	|aCreditCard|
+	
+	aCreditCard := self validCreditCardWithTheExpirationDate: (GregorianDayOfMonth current previous) month.
+	
+	self assert: aCreditCard isExpired.
+
+	! !
+!CreditCardTest methodsFor: 'tests' stamp: 'LH 11/23/2020 18:21:38' prior: 50877724!
+test03ACreditCardWithExpirationDatingAPastMonthThisYearIsExpired
+	|aCreditCard|
+	
+	aCreditCard := self validCreditCardWithTheExpirationDate: (GregorianDayOfMonth current previous).
+	
+	self assert: aCreditCard isExpired.
+
+	! !
+!CreditCardTest methodsFor: 'tests' stamp: 'LH 11/23/2020 18:21:50' prior: 50877735!
+test03ACreditCardWithExpirationDatingAPastMonthThisYearIsExpired
+	|aCreditCard|
+	
+	aCreditCard := self validCreditCardWithTheExpirationDate: GregorianDayOfMonth current previous.
+	
+	self assert: aCreditCard isExpired.
+
+	! !
+
+!testRun: #CreditCardTest #test03ACreditCardWithExpirationDatingAPastMonthThisYearIsExpired stamp: 'LH 11/23/2020 18:21:51'!
+ERROR!
+!CreditCardTest methodsFor: 'tests' stamp: 'LH 11/23/2020 18:22:06' prior: 50877506!
+test02ACreditCardWithExpirationDatingThisMonthAndYearIsExpired
+	|aCreditCard|
+	
+	aCreditCard := self validCreditCardWithTheExpirationDate: GregorianMonthOfYear current.
+	
+	self assert: aCreditCard isExpired.
+
+	! !
+!CreditCardTest methodsFor: 'tests' stamp: 'LH 11/23/2020 18:22:09' prior: 50877745!
+test03ACreditCardWithExpirationDatingAPastMonthThisYearIsExpired
+	|aCreditCard|
+	
+	aCreditCard := self validCreditCardWithTheExpirationDate: GregorianMonthOfYear current previous.
+	
+	self assert: aCreditCard isExpired.
+
+	! !
+!CreditCardTest methodsFor: 'tests' stamp: 'LH 11/23/2020 18:22:13' prior: 50877527!
+test04ACreditCardWithExpirationDatingAFutureYearIsNotExpired
+	|aCreditCard|
+	
+	aCreditCard := self validCreditCardWithTheExpirationDate: (GregorianMonthOfYear current next: self daysInYear) .
+	
+	self deny: aCreditCard isExpired.
+
+	! !
+!CreditCardTest methodsFor: 'tests' stamp: 'LH 11/23/2020 18:24:05' prior: 50877538!
+test05ACreditCardWithExpirationDatingAPastYearIsExpired
+	|aCreditCard|
+	
+	aCreditCard := self validCreditCardWithTheExpirationDate: (GregorianMonthOfYear current next: self daysThisMonth - self daysInYear) .
+	
+	self assert: aCreditCard isExpired.
+
+	! !
+!CreditCardTest methodsFor: 'tests' stamp: 'LH 11/23/2020 18:24:32' prior: 50877549!
+test08TheNameOfACreditCardOwnerCanNotBeBlank
+	
+	self should: [CreditCard withNumber: '0000000000000000'
+		expirationDate: (GregorianMonthOfYear current next: self daysThisMonth)
+		belongingTo: ''.]
+		raise: Error
+		withMessageText: CreditCard invalidCreditCardOwnerName.
+	
+	! !
+!CreditCardTest methodsFor: 'util' stamp: 'LH 11/23/2020 18:24:37' prior: 50877483!
+assertInvalidCardNumberErrorWithNumber: aCCNumber 
+	
+	self should: [CreditCard         withNumber: aCCNumber
+							expirationDate: (GregorianMonthOfYear current next: self daysThisMonth) 
+							belongingTo: 'Juan Pablo'.]
+		raise: Error
+		withMessageText: CreditCard invalidCreditCardNumber.
+	
+	! !
+!CreditCardTest methodsFor: 'util' stamp: 'LH 11/23/2020 18:25:32' prior: 50877643!
+daysThisMonth
+
+	^GregorianMonthOfYear current numberOfDays.
+	! !
+
+!testRun: #CreditCardTest #test01ACreditCardCanBeNotExpired stamp: 'LH 11/23/2020 18:25:46'!
+PASSED!
+
+!testRun: #CreditCardTest #test02ACreditCardWithExpirationDatingThisMonthAndYearIsExpired stamp: 'LH 11/23/2020 18:25:46'!
+PASSED!
+
+!testRun: #CreditCardTest #test03ACreditCardWithExpirationDatingAPastMonthThisYearIsExpired stamp: 'LH 11/23/2020 18:25:46'!
+PASSED!
+
+!testRun: #CreditCardTest #test04ACreditCardWithExpirationDatingAFutureYearIsNotExpired stamp: 'LH 11/23/2020 18:25:46'!
+ERROR!
+
+!testRun: #CreditCardTest #test05ACreditCardWithExpirationDatingAPastYearIsExpired stamp: 'LH 11/23/2020 18:25:46'!
+ERROR!
+
+!testRun: #CreditCardTest #test06CreditCarNumberCantHaveAnythingBut16Symbols stamp: 'LH 11/23/2020 18:25:46'!
+FAILURE!
+
+!testRun: #CreditCardTest #test07CreditCarNumberCantHaveAnythingButNumbers stamp: 'LH 11/23/2020 18:25:46'!
+FAILURE!
+
+!testRun: #CreditCardTest #test08TheNameOfACreditCardOwnerCanNotBeBlank stamp: 'LH 11/23/2020 18:25:46'!
+FAILURE!
+
+!testRun: #CreditCardTest #test04ACreditCardWithExpirationDatingAFutureYearIsNotExpired stamp: 'LH 11/23/2020 18:25:57'!
+ERROR!
+
+!testRun: #CreditCardTest #test06CreditCarNumberCantHaveAnythingBut16Symbols stamp: 'LH 11/23/2020 18:26:58'!
+FAILURE!
+!CreditCardTest methodsFor: 'util' stamp: 'LH 11/23/2020 18:27:55' prior: 50877814!
+assertInvalidCardNumberErrorWithNumber: aCCNumber 
+	
+	self should: [CreditCard         withNumber: aCCNumber
+							expirationDate: (GregorianMonthOfYear current next) 
+							belongingTo: 'Juan Pablo'.]
+		raise: Error
+		withMessageText: CreditCard invalidCreditCardNumber.
+	
+	! !
+
+!testRun: #CreditCardTest #test06CreditCarNumberCantHaveAnythingBut16Symbols stamp: 'LH 11/23/2020 18:27:57'!
+PASSED!
+
+!testRun: #CreditCardTest #test08TheNameOfACreditCardOwnerCanNotBeBlank stamp: 'LH 11/23/2020 18:28:01'!
+FAILURE!
+
+!testRun: #CreditCardTest #test08TheNameOfACreditCardOwnerCanNotBeBlank stamp: 'LH 11/23/2020 18:28:03'!
+PASSED!
+
+!testRun: #CreditCardTest #test07CreditCarNumberCantHaveAnythingButNumbers stamp: 'LH 11/23/2020 18:28:06'!
+PASSED!
+!CreditCardTest methodsFor: 'tests' stamp: 'LH 11/23/2020 18:28:50'!
+test03ACreditCardWithExpirationDatedInThePastIsExpired
+	|aCreditCard|
+	
+	aCreditCard := self validCreditCardWithTheExpirationDate: GregorianMonthOfYear current previous.
+	
+	self assert: aCreditCard isExpired.
+
+	! !
+
+!methodRemoval: CreditCardTest #test03ACreditCardWithExpirationDatingAPastMonthThisYearIsExpired stamp: 'LH 11/23/2020 18:29:13'!
+test03ACreditCardWithExpirationDatingAPastMonthThisYearIsExpired
+	|aCreditCard|
+	
+	aCreditCard := self validCreditCardWithTheExpirationDate: GregorianMonthOfYear current previous.
+	
+	self assert: aCreditCard isExpired.
+
+	!
+
+!methodRemoval: CreditCardTest #test04ACreditCardWithExpirationDatingAFutureYearIsNotExpired stamp: 'LH 11/23/2020 18:29:35'!
+test04ACreditCardWithExpirationDatingAFutureYearIsNotExpired
+	|aCreditCard|
+	
+	aCreditCard := self validCreditCardWithTheExpirationDate: (GregorianMonthOfYear current next: self daysInYear) .
+	
+	self deny: aCreditCard isExpired.
+
+	!
+
+!methodRemoval: CreditCardTest #test05ACreditCardWithExpirationDatingAPastYearIsExpired stamp: 'LH 11/23/2020 18:29:44'!
+test05ACreditCardWithExpirationDatingAPastYearIsExpired
+	|aCreditCard|
+	
+	aCreditCard := self validCreditCardWithTheExpirationDate: (GregorianMonthOfYear current next: self daysThisMonth - self daysInYear) .
+	
+	self assert: aCreditCard isExpired.
+
+	!
+!CreditCardTest methodsFor: 'tests' stamp: 'LH 11/23/2020 18:29:51'!
+test04CreditCarNumberCantHaveAnythingBut16Symbols
+	
+	self assertInvalidCardNumberErrorWithNumber: '00000000000000000'.
+	self assertInvalidCardNumberErrorWithNumber: '000000000000000'.
+	! !
+
+!methodRemoval: CreditCardTest #test06CreditCarNumberCantHaveAnythingBut16Symbols stamp: 'LH 11/23/2020 18:29:51'!
+test06CreditCarNumberCantHaveAnythingBut16Symbols
+	
+	self assertInvalidCardNumberErrorWithNumber: '00000000000000000'.
+	self assertInvalidCardNumberErrorWithNumber: '000000000000000'.
+	!
+!CreditCardTest methodsFor: 'tests' stamp: 'LH 11/23/2020 18:29:57'!
+test05CreditCarNumberCantHaveAnythingButNumbers
+	
+	self assertInvalidCardNumberErrorWithNumber: '000000000000000O'.
+	
+	! !
+
+!methodRemoval: CreditCardTest #test07CreditCarNumberCantHaveAnythingButNumbers stamp: 'LH 11/23/2020 18:29:57'!
+test07CreditCarNumberCantHaveAnythingButNumbers
+	
+	self assertInvalidCardNumberErrorWithNumber: '000000000000000O'.
+	
+	!
+!CreditCardTest methodsFor: 'tests' stamp: 'LH 11/23/2020 18:30:02'!
+test06TheNameOfACreditCardOwnerCanNotBeBlank
+	
+	self should: [CreditCard withNumber: '0000000000000000'
+		expirationDate: (GregorianMonthOfYear current next: self daysThisMonth)
+		belongingTo: ''.]
+		raise: Error
+		withMessageText: CreditCard invalidCreditCardOwnerName.
+	
+	! !
+
+!methodRemoval: CreditCardTest #test08TheNameOfACreditCardOwnerCanNotBeBlank stamp: 'LH 11/23/2020 18:30:03'!
+test08TheNameOfACreditCardOwnerCanNotBeBlank
+	
+	self should: [CreditCard withNumber: '0000000000000000'
+		expirationDate: (GregorianMonthOfYear current next: self daysThisMonth)
+		belongingTo: ''.]
+		raise: Error
+		withMessageText: CreditCard invalidCreditCardOwnerName.
+	
+	!
+
+!methodRemoval: CreditCardTest #daysInYear stamp: 'LH 11/23/2020 18:30:46'!
+daysInYear
+	
+	^365 days 
+
+	!
+
+!testRun: #CreditCardTest #test06TheNameOfACreditCardOwnerCanNotBeBlank stamp: 'LH 11/23/2020 18:30:50'!
+FAILURE!
+!CreditCardTest methodsFor: 'tests' stamp: 'LH 11/23/2020 18:31:06' prior: 50877972!
+test06TheNameOfACreditCardOwnerCanNotBeBlank
+	
+	self should: [CreditCard withNumber: '0000000000000000'
+		expirationDate: (GregorianMonthOfYear current next)
+		belongingTo: ''.]
+		raise: Error
+		withMessageText: CreditCard invalidCreditCardOwnerName.
+	
+	! !
+
+!testRun: #CreditCardTest #test06TheNameOfACreditCardOwnerCanNotBeBlank stamp: 'LH 11/23/2020 18:31:10'!
+PASSED!
+
+!testRun: #CreditCardTest #test01ACreditCardCanBeNotExpired stamp: 'LH 11/23/2020 18:31:10'!
+PASSED!
+
+!testRun: #CreditCardTest #test02ACreditCardWithExpirationDatingThisMonthAndYearIsExpired stamp: 'LH 11/23/2020 18:31:10'!
+PASSED!
+
+!testRun: #CreditCardTest #test03ACreditCardWithExpirationDatedInThePastIsExpired stamp: 'LH 11/23/2020 18:31:10'!
+PASSED!
+
+!testRun: #CreditCardTest #test04CreditCarNumberCantHaveAnythingBut16Symbols stamp: 'LH 11/23/2020 18:31:10'!
+PASSED!
+
+!testRun: #CreditCardTest #test05CreditCarNumberCantHaveAnythingButNumbers stamp: 'LH 11/23/2020 18:31:10'!
+PASSED!
+
+!testRun: #CreditCardTest #test06TheNameOfACreditCardOwnerCanNotBeBlank stamp: 'LH 11/23/2020 18:31:10'!
+PASSED!
+!CreditCard methodsFor: 'testing' stamp: 'LH 11/23/2020 18:31:29' prior: 50877561!
+isExpired
+	"returns if this credit card is expired"
+	
+	^expirationDate < GregorianMonthOfYear current or: expirationDate = GregorianMonthOfYear current.! !
+!ShoppingCashierTest methodsFor: 'util' stamp: 'LH 11/23/2020 18:32:10' prior: 50876735!
+invalidDate
+
+	^GregorianMonthOfYear current previous
+		! !
+!ShoppingCashierTest methodsFor: 'util' stamp: 'LH 11/23/2020 18:32:26' prior: 50876740!
+validDate
+
+	^GregorianMonthOfYear current next
+		! !
+
+!testRun: #ShoppingCashierTest #test01AnEmptyCartCannotBeCheckedOut stamp: 'LH 11/23/2020 18:32:31'!
+PASSED!
+
+!testRun: #ShoppingCashierTest #test02ACartWith1BookWillCheckOutCorrectly stamp: 'LH 11/23/2020 18:32:31'!
+PASSED!
+
+!testRun: #ShoppingCashierTest #test03ACartWithManyBooksWillCheckOutCorrectly stamp: 'LH 11/23/2020 18:32:31'!
+PASSED!
+
+!testRun: #ShoppingCashierTest #test04TheCardShouldNotBeExpired stamp: 'LH 11/23/2020 18:32:31'!
+PASSED!
+
+!testRun: #ShoppingCashierTest #test05ACartShouldNotCheckoutIfMerchantProcessorFails stamp: 'LH 11/23/2020 18:32:32'!
+PASSED!
+
+----SNAPSHOT----(23 November 2020 18:33:07) CuisUniversity-4384.image priorSource: 17429928!
+
+!methodRemoval: CreditCardTest #daysThisMonth stamp: 'LH 11/23/2020 18:33:29'!
+daysThisMonth
+
+	^GregorianMonthOfYear current numberOfDays.
+	!
+!CreditCardTest methodsFor: 'tests' stamp: 'LH 11/23/2020 18:34:35'!
+validMonthOfYear
+
+	^GregorianMonthOfYear current next
+	! !
+!CreditCardTest methodsFor: 'tests' stamp: 'LH 11/23/2020 18:34:52' prior: 50877681!
+test01ACreditCardCanBeNotExpired
+
+	|aCreditCard|
+	
+	aCreditCard := self validCreditCardWithTheExpirationDate: self validMonthOfYear.
+	
+	self deny: aCreditCard isExpired.
+
+	! !
+!CreditCardTest methodsFor: 'tests' stamp: 'LH 11/23/2020 18:35:04' prior: 50878003!
+test06TheNameOfACreditCardOwnerCanNotBeBlank
+	
+	self should: [CreditCard withNumber: '0000000000000000'
+		expirationDate: self validMonthOfYear
+		belongingTo: ''.]
+		raise: Error
+		withMessageText: CreditCard invalidCreditCardOwnerName.
+	
+	! !
+!CreditCardTest methodsFor: 'util' stamp: 'LH 11/23/2020 18:35:22' prior: 50877870!
+assertInvalidCardNumberErrorWithNumber: aCCNumber 
+	
+	self should: [CreditCard         withNumber: aCCNumber
+							expirationDate: self validMonthOfYear 
+							belongingTo: 'Juan Pablo'.]
+		raise: Error
+		withMessageText: CreditCard invalidCreditCardNumber.
+	
+	! !
+
+!testRun: #CreditCardTest #test01ACreditCardCanBeNotExpired stamp: 'LH 11/23/2020 18:35:26'!
+PASSED!
+
+!testRun: #CreditCardTest #test02ACreditCardWithExpirationDatingThisMonthAndYearIsExpired stamp: 'LH 11/23/2020 18:35:26'!
+PASSED!
+
+!testRun: #CreditCardTest #test03ACreditCardWithExpirationDatedInThePastIsExpired stamp: 'LH 11/23/2020 18:35:26'!
+PASSED!
+
+!testRun: #CreditCardTest #test04CreditCarNumberCantHaveAnythingBut16Symbols stamp: 'LH 11/23/2020 18:35:26'!
+PASSED!
+
+!testRun: #CreditCardTest #test05CreditCarNumberCantHaveAnythingButNumbers stamp: 'LH 11/23/2020 18:35:26'!
+PASSED!
+
+!testRun: #CreditCardTest #test06TheNameOfACreditCardOwnerCanNotBeBlank stamp: 'LH 11/23/2020 18:35:26'!
+PASSED!
+
+!testRun: #CreditCardTest #test01ACreditCardCanBeNotExpired stamp: 'LH 11/23/2020 18:35:30'!
+PASSED!
+
+!testRun: #CreditCardTest #test02ACreditCardWithExpirationDatingThisMonthAndYearIsExpired stamp: 'LH 11/23/2020 18:35:30'!
+PASSED!
+
+!testRun: #CreditCardTest #test03ACreditCardWithExpirationDatedInThePastIsExpired stamp: 'LH 11/23/2020 18:35:30'!
+PASSED!
+
+!testRun: #CreditCardTest #test04CreditCarNumberCantHaveAnythingBut16Symbols stamp: 'LH 11/23/2020 18:35:30'!
+PASSED!
+
+!testRun: #CreditCardTest #test05CreditCarNumberCantHaveAnythingButNumbers stamp: 'LH 11/23/2020 18:35:31'!
+PASSED!
+
+!testRun: #CreditCardTest #test06TheNameOfACreditCardOwnerCanNotBeBlank stamp: 'LH 11/23/2020 18:35:31'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test01NewCartIsEmpty stamp: 'LH 11/23/2020 18:35:31'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test02CanAddABookToACart stamp: 'LH 11/23/2020 18:35:31'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test03CanAddManyBooksToACart stamp: 'LH 11/23/2020 18:35:31'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test04CanMoreThanOneFromTheSameBookToACart stamp: 'LH 11/23/2020 18:35:31'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test05CanNotAddABookWithInvalidISBN stamp: 'LH 11/23/2020 18:35:31'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test06CanNotAdd0Books stamp: 'LH 11/23/2020 18:35:31'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test07CanNotAddMinusBooks stamp: 'LH 11/23/2020 18:35:31'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test08CanNotAddNotWholeBooks stamp: 'LH 11/23/2020 18:35:31'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test09CannotEditCartList stamp: 'LH 11/23/2020 18:35:31'!
+PASSED!
+
+!testRun: #ShoppingCashierTest #test01AnEmptyCartCannotBeCheckedOut stamp: 'LH 11/23/2020 18:35:31'!
+PASSED!
+
+!testRun: #ShoppingCashierTest #test02ACartWith1BookWillCheckOutCorrectly stamp: 'LH 11/23/2020 18:35:31'!
+PASSED!
+
+!testRun: #ShoppingCashierTest #test03ACartWithManyBooksWillCheckOutCorrectly stamp: 'LH 11/23/2020 18:35:31'!
+PASSED!
+
+!testRun: #ShoppingCashierTest #test04TheCardShouldNotBeExpired stamp: 'LH 11/23/2020 18:35:31'!
+PASSED!
+
+!testRun: #ShoppingCashierTest #test05ACartShouldNotCheckoutIfMerchantProcessorFails stamp: 'LH 11/23/2020 18:35:31'!
+PASSED!
+!ShoppingCartTest methodsFor: 'tests' stamp: 'LH 11/23/2020 18:37:25'!
+test10TheValueOfAnEmptyCartsProductsIs0
+	| aCart |
+	
+	aCart := ShoppingCart withCatalogue: (Dictionary newFromPairs: #('0-7645-2641-3' 100 '0-7645-2641-4' 100)).
+	self assert: 0 equals: aCart valueOfProducts.! !
+
+!testRun: #ShoppingCartTest #test10TheValueOfAnEmptyCartsProductsIs0 stamp: 'LH 11/23/2020 18:37:28'!
+ERROR!
+!ShoppingCart methodsFor: 'product value' stamp: 'LH 11/23/2020 18:38:04'!
+valueOfProducts
+	self shouldBeImplemented.! !
+!ShoppingCart methodsFor: 'product value' stamp: 'LH 11/23/2020 18:38:09' prior: 50878223!
+valueOfProducts
+	^0! !
+
+!testRun: #ShoppingCartTest #test10TheValueOfAnEmptyCartsProductsIs0 stamp: 'LH 11/23/2020 18:38:12'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test01NewCartIsEmpty stamp: 'LH 11/23/2020 18:38:12'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test02CanAddABookToACart stamp: 'LH 11/23/2020 18:38:12'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test03CanAddManyBooksToACart stamp: 'LH 11/23/2020 18:38:12'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test04CanMoreThanOneFromTheSameBookToACart stamp: 'LH 11/23/2020 18:38:12'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test05CanNotAddABookWithInvalidISBN stamp: 'LH 11/23/2020 18:38:12'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test06CanNotAdd0Books stamp: 'LH 11/23/2020 18:38:12'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test07CanNotAddMinusBooks stamp: 'LH 11/23/2020 18:38:12'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test08CanNotAddNotWholeBooks stamp: 'LH 11/23/2020 18:38:12'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test09CannotEditCartList stamp: 'LH 11/23/2020 18:38:12'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test10TheValueOfAnEmptyCartsProductsIs0 stamp: 'LH 11/23/2020 18:38:12'!
+PASSED!
+!ShoppingCartTest methodsFor: 'tests' stamp: 'LH 11/23/2020 18:39:44'!
+test11TheValueOfProductsOfACartWithOneProductShouldBeThatProduct
+	| aCart |
+	
+	aCart := ShoppingCart withCatalogue: (Dictionary newFromPairs: #('0-7645-2641-3' 100 '0-7645-2641-4' 100)).	aCart add: '0-7645-2641-3'.
+	
+	self assert: 0 equals: aCart valueOfProducts.! !
+!ShoppingCartTest methodsFor: 'tests' stamp: 'LH 11/23/2020 18:40:03' prior: 50878210!
+test10TheValueOfAnEmptyCartsProductsIs0
+	| aCart |
+	
+	aCart := ShoppingCart withCatalogue: (Dictionary new).
+	self assert: 0 equals: aCart valueOfProducts.! !
+!ShoppingCartTest methodsFor: 'tests' stamp: 'LH 11/23/2020 18:40:32' prior: 50878266!
+test11TheValueOfProductsOfACartWithOneProductShouldBeThatProduct
+	| aCart |
+	
+	aCart := self newShoppingCartWithAProduct .	aCart add: '0-7645-2641-3'.
+	
+	self assert: 100 equals: aCart valueOfProducts.! !
+
+!testRun: #ShoppingCartTest #test11TheValueOfProductsOfACartWithOneProductShouldBeThatProduct stamp: 'LH 11/23/2020 18:40:33'!
+FAILURE!
+!ShoppingCart methodsFor: 'product value' stamp: 'LH 11/23/2020 18:41:48' prior: 50878228!
+valueOfProducts
+	books isEmpty ifFalse:[^100].
+	^0! !
+
+!testRun: #ShoppingCartTest #test01NewCartIsEmpty stamp: 'LH 11/23/2020 18:41:51'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test02CanAddABookToACart stamp: 'LH 11/23/2020 18:41:51'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test03CanAddManyBooksToACart stamp: 'LH 11/23/2020 18:41:51'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test04CanMoreThanOneFromTheSameBookToACart stamp: 'LH 11/23/2020 18:41:51'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test05CanNotAddABookWithInvalidISBN stamp: 'LH 11/23/2020 18:41:51'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test06CanNotAdd0Books stamp: 'LH 11/23/2020 18:41:51'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test07CanNotAddMinusBooks stamp: 'LH 11/23/2020 18:41:51'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test08CanNotAddNotWholeBooks stamp: 'LH 11/23/2020 18:41:51'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test09CannotEditCartList stamp: 'LH 11/23/2020 18:41:51'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test10TheValueOfAnEmptyCartsProductsIs0 stamp: 'LH 11/23/2020 18:41:51'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test11TheValueOfProductsOfACartWithOneProductShouldBeThatProduct stamp: 'LH 11/23/2020 18:41:51'!
+PASSED!
+!ShoppingCartTest methodsFor: 'tests' stamp: 'LH 11/23/2020 18:42:47'!
+test11TheValueOfProductsOfACartWithManyProductShouldBeTheirSum
+	| aCart |
+	
+	aCart := self newShoppingCartWithAProduct .	aCart add: '0-7645-2641-3' withQuantity: 2.
+	aCart add: '0-7645-2641-4' withQuantity: 2.
+	
+	self assert: 400 equals: aCart valueOfProducts.! !
+!ShoppingCartTest methodsFor: 'tests' stamp: 'LH 11/23/2020 18:43:02'!
+test12TheValueOfProductsOfACartWithManyProductShouldBeTheirSum
+	| aCart |
+	
+	aCart := self newShoppingCartWithAProduct .	aCart add: '0-7645-2641-3' withQuantity: 2.
+	aCart add: '0-7645-2641-4' withQuantity: 2.
+	
+	self assert: 400 equals: aCart valueOfProducts.! !
+
+!methodRemoval: ShoppingCartTest #test11TheValueOfProductsOfACartWithManyProductShouldBeTheirSum stamp: 'LH 11/23/2020 18:43:02'!
+test11TheValueOfProductsOfACartWithManyProductShouldBeTheirSum
+	| aCart |
+	
+	aCart := self newShoppingCartWithAProduct .	aCart add: '0-7645-2641-3' withQuantity: 2.
+	aCart add: '0-7645-2641-4' withQuantity: 2.
+	
+	self assert: 400 equals: aCart valueOfProducts.!
+!ShoppingCartTest methodsFor: 'util' stamp: 'LH 11/23/2020 18:43:51'!
+newShoppingCartWithTwoProducts
+	
+	^ShoppingCart withCatalogue: (Dictionary newFromPairs: #('0-7645-2641-3' 100 '0-7645-2641-4' 50))
+! !
+!ShoppingCartTest methodsFor: 'tests' stamp: 'LH 11/23/2020 18:44:36' prior: 50877132!
+test03CanAddManyBooksToACart
+	|aCart|
+	
+	aCart := self newShoppingCartWithTwoProducts .
+	aCart add: '0-7645-2641-3'.
+	aCart add: '0-7645-2641-4'.
+	
+	self assert: 2 equals: aCart listCart size.
+	self assert: (aCart listCart includes: '0-7645-2641-3').
+	self assert: (aCart listCart includes: '0-7645-2641-4').! !
+!ShoppingCartTest methodsFor: 'tests' stamp: 'LH 11/23/2020 18:44:54' prior: 50877147!
+test09CannotEditCartList
+	| aCart list |
+	
+	
+	aCart := self newShoppingCartWithTwoProducts.
+	aCart add: '0-7645-2641-3'.
+
+	
+	list := aCart listCart.
+	list add: '0-7645-2641-4'.
+
+	self assert: 1 equals: aCart listCart size.
+
+	self assert: (aCart listCart includes: '0-7645-2641-3').
+	self deny: (aCart listCart includes: '0-7645-2641-4').! !
+!ShoppingCartTest methodsFor: 'tests' stamp: 'LH 11/23/2020 18:45:08' prior: 50878351!
+test12TheValueOfProductsOfACartWithManyProductShouldBeTheirSum
+	| aCart |
+	
+	aCart := self newShoppingCartWithTwoProducts .	aCart add: '0-7645-2641-3' withQuantity: 2.
+	aCart add: '0-7645-2641-4' withQuantity: 2.
+	
+	self assert: 400 equals: aCart valueOfProducts.! !
+!ShoppingCartTest methodsFor: 'tests' stamp: 'LH 11/23/2020 18:45:15' prior: 50878409!
+test12TheValueOfProductsOfACartWithManyProductShouldBeTheirSum
+	| aCart |
+	
+	aCart := self newShoppingCartWithTwoProducts .	aCart add: '0-7645-2641-3' withQuantity: 2.
+	aCart add: '0-7645-2641-4' withQuantity: 2.
+	
+	self assert: 300 equals: aCart valueOfProducts.! !
+
+!testRun: #ShoppingCartTest #test12TheValueOfProductsOfACartWithManyProductShouldBeTheirSum stamp: 'LH 11/23/2020 18:45:16'!
+FAILURE!
+!ShoppingCart methodsFor: 'product value' stamp: 'LH 11/23/2020 18:46:22' prior: 50878300!
+valueOfProducts
+	^books inject: 0 into: [:theSum :anISBN | theSum + catalgue at: anISBN]! !
+
+!classDefinition: #ShoppingCart category: 'Ejercicio-20-Tus-Libros' stamp: 'LH 11/23/2020 18:46:32'!
+Object subclass: #ShoppingCart
+	instanceVariableNames: 'books catalogue'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Ejercicio-20-Tus-Libros'!
+!ShoppingCart methodsFor: 'as yet unclassified' stamp: 'LH 11/23/2020 18:46:32' prior: 50878437!
+valueOfProducts
+	^books inject: 0 into: [:theSum :anISBN | theSum + catalogue at: anISBN]! !
+!ShoppingCart methodsFor: 'as yet unclassified' stamp: 'LH 11/23/2020 18:46:33' prior: 50876905!
+initializeWithCatalogue: aCatalgue 
+
+	catalogue := aCatalgue.
+	books := Bag new.! !
+!ShoppingCart methodsFor: 'as yet unclassified' stamp: 'LH 11/23/2020 18:46:33' prior: 50877286!
+validateISBNInCatalogue: anISBN
+
+	(catalogue includesKey: anISBN) ifFalse:[^self error: ShoppingCart invalidISBNErrorMessage].
+	! !
+
+!testRun: #ShoppingCartTest #test12TheValueOfProductsOfACartWithManyProductShouldBeTheirSum stamp: 'LH 11/23/2020 18:46:34'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test01NewCartIsEmpty stamp: 'LH 11/23/2020 18:46:34'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test02CanAddABookToACart stamp: 'LH 11/23/2020 18:46:34'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test03CanAddManyBooksToACart stamp: 'LH 11/23/2020 18:46:34'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test04CanMoreThanOneFromTheSameBookToACart stamp: 'LH 11/23/2020 18:46:34'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test05CanNotAddABookWithInvalidISBN stamp: 'LH 11/23/2020 18:46:34'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test06CanNotAdd0Books stamp: 'LH 11/23/2020 18:46:34'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test07CanNotAddMinusBooks stamp: 'LH 11/23/2020 18:46:34'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test08CanNotAddNotWholeBooks stamp: 'LH 11/23/2020 18:46:35'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test09CannotEditCartList stamp: 'LH 11/23/2020 18:46:35'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test10TheValueOfAnEmptyCartsProductsIs0 stamp: 'LH 11/23/2020 18:46:35'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test11TheValueOfProductsOfACartWithOneProductShouldBeThatProduct stamp: 'LH 11/23/2020 18:46:35'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test12TheValueOfProductsOfACartWithManyProductShouldBeTheirSum stamp: 'LH 11/23/2020 18:46:35'!
+PASSED!
+!ShoppingCashier methodsFor: 'checkOut' stamp: 'LH 11/23/2020 18:53:41' prior: 50877084!
+checkOut: aShoppingCart withCreditCard: aCreditCard
+
+	aShoppingCart listCart size = 0 ifTrue: [^self error: ShoppingCashier invalidCartErrorMessage].
+	aCreditCard isExpired ifTrue: [^self error: ShoppingCashier invalidCreditCard].
+	
+	^merchantProcessor debitWith: aCreditCard for: aShoppingCart valueOfProducts.! !
+
+!testRun: #ShoppingCashierTest #test01AnEmptyCartCannotBeCheckedOut stamp: 'LH 11/23/2020 18:53:42'!
+PASSED!
+
+!testRun: #ShoppingCashierTest #test02ACartWith1BookWillCheckOutCorrectly stamp: 'LH 11/23/2020 18:53:42'!
+PASSED!
+
+!testRun: #ShoppingCashierTest #test03ACartWithManyBooksWillCheckOutCorrectly stamp: 'LH 11/23/2020 18:53:42'!
+PASSED!
+
+!testRun: #ShoppingCashierTest #test04TheCardShouldNotBeExpired stamp: 'LH 11/23/2020 18:53:42'!
+PASSED!
+
+!testRun: #ShoppingCashierTest #test05ACartShouldNotCheckoutIfMerchantProcessorFails stamp: 'LH 11/23/2020 18:53:42'!
+PASSED!
+!MerchantProcessor methodsFor: 'as yet unclassified' stamp: 'LH 11/23/2020 18:54:56' prior: 50876831!
+debitWith: aCreditCard for: anAmount	"simulator for an interaction with a Merchant Procesor"
+	^self subclassResponsibility.
+! !
+!ErroredMerchantProcessor methodsFor: 'debit operaions' stamp: 'LH 11/23/2020 18:55:39' prior: 50876852 overrides: 50878546!
+debitWith: aCreditCard for: anAmount	"see superclass"
+	^self error: ErroredMerchantProcessor dummyErrorMessage.
+! !
+!NullMerchantProcessor methodsFor: 'debit operations' stamp: 'LH 11/23/2020 18:55:51' prior: 50877079 overrides: 50878546!
+debitWith: aCreditCard for: anAmount
+	"see superclass"
+	^anAmount
+! !
+!ShoppingCart methodsFor: 'product value' stamp: 'LH 11/23/2020 18:56:13' prior: 50878451!
+valueOfProducts
+	"returns the accumulated value of all products in this cart"
+	
+	^books inject: 0 into: [:theSum :anISBN | theSum + catalogue at: anISBN]! !
+!ShoppingCart methodsFor: 'adding' stamp: 'LH 11/23/2020 18:57:03' prior: 50877304!
+add: anISBN withQuantity: aQuantity 	"adds a quantity of the ISBN's book to this cart"
+
+	(aQuantity isInteger and: aQuantity > 0) ifFalse:[^self error: ShoppingCart invalidQuantityErrorMessage ].
+	self validateISBNInCatalogue: anISBN.
+	
+	books add: anISBN withOccurrences: aQuantity.! !
+!ShoppingCashier methodsFor: 'checkOut' stamp: 'LH 11/23/2020 18:57:57' prior: 50878514!
+checkOut: aShoppingCart withCreditCard: aCreditCard
+	"debits the credit card for the contents of the cart"
+	
+	aShoppingCart listCart size = 0 ifTrue: [^self error: ShoppingCashier invalidCartErrorMessage].
+	aCreditCard isExpired ifTrue: [^self error: ShoppingCashier invalidCreditCard].
+	
+	^merchantProcessor debitWith: aCreditCard for: aShoppingCart valueOfProducts.! !
+!ShoppingCashierTest methodsFor: 'tests' stamp: 'LH 11/23/2020 19:01:56' prior: 50877348!
+test01AnEmptyCartCannotBeCheckedOut
+	|aCashier aCart aCreditCard|
+	
+	aCart := ShoppingCart withCatalogue: Dictionary new.
+	aCreditCard := CreditCard withNumber: '0000000000000000' expirationDate: self validDate belongingTo: 'Juan Pablo'. 
+	
+	aCashier := ShoppingCashier withMerchanProcessor: NullMerchantProcessor new.
+	
+	self should: [aCashier checkOut: aCart withCreditCard: aCreditCard]
+		raise: Error
+		withMessageText: ShoppingCashier invalidCartErrorMessage.! !
+
+!testRun: #ShoppingCashierTest #test01AnEmptyCartCannotBeCheckedOut stamp: 'LH 11/23/2020 19:02:27'!
+ERROR!
+!ShoppingCashier class methodsFor: 'instance creation' stamp: 'LH 11/23/2020 19:02:33'!
+withMerchanProcessor: aNullMerchantProcessor 
+	"DO NOT FORGET TO RENAME COLLABORATORS AND REMOVE THIS COMMENT!!!!"
+	self shouldBeImplemented.
+	^self new initializeWithMerchanProcessor: aNullMerchantProcessor ! !
+!ShoppingCashier class methodsFor: 'instance creation' stamp: 'LH 11/23/2020 19:02:50' prior: 50878625!
+withMerchanProcessor: aMerchantProcessor 
+
+	^self new initializeWithMerchanProcessor: aMerchantProcessor ! !
+
+!testRun: #ShoppingCashierTest #test01AnEmptyCartCannotBeCheckedOut stamp: 'LH 11/23/2020 19:02:54'!
+ERROR!
+!ShoppingCashier methodsFor: 'initialization' stamp: 'LH 11/23/2020 19:03:05'!
+initializeWithMerchanProcessor: aMerchantProcessor 
+	self shouldBeImplemented.
+	merchantProcessor := aMerchantProcessor.! !
+!ShoppingCashier methodsFor: 'initialization' stamp: 'LH 11/23/2020 19:03:13' prior: 50878645!
+initializeWithMerchanProcessor: aMerchantProcessor 
+
+	merchantProcessor := aMerchantProcessor.! !
+
+!testRun: #ShoppingCashierTest #test01AnEmptyCartCannotBeCheckedOut stamp: 'LH 11/23/2020 19:03:18'!
+PASSED!
+
+!testRun: #ShoppingCashierTest #test01AnEmptyCartCannotBeCheckedOut stamp: 'LH 11/23/2020 19:03:18'!
+PASSED!
+
+!testRun: #ShoppingCashierTest #test02ACartWith1BookWillCheckOutCorrectly stamp: 'LH 11/23/2020 19:03:18'!
+PASSED!
+
+!testRun: #ShoppingCashierTest #test03ACartWithManyBooksWillCheckOutCorrectly stamp: 'LH 11/23/2020 19:03:18'!
+PASSED!
+
+!testRun: #ShoppingCashierTest #test04TheCardShouldNotBeExpired stamp: 'LH 11/23/2020 19:03:18'!
+PASSED!
+
+!testRun: #ShoppingCashierTest #test05ACartShouldNotCheckoutIfMerchantProcessorFails stamp: 'LH 11/23/2020 19:03:18'!
+PASSED!
+!ShoppingCashierTest methodsFor: 'tests' stamp: 'LH 11/23/2020 19:03:39' prior: 50877366!
+test02ACartWith1BookWillCheckOutCorrectly
+	|aCashier aCart aCreditCard|
+	
+	aCart := ShoppingCart withCatalogue: (Dictionary newFromPairs: #('0-7645-2641-3' 100)).
+	aCart add: '0-7645-2641-3'.
+	aCreditCard := CreditCard withNumber: '0000000000000000' expirationDate: self validDate belongingTo: 'Juan Pablo'.
+	
+	aCashier := ShoppingCashier withMerchanProcessor: NullMerchantProcessor new .
+	
+	self assert: 100 equals: (aCashier checkOut: aCart withCreditCard: aCreditCard).! !
+!ShoppingCashierTest methodsFor: 'tests' stamp: 'LH 11/23/2020 19:03:47' prior: 50877385!
+test03ACartWithManyBooksWillCheckOutCorrectly
+	|aCashier aCart aCreditCard|
+	
+	aCart := ShoppingCart withCatalogue: (Dictionary newFromPairs: #('0-7645-2641-3' 100 '0-7645-2641-4' 100)).
+	aCart add: '0-7645-2641-3' withQuantity: 2.
+	aCart add: '0-7645-2641-4'.
+	aCreditCard := CreditCard withNumber: '0000000000000000' expirationDate: self validDate belongingTo: 'Juan Pablo'.
+	
+	aCashier := ShoppingCashier withMerchanProcessor: NullMerchantProcessor new .
+	
+	self assert: 300 equals: (aCashier checkOut: aCart withCreditCard: aCreditCard).! !
+!ShoppingCashierTest methodsFor: 'tests' stamp: 'LH 11/23/2020 19:03:53' prior: 50877407!
+test04TheCardShouldNotBeExpired
+	|aCashier aCart aCreditCard|
+	
+	aCart := ShoppingCart withCatalogue: (Dictionary newFromPairs: #('0-7645-2641-3' 100)).
+	aCart add: '0-7645-2641-3'.
+	aCreditCard := CreditCard withNumber: '0000000000000000' expirationDate: self invalidDate belongingTo: 'Juan Pablo'.
+	
+	aCashier := ShoppingCashier withMerchanProcessor: NullMerchantProcessor new .
+	
+	self should:[ aCashier checkOut: aCart withCreditCard: aCreditCard]
+		raise: Error
+		withMessageText: ShoppingCashier invalidCreditCard.
+		! !
+!ShoppingCashierTest methodsFor: 'tests' stamp: 'LH 11/23/2020 19:04:37' prior: 50877428!
+test05ACartShouldNotCheckoutIfMerchantProcessorFails
+
+	|aCashier aCart aCreditCard|
+	
+	aCart := ShoppingCart withCatalogue: (Dictionary newFromPairs: #('0-7645-2641-3' 100 '0-7645-2641-4' 100)).
+	aCart add: '0-7645-2641-3' withQuantity: 2.
+	aCart add: '0-7645-2641-4'.
+	aCreditCard := CreditCard withNumber: '0000000000000000' expirationDate: self validDate belongingTo: 'Juan Pablo'.
+
+	aCashier := ShoppingCashier withMerchanProcessor: ErroredMerchantProcessor new.
+	
+	
+	self should: [aCashier checkOut: aCart withCreditCard: aCreditCard]
+		raise: Error
+		withMessageText: ErroredMerchantProcessor dummyErrorMessage.
+		
+	
+! !
+
+!testRun: #ShoppingCashierTest #test05ACartShouldNotCheckoutIfMerchantProcessorFails stamp: 'LH 11/23/2020 19:04:41'!
+PASSED!
+
+!testRun: #ShoppingCashierTest #test01AnEmptyCartCannotBeCheckedOut stamp: 'LH 11/23/2020 19:04:41'!
+PASSED!
+
+!testRun: #ShoppingCashierTest #test02ACartWith1BookWillCheckOutCorrectly stamp: 'LH 11/23/2020 19:04:41'!
+PASSED!
+
+!testRun: #ShoppingCashierTest #test03ACartWithManyBooksWillCheckOutCorrectly stamp: 'LH 11/23/2020 19:04:41'!
+PASSED!
+
+!testRun: #ShoppingCashierTest #test04TheCardShouldNotBeExpired stamp: 'LH 11/23/2020 19:04:41'!
+PASSED!
+
+!testRun: #ShoppingCashierTest #test05ACartShouldNotCheckoutIfMerchantProcessorFails stamp: 'LH 11/23/2020 19:04:41'!
+PASSED!
+
+!methodRemoval: ShoppingCashier class #withPriceCatalogue: stamp: 'LH 11/23/2020 19:04:53'!
+withPriceCatalogue: aPriceCatalogue 
+
+	^self new initializeWithPriceCatalogue: aPriceCatalogue !
+
+!methodRemoval: ShoppingCashier class #withPriceCatalogue:andMerchantProcessor: stamp: 'LH 11/23/2020 19:04:55'!
+withPriceCatalogue: aDictionary andMerchantProcessor: aClass 
+
+	^self new initializeWithPriceCatalogue: aDictionary andMerchantProcessor: aClass !
+
+Object subclass: #ShoppingCashier
+	instanceVariableNames: 'merchantProcessor'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Ejercicio-20-Tus-Libros'!
+
+!classDefinition: #ShoppingCashier category: 'Ejercicio-20-Tus-Libros' stamp: 'LH 11/23/2020 19:05:01'!
+Object subclass: #ShoppingCashier
+	instanceVariableNames: 'merchantProcessor'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Ejercicio-20-Tus-Libros'!
+
+!testRun: #ShoppingCashierTest #test01AnEmptyCartCannotBeCheckedOut stamp: 'LH 11/23/2020 19:05:03'!
+PASSED!
+
+!testRun: #ShoppingCashierTest #test02ACartWith1BookWillCheckOutCorrectly stamp: 'LH 11/23/2020 19:05:03'!
+PASSED!
+
+!testRun: #ShoppingCashierTest #test03ACartWithManyBooksWillCheckOutCorrectly stamp: 'LH 11/23/2020 19:05:03'!
+PASSED!
+
+!testRun: #ShoppingCashierTest #test04TheCardShouldNotBeExpired stamp: 'LH 11/23/2020 19:05:03'!
+PASSED!
+
+!testRun: #ShoppingCashierTest #test05ACartShouldNotCheckoutIfMerchantProcessorFails stamp: 'LH 11/23/2020 19:05:03'!
+PASSED!
+
+!testRun: #CreditCardTest #test01ACreditCardCanBeNotExpired stamp: 'LH 11/23/2020 19:05:05'!
+PASSED!
+
+!testRun: #CreditCardTest #test02ACreditCardWithExpirationDatingThisMonthAndYearIsExpired stamp: 'LH 11/23/2020 19:05:05'!
+PASSED!
+
+!testRun: #CreditCardTest #test03ACreditCardWithExpirationDatedInThePastIsExpired stamp: 'LH 11/23/2020 19:05:05'!
+PASSED!
+
+!testRun: #CreditCardTest #test04CreditCarNumberCantHaveAnythingBut16Symbols stamp: 'LH 11/23/2020 19:05:05'!
+PASSED!
+
+!testRun: #CreditCardTest #test05CreditCarNumberCantHaveAnythingButNumbers stamp: 'LH 11/23/2020 19:05:05'!
+PASSED!
+
+!testRun: #CreditCardTest #test06TheNameOfACreditCardOwnerCanNotBeBlank stamp: 'LH 11/23/2020 19:05:05'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test01NewCartIsEmpty stamp: 'LH 11/23/2020 19:05:05'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test02CanAddABookToACart stamp: 'LH 11/23/2020 19:05:05'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test03CanAddManyBooksToACart stamp: 'LH 11/23/2020 19:05:05'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test04CanMoreThanOneFromTheSameBookToACart stamp: 'LH 11/23/2020 19:05:05'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test05CanNotAddABookWithInvalidISBN stamp: 'LH 11/23/2020 19:05:05'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test06CanNotAdd0Books stamp: 'LH 11/23/2020 19:05:05'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test07CanNotAddMinusBooks stamp: 'LH 11/23/2020 19:05:05'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test08CanNotAddNotWholeBooks stamp: 'LH 11/23/2020 19:05:05'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test09CannotEditCartList stamp: 'LH 11/23/2020 19:05:05'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test10TheValueOfAnEmptyCartsProductsIs0 stamp: 'LH 11/23/2020 19:05:05'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test11TheValueOfProductsOfACartWithOneProductShouldBeThatProduct stamp: 'LH 11/23/2020 19:05:05'!
+PASSED!
+
+!testRun: #ShoppingCartTest #test12TheValueOfProductsOfACartWithManyProductShouldBeTheirSum stamp: 'LH 11/23/2020 19:05:05'!
+PASSED!
+
+!testRun: #ShoppingCashierTest #test01AnEmptyCartCannotBeCheckedOut stamp: 'LH 11/23/2020 19:05:05'!
+PASSED!
+
+!testRun: #ShoppingCashierTest #test02ACartWith1BookWillCheckOutCorrectly stamp: 'LH 11/23/2020 19:05:05'!
+PASSED!
+
+!testRun: #ShoppingCashierTest #test03ACartWithManyBooksWillCheckOutCorrectly stamp: 'LH 11/23/2020 19:05:05'!
+PASSED!
+
+!testRun: #ShoppingCashierTest #test04TheCardShouldNotBeExpired stamp: 'LH 11/23/2020 19:05:05'!
+PASSED!
+
+!testRun: #ShoppingCashierTest #test05ACartShouldNotCheckoutIfMerchantProcessorFails stamp: 'LH 11/23/2020 19:05:05'!
+PASSED!
+
+!methodRemoval: ShoppingCashier #initializeWithPriceCatalogue: stamp: 'LH 11/23/2020 19:09:21'!
+initializeWithPriceCatalogue: aPriceCatalogue 
+
+	self initializeWithPriceCatalogue: aPriceCatalogue andMerchantProcessor: NullMerchantProcessor new.
+!
+
+!methodRemoval: ShoppingCashier #initializeWithPriceCatalogue:andMerchantProcessor: stamp: 'LH 11/23/2020 19:09:22'!
+initializeWithPriceCatalogue: aPriceCatalogue andMerchantProcessor: aMerchantProcessor 
+
+	priceCatalogue := aPriceCatalogue.
+	merchantProcessor := aMerchantProcessor.!
+
+!testRun: #ShoppingCashierTest #test01AnEmptyCartCannotBeCheckedOut stamp: 'LH 11/23/2020 19:09:29'!
+PASSED!
+
+!testRun: #ShoppingCashierTest #test02ACartWith1BookWillCheckOutCorrectly stamp: 'LH 11/23/2020 19:09:29'!
+PASSED!
+
+!testRun: #ShoppingCashierTest #test03ACartWithManyBooksWillCheckOutCorrectly stamp: 'LH 11/23/2020 19:09:29'!
+PASSED!
+
+!testRun: #ShoppingCashierTest #test04TheCardShouldNotBeExpired stamp: 'LH 11/23/2020 19:09:29'!
+PASSED!
+
+!testRun: #ShoppingCashierTest #test05ACartShouldNotCheckoutIfMerchantProcessorFails stamp: 'LH 11/23/2020 19:09:29'!
+PASSED!
+
+----SNAPSHOT----(23 November 2020 19:10:28) CuisUniversity-4384.image priorSource: 17485594!
+
+----QUIT----(23 November 2020 19:10:42) CuisUniversity-4384.image priorSource: 17513405!
