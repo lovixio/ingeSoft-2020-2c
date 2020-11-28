@@ -265,8 +265,8 @@ test01ANewStoreHasNoCarts
 	
 	! !
 
-!ShopInterfaceTest methodsFor: 'test' stamp: 'LH 11/26/2020 21:56:52'!
-test02CreateCartYieldsAnEmptyCar
+!ShopInterfaceTest methodsFor: 'test' stamp: 'LH 11/28/2020 15:53:14'!
+test02CreateCartCreatesAnEmptyCar
 	|cartID aShopInterface objectFactory|
 	
 	objectFactory := StoreTestObjectsFactory new.
@@ -280,8 +280,8 @@ test02CreateCartYieldsAnEmptyCar
 	
 	! !
 
-!ShopInterfaceTest methodsFor: 'test' stamp: 'LH 11/26/2020 22:01:28'!
-test03aShopInterfaceCanCreateMultipleCarts
+!ShopInterfaceTest methodsFor: 'test' stamp: 'LH 11/28/2020 15:53:23'!
+test03AShopInterfaceCanCreateMultipleCarts
 	|aShopInterface objectFactory|
 	
 	objectFactory := StoreTestObjectsFactory new.
@@ -293,6 +293,31 @@ test03aShopInterfaceCanCreateMultipleCarts
 	
 	self assert: 2 equals: aShopInterface numberOfActiveCarts.
 	
+	! !
+
+!ShopInterfaceTest methodsFor: 'test' stamp: 'LH 11/28/2020 16:16:52'!
+test04AStoreCanAddItemsToACart
+	|aShopInterface objectFactory aCartId|
+	
+	objectFactory := StoreTestObjectsFactory new.
+	
+	aShopInterface := ShopInterface withCatalogue: objectFactory defaultCatalog.
+	
+	aCartId := aShopInterface creatCartFor: 'admin' password: 'password'.
+	aShopInterface addToCart: aCartId theBook: objectFactory itemSellByTheStore inQuantity: 1.
+	
+	self assert: (aShopInterface listCart: aCartId) includes: objectFactory itemSellByTheStore.
+	
+	
+	aShopInterface addToCart: aCartId theBook: objectFactory itemSellByTheStore inQuantity: 2.
+	 
+	self assert: 3 equals: ((aShopInterface listCart: aCartId) occurrencesOf: objectFactory itemSellByTheStore).
+	
+	self should: [aShopInterface addToCart: aCartId theBook: objectFactory itemSellByTheStore inQuantity: -1.]
+		raise: Error
+		withExceptionDo:[:anError | 
+				self assert: anError messageText equals: (aShopInterface listCart: aCartId) invalidQuantityErrorMessage.
+				self assert: 3 equals: ((aShopInterface listCart: aCartId) occurrencesOf: objectFactory itemSellByTheStore)].
 	! !
 
 
@@ -534,36 +559,41 @@ of: aTotal
 
 !classDefinition: #ShopInterface category: 'TusLibros'!
 Object subclass: #ShopInterface
-	instanceVariableNames: 'userID password catalogue cart'
+	instanceVariableNames: 'userID password catalogue carts'
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'TusLibros'!
 
-!ShopInterface methodsFor: 'initialization' stamp: 'LH 11/26/2020 22:04:36'!
+!ShopInterface methodsFor: 'initialization' stamp: 'LH 11/28/2020 16:37:54'!
 initializeWithCatalogue: aCatalogue 
 
 	catalogue := aCatalogue.
-	cart := OrderedCollection new.! !
+	carts := OrderedCollection new.! !
 
 
-!ShopInterface methodsFor: 'cart operations' stamp: 'LH 11/26/2020 22:05:29'!
+!ShopInterface methodsFor: 'cart operations' stamp: 'LH 11/28/2020 16:42:27'!
+addToCart: aCartID theBook: anISBN inQuantity: aQuantity 
+	
+	(carts at: aCartID asInteger) add: aQuantity of: anISBN.! !
+
+!ShopInterface methodsFor: 'cart operations' stamp: 'LH 11/28/2020 16:37:54'!
 creatCartFor: aUserId password: aPassword
 
-	cart add: (Cart acceptingItemsOf: catalogue).
+	carts add: (Cart acceptingItemsOf: catalogue).
 	
-	^cart size asString.
+	^carts size asString.
 	! !
 
-!ShopInterface methodsFor: 'cart operations' stamp: 'LH 11/26/2020 22:07:18'!
+!ShopInterface methodsFor: 'cart operations' stamp: 'LH 11/28/2020 16:37:54'!
 listCart: aCartId 
 	
-	^(cart at: aCartId asInteger) copy.! !
+	^(carts at: aCartId asInteger) copy.! !
 
 
-!ShopInterface methodsFor: 'queries' stamp: 'LH 11/26/2020 22:06:05'!
+!ShopInterface methodsFor: 'queries' stamp: 'LH 11/28/2020 16:37:54'!
 numberOfActiveCarts
 	
-	^cart size.! !
+	^carts size.! !
 
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 

@@ -45098,3 +45098,152 @@ PASSED!
 ----SNAPSHOT----(26 November 2020 22:08:57) CuisUniversity-4384.image priorSource: 17549706!
 
 ----QUIT----(26 November 2020 22:09:35) CuisUniversity-4384.image priorSource: 17587958!
+
+----STARTUP---- (28 November 2020 15:45:36) as C:\Users\Usuario\Desktop\labo\inge1\Cuis\windows64 tus libros\CuisUniversity-4384.image!
+
+!ShopInterfaceTest methodsFor: 'test' stamp: 'LH 11/28/2020 15:53:14'!
+test02CreateCartCreatesAnEmptyCar
+	|cartID aShopInterface objectFactory|
+	
+	objectFactory := StoreTestObjectsFactory new.
+	
+	aShopInterface := ShopInterface withCatalogue: objectFactory defaultCatalog.
+	
+	cartID := aShopInterface creatCartFor: 'admin' password: 'password'.
+	
+	self assert: 1 equals: aShopInterface numberOfActiveCarts.
+	self assert: (aShopInterface listCart: cartID) isEmpty.
+	
+	! !
+
+!methodRemoval: ShopInterfaceTest #test02CreateCartYieldsAnEmptyCar stamp: 'LH 11/28/2020 15:53:14'!
+test02CreateCartYieldsAnEmptyCar
+	|cartID aShopInterface objectFactory|
+	
+	objectFactory := StoreTestObjectsFactory new.
+	
+	aShopInterface := ShopInterface withCatalogue: objectFactory defaultCatalog.
+	
+	cartID := aShopInterface creatCartFor: 'admin' password: 'password'.
+	
+	self assert: 1 equals: aShopInterface numberOfActiveCarts.
+	self assert: (aShopInterface listCart: cartID) isEmpty.
+	
+	!
+!ShopInterfaceTest methodsFor: 'test' stamp: 'LH 11/28/2020 15:53:23'!
+test03AShopInterfaceCanCreateMultipleCarts
+	|aShopInterface objectFactory|
+	
+	objectFactory := StoreTestObjectsFactory new.
+	
+	aShopInterface := ShopInterface withCatalogue: objectFactory defaultCatalog.
+	
+	aShopInterface creatCartFor: 'admin' password: 'password'.
+	aShopInterface creatCartFor: 'admin2' password: 'password2'.
+	
+	self assert: 2 equals: aShopInterface numberOfActiveCarts.
+	
+	! !
+
+!methodRemoval: ShopInterfaceTest #test03aShopInterfaceCanCreateMultipleCarts stamp: 'LH 11/28/2020 15:53:23'!
+test03aShopInterfaceCanCreateMultipleCarts
+	|aShopInterface objectFactory|
+	
+	objectFactory := StoreTestObjectsFactory new.
+	
+	aShopInterface := ShopInterface withCatalogue: objectFactory defaultCatalog.
+	
+	aShopInterface creatCartFor: 'admin' password: 'password'.
+	aShopInterface creatCartFor: 'admin2' password: 'password2'.
+	
+	self assert: 2 equals: aShopInterface numberOfActiveCarts.
+	
+	!
+!ShopInterfaceTest methodsFor: 'test' stamp: 'LH 11/28/2020 16:16:52'!
+test04AStoreCanAddItemsToACart
+	|aShopInterface objectFactory aCartId|
+	
+	objectFactory := StoreTestObjectsFactory new.
+	
+	aShopInterface := ShopInterface withCatalogue: objectFactory defaultCatalog.
+	
+	aCartId := aShopInterface creatCartFor: 'admin' password: 'password'.
+	aShopInterface addToCart: aCartId theBook: objectFactory itemSellByTheStore inQuantity: 1.
+	
+	self assert: (aShopInterface listCart: aCartId) includes: objectFactory itemSellByTheStore.
+	
+	
+	aShopInterface addToCart: aCartId theBook: objectFactory itemSellByTheStore inQuantity: 2.
+	 
+	self assert: 3 equals: ((aShopInterface listCart: aCartId) occurrencesOf: objectFactory itemSellByTheStore).
+	
+	self should: [aShopInterface addToCart: aCartId theBook: objectFactory itemSellByTheStore inQuantity: -1.]
+		raise: Error
+		withExceptionDo:[:anError | 
+				self assert: anError messageText equals: (aShopInterface listCart: aCartId) invalidQuantityErrorMessage.
+				self assert: 3 equals: ((aShopInterface listCart: aCartId) occurrencesOf: objectFactory itemSellByTheStore)].
+	! !
+
+!testRun: #ShopInterfaceTest #test04AStoreCanAddItemsToACart stamp: 'LH 11/28/2020 16:17:04'!
+ERROR!
+!ShopInterface methodsFor: 'cart operations' stamp: 'LH 11/28/2020 16:17:21'!
+addToCart: aString theBook: aString2 inQuantity: aSmallInteger 
+	self shouldBeImplemented.! !
+!ShopInterface methodsFor: 'cart operations' stamp: 'LH 11/28/2020 16:19:18' prior: 50881385!
+addToCart: aCartID theBook: anISBN inQuantity: aQuantity 
+	
+	(cart at: aCartID asInteger) add: aQuantity of: anISBN.! !
+
+!testRun: #ShopInterfaceTest #test04AStoreCanAddItemsToACart stamp: 'LH 11/28/2020 16:19:19'!
+PASSED!
+
+!testRun: #ShopInterfaceTest #test01ANewStoreHasNoCarts stamp: 'LH 11/28/2020 16:19:19'!
+PASSED!
+
+!testRun: #ShopInterfaceTest #test02CreateCartCreatesAnEmptyCar stamp: 'LH 11/28/2020 16:19:19'!
+PASSED!
+
+!testRun: #ShopInterfaceTest #test03AShopInterfaceCanCreateMultipleCarts stamp: 'LH 11/28/2020 16:19:19'!
+PASSED!
+
+!testRun: #ShopInterfaceTest #test04AStoreCanAddItemsToACart stamp: 'LH 11/28/2020 16:19:19'!
+PASSED!
+
+!classDefinition: #ShopInterface category: 'TusLibros' stamp: 'LH 11/28/2020 16:37:54'!
+Object subclass: #ShopInterface
+	instanceVariableNames: 'userID password catalogue carts'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+!ShopInterface methodsFor: 'as yet unclassified' stamp: 'LH 11/28/2020 16:37:54' prior: 50881190!
+initializeWithCatalogue: aCatalogue 
+
+	catalogue := aCatalogue.
+	carts := OrderedCollection new.! !
+!ShopInterface methodsFor: 'as yet unclassified' stamp: 'LH 11/28/2020 16:37:54' prior: 50881200!
+creatCartFor: aUserId password: aPassword
+
+	carts add: (Cart acceptingItemsOf: catalogue).
+	
+	^carts size asString.
+	! !
+!ShopInterface methodsFor: 'as yet unclassified' stamp: 'LH 11/28/2020 16:37:54' prior: 50881211!
+numberOfActiveCarts
+	
+	^carts size.! !
+!ShopInterface methodsFor: 'as yet unclassified' stamp: 'LH 11/28/2020 16:37:54' prior: 50881232!
+listCart: aCartId 
+	
+	^(carts at: aCartId asInteger) copy.! !
+!ShopInterface methodsFor: 'as yet unclassified' stamp: 'LH 11/28/2020 16:37:54' prior: 50881391!
+addToCart: aCartID theBook: anISBN inQuantity: aQuantity 
+	
+	(carts at: aCartID asInteger) add: aQuantity of: anISBN.! !
+!ShopInterface methodsFor: 'cart operations' stamp: 'LH 11/28/2020 16:42:27' prior: 50881446!
+addToCart: aCartID theBook: anISBN inQuantity: aQuantity 
+	
+	(carts at: aCartID asInteger) add: aQuantity of: anISBN.! !
+
+----SNAPSHOT----(28 November 2020 16:46:09) CuisUniversity-4384.image priorSource: 17588052!
+
+----QUIT----(28 November 2020 16:46:41) CuisUniversity-4384.image priorSource: 17593880!
