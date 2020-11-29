@@ -246,79 +246,168 @@ debit: anAmount from: aCreditCard
 	^debitBehavior value: anAmount value: aCreditCard ! !
 
 
-!classDefinition: #ShopInterfaceTest category: 'TusLibros'!
-TestCase subclass: #ShopInterfaceTest
-	instanceVariableNames: ''
+!classDefinition: #StoreInterfaceTest category: 'TusLibros'!
+TestCase subclass: #StoreInterfaceTest
+	instanceVariableNames: 'testObjectsFactory debitBehavior'
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'TusLibros'!
 
-!ShopInterfaceTest methodsFor: 'test' stamp: 'LH 11/26/2020 21:53:33'!
-test01ANewStoreHasNoCarts
-	|aShopInterface objectFactory|
-	
-	objectFactory := StoreTestObjectsFactory new.
-	
-	aShopInterface := ShopInterface withCatalogue: objectFactory defaultCatalog.
-	
-	self assert: 0 equals: aShopInterface numberOfActiveCarts.
-	
-	! !
+!StoreInterfaceTest methodsFor: 'set up' stamp: 'LH 11/28/2020 21:24:11'!
+setUp 
 
-!ShopInterfaceTest methodsFor: 'test' stamp: 'LH 11/28/2020 15:53:14'!
-test02CreateCartCreatesAnEmptyCar
-	|cartID aShopInterface objectFactory|
-	
-	objectFactory := StoreTestObjectsFactory new.
-	
-	aShopInterface := ShopInterface withCatalogue: objectFactory defaultCatalog.
-	
-	cartID := aShopInterface creatCartFor: 'admin' password: 'password'.
-	
-	self assert: 1 equals: aShopInterface numberOfActiveCarts.
-	self assert: (aShopInterface listCart: cartID) isEmpty.
-	
-	! !
+	testObjectsFactory := StoreTestObjectsFactory new.
+	debitBehavior := [ :anAmount :aCreditCard | ]! !
 
-!ShopInterfaceTest methodsFor: 'test' stamp: 'LH 11/28/2020 15:53:23'!
-test03AShopInterfaceCanCreateMultipleCarts
-	|aShopInterface objectFactory|
-	
-	objectFactory := StoreTestObjectsFactory new.
-	
-	aShopInterface := ShopInterface withCatalogue: objectFactory defaultCatalog.
-	
-	aShopInterface creatCartFor: 'admin' password: 'password'.
-	aShopInterface creatCartFor: 'admin2' password: 'password2'.
-	
-	self assert: 2 equals: aShopInterface numberOfActiveCarts.
-	
-	! !
 
-!ShopInterfaceTest methodsFor: 'test' stamp: 'LH 11/28/2020 16:16:52'!
-test04AStoreCanAddItemsToACart
-	|aShopInterface objectFactory aCartId|
+!StoreInterfaceTest methodsFor: 'test' stamp: 'LH 11/28/2020 21:24:53'!
+test01ANewStoreHasNoActiveCarts
+	|aShopInterface |
 	
-	objectFactory := StoreTestObjectsFactory new.
+	self setUp.
 	
-	aShopInterface := ShopInterface withCatalogue: objectFactory defaultCatalog.
+	aShopInterface := StoreInterface withCatalogue: testObjectsFactory defaultCatalog withMerchantProccessor: self.
 	
-	aCartId := aShopInterface creatCartFor: 'admin' password: 'password'.
-	aShopInterface addToCart: aCartId theBook: objectFactory itemSellByTheStore inQuantity: 1.
+	self assert: 0 equals: aShopInterface numberOfActiveCarts.! !
+
+!StoreInterfaceTest methodsFor: 'test' stamp: 'LH 11/28/2020 21:25:08'!
+test02ACartCanBeCreatedInAStore
+	|aShopInterface |
 	
-	self assert: (aShopInterface listCart: aCartId) includes: objectFactory itemSellByTheStore.
+	self setUp.
 	
+	aShopInterface := StoreInterface withCatalogue: testObjectsFactory defaultCatalog withMerchantProccessor: self.
 	
-	aShopInterface addToCart: aCartId theBook: objectFactory itemSellByTheStore inQuantity: 2.
-	 
-	self assert: 3 equals: ((aShopInterface listCart: aCartId) occurrencesOf: objectFactory itemSellByTheStore).
+	aShopInterface createCartFor: 'admin' password: 'password'.
 	
-	self should: [aShopInterface addToCart: aCartId theBook: objectFactory itemSellByTheStore inQuantity: -1.]
+	self assert: 1 equals: aShopInterface numberOfActiveCarts.! !
+
+!StoreInterfaceTest methodsFor: 'test' stamp: 'LH 11/28/2020 21:25:31'!
+test03AStoreInterfaceCanCreateMultipleCarts
+	|aShopInterface |
+	
+	self setUp.
+	
+	aShopInterface := StoreInterface withCatalogue: testObjectsFactory defaultCatalog withMerchantProccessor: self.
+	
+	aShopInterface createCartFor: 'admin' password: 'password'.
+	aShopInterface createCartFor: 'admin2' password: 'password2'.
+	
+	self assert: 2 equals: aShopInterface numberOfActiveCarts.! !
+
+!StoreInterfaceTest methodsFor: 'test' stamp: 'LH 11/28/2020 21:25:42'!
+test04ANewCartInAStoreIsEmpty
+	|aShopInterface aCartId|
+	
+	self setUp.
+	
+	aShopInterface := StoreInterface withCatalogue: testObjectsFactory defaultCatalog withMerchantProccessor: self.
+	
+	aCartId := aShopInterface createCartFor: 'admin' password: 'password'.
+	
+	self assert: (aShopInterface listCart: aCartId) isEmpty.! !
+
+!StoreInterfaceTest methodsFor: 'test' stamp: 'LH 11/28/2020 21:26:01'!
+test05AStoreCanAddAnItemToOneOfItsCarts
+	|aShopInterface aCartId anAvailableItem|
+	
+	self setUp.
+	aShopInterface := StoreInterface withCatalogue: testObjectsFactory defaultCatalog withMerchantProccessor: self.
+	anAvailableItem := testObjectsFactory itemSellByTheStore.
+	
+	aCartId := aShopInterface createCartFor: 'admin' password: 'password'.
+	
+	aShopInterface addToCart: aCartId theBook: anAvailableItem inQuantity: 1.
+	
+	self assert: (aShopInterface listCart: aCartId) includes: anAvailableItem.! !
+
+!StoreInterfaceTest methodsFor: 'test' stamp: 'LH 11/28/2020 21:26:21'!
+test06AStoreCanAddVariousItemsToOneOfItsCarts
+	|aShopInterface aCartId anAvailableItem|
+	
+	self setUp.
+	aShopInterface := StoreInterface withCatalogue: testObjectsFactory defaultCatalog withMerchantProccessor: self.
+	anAvailableItem := testObjectsFactory itemSellByTheStore.
+	
+	aCartId := aShopInterface createCartFor: 'admin' password: 'password'.
+	
+	aShopInterface addToCart: aCartId theBook: anAvailableItem inQuantity: 2.
+	
+	self assert: 2 equals: ((aShopInterface listCart: aCartId) occurrencesOf: anAvailableItem).! !
+
+!StoreInterfaceTest methodsFor: 'test' stamp: 'LH 11/28/2020 21:26:39'!
+test07AStoreCanAddItemsToItsCarts
+	|aShopInterface aCartId2 aCartId1 anAvailableItem|
+	
+	self setUp.
+	aShopInterface := StoreInterface withCatalogue: testObjectsFactory defaultCatalog withMerchantProccessor: self.
+	anAvailableItem := testObjectsFactory itemSellByTheStore.
+	
+	aCartId1 := aShopInterface createCartFor: 'admin' password: 'password'.
+	aCartId2 := aShopInterface createCartFor: 'admin1' password: 'password1'.
+	
+	aShopInterface addToCart: aCartId1 theBook: anAvailableItem inQuantity: 2.
+	aShopInterface addToCart: aCartId2 theBook: anAvailableItem inQuantity: 1.
+	
+	self assert: 2 equals: ((aShopInterface listCart: aCartId1) occurrencesOf: anAvailableItem).
+	self assert: 1 equals: ((aShopInterface listCart: aCartId2) occurrencesOf: anAvailableItem).! !
+
+!StoreInterfaceTest methodsFor: 'test' stamp: 'LH 11/28/2020 21:26:56'!
+test08CanNotCheckOutWithInvalidCartId
+	|aShopInterface aCreditCard|
+	
+	self setUp.
+	aShopInterface := StoreInterface withCatalogue: testObjectsFactory defaultCatalog withMerchantProccessor: self.
+	aCreditCard := testObjectsFactory notExpiredCreditCard.
+	
+	self should: [aShopInterface checkOut: 1 withCreditCard: aCreditCard]
 		raise: Error
 		withExceptionDo:[:anError | 
-				self assert: anError messageText equals: (aShopInterface listCart: aCartId) invalidQuantityErrorMessage.
-				self assert: 3 equals: ((aShopInterface listCart: aCartId) occurrencesOf: objectFactory itemSellByTheStore)].
-	! !
+				self assert: anError messageText equals: StoreInterface invalidCartId.
+				self assert: aShopInterface hasNoSales.]! !
+
+!StoreInterfaceTest methodsFor: 'test' stamp: 'LH 11/28/2020 21:49:34'!
+test09ACartWithItemsCanBeCheckedOut
+	|aShopInterface aCreditCard aCartID|
+	
+	self setUp.
+	aShopInterface := StoreInterface withCatalogue: testObjectsFactory defaultCatalog withMerchantProccessor: self.
+	aCreditCard := testObjectsFactory notExpiredCreditCard.
+	
+	aCartID := aShopInterface createCartFor: 'admin' password: 'password'.
+	aShopInterface addToCart: aCartID theBook: testObjectsFactory itemSellByTheStore inQuantity: 2.
+	
+	aShopInterface checkOut: aCartID withCreditCard: aCreditCard.
+	
+	self deny: aShopInterface hasNoSales.
+	self assert: (aShopInterface hasMadeTheSale: (Sale of: testObjectsFactory itemSellByTheStorePrice *2)).! !
+
+!StoreInterfaceTest methodsFor: 'test' stamp: 'LH 11/28/2020 21:48:28'!
+test10ManyCartsCanBeCheckedOut
+	|aShopInterface aCreditCard aCartID1 aCartID2|
+	
+	self setUp.
+	aShopInterface := StoreInterface withCatalogue: testObjectsFactory defaultCatalog withMerchantProccessor: self.
+	aCreditCard := testObjectsFactory notExpiredCreditCard.
+	
+	aCartID1 := aShopInterface createCartFor: 'admin' password: 'password'.
+	aCartID2 := aShopInterface createCartFor: 'admin1' password: 'password1'.
+	aShopInterface addToCart: aCartID1 theBook: testObjectsFactory itemSellByTheStore inQuantity: 2.
+	aShopInterface addToCart: aCartID2 theBook: testObjectsFactory itemSellByTheStore inQuantity: 10.
+	
+	aShopInterface checkOut: aCartID1 withCreditCard: aCreditCard.
+	
+	self deny: aShopInterface hasNoSales.
+	self assert: (aShopInterface hasMadeTheSale: (Sale of: testObjectsFactory itemSellByTheStorePrice *2)).
+	
+	aShopInterface checkOut: aCartID2 withCreditCard: aCreditCard.
+	
+	self assert: (aShopInterface hasMadeTheSale: (Sale of: testObjectsFactory itemSellByTheStorePrice *10)).! !
+
+
+!StoreInterfaceTest methodsFor: 'debit' stamp: 'LH 11/28/2020 21:32:52'!
+debit: anAmmount from: aCreditCard 
+	^debitBehavior value: anAmmount value: aCreditCard.! !
 
 
 !classDefinition: #Cart category: 'TusLibros'!
@@ -539,6 +628,12 @@ total
 	^ total! !
 
 
+!Sale methodsFor: 'queries' stamp: 'LH 11/28/2020 21:42:43'!
+= aSale
+
+	^ total = aSale total.! !
+
+
 !Sale methodsFor: 'initialization' stamp: 'HernanWilkinson 6/17/2013 18:47'!
 initializeTotal: aTotal
 
@@ -557,54 +652,80 @@ of: aTotal
 	^self new initializeTotal: aTotal ! !
 
 
-!classDefinition: #ShopInterface category: 'TusLibros'!
-Object subclass: #ShopInterface
-	instanceVariableNames: 'userID password catalogue carts'
+!classDefinition: #StoreInterface category: 'TusLibros'!
+Object subclass: #StoreInterface
+	instanceVariableNames: 'catalogue carts merchantProcessor salesBook'
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'TusLibros'!
 
-!ShopInterface methodsFor: 'initialization' stamp: 'LH 11/28/2020 16:37:54'!
-initializeWithCatalogue: aCatalogue 
-
+!StoreInterface methodsFor: 'initialization' stamp: 'LH 11/28/2020 21:22:10'!
+initializeWithCatalogue: aCatalogue andMerchantProccessor: aMerchantProccessor  
+	
 	catalogue := aCatalogue.
+	merchantProcessor := aMerchantProccessor.
+	
+	salesBook := OrderedCollection new.
 	carts := OrderedCollection new.! !
 
 
-!ShopInterface methodsFor: 'cart operations' stamp: 'LH 11/28/2020 16:42:27'!
-addToCart: aCartID theBook: anISBN inQuantity: aQuantity 
-	
-	(carts at: aCartID asInteger) add: aQuantity of: anISBN.! !
+!StoreInterface methodsFor: 'queries' stamp: 'LH 11/28/2020 21:34:11'!
+hasMadeTheSale: aSale 
+	^salesBook includes: aSale.! !
 
-!ShopInterface methodsFor: 'cart operations' stamp: 'LH 11/28/2020 16:37:54'!
-creatCartFor: aUserId password: aPassword
-
-	carts add: (Cart acceptingItemsOf: catalogue).
-	
-	^carts size asString.
-	! !
-
-!ShopInterface methodsFor: 'cart operations' stamp: 'LH 11/28/2020 16:37:54'!
-listCart: aCartId 
-	
-	^(carts at: aCartId asInteger) copy.! !
-
-
-!ShopInterface methodsFor: 'queries' stamp: 'LH 11/28/2020 16:37:54'!
+!StoreInterface methodsFor: 'queries' stamp: 'LH 11/28/2020 21:22:10'!
 numberOfActiveCarts
 	
-	^carts size.! !
+	^ carts size.! !
+
+
+!StoreInterface methodsFor: 'cart operations' stamp: 'LH 11/28/2020 21:22:10'!
+addToCart: aCartId theBook: anISBN inQuantity: aQuantity 
+	
+	(carts at: aCartId asInteger) add: aQuantity of: anISBN.! !
+
+!StoreInterface methodsFor: 'cart operations' stamp: 'LH 11/28/2020 21:22:10'!
+createCartFor: aUserID password: aPassword 
+	
+	carts add: (Cart acceptingItemsOf: catalogue).
+	^ carts size asString.! !
+
+!StoreInterface methodsFor: 'cart operations' stamp: 'LH 11/28/2020 21:22:10'!
+listCart: aCartId 
+	
+	^ carts at: aCartId asInteger.! !
+
+
+!StoreInterface methodsFor: 'checkout' stamp: 'LH 11/28/2020 21:49:13'!
+checkOut: aCartId withCreditCard: aCreditCard 
+	|aCashier|
+	carts isEmpty ifTrue:[^self error: StoreInterface invalidCartId].
+	
+	aCashier := Cashier toCheckout: (self listCart: aCartId asInteger) charging: aCreditCard throught: merchantProcessor on: DateAndTime now registeringOn: salesBook.
+	
+	^ aCashier checkOut.! !
+
+
+
+!StoreInterface methodsFor: 'as yet unclassified' stamp: 'LH 11/28/2020 21:33:17'!
+hasNoSales
+	^salesBook isEmpty.! !
 
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
-!classDefinition: 'ShopInterface class' category: 'TusLibros'!
-ShopInterface class
+!classDefinition: 'StoreInterface class' category: 'TusLibros'!
+StoreInterface class
 	instanceVariableNames: ''!
 
-!ShopInterface class methodsFor: 'instance creation' stamp: 'LH 11/26/2020 21:37:50'!
-withCatalogue: aCatalogue 
+!StoreInterface class methodsFor: 'instance creation' stamp: 'LH 11/28/2020 21:21:24'!
+withCatalogue: aCatalogue withMerchantProccessor: aMerchantProccessor  
 	
-	^self new initializeWithCatalogue: aCatalogue ! !
+	^self new initializeWithCatalogue: aCatalogue andMerchantProccessor: aMerchantProccessor ! !
+
+
+!StoreInterface class methodsFor: 'error descriptions' stamp: 'LH 11/28/2020 20:59:56'!
+invalidCartId
+	^'The Cart ID is not valid'! !
 
 
 !classDefinition: #StoreTestObjectsFactory category: 'TusLibros'!
