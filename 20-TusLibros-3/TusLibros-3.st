@@ -361,7 +361,7 @@ test06ACartWithItemsCanBeCheckedOut
 	self assert: (aStoreInterface hasMadeTheSale: (Sale of: testObjectsFactory itemSellByTheStorePrice *2)).! !
 
 
-!StoreInterfaceTest methodsFor: 'tests bad cart usage' stamp: 'IO 12/1/2020 19:32:22'!
+!StoreInterfaceTest methodsFor: 'tests bad cart usage' stamp: 'LH 12/2/2020 11:47:28'!
 test07CannotModifyACartFromOutsideStore
 	| aCartID listedCart aStoreInterface|
 	
@@ -371,7 +371,7 @@ test07CannotModifyACartFromOutsideStore
 	
 	listedCart := aStoreInterface listCart: aCartID.
 	
-	listedCart add: 10 of: testObjectsFactory itemSellByTheStore.
+	listedCart add: testObjectsFactory itemSellByTheStore withOccurrences: 2.
 
 	self assert: 2 equals: ((aStoreInterface listCart: aCartID) occurrencesOf: testObjectsFactory itemSellByTheStore).! !
 
@@ -388,7 +388,7 @@ test08CannotCreateCartWithInvalidClientId
 
 	! !
 
-!StoreInterfaceTest methodsFor: 'tests bad cart usage' stamp: 'IO 12/1/2020 19:32:31'!
+!StoreInterfaceTest methodsFor: 'tests bad cart usage' stamp: 'LH 12/2/2020 12:03:03'!
 test09CannotCreateCartWithInvalidClientPassword
 	|aStoreInterface|
 
@@ -397,11 +397,13 @@ test09CannotCreateCartWithInvalidClientPassword
 	self
 		should: [aStoreInterface createCartFor: testObjectsFactory validClientId password: testObjectsFactory invalidClientPassword]
 		raise: Error
-		withMessageText: StoreInterface invalidClientId.
+		withExceptionDo:[:anError |
+			self assert: anError messageText equals: StoreInterface invalidClientId.
+			self assert: 0 equals: aStoreInterface numberOfActiveCarts.].
 
 	! !
 
-!StoreInterfaceTest methodsFor: 'tests bad cart usage' stamp: 'IO 12/1/2020 20:21:05'!
+!StoreInterfaceTest methodsFor: 'tests bad cart usage' stamp: 'LH 12/2/2020 12:04:24'!
 test14CannotAddOnNotExistentCart
 	|aStoreInterface|
 
@@ -427,7 +429,7 @@ test15CannotListNotExistentCart
 
 	! !
 
-!StoreInterfaceTest methodsFor: 'tests bad cart usage' stamp: 'IO 12/1/2020 20:17:48'!
+!StoreInterfaceTest methodsFor: 'tests bad cart usage' stamp: 'LH 12/2/2020 12:06:32'!
 test16CannotOperateAfterCheckout
 	| aStoreInterface aCartId |
 
@@ -444,12 +446,26 @@ test16CannotOperateAfterCheckout
 	self
 		should: [aStoreInterface listCart: aCartId]
 		raise: Error
-		withMessageText: StoreInterface invalidCartId.
+		withExceptionDo: [:anError |
+			self assert: anError messageText equals: StoreInterface invalidCartId.
+			self assert: 0 equals: aStoreInterface numberOfActiveCarts].
 
 	! !
 
 
-!StoreInterfaceTest methodsFor: 'tests time invalidation' stamp: 'IO 12/1/2020 19:41:26'!
+!StoreInterfaceTest methodsFor: 'tests time invalidation' stamp: 'LH 12/2/2020 12:11:26'!
+assertThatACart: aCartId fromTheStore: aStoreInterface IsNotValidAfter30MinutesWhenDoing: aStoreInterfaceAction
+	
+	self leap: 30 minutes.
+	
+	self should: aStoreInterfaceAction
+		raise: Error
+		withExceptionDo: [:anError |
+				self assert: anError messageText equals: StoreInterface invalidCartOutOfTime.
+				self deny: (aStoreInterface isActiveCart: aCartId).]
+! !
+
+!StoreInterfaceTest methodsFor: 'tests time invalidation' stamp: 'LH 12/2/2020 12:12:39'!
 test10CannotAdd30MinutesAfterCreation
 	|aStoreInterface aCartId|
 	
@@ -457,16 +473,13 @@ test10CannotAdd30MinutesAfterCreation
 								
 	aCartId := aStoreInterface createCartFor: testObjectsFactory validClientId password: testObjectsFactory validClientPassword.
 	
-	self leap: 30 minutes.
+	self  assertThatACart: aCartId
+		fromTheStore: aStoreInterface 
+		IsNotValidAfter30MinutesWhenDoing: [aStoreInterface addToCart: aCartId book: testObjectsFactory itemSellByTheStore quantity: 2].
 	
-	self should:[aStoreInterface addToCart: aCartId book: testObjectsFactory itemSellByTheStore quantity: 2]
-		raise: Error
-		withExceptionDo: [:anError |
-				self assert: anError messageText equals: StoreInterface invalidCartOutOfTime.
-				self deny: (aStoreInterface isActiveCart: aCartId).]
 ! !
 
-!StoreInterfaceTest methodsFor: 'tests time invalidation' stamp: 'IO 12/1/2020 20:18:12'!
+!StoreInterfaceTest methodsFor: 'tests time invalidation' stamp: 'LH 12/2/2020 12:13:40'!
 test11CannotCheckout30MinutesAfterAdding
 	|aStoreInterface aCartId|
 	
@@ -476,20 +489,16 @@ test11CannotCheckout30MinutesAfterAdding
 	
 	aStoreInterface addToCart: aCartId book: testObjectsFactory itemSellByTheStore quantity: 2.
 
-	self leap: 30 minutes.
-
-	self should:[
-		aStoreInterface checkOutCart: aCartId
-			ccn: testObjectsFactory notExpiredCreditCard ccn
-			cced: testObjectsFactory notExpiredCreditCard cced
-			cco: testObjectsFactory notExpiredCreditCard cco.]
-		raise: Error
-		withExceptionDo: [:anError |
-				self assert: anError messageText equals: StoreInterface invalidCartOutOfTime.
-				self deny: (aStoreInterface isActiveCart: aCartId).]
+	self  assertThatACart: aCartId
+	fromTheStore: aStoreInterface 
+	IsNotValidAfter30MinutesWhenDoing: [
+			aStoreInterface checkOutCart: aCartId
+				ccn: testObjectsFactory notExpiredCreditCard ccn
+				cced: testObjectsFactory notExpiredCreditCard cced
+				cco: testObjectsFactory notExpiredCreditCard cco.].
 ! !
 
-!StoreInterfaceTest methodsFor: 'tests time invalidation' stamp: 'IO 12/1/2020 19:06:11'!
+!StoreInterfaceTest methodsFor: 'tests time invalidation' stamp: 'LH 12/2/2020 12:14:47'!
 test12CannotList30MinutesAfterLastOperation
 	|aStoreInterface aCartId|
 	
@@ -505,14 +514,9 @@ test12CannotList30MinutesAfterLastOperation
 	
 	aStoreInterface listCart: aCartId.
 	
-	self leap: 30 minutes.
-
-	self should: [aStoreInterface listCart: aCartId]
-		raise: Error
-		withExceptionDo: [:anError |
-				self assert: anError messageText equals: StoreInterface invalidCartOutOfTime.
-				self deny: (aStoreInterface isActiveCart: aCartId).]
-! !
+	self  assertThatACart: aCartId
+		fromTheStore: aStoreInterface 
+		IsNotValidAfter30MinutesWhenDoing: [aStoreInterface listCart: aCartId].! !
 
 !StoreInterfaceTest methodsFor: 'tests time invalidation' stamp: 'IO 12/1/2020 19:07:19'!
 test13CanListDuring30MinutesAfterLastListing
@@ -595,11 +599,11 @@ assertIsValidQuantity: aQuantity
 	aQuantity strictlyPositive ifFalse: [ self error: self invalidQuantityErrorMessage ]! !
 
 
-!Cart methodsFor: 'initialization' stamp: 'HernanWilkinson 6/17/2013 17:48'!
+!Cart methodsFor: 'initialization' stamp: 'LH 12/2/2020 11:50:45'!
 initializeAcceptingItemsOf: aCatalog
 
 	catalog := aCatalog.
-	items := OrderedCollection new.! !
+	items := Bag new.! !
 
 
 !Cart methodsFor: 'queries' stamp: 'HernanWilkinson 6/17/2013 17:45'!
@@ -630,13 +634,13 @@ add: anItem
 
 	^ self add: 1 of: anItem ! !
 
-!Cart methodsFor: 'adding' stamp: 'HernanWilkinson 6/17/2013 17:51'!
+!Cart methodsFor: 'adding' stamp: 'LH 12/2/2020 11:51:18'!
 add: aQuantity of: anItem
 
 	self assertIsValidQuantity: aQuantity.
 	self assertIsValidItem: anItem.
 
-	1 to: aQuantity do: [ :aNumber | items add: anItem ]! !
+	items add: anItem withOccurrences: aQuantity.! !
 
 
 !Cart methodsFor: 'as yet unclassified' stamp: 'IO 11/30/2020 02:07:33'!
@@ -648,6 +652,11 @@ copy
 	
 	^cartCopy.
 ! !
+
+
+!Cart methodsFor: 'accessing' stamp: 'LH 12/2/2020 11:48:50'!
+listItems
+	^ items copy.! !
 
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
@@ -822,7 +831,6 @@ initializeTotal: aTotal
 
 	total := aTotal ! !
 
-
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
 !classDefinition: 'Sale class' category: 'TusLibros'!
@@ -864,36 +872,37 @@ initializeWithCatalogue: aCatalgue withMerchantProccessor: aMerchantProccessor w
 ! !
 
 
-!StoreInterface methodsFor: 'testing' stamp: 'IO 12/1/2020 19:11:10'!
+!StoreInterface methodsFor: 'testing' stamp: 'LH 12/2/2020 12:16:25'!
 hasMadeTheSale: aSale
 
 	^salesBook includes: aSale.! !
 
-!StoreInterface methodsFor: 'testing' stamp: 'IO 12/1/2020 19:11:16'!
+!StoreInterface methodsFor: 'testing' stamp: 'LH 12/2/2020 12:17:13'!
 isActiveCart: aCartID 
-	
+	"awnsers if there is a usable cart associated with a cart ID"
 	^carts includesKey: aCartID.
 ! !
 
-!StoreInterface methodsFor: 'testing' stamp: 'IO 12/1/2020 18:55:42'!
+!StoreInterface methodsFor: 'testing' stamp: 'LH 12/2/2020 12:18:25'!
 numberOfActiveCarts
-
+	"awnsers the number of carts that exist in the store"
 	^carts size.! !
 
 
-!StoreInterface methodsFor: 'interface' stamp: 'IO 12/1/2020 19:54:21'!
-addToCart: aCartId book: anISBN quantity: aQuantity 
-
-	self do: [(carts at: aCartId) add: aQuantity of: anISBN] onCart: aCartId.
+!StoreInterface methodsFor: 'interface' stamp: 'LH 12/2/2020 12:19:22'!
+addToCart: aCartId book: anItem quantity: aQuantity 
+	"adds a quantity of an item to the cart associated with a cart ID"
+	self do: [(carts at: aCartId) add: aQuantity of: anItem] onCart: aCartId.
 ! !
 
-!StoreInterface methodsFor: 'interface' stamp: 'IO 12/1/2020 20:33:29'!
+!StoreInterface methodsFor: 'interface' stamp: 'LH 12/2/2020 12:21:19'!
 checkOutCart: aCartId ccn: aCCNumber cced: aCCExpirationDate cco: aCCOwner
-
+	"checksout the cart associated with a cart ID and removes the cart after, debiting the credit card that matches the information.
+	The sale is registered on the sales book"
 	| total |
-
+	self validateCart: aCartId.
 	total := (Cashier
-		toCheckout: (self listCart: aCartId)
+		toCheckout: (carts at: aCartId)
 		charging: (CreditCard expiringOn: aCCExpirationDate)
 		throught: merchantProccessor
 		on: DateAndTime now
@@ -904,21 +913,22 @@ checkOutCart: aCartId ccn: aCCNumber cced: aCCExpirationDate cco: aCCOwner
 	^total
 ! !
 
-!StoreInterface methodsFor: 'interface' stamp: 'IO 12/1/2020 19:16:37'!
-createCartFor: aUserID password: aPassword
-	
-	clientDatabase validateUser: aUserID andPassword: aPassword.
+!StoreInterface methodsFor: 'interface' stamp: 'LH 12/2/2020 12:22:59'!
+createCartFor: anUserID password: aPassword
+	"creates a new cart for an user with a password"
+	clientDatabase validateUser: anUserID andPassword: aPassword.
 
 	^self createCart.
 ! !
 
-!StoreInterface methodsFor: 'interface' stamp: 'IO 12/1/2020 19:54:29'!
+!StoreInterface methodsFor: 'interface' stamp: 'LH 12/2/2020 12:23:22'!
 listCart: aCartId
+	"lists the contentes of the cart associated to a cart ID"
+	^self do: [(carts at: aCartId) listItems] onCart: aCartId.! !
 
-	^self do: [(carts at: aCartId) copy] onCart: aCartId.! !
-
-!StoreInterface methodsFor: 'interface' stamp: 'IO 12/1/2020 20:52:48'!
-listPurchasesFor: aString password: aString2 
+!StoreInterface methodsFor: 'interface' stamp: 'LH 12/2/2020 12:23:54'!
+listPurchasesFor: aUserId password: aPassword
+	"lists the purchases that have been made by carts associated with an user" 
 	| purchases |
 	(salesBook size = 0) ifTrue: [^OrderedCollection with: 0.].
 
@@ -928,14 +938,16 @@ listPurchasesFor: aString password: aString2
 	! !
 
 
-!StoreInterface methodsFor: 'cart invalidation' stamp: 'IO 12/1/2020 19:12:19'!
+!StoreInterface methodsFor: 'cart invalidation' stamp: 'LH 12/2/2020 12:24:51'!
 setCartUsageTime: aCartId
+	"registers the current Date and Time as the last usage of the cart associated with a cart ID"
 	lastActionForCarts add: (Association key: aCartId value: clock now).
 ! !
 
-!StoreInterface methodsFor: 'cart invalidation' stamp: 'IO 12/1/2020 19:55:01'!
+!StoreInterface methodsFor: 'cart invalidation' stamp: 'LH 12/2/2020 12:26:29'!
 validateCart: aCartId
-
+	"validates if the cart associated with a cart ID is usable at this moment.
+	In the case it is not, the cart is deleted from the list if necessary and an error is returned"
 	(self isActiveCart: aCartId) ifFalse: [^self error: StoreInterface invalidCartId].
 	(clock now - (lastActionForCarts at: aCartId) < 30 minutes) ifFalse: [
 		carts removeKey: aCartId.
@@ -943,8 +955,9 @@ validateCart: aCartId
 ! !
 
 
-!StoreInterface methodsFor: 'private' stamp: 'IO 12/1/2020 19:16:14'!
+!StoreInterface methodsFor: 'private' stamp: 'LH 12/2/2020 12:26:49'!
 createCart
+	"creates a new cart in this Store interface"
 	|aCartId|
 
 	aCartId := carts keys size + 1.
@@ -955,9 +968,9 @@ createCart
 	^aCartId.
 ! !
 
-!StoreInterface methodsFor: 'private' stamp: 'IO 12/1/2020 19:54:52'!
+!StoreInterface methodsFor: 'private' stamp: 'LH 12/2/2020 12:28:14'!
 do: anOperation onCart: aCartId
-
+	"this method validates that we operate on a valid cart, then it sets the time of operation as the last known use of the cart and executes the operation"
 	self validateCart: aCartId.
 	self setCartUsageTime: aCartId.
 

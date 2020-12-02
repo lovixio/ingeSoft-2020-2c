@@ -62873,3 +62873,844 @@ PASSED!
 PASSED!
 
 ----SNAPSHOT----(1 December 2020 21:09:14) CuisUniversity-4384.image priorSource: 17411790!
+
+----STARTUP---- (2 December 2020 11:40:22) as C:\Users\Usuario\Desktop\labo\inge1\Cuis\windows64 tus libros\CuisUniversity-4384.image!
+
+
+!classRemoval: #StoreTestObjectsFactory stamp: 'LH 12/2/2020 11:40:28'!
+Object subclass: #StoreTestObjectsFactory
+	instanceVariableNames: 'today'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+
+!classRemoval: #StoreInterface stamp: 'LH 12/2/2020 11:40:28'!
+Object subclass: #StoreInterface
+	instanceVariableNames: 'catalogue carts salesBook clientDatabase merchantProccessor clock lastActionForCarts'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+
+!classRemoval: #Sale stamp: 'LH 12/2/2020 11:40:29'!
+Object subclass: #Sale
+	instanceVariableNames: 'total'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+
+!classRemoval: #CreditCard stamp: 'LH 12/2/2020 11:40:29'!
+Object subclass: #CreditCard
+	instanceVariableNames: 'expiration'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+
+!classRemoval: #Cashier stamp: 'LH 12/2/2020 11:40:29'!
+Object subclass: #Cashier
+	instanceVariableNames: 'cart salesBook merchantProcessor creditCard total'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+
+!classRemoval: #Cart stamp: 'LH 12/2/2020 11:40:30'!
+Object subclass: #Cart
+	instanceVariableNames: 'catalog items'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+
+!classRemoval: #StoreInterfaceTest stamp: 'LH 12/2/2020 11:40:30'!
+TestCase subclass: #StoreInterfaceTest
+	instanceVariableNames: 'testObjectsFactory debitBehavior clock clientsBook'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+
+!classRemoval: #CashierTest stamp: 'LH 12/2/2020 11:40:31'!
+TestCase subclass: #CashierTest
+	instanceVariableNames: 'testObjectsFactory debitBehavior'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+
+!classRemoval: #CartTest stamp: 'LH 12/2/2020 11:40:31'!
+TestCase subclass: #CartTest
+	instanceVariableNames: 'testObjectsFactory'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+
+----End fileIn of C:\Users\Usuario\Desktop\labo\inge1\Cuis\windows64 tus libros\TusLibros-3.st----!
+!StoreInterface methodsFor: 'interface' stamp: 'LH 12/2/2020 11:41:40' prior: 50888363!
+listPurchasesFor: aUserId password: aString2 
+	| purchases |
+	(salesBook size = 0) ifTrue: [^OrderedCollection with: 0.].
+
+	purchases := OrderedCollection new.
+	salesBook first listPurchasesOn: purchases.
+	purchases add: (salesBook sum: [ :sale | sale total ]).
+	! !
+!StoreInterface methodsFor: 'interface' stamp: 'LH 12/2/2020 11:41:50' prior: 50888581!
+listPurchasesFor: aUserId password: aPassword 
+	| purchases |
+	(salesBook size = 0) ifTrue: [^OrderedCollection with: 0.].
+
+	purchases := OrderedCollection new.
+	salesBook first listPurchasesOn: purchases.
+	purchases add: (salesBook sum: [ :sale | sale total ]).
+	! !
+!StoreInterfaceTest methodsFor: 'tests bad cart usage' stamp: 'LH 12/2/2020 11:47:28' prior: 50887779!
+test07CannotModifyACartFromOutsideStore
+	| aCartID listedCart aStoreInterface|
+	
+	aStoreInterface := testObjectsFactory aStoreInterfaceWithSimulator: self.
+	aCartID := aStoreInterface createCartFor: testObjectsFactory validClientId password: testObjectsFactory validClientPassword.
+	aStoreInterface addToCart: aCartID book: testObjectsFactory itemSellByTheStore quantity: 2.
+	
+	listedCart := aStoreInterface listCart: aCartID.
+	
+	listedCart add: testObjectsFactory itemSellByTheStore withOccurrences: 2.
+
+	self assert: 2 equals: ((aStoreInterface listCart: aCartID) occurrencesOf: testObjectsFactory itemSellByTheStore).! !
+
+!testRun: #StoreInterfaceTest #test07CannotModifyACartFromOutsideStore stamp: 'LH 12/2/2020 11:47:30'!
+ERROR!
+!StoreInterface methodsFor: 'interface' stamp: 'LH 12/2/2020 11:48:16' prior: 50888358!
+listCart: aCartId
+
+	^self do: [(carts at: aCartId) listItems] onCart: aCartId.! !
+
+!testRun: #StoreInterfaceTest #test07CannotModifyACartFromOutsideStore stamp: 'LH 12/2/2020 11:48:21'!
+ERROR!
+!Cart methodsFor: 'accessing' stamp: 'LH 12/2/2020 11:48:28'!
+listItems
+	self shouldBeImplemented.! !
+!Cart methodsFor: 'accessing' stamp: 'LH 12/2/2020 11:48:50' prior: 50888639!
+listItems
+	^ items copy.! !
+
+!testRun: #StoreInterfaceTest #test07CannotModifyACartFromOutsideStore stamp: 'LH 12/2/2020 11:48:54'!
+PASSED!
+
+!testRun: #StoreInterfaceTest #test01ANewStoreHasNoActiveCarts stamp: 'LH 12/2/2020 11:48:54'!
+PASSED!
+
+!testRun: #StoreInterfaceTest #test02ACartCanBeCreatedInAStore stamp: 'LH 12/2/2020 11:48:54'!
+PASSED!
+
+!testRun: #StoreInterfaceTest #test03AStoreInterfaceCanCreateMultipleCarts stamp: 'LH 12/2/2020 11:48:54'!
+PASSED!
+
+!testRun: #StoreInterfaceTest #test04ANewCartInAStoreIsEmpty stamp: 'LH 12/2/2020 11:48:54'!
+PASSED!
+
+!testRun: #StoreInterfaceTest #test05AStoreCanAddItemsToMultipleCarts stamp: 'LH 12/2/2020 11:48:54'!
+PASSED!
+
+!testRun: #StoreInterfaceTest #test06ACartWithItemsCanBeCheckedOut stamp: 'LH 12/2/2020 11:48:54'!
+ERROR!
+
+!testRun: #StoreInterfaceTest #test07CannotModifyACartFromOutsideStore stamp: 'LH 12/2/2020 11:48:54'!
+PASSED!
+
+!testRun: #StoreInterfaceTest #test08CannotCreateCartWithInvalidClientId stamp: 'LH 12/2/2020 11:48:54'!
+PASSED!
+
+!testRun: #StoreInterfaceTest #test09CannotCreateCartWithInvalidClientPassword stamp: 'LH 12/2/2020 11:48:54'!
+PASSED!
+
+!testRun: #StoreInterfaceTest #test10CannotAdd30MinutesAfterCreation stamp: 'LH 12/2/2020 11:48:54'!
+PASSED!
+
+!testRun: #StoreInterfaceTest #test11CannotCheckout30MinutesAfterAdding stamp: 'LH 12/2/2020 11:48:54'!
+PASSED!
+
+!testRun: #StoreInterfaceTest #test12CannotList30MinutesAfterLastOperation stamp: 'LH 12/2/2020 11:48:54'!
+PASSED!
+
+!testRun: #StoreInterfaceTest #test13CanListDuring30MinutesAfterLastListing stamp: 'LH 12/2/2020 11:48:54'!
+PASSED!
+
+!testRun: #StoreInterfaceTest #test14CannotAddOnNotExistentCart stamp: 'LH 12/2/2020 11:48:54'!
+PASSED!
+
+!testRun: #StoreInterfaceTest #test15CannotListNotExistentCart stamp: 'LH 12/2/2020 11:48:54'!
+PASSED!
+
+!testRun: #StoreInterfaceTest #test16CannotOperateAfterCheckout stamp: 'LH 12/2/2020 11:48:55'!
+ERROR!
+
+!testRun: #StoreInterfaceTest #test17clientHasInitialyNoPurchases stamp: 'LH 12/2/2020 11:48:55'!
+PASSED!
+
+!testRun: #StoreInterfaceTest #test18clientAfterCheckoutHasPurchasedBooks stamp: 'LH 12/2/2020 11:48:55'!
+PASSED!
+
+!testRun: #StoreInterfaceTest #test06ACartWithItemsCanBeCheckedOut stamp: 'LH 12/2/2020 11:48:58'!
+ERROR!
+!StoreInterface methodsFor: 'interface' stamp: 'LH 12/2/2020 11:49:55' prior: 50888338!
+checkOutCart: aCartId ccn: aCCNumber cced: aCCExpirationDate cco: aCCOwner
+
+	| total |
+
+	total := (Cashier
+		toCheckout: (carts at: aCartId)
+		charging: (CreditCard expiringOn: aCCExpirationDate)
+		throught: merchantProccessor
+		on: DateAndTime now
+		registeringOn: salesBook) checkOut.
+
+	carts removeKey: aCartId.
+
+	^total
+! !
+
+!testRun: #StoreInterfaceTest #test06ACartWithItemsCanBeCheckedOut stamp: 'LH 12/2/2020 11:49:56'!
+PASSED!
+
+!testRun: #StoreInterfaceTest #test16CannotOperateAfterCheckout stamp: 'LH 12/2/2020 11:49:59'!
+PASSED!
+!Cart methodsFor: 'initialization' stamp: 'LH 12/2/2020 11:50:45' prior: 50888042!
+initializeAcceptingItemsOf: aCatalog
+
+	catalog := aCatalog.
+	items := Bag new.! !
+!Cart methodsFor: 'adding' stamp: 'LH 12/2/2020 11:51:18' prior: 50888069!
+add: aQuantity of: anItem
+
+	self assertIsValidQuantity: aQuantity.
+	self assertIsValidItem: anItem.
+
+	items add: anItem withOccurrences: aQuantity.! !
+
+!testRun: #CartTest #test01NewCartsAreCreatedEmpty stamp: 'LH 12/2/2020 11:51:26'!
+PASSED!
+
+!testRun: #CartTest #test02CanNotAddItemsThatDoNotBelongToStore stamp: 'LH 12/2/2020 11:51:26'!
+PASSED!
+
+!testRun: #CartTest #test03AfterAddingAnItemTheCartIsNotEmptyAnymore stamp: 'LH 12/2/2020 11:51:26'!
+PASSED!
+
+!testRun: #CartTest #test04CanNotAddNonPositiveNumberOfItems stamp: 'LH 12/2/2020 11:51:26'!
+PASSED!
+
+!testRun: #CartTest #test05CanNotAddMoreThanOneItemNotSellByTheStore stamp: 'LH 12/2/2020 11:51:26'!
+PASSED!
+
+!testRun: #CartTest #test06CartRemembersAddedItems stamp: 'LH 12/2/2020 11:51:26'!
+PASSED!
+
+!testRun: #CartTest #test07CartDoesNotHoldNotAddedItems stamp: 'LH 12/2/2020 11:51:26'!
+PASSED!
+
+!testRun: #CartTest #test08CartRemembersTheNumberOfAddedItems stamp: 'LH 12/2/2020 11:51:26'!
+PASSED!
+
+!testRun: #CartTest #test01NewCartsAreCreatedEmpty stamp: 'LH 12/2/2020 11:52:48'!
+PASSED!
+
+!testRun: #CartTest #test02CanNotAddItemsThatDoNotBelongToStore stamp: 'LH 12/2/2020 11:52:48'!
+PASSED!
+
+!testRun: #CartTest #test03AfterAddingAnItemTheCartIsNotEmptyAnymore stamp: 'LH 12/2/2020 11:52:48'!
+PASSED!
+
+!testRun: #CartTest #test04CanNotAddNonPositiveNumberOfItems stamp: 'LH 12/2/2020 11:52:48'!
+PASSED!
+
+!testRun: #CartTest #test05CanNotAddMoreThanOneItemNotSellByTheStore stamp: 'LH 12/2/2020 11:52:48'!
+PASSED!
+
+!testRun: #CartTest #test06CartRemembersAddedItems stamp: 'LH 12/2/2020 11:52:48'!
+PASSED!
+
+!testRun: #CartTest #test07CartDoesNotHoldNotAddedItems stamp: 'LH 12/2/2020 11:52:48'!
+PASSED!
+
+!testRun: #CartTest #test08CartRemembersTheNumberOfAddedItems stamp: 'LH 12/2/2020 11:52:48'!
+PASSED!
+
+!testRun: #CashierTest #test01CanNotCheckoutAnEmptyCart stamp: 'LH 12/2/2020 11:52:48'!
+PASSED!
+
+!testRun: #CashierTest #test02CalculatedTotalIsCorrect stamp: 'LH 12/2/2020 11:52:48'!
+PASSED!
+
+!testRun: #CashierTest #test03CanNotCheckoutWithAnExpiredCreditCart stamp: 'LH 12/2/2020 11:52:48'!
+PASSED!
+
+!testRun: #CashierTest #test04CheckoutRegistersASale stamp: 'LH 12/2/2020 11:52:48'!
+PASSED!
+
+!testRun: #CashierTest #test05CashierChargesCreditCardUsingMerchantProcessor stamp: 'LH 12/2/2020 11:52:48'!
+PASSED!
+
+!testRun: #CashierTest #test06CashierDoesNotSaleWhenTheCreditCardHasNoCredit stamp: 'LH 12/2/2020 11:52:48'!
+PASSED!
+
+!testRun: #StoreInterfaceTest #test01ANewStoreHasNoActiveCarts stamp: 'LH 12/2/2020 11:52:48'!
+PASSED!
+
+!testRun: #StoreInterfaceTest #test02ACartCanBeCreatedInAStore stamp: 'LH 12/2/2020 11:52:49'!
+PASSED!
+
+!testRun: #StoreInterfaceTest #test03AStoreInterfaceCanCreateMultipleCarts stamp: 'LH 12/2/2020 11:52:49'!
+PASSED!
+
+!testRun: #StoreInterfaceTest #test04ANewCartInAStoreIsEmpty stamp: 'LH 12/2/2020 11:52:49'!
+PASSED!
+
+!testRun: #StoreInterfaceTest #test05AStoreCanAddItemsToMultipleCarts stamp: 'LH 12/2/2020 11:52:49'!
+PASSED!
+
+!testRun: #StoreInterfaceTest #test06ACartWithItemsCanBeCheckedOut stamp: 'LH 12/2/2020 11:52:49'!
+PASSED!
+
+!testRun: #StoreInterfaceTest #test07CannotModifyACartFromOutsideStore stamp: 'LH 12/2/2020 11:52:49'!
+PASSED!
+
+!testRun: #StoreInterfaceTest #test08CannotCreateCartWithInvalidClientId stamp: 'LH 12/2/2020 11:52:49'!
+PASSED!
+
+!testRun: #StoreInterfaceTest #test09CannotCreateCartWithInvalidClientPassword stamp: 'LH 12/2/2020 11:52:49'!
+PASSED!
+
+!testRun: #StoreInterfaceTest #test10CannotAdd30MinutesAfterCreation stamp: 'LH 12/2/2020 11:52:49'!
+PASSED!
+
+!testRun: #StoreInterfaceTest #test11CannotCheckout30MinutesAfterAdding stamp: 'LH 12/2/2020 11:52:49'!
+FAILURE!
+
+!testRun: #StoreInterfaceTest #test12CannotList30MinutesAfterLastOperation stamp: 'LH 12/2/2020 11:52:49'!
+PASSED!
+
+!testRun: #StoreInterfaceTest #test13CanListDuring30MinutesAfterLastListing stamp: 'LH 12/2/2020 11:52:49'!
+PASSED!
+
+!testRun: #StoreInterfaceTest #test14CannotAddOnNotExistentCart stamp: 'LH 12/2/2020 11:52:49'!
+PASSED!
+
+!testRun: #StoreInterfaceTest #test15CannotListNotExistentCart stamp: 'LH 12/2/2020 11:52:49'!
+PASSED!
+
+!testRun: #StoreInterfaceTest #test16CannotOperateAfterCheckout stamp: 'LH 12/2/2020 11:52:49'!
+PASSED!
+
+!testRun: #StoreInterfaceTest #test17clientHasInitialyNoPurchases stamp: 'LH 12/2/2020 11:52:49'!
+PASSED!
+
+!testRun: #StoreInterfaceTest #test18clientAfterCheckoutHasPurchasedBooks stamp: 'LH 12/2/2020 11:52:49'!
+PASSED!
+
+!testRun: #StoreInterfaceTest #test11CannotCheckout30MinutesAfterAdding stamp: 'LH 12/2/2020 11:52:49'!
+FAILURE!
+!StoreInterface methodsFor: 'interface' stamp: 'LH 12/2/2020 11:55:04' prior: 50888716!
+checkOutCart: aCartId ccn: aCCNumber cced: aCCExpirationDate cco: aCCOwner
+
+	| total |
+	self validateCart: aCartId.
+	total := (Cashier
+		toCheckout: (carts at: aCartId)
+		charging: (CreditCard expiringOn: aCCExpirationDate)
+		throught: merchantProccessor
+		on: DateAndTime now
+		registeringOn: salesBook) checkOut.
+
+	carts removeKey: aCartId.
+
+	^total
+! !
+
+!testRun: #StoreInterfaceTest #test11CannotCheckout30MinutesAfterAdding stamp: 'LH 12/2/2020 11:55:24'!
+PASSED!
+
+!testRun: #CartTest #test01NewCartsAreCreatedEmpty stamp: 'LH 12/2/2020 11:55:29'!
+PASSED!
+
+!testRun: #CartTest #test02CanNotAddItemsThatDoNotBelongToStore stamp: 'LH 12/2/2020 11:55:29'!
+PASSED!
+
+!testRun: #CartTest #test03AfterAddingAnItemTheCartIsNotEmptyAnymore stamp: 'LH 12/2/2020 11:55:29'!
+PASSED!
+
+!testRun: #CartTest #test04CanNotAddNonPositiveNumberOfItems stamp: 'LH 12/2/2020 11:55:29'!
+PASSED!
+
+!testRun: #CartTest #test05CanNotAddMoreThanOneItemNotSellByTheStore stamp: 'LH 12/2/2020 11:55:30'!
+PASSED!
+
+!testRun: #CartTest #test06CartRemembersAddedItems stamp: 'LH 12/2/2020 11:55:30'!
+PASSED!
+
+!testRun: #CartTest #test07CartDoesNotHoldNotAddedItems stamp: 'LH 12/2/2020 11:55:30'!
+PASSED!
+
+!testRun: #CartTest #test08CartRemembersTheNumberOfAddedItems stamp: 'LH 12/2/2020 11:55:30'!
+PASSED!
+
+!testRun: #CashierTest #test01CanNotCheckoutAnEmptyCart stamp: 'LH 12/2/2020 11:55:30'!
+PASSED!
+
+!testRun: #CashierTest #test02CalculatedTotalIsCorrect stamp: 'LH 12/2/2020 11:55:30'!
+PASSED!
+
+!testRun: #CashierTest #test03CanNotCheckoutWithAnExpiredCreditCart stamp: 'LH 12/2/2020 11:55:30'!
+PASSED!
+
+!testRun: #CashierTest #test04CheckoutRegistersASale stamp: 'LH 12/2/2020 11:55:30'!
+PASSED!
+
+!testRun: #CashierTest #test05CashierChargesCreditCardUsingMerchantProcessor stamp: 'LH 12/2/2020 11:55:30'!
+PASSED!
+
+!testRun: #CashierTest #test06CashierDoesNotSaleWhenTheCreditCardHasNoCredit stamp: 'LH 12/2/2020 11:55:30'!
+PASSED!
+
+!testRun: #StoreInterfaceTest #test01ANewStoreHasNoActiveCarts stamp: 'LH 12/2/2020 11:55:30'!
+PASSED!
+
+!testRun: #StoreInterfaceTest #test02ACartCanBeCreatedInAStore stamp: 'LH 12/2/2020 11:55:30'!
+PASSED!
+
+!testRun: #StoreInterfaceTest #test03AStoreInterfaceCanCreateMultipleCarts stamp: 'LH 12/2/2020 11:55:30'!
+PASSED!
+
+!testRun: #StoreInterfaceTest #test04ANewCartInAStoreIsEmpty stamp: 'LH 12/2/2020 11:55:30'!
+PASSED!
+
+!testRun: #StoreInterfaceTest #test05AStoreCanAddItemsToMultipleCarts stamp: 'LH 12/2/2020 11:55:30'!
+PASSED!
+
+!testRun: #StoreInterfaceTest #test06ACartWithItemsCanBeCheckedOut stamp: 'LH 12/2/2020 11:55:30'!
+PASSED!
+
+!testRun: #StoreInterfaceTest #test07CannotModifyACartFromOutsideStore stamp: 'LH 12/2/2020 11:55:30'!
+PASSED!
+
+!testRun: #StoreInterfaceTest #test08CannotCreateCartWithInvalidClientId stamp: 'LH 12/2/2020 11:55:30'!
+PASSED!
+
+!testRun: #StoreInterfaceTest #test09CannotCreateCartWithInvalidClientPassword stamp: 'LH 12/2/2020 11:55:30'!
+PASSED!
+
+!testRun: #StoreInterfaceTest #test10CannotAdd30MinutesAfterCreation stamp: 'LH 12/2/2020 11:55:30'!
+PASSED!
+
+!testRun: #StoreInterfaceTest #test11CannotCheckout30MinutesAfterAdding stamp: 'LH 12/2/2020 11:55:30'!
+PASSED!
+
+!testRun: #StoreInterfaceTest #test12CannotList30MinutesAfterLastOperation stamp: 'LH 12/2/2020 11:55:30'!
+PASSED!
+
+!testRun: #StoreInterfaceTest #test13CanListDuring30MinutesAfterLastListing stamp: 'LH 12/2/2020 11:55:30'!
+PASSED!
+
+!testRun: #StoreInterfaceTest #test14CannotAddOnNotExistentCart stamp: 'LH 12/2/2020 11:55:30'!
+PASSED!
+
+!testRun: #StoreInterfaceTest #test15CannotListNotExistentCart stamp: 'LH 12/2/2020 11:55:31'!
+PASSED!
+
+!testRun: #StoreInterfaceTest #test16CannotOperateAfterCheckout stamp: 'LH 12/2/2020 11:55:31'!
+PASSED!
+
+!testRun: #StoreInterfaceTest #test17clientHasInitialyNoPurchases stamp: 'LH 12/2/2020 11:55:31'!
+PASSED!
+
+!testRun: #StoreInterfaceTest #test18clientAfterCheckoutHasPurchasedBooks stamp: 'LH 12/2/2020 11:55:31'!
+PASSED!
+!StoreInterface methodsFor: 'private' stamp: 'LH 12/2/2020 11:57:09' prior: 50888391!
+createCart
+	|aCartId|
+
+	aCartId := carts keys size + 1.
+	self do: [carts at: aCartId put: (Cart acceptingItemsOf: catalogue)] onCart: aCartId.
+	carts at: aCartId put: (Cart acceptingItemsOf: catalogue).
+
+	self setCartUsageTime: aCartId.
+
+	^aCartId.
+! !
+!StoreInterface methodsFor: 'private' stamp: 'LH 12/2/2020 11:57:29' prior: 50889010!
+createCart
+	|aCartId|
+
+	aCartId := carts keys size + 1.
+	carts at: aCartId put: (Cart acceptingItemsOf: catalogue).
+
+	self setCartUsageTime: aCartId.
+
+	^aCartId.
+! !
+
+!testRun: #CartTest #test01NewCartsAreCreatedEmpty stamp: 'LH 12/2/2020 11:57:38'!
+PASSED!
+
+!testRun: #CartTest #test02CanNotAddItemsThatDoNotBelongToStore stamp: 'LH 12/2/2020 11:57:38'!
+PASSED!
+
+!testRun: #CartTest #test03AfterAddingAnItemTheCartIsNotEmptyAnymore stamp: 'LH 12/2/2020 11:57:38'!
+PASSED!
+
+!testRun: #CartTest #test04CanNotAddNonPositiveNumberOfItems stamp: 'LH 12/2/2020 11:57:38'!
+PASSED!
+
+!testRun: #CartTest #test05CanNotAddMoreThanOneItemNotSellByTheStore stamp: 'LH 12/2/2020 11:57:38'!
+PASSED!
+
+!testRun: #CartTest #test06CartRemembersAddedItems stamp: 'LH 12/2/2020 11:57:38'!
+PASSED!
+
+!testRun: #CartTest #test07CartDoesNotHoldNotAddedItems stamp: 'LH 12/2/2020 11:57:38'!
+PASSED!
+
+!testRun: #CartTest #test08CartRemembersTheNumberOfAddedItems stamp: 'LH 12/2/2020 11:57:38'!
+PASSED!
+
+!testRun: #CashierTest #test01CanNotCheckoutAnEmptyCart stamp: 'LH 12/2/2020 11:57:39'!
+PASSED!
+
+!testRun: #CashierTest #test02CalculatedTotalIsCorrect stamp: 'LH 12/2/2020 11:57:39'!
+PASSED!
+
+!testRun: #CashierTest #test03CanNotCheckoutWithAnExpiredCreditCart stamp: 'LH 12/2/2020 11:57:39'!
+PASSED!
+
+!testRun: #CashierTest #test04CheckoutRegistersASale stamp: 'LH 12/2/2020 11:57:39'!
+PASSED!
+
+!testRun: #CashierTest #test05CashierChargesCreditCardUsingMerchantProcessor stamp: 'LH 12/2/2020 11:57:39'!
+PASSED!
+
+!testRun: #CashierTest #test06CashierDoesNotSaleWhenTheCreditCardHasNoCredit stamp: 'LH 12/2/2020 11:57:39'!
+PASSED!
+
+!testRun: #StoreInterfaceTest #test01ANewStoreHasNoActiveCarts stamp: 'LH 12/2/2020 11:57:39'!
+PASSED!
+
+!testRun: #StoreInterfaceTest #test02ACartCanBeCreatedInAStore stamp: 'LH 12/2/2020 11:57:39'!
+PASSED!
+
+!testRun: #StoreInterfaceTest #test03AStoreInterfaceCanCreateMultipleCarts stamp: 'LH 12/2/2020 11:57:39'!
+PASSED!
+
+!testRun: #StoreInterfaceTest #test04ANewCartInAStoreIsEmpty stamp: 'LH 12/2/2020 11:57:39'!
+PASSED!
+
+!testRun: #StoreInterfaceTest #test05AStoreCanAddItemsToMultipleCarts stamp: 'LH 12/2/2020 11:57:39'!
+PASSED!
+
+!testRun: #StoreInterfaceTest #test06ACartWithItemsCanBeCheckedOut stamp: 'LH 12/2/2020 11:57:39'!
+PASSED!
+
+!testRun: #StoreInterfaceTest #test07CannotModifyACartFromOutsideStore stamp: 'LH 12/2/2020 11:57:39'!
+PASSED!
+
+!testRun: #StoreInterfaceTest #test08CannotCreateCartWithInvalidClientId stamp: 'LH 12/2/2020 11:57:39'!
+PASSED!
+
+!testRun: #StoreInterfaceTest #test09CannotCreateCartWithInvalidClientPassword stamp: 'LH 12/2/2020 11:57:39'!
+PASSED!
+
+!testRun: #StoreInterfaceTest #test10CannotAdd30MinutesAfterCreation stamp: 'LH 12/2/2020 11:57:39'!
+PASSED!
+
+!testRun: #StoreInterfaceTest #test11CannotCheckout30MinutesAfterAdding stamp: 'LH 12/2/2020 11:57:39'!
+PASSED!
+
+!testRun: #StoreInterfaceTest #test12CannotList30MinutesAfterLastOperation stamp: 'LH 12/2/2020 11:57:39'!
+PASSED!
+
+!testRun: #StoreInterfaceTest #test13CanListDuring30MinutesAfterLastListing stamp: 'LH 12/2/2020 11:57:39'!
+PASSED!
+
+!testRun: #StoreInterfaceTest #test14CannotAddOnNotExistentCart stamp: 'LH 12/2/2020 11:57:39'!
+PASSED!
+
+!testRun: #StoreInterfaceTest #test15CannotListNotExistentCart stamp: 'LH 12/2/2020 11:57:39'!
+PASSED!
+
+!testRun: #StoreInterfaceTest #test16CannotOperateAfterCheckout stamp: 'LH 12/2/2020 11:57:39'!
+PASSED!
+
+!testRun: #StoreInterfaceTest #test17clientHasInitialyNoPurchases stamp: 'LH 12/2/2020 11:57:39'!
+PASSED!
+
+!testRun: #StoreInterfaceTest #test18clientAfterCheckoutHasPurchasedBooks stamp: 'LH 12/2/2020 11:57:39'!
+PASSED!
+!StoreInterfaceTest methodsFor: 'tests bad cart usage' stamp: 'LH 12/2/2020 12:03:03' prior: 50887815!
+test09CannotCreateCartWithInvalidClientPassword
+	|aStoreInterface|
+
+	aStoreInterface := testObjectsFactory aStoreInterfaceWithSimulator: self.
+
+	self
+		should: [aStoreInterface createCartFor: testObjectsFactory validClientId password: testObjectsFactory invalidClientPassword]
+		raise: Error
+		withExceptionDo:[:anError |
+			self assert: anError messageText equals: StoreInterface invalidClientId.
+			self assert: 0 equals: aStoreInterface numberOfActiveCarts.].
+
+	! !
+
+!testRun: #StoreInterfaceTest #test09CannotCreateCartWithInvalidClientPassword stamp: 'LH 12/2/2020 12:03:06'!
+PASSED!
+!StoreInterfaceTest methodsFor: 'tests bad cart usage' stamp: 'LH 12/2/2020 12:04:24' prior: 50887829!
+test14CannotAddOnNotExistentCart
+	|aStoreInterface|
+
+	aStoreInterface := testObjectsFactory aStoreInterfaceWithSimulator: self.
+
+	self
+		should: [aStoreInterface addToCart: 1 book: testObjectsFactory itemSellByTheStore quantity: 1]
+		raise: Error
+		withMessageText: StoreInterface invalidCartId.
+
+	! !
+
+!testRun: #StoreInterfaceTest #test14CannotAddOnNotExistentCart stamp: 'LH 12/2/2020 12:04:25'!
+PASSED!
+!StoreInterfaceTest methodsFor: 'tests bad cart usage' stamp: 'LH 12/2/2020 12:06:32' prior: 50887853!
+test16CannotOperateAfterCheckout
+	| aStoreInterface aCartId |
+
+	aStoreInterface := testObjectsFactory aStoreInterfaceWithSimulator: self.
+
+	aCartId := aStoreInterface createCartFor: testObjectsFactory validClientId password: testObjectsFactory validClientPassword.
+	aStoreInterface addToCart: aCartId book: testObjectsFactory itemSellByTheStore quantity: 1.
+
+	aStoreInterface checkOutCart: aCartId
+		ccn: testObjectsFactory notExpiredCreditCard ccn
+		cced: testObjectsFactory notExpiredCreditCard cced
+		cco: testObjectsFactory notExpiredCreditCard cco.
+
+	self
+		should: [aStoreInterface listCart: aCartId]
+		raise: Error
+		withExceptionDo: [:anError |
+			self assert: anError messageText equals: StoreInterface invalidCartId.
+			self assert: 0 equals: aStoreInterface numberOfActiveCarts].
+
+	! !
+
+!testRun: #StoreInterfaceTest #test16CannotOperateAfterCheckout stamp: 'LH 12/2/2020 12:06:34'!
+PASSED!
+
+!testRun: #StoreInterfaceTest #test01ANewStoreHasNoActiveCarts stamp: 'LH 12/2/2020 12:06:38'!
+PASSED!
+
+!testRun: #StoreInterfaceTest #test02ACartCanBeCreatedInAStore stamp: 'LH 12/2/2020 12:06:38'!
+PASSED!
+
+!testRun: #StoreInterfaceTest #test03AStoreInterfaceCanCreateMultipleCarts stamp: 'LH 12/2/2020 12:06:38'!
+PASSED!
+
+!testRun: #StoreInterfaceTest #test04ANewCartInAStoreIsEmpty stamp: 'LH 12/2/2020 12:06:38'!
+PASSED!
+
+!testRun: #StoreInterfaceTest #test05AStoreCanAddItemsToMultipleCarts stamp: 'LH 12/2/2020 12:06:38'!
+PASSED!
+
+!testRun: #StoreInterfaceTest #test06ACartWithItemsCanBeCheckedOut stamp: 'LH 12/2/2020 12:06:38'!
+PASSED!
+
+!testRun: #StoreInterfaceTest #test07CannotModifyACartFromOutsideStore stamp: 'LH 12/2/2020 12:06:38'!
+PASSED!
+
+!testRun: #StoreInterfaceTest #test08CannotCreateCartWithInvalidClientId stamp: 'LH 12/2/2020 12:06:38'!
+PASSED!
+
+!testRun: #StoreInterfaceTest #test09CannotCreateCartWithInvalidClientPassword stamp: 'LH 12/2/2020 12:06:38'!
+PASSED!
+
+!testRun: #StoreInterfaceTest #test10CannotAdd30MinutesAfterCreation stamp: 'LH 12/2/2020 12:06:38'!
+PASSED!
+
+!testRun: #StoreInterfaceTest #test11CannotCheckout30MinutesAfterAdding stamp: 'LH 12/2/2020 12:06:38'!
+PASSED!
+
+!testRun: #StoreInterfaceTest #test12CannotList30MinutesAfterLastOperation stamp: 'LH 12/2/2020 12:06:38'!
+PASSED!
+
+!testRun: #StoreInterfaceTest #test13CanListDuring30MinutesAfterLastListing stamp: 'LH 12/2/2020 12:06:38'!
+PASSED!
+
+!testRun: #StoreInterfaceTest #test14CannotAddOnNotExistentCart stamp: 'LH 12/2/2020 12:06:39'!
+PASSED!
+
+!testRun: #StoreInterfaceTest #test15CannotListNotExistentCart stamp: 'LH 12/2/2020 12:06:39'!
+PASSED!
+
+!testRun: #StoreInterfaceTest #test16CannotOperateAfterCheckout stamp: 'LH 12/2/2020 12:06:39'!
+PASSED!
+
+!testRun: #StoreInterfaceTest #test17clientHasInitialyNoPurchases stamp: 'LH 12/2/2020 12:06:39'!
+PASSED!
+
+!testRun: #StoreInterfaceTest #test18clientAfterCheckoutHasPurchasedBooks stamp: 'LH 12/2/2020 12:06:39'!
+PASSED!
+!StoreInterfaceTest methodsFor: 'tests time invalidation' stamp: 'LH 12/2/2020 12:11:26'!
+assertThatACart: aCartId fromTheStore: aStoreInterface IsNotValidAfter30MinutesWhenDoing: aStoreInterfaceAction
+	
+	self leap: 30 minutes.
+	
+	self should: aStoreInterfaceAction
+		raise: Error
+		withExceptionDo: [:anError |
+				self assert: anError messageText equals: StoreInterface invalidCartOutOfTime.
+				self deny: (aStoreInterface isActiveCart: aCartId).]
+! !
+!StoreInterfaceTest methodsFor: 'tests time invalidation' stamp: 'LH 12/2/2020 12:12:39' prior: 50887877!
+test10CannotAdd30MinutesAfterCreation
+	|aStoreInterface aCartId|
+	
+	aStoreInterface := testObjectsFactory aStoreInterfaceWithSimulator: self.
+								
+	aCartId := aStoreInterface createCartFor: testObjectsFactory validClientId password: testObjectsFactory validClientPassword.
+	
+	self  assertThatACart: aCartId
+		fromTheStore: aStoreInterface 
+		IsNotValidAfter30MinutesWhenDoing: [aStoreInterface addToCart: aCartId book: testObjectsFactory itemSellByTheStore quantity: 2].
+	
+! !
+
+!testRun: #StoreInterfaceTest #test10CannotAdd30MinutesAfterCreation stamp: 'LH 12/2/2020 12:12:41'!
+PASSED!
+!StoreInterfaceTest methodsFor: 'tests time invalidation' stamp: 'LH 12/2/2020 12:13:40' prior: 50887899!
+test11CannotCheckout30MinutesAfterAdding
+	|aStoreInterface aCartId|
+	
+	aStoreInterface := testObjectsFactory aStoreInterfaceWithSimulator: self andClock: self.
+								
+	aCartId := aStoreInterface createCartFor: testObjectsFactory validClientId password: testObjectsFactory validClientPassword.
+	
+	aStoreInterface addToCart: aCartId book: testObjectsFactory itemSellByTheStore quantity: 2.
+
+	self  assertThatACart: aCartId
+	fromTheStore: aStoreInterface 
+	IsNotValidAfter30MinutesWhenDoing: [
+			aStoreInterface checkOutCart: aCartId
+				ccn: testObjectsFactory notExpiredCreditCard ccn
+				cced: testObjectsFactory notExpiredCreditCard cced
+				cco: testObjectsFactory notExpiredCreditCard cco.].
+! !
+
+!testRun: #StoreInterfaceTest #test11CannotCheckout30MinutesAfterAdding stamp: 'LH 12/2/2020 12:13:42'!
+PASSED!
+!StoreInterfaceTest methodsFor: 'tests time invalidation' stamp: 'LH 12/2/2020 12:14:47' prior: 50887928!
+test12CannotList30MinutesAfterLastOperation
+	|aStoreInterface aCartId|
+	
+	aStoreInterface := testObjectsFactory aStoreInterfaceWithSimulator: self andClock: self.
+								
+	aCartId := aStoreInterface createCartFor: testObjectsFactory validClientId password: testObjectsFactory validClientPassword.
+	
+	self leap: 20 minutes.
+	
+	aStoreInterface addToCart: aCartId book: testObjectsFactory itemSellByTheStore quantity: 2.
+
+	self leap: 20 minutes.
+	
+	aStoreInterface listCart: aCartId.
+	
+	self  assertThatACart: aCartId
+		fromTheStore: aStoreInterface 
+		IsNotValidAfter30MinutesWhenDoing: [aStoreInterface listCart: aCartId].! !
+
+!testRun: #StoreInterfaceTest #test12CannotList30MinutesAfterLastOperation stamp: 'LH 12/2/2020 12:14:49'!
+PASSED!
+!StoreInterface methodsFor: 'testing' stamp: 'LH 12/2/2020 12:16:25' prior: 50888318!
+hasMadeTheSale: aSale
+
+	^salesBook includes: aSale.! !
+!StoreInterface methodsFor: 'testing' stamp: 'LH 12/2/2020 12:17:13' prior: 50888322!
+isActiveCart: aCartID 
+	"awnsers if there is a usable cart associated with a cart ID"
+	^carts includesKey: aCartID.
+! !
+!StoreInterface methodsFor: 'testing' stamp: 'LH 12/2/2020 12:18:25' prior: 50888327!
+numberOfActiveCarts
+	"awnsers the number of carts that exist in the store"
+	^carts size.! !
+!StoreInterface methodsFor: 'interface' stamp: 'LH 12/2/2020 12:19:22' prior: 50888331!
+addToCart: aCartId book: anItem quantity: aQuantity 
+	"adds a quantity of an item to the cart associated with a cart ID"
+	self do: [(carts at: aCartId) add: aQuantity of: anItem] onCart: aCartId.
+! !
+!StoreInterface methodsFor: 'interface' stamp: 'LH 12/2/2020 12:21:19' prior: 50888885!
+checkOutCart: aCartId ccn: aCCNumber cced: aCCExpirationDate cco: aCCOwner
+	"checksout the cart associated with a cart ID and removes the cart after, debiting the credit card that matches the information.
+	The sale is registered on the sales book"
+	| total |
+	self validateCart: aCartId.
+	total := (Cashier
+		toCheckout: (carts at: aCartId)
+		charging: (CreditCard expiringOn: aCCExpirationDate)
+		throught: merchantProccessor
+		on: DateAndTime now
+		registeringOn: salesBook) checkOut.
+
+	carts removeKey: aCartId.
+
+	^total
+! !
+!StoreInterface methodsFor: 'interface' stamp: 'LH 12/2/2020 12:22:59' prior: 50888351!
+createCartFor: anUserID password: aPassword
+	"creates a new cart for an user with a password"
+	clientDatabase validateUser: anUserID andPassword: aPassword.
+
+	^self createCart.
+! !
+!StoreInterface methodsFor: 'interface' stamp: 'LH 12/2/2020 12:23:22' prior: 50888631!
+listCart: aCartId
+	"lists the contentes of the cart associated to a cart ID"
+	^self do: [(carts at: aCartId) listItems] onCart: aCartId.! !
+!StoreInterface methodsFor: 'interface' stamp: 'LH 12/2/2020 12:23:54' prior: 50888593!
+listPurchasesFor: aUserId password: aPassword
+	"lists the purchases that have been made by carts associated with an user" 
+	| purchases |
+	(salesBook size = 0) ifTrue: [^OrderedCollection with: 0.].
+
+	purchases := OrderedCollection new.
+	salesBook first listPurchasesOn: purchases.
+	purchases add: (salesBook sum: [ :sale | sale total ]).
+	! !
+!StoreInterface methodsFor: 'cart invalidation' stamp: 'LH 12/2/2020 12:24:51' prior: 50888374!
+setCartUsageTime: aCartId
+	"registers the current Date and Time as the last usage of the cart associated with a cart ID"
+	lastActionForCarts add: (Association key: aCartId value: clock now).
+! !
+!StoreInterface methodsFor: 'cart invalidation' stamp: 'LH 12/2/2020 12:26:29' prior: 50888380!
+validateCart: aCartId
+	"validates if the cart associated with a cart ID is usable at this moment.
+	In the case it is not, the cart is deleted from the list if necessary and an error is returned"
+	(self isActiveCart: aCartId) ifFalse: [^self error: StoreInterface invalidCartId].
+	(clock now - (lastActionForCarts at: aCartId) < 30 minutes) ifFalse: [
+		carts removeKey: aCartId.
+		^self error: StoreInterface invalidCartOutOfTime.].
+! !
+!StoreInterface methodsFor: 'private' stamp: 'LH 12/2/2020 12:26:49' prior: 50889021!
+createCart
+	"creates a new cart in this Store interface"
+	|aCartId|
+
+	aCartId := carts keys size + 1.
+	carts at: aCartId put: (Cart acceptingItemsOf: catalogue).
+
+	self setCartUsageTime: aCartId.
+
+	^aCartId.
+! !
+!StoreInterface methodsFor: 'private' stamp: 'LH 12/2/2020 12:28:14' prior: 50888399!
+do: anOperation onCart: aCartId
+	"this method validates that we operate on a valid cart, then it sets the time of operation as the last known use of the cart and executes the operation"
+	self validateCart: aCartId.
+	self setCartUsageTime: aCartId.
+
+	^anOperation value.
+! !
+
+----SNAPSHOT----(2 December 2020 12:28:29) CuisUniversity-4384.image priorSource: 17780880!
+
+----QUIT----(2 December 2020 12:28:53) CuisUniversity-4384.image priorSource: 17850737!
